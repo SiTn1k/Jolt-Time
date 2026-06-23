@@ -125,14 +125,96 @@ Complete Telegram integration architecture:
 
 ### Artifacts System
 The heart of Jolt Time - historical artifact collection:
-- 6 rarity tiers (Common to Mythic)
-- 6 historical eras (Ancient World to Modern Era)
-- Upgrade system (Level 1-10 with fragment progression)
-- 8 artifact types (Weapon, Armor, Document, Relic, Scientific Item, Royal Artifact, Military Artifact, Cultural Artifact)
+- 6 rarity tiers (Common to Mythic) with distinct colors, drop rates, visual effects, and multipliers
+- 10 historical eras (Prehistoric to Modern Era) spanning 10,000+ years of history
+- 8 artifact categories (Weapons, Documents, Jewelry, Ancient Tools, Relics, Military Objects, Royal Objects, Scientific Artifacts)
+- Artifact progression system: Level 1-100 cap, stats scale with level (2% per level), Mythic artifacts evolve visually at levels 25/50/75/100
 - Collection percentage tracking with milestone rewards
 - Museum display mechanics
+- Full artifact data structure: id, name, description, era, civilization, rarity, power, luck, knowledge, level, experience, image_url, is_discovered, is_equipped, created_at
 
-**See:** `knowledge/artifacts.md` for detailed artifact design.
+**See:** `.openhands/knowledge/artifact-system.md` for complete artifact specification.
+
+### Inventory System
+Player-facing artifact management system:
+- Artifact storage with virtualized grid/list view for 1000+ items
+- 6 sorting methods: By Rarity, By Era, By Power, By Level, By Newest, By Oldest
+- 5 filter types: Era (multi-select), Civilization (multi-select), Category (multi-select), Rarity (multi-select), Level Range (slider)
+- Real-time search with 300ms debounce, partial match, case-insensitive
+- Favorites system: max 20 artifacts, star/unstar, dedicated view
+- Equipped artifacts: up to 5 slots, equipped badge, filter view
+- Quick actions: View Details, Favorite, Share, View in Museum, Equip/Unequip
+- Duplicate management: auto-convert to fragments, count badge, conversion notification
+- Capacity: 100 initial slots, 1000 max, expansion via gameplay rewards/premium/achievements
+
+**See:** `.openhands/knowledge/inventory-system.md` for complete inventory specification.
+
+### Collection System
+Tracks player progress across all artifacts:
+- Total collection completion: percentage and count (e.g., 67/82 = 82%)
+- Era completion: 9 eras tracked individually with percentages
+- Rarity completion: 6 rarity tiers tracked individually
+- Category completion: 8 artifact categories tracked individually
+- Set completion: multiple artifact sets per era with bonus previews
+- Milestone rewards: 25% → 200 Dust + Bronze Badge, 50% → 500 Dust + Silver Frame, 75% → 1,000 Dust + Gold Frame, 100% → 5,000 Dust + Chrono Aura + Mythic Artifact
+- Era/Rarity/Category-specific completion rewards
+
+**See:** `.openhands/knowledge/inventory-system.md` for complete collection specification.
+
+### Museum System
+Special artifact designation system:
+- Museum artifacts: permanently retained, cannot be sold, cannot convert to fragments
+- Auto-promotion: first artifact of each rarity automatically becomes museum piece
+- Manual promotion: player can promote additional artifacts within capacity limits
+- Museum capacity: 20 base + 5 per era completed (e.g., 5 eras complete = 45 slots)
+- Museum score: each museum artifact contributes to prestige calculation
+- Cosmetic unlocks: era-specific frames and badges based on museum completeness
+- Museum sections: Hall of Ages, Rarity Gallery, Category Hall, Favorites, Recently Added
+
+**See:** `.openhands/knowledge/inventory-system.md` for complete museum specification.
+
+### Prestige System
+Rewards long-term dedication and collection mastery:
+- Prestige score calculated from: Museum Collections (+25-100/era), Completed Eras (+50/era), Mythic Artifacts (+500/each), Legendary Artifacts (+100/each), Epic Artifacts (+25/each), Achievements (+5-500 each)
+- 10 prestige levels: Novice Collector (0) → Master of Time (100,000)
+- Prestige benefits: profile borders (Bronze→Silver→Gold→Platinum→Prismatic), inventory slots (+10 to +100), Chrono Aura at max level
+
+**See:** `.openhands/knowledge/inventory-system.md` for complete prestige specification.
+
+### Gacha System (Pack Opening)
+Artifact acquisition through pack opening:
+- 7 pack types: Basic (free/50 dust), Ancient (100 dust, era-specific), Premium (150 dust), Legendary (500 dust), Event (free/event currency), Seasonal (pass/200 dust), Mystery (75 dust)
+- Drop rates by pack: Basic (Common 85%, Uncommon 15%) → Legendary (Rare 50%, Epic 35%, Legendary 13%, Mythic 2%)
+- Pity system: 10 opens → Uncommon+, 25 opens → Rare+, 50 opens → Epic+, 100 opens → Legendary, 500 opens → Mythic
+- Pity shared across non-event packs, never resets unfairly
+- First-open bonuses: Welcome bundle (3 free packs + guaranteed Rare + 200 dust), beginner pity (10 → Uncommon+, 20 → Rare+)
+- Daily free pack: 24-hour timer, streak bonuses at days 3/7/14/30, grace period protection
+- Opening animations scaled by rarity (2s Common → 5s Mythic), with particle effects, sounds, and screen flashes
+- Duplicate protection: auto-convert to fragments, Mythic duplicates give special rewards (500 dust + Legendary Pack)
+
+**See:** `.openhands/knowledge/gacha-system.md` for complete gacha specification.
+
+### Pack Economy
+Fair progression economy ensuring no pay-to-win:
+- All artifacts obtainable through gameplay (free daily pack, AdsGram ads, quest rewards, events)
+- Optional purchases are cosmetic/convenience only (Season Pass, cosmetic bundles, ad-free subscription)
+- Chrono Dust earned through gameplay, not purchased with real money (except optional bundles)
+- Drop rates always visible before opening; pity progress always shown
+- Free player progression: ~2-4 packs/day, complete Common/Uncommon in 2-4 weeks, Rare in 2-4 months
+- Premium currency (Time Shards) for cosmetics only; no direct artifact purchases
+
+**See:** `.openhands/knowledge/gacha-system.md` for complete economy specification.
+
+### AdsGram Reward System
+Primary revenue model via Telegram AdsGram SDK:
+- Rewarded video ads: player-initiated, 5/day max, earn packs/currency/boosters, 1-hour cooldown between ads
+- Interstitial ads: automatic at natural breaks, 1 per 3 minutes, skip after 5 seconds, no gameplay interruption
+- Enhanced daily pack ad: 1/day, upgrades Basic Pack to Rare Pack equivalent
+- Event bonus ads: 1/day during events, upgrades Event Pack to include Epic guarantee
+- Reward preview always shown before ad; player choice to watch or continue free
+- Never mandatory for gameplay progression; ads always feel optional
+
+**See:** `.openhands/knowledge/adsgram.md` for complete AdsGram specification.
 
 ### Quest System
 Structured objectives driving player engagement:
