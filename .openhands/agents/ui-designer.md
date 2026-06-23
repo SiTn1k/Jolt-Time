@@ -26,6 +26,7 @@ The UI Designer Agent is responsible for user interface design, user experience,
 - Home screen
 - Mission screens
 - Collection screens
+- Artifact detail screen
 - Profile screens
 - Settings screens
 - Modal dialogs
@@ -302,6 +303,48 @@ The UI Designer Agent is responsible for user interface design, user experience,
 - Respect prefers-reduced-motion
 - Provide animation alternatives
 - No essential info in animation only
+
+---
+
+## Artifact Detail Screen
+
+### Layout Structure
+- Header: Back button, title "DETAILS", favorite toggle
+- Hero section: Large artifact image with rarity glow border
+- Info chips: Quick stats (type, era, rarity)
+- Description block: Short artifact description
+- Historical education block: Expandable facts, importance, trivia
+- Stats section: Power, level, fragments progress
+- Acquisition info: Date obtained, source, quantity
+- Action buttons: Share, View in Museum
+- Future buttons: Upgrade, Fuse, NFT, Sell (initially disabled)
+
+### Rarity Visual System
+Each rarity tier has distinct visual treatment:
+- Common: Gray border, no effects
+- Rare: Blue border with subtle shimmer
+- Epic: Purple border with pulsing aura
+- Legendary: Gold border with animated gradient
+- Mythic: Rainbow prismatic border with 3D effects
+
+### Accessibility Requirements
+- Semantic HTML with ARIA labels
+- 44x44px minimum touch targets
+- Keyboard navigation support
+- Screen reader announcements
+- Color contrast WCAG 2.1 AA compliance
+- Reduced motion support
+
+### Performance Targets
+- Initial paint: < 200ms
+- Interactive: < 500ms
+- Image load: < 300ms
+- Full render: < 800ms
+
+### Future Compatibility
+- Feature flags for upgrade, fusion, NFT, marketplace, evolution
+- Placeholder UI for future buttons (disabled state)
+- Data schema prepared for future fields
 
 ---
 

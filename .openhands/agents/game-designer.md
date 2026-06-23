@@ -24,7 +24,8 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 
 ### 3. Retention Systems
 - Daily login incentives
-- Streak protection design
+- Daily Rewards system (7-day cycle, streak bonuses, missed day handling)
+- Streak protection design (premium shields, grace periods)
 - Variable reward scheduling
 - Social obligation mechanics
 - Collection completion drives
@@ -95,6 +96,18 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 - Dialog systems
 - Tutorial design
 - Event concepts
+
+### 8. Inventory Management
+- Artifact collection organization and display
+- Inventory section structure (Artifacts, Museum, Consumables, Event Items, Boosters, Special Rewards)
+- Filter system design (Era, Rarity, Type, Source, Favorites)
+- Sort options and persistence (Newest, Oldest, Rarity, Alphabetical, Most Used)
+- Favorites system with limits and management
+- Duplicate handling and fragment conversion
+- Empty state messaging and guidance
+- Search functionality and performance requirements
+- Quick actions (View Details, Favorites, Share, Museum Link)
+- Long-term scalability for future inventory features (upgrades, fusion, crafting)
 
 ## Goals
 

@@ -90,6 +90,21 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 - Item descriptions
 - Environmental storytelling
 
+### 10. Museum Content
+- Era descriptions for museum sections (Ancient, Classical, Medieval, Renaissance, Industrial, Modern, Future)
+- Artifact historical narratives and backstories
+- Educational content for historical facts display
+- Cultural significance explanations
+- "Did You Know?" trivia facts for each artifact
+- Museum empty state encouraging messages
+- Source citations for all historical claims
+- Quiz questions for educational verification
+- Historical accuracy verification for museum content
+- Cultural sensitivity review for all eras
+- Museum progression narratives and milestones
+- Collection achievement descriptions
+- Seasonal collection themes and stories
+
 ## Goals
 
 ### Primary Goals
