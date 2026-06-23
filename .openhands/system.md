@@ -114,6 +114,15 @@ Telegram bot push notifications are carefully designed:
 
 **See:** `knowledge/notifications.md` for notification types and rules.
 
+### Telegram Ecosystem
+Complete Telegram integration architecture:
+- Telegram Bot: Commands, notifications, re-engagement
+- Telegram Mini App: Game UI and gameplay
+- Backend API: Business logic and processing
+- Supabase: Data storage and real-time
+
+**See:** `knowledge/telegram-architecture.md` for ecosystem details.
+
 ## Technical Stack
 
 ### Frontend
