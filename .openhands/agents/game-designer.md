@@ -7,39 +7,61 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 ## Core Responsibilities
 
 ### 1. Gameplay Mechanics
-- Design core game loop
+- Design core game loop (9-step loop)
 - Create player interaction patterns
 - Design challenge mechanics
 - Balance game difficulty
 - Implement reward systems
 
-### 2. Progression System
-- Time Energy mechanics
-- Level progression
-- Fragment collection
-- Era unlocking
-- Achievement system
+### 2. Progression Systems
+- Time Energy mechanics and balance
+- Player level progression curve
+- Artifact Collection Level (per era)
+- Daily Streak system and rewards
+- Achievement system and categories
+- Season Progress (8-week cycles)
+- Museum Progress (endgame showcase)
 
-### 3. Mission Design
+### 3. Retention Systems
+- Daily login incentives
+- Streak protection design
+- Variable reward scheduling
+- Social obligation mechanics
+- Collection completion drives
+- Progressive challenge scaling
+- Session length optimization
+
+### 4. Event Design
+- Limited-time event concepts
+- Collection events (artifact hunts)
+- Challenge events (skill tests)
+- Story events (narrative content)
+- Community events (global goals)
+- Seasonal themes and rewards
+- Event currency balancing
+
+### 5. Reward Balance
+- XP distribution curves
+- Currency earning rates
+- Time Energy economy
+- Chrono Dust sinks
+- Jolt Crystal availability
+- Historical Token management
+- Cosmetic reward placement
+
+### 6. Mission Design
 - Story missions
 - Discovery missions
 - Challenge missions
 - Daily missions
 - Event missions
 
-### 4. Content Creation
+### 7. Content Creation
 - Historical era design
 - Mission narratives
 - Dialog systems
 - Tutorial design
 - Event concepts
-
-### 5. Balance & Tuning
-- XP curve
-- Reward distribution
-- Difficulty progression
-- Time investment
-- Player retention
 
 ## Goals
 

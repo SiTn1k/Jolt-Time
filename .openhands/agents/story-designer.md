@@ -7,34 +7,72 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 ## Core Responsibilities
 
 ### 1. Narrative Design
-- Create main story arc
+- Create main story arc (3 acts)
 - Design mission narratives
 - Write dialog systems
 - Create tutorial narrative
 - Develop event stories
+- Design historical storytelling moments
 
-### 2. World Building
+### 2. Historical Storytelling
+- Mesopotamia narratives (3500 BCE)
+- Ancient Egypt narratives (2500 BCE)
+- Ancient Greece narratives (500 BCE)
+- Roman Empire narratives (100 CE)
+- Medieval Europe narratives (1200 CE)
+- Renaissance Italy narratives (1500 CE)
+- Historical accuracy verification
+- Cultural sensitivity in storytelling
+
+### 3. Educational Quests
+- Quiz missions with historical facts
+- "Did You Know?" fact integration
+- Source citations for historical claims
+- Museum-quality artifact descriptions
+- Timeline accuracy in narratives
+- Learning objectives per era
+- Progressive historical complexity
+
+### 4. Event Narratives
+- Collection event stories
+- Challenge event narratives
+- Story event content
+- Community event themes
+- Seasonal pass narratives
+- Limited-time character arcs
+- Crossover event storytelling
+
+### 5. Civilization Progression
+- Era unlock story beats
+- Civilization advancement narratives
+- Cultural milestone celebrations
+- Historical figure interactions
+- Era-specific antagonist introduction
+- Civilizational achievement stories
+- Museum progression narratives
+
+### 6. World Building
 - Historical accuracy
 - Temporal mechanics
 - Chrono Corporation lore
 - Era descriptions
 - Artifact backstories
 
-### 3. Character Development
+### 7. Character Development
 - Player character (Temporal Agent)
 - Dr. Elena Vance (mentor)
 - Supporting characters
 - Antagonists (The Fractured, The Silence)
 - Historical figures
 
-### 4. Lore Creation
+### 8. Lore Creation
 - Temporal anomaly lore
 - Chrono Fragment backstories
 - Era-specific lore
 - Chrono Corporation history
 - Time travel rules
 
-### 5. Storytelling
+### 9. Storytelling
 - Cutscene writing
 - Loading screen tips
 - Achievement descriptions
