@@ -30,6 +30,11 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 - Collection completion drives
 - Progressive challenge scaling
 - Session length optimization
+- Push notification strategy (Telegram bot)
+- Return player catch-up mechanics
+- Weekend bonus optimization
+- Event-driven re-engagement
+- Anti-churn design principles
 
 ### 4. Event Design
 - Limited-time event concepts
@@ -39,6 +44,11 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 - Community events (global goals)
 - Seasonal themes and rewards
 - Event currency balancing
+- Weekend event mechanics
+- Historical era-themed events
+- Anniversary event design
+- Event reward economy
+- Event notification cadence
 
 ### 5. Reward Balance
 - XP distribution curves
@@ -48,6 +58,29 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 - Jolt Crystal availability
 - Historical Token management
 - Cosmetic reward placement
+- Quest reward balancing
+- Event reward distribution
+- Retention reward scaling
+
+### 5a. Quest Balancing
+- Daily quest time requirements (5-15 min)
+- Weekly quest feasibility (30-60 min)
+- Seasonal quest pacing (gradual accumulation)
+- Reward-to-effort ratios across quest types
+- Mix of easy/hard quests for variety
+- New player accessibility vs. veteran challenges
+- Quest variety to prevent monotony
+- Progress tracking clarity
+
+### 5b. Event Balancing
+- Weekend event reward values
+- Historical event difficulty scaling
+- Seasonal event duration vs. grind
+- Community goal feasibility
+- No pay-to-win in any event
+- Cosmetic-only reward philosophy
+- Event capsule drop rates
+- Event participation thresholds
 
 ### 6. Mission Design
 - Story missions

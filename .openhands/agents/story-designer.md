@@ -32,6 +32,9 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 - Timeline accuracy in narratives
 - Learning objectives per era
 - Progressive historical complexity
+- Historical accuracy in quest narratives
+- Educational mission design standards
+- Fact verification for all educational content
 
 ### 4. Event Narratives
 - Collection event stories
@@ -41,6 +44,10 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 - Seasonal pass narratives
 - Limited-time character arcs
 - Crossover event storytelling
+- Historical event storytelling
+- Civilization-themed event narratives
+- Era-specific event themes (Egypt Week, Roman Empire, etc.)
+- Event story integration with gameplay objectives
 
 ### 5. Civilization Progression
 - Era unlock story beats
@@ -50,6 +57,10 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 - Era-specific antagonist introduction
 - Civilizational achievement stories
 - Museum progression narratives
+- Civilization-themed event storytelling
+- Historical event characters and dialog
+- Era-specific narrative voice and tone
+- Cultural authenticity in storytelling
 
 ### 6. World Building
 - Historical accuracy

@@ -4,6 +4,38 @@
 
 Telegram Bot notifications are designed to increase retention through timely, relevant reminders without becoming spam. Maximum 2-4 notifications per day per user.
 
+---
+
+## Retention Systems Integration
+
+Notifications work in conjunction with these retention systems:
+
+### 1. Daily Streaks
+- Streak milestone celebrations (Day 7, 30, 60, 100)
+- Streak protection reminders (before grace period ends)
+- Streak recovery options (when missed)
+
+### 2. Comeback Rewards
+- Welcome back bonuses for returning players
+- Missed rewards converted to "Welcome Back Chest"
+- Catch-up content highlights
+
+### 3. Weekend Bonuses
+- Friday evening reminder for weekend start
+- Weekend bonus reminders (Saturday/Sunday)
+- Weekend-ending summary
+
+### 4. Seasonal Events
+- Season start announcements
+- Mid-season highlights
+- Season-ending countdown
+- New season preview
+
+### 5. Limited-Time Missions
+- Mission availability alerts
+- Event mission reminders
+- Time-sensitive quest deadlines
+
 ## Notification Philosophy
 
 ### Core Principles
@@ -44,12 +76,14 @@ Time Energy: ████████░░ 80/100
 Daily Reward: 🎁 Ready to claim!
 Streak: 🔥 Day 7 (2.0x bonus active!)
 
+Weekend Bonus: Active! 2x XP this weekend!
 [Continue Your Journey] → Jolt Time
 ```
 
 **Why Valuable:**
 - Daily rewards available
 - Streak protection reminder
+- Weekend bonus reminder (when applicable)
 - No pressure to open immediately
 
 **Opt-Out:** Users can disable or change time
@@ -299,6 +333,7 @@ They're now a certified "History Master"
 
 Top Era: Mesopotamia (68% complete)
 
+🎁 Weekly Reward: Ready to claim!
 [Start New Week Strong] → Jolt Time
 ```
 
@@ -306,6 +341,163 @@ Top Era: Mesopotamia (68% complete)
 - Progress reflection
 - Achievement recognition
 - Motivational
+- Weekly reward reminder
+
+---
+
+### 11. Streak Milestone
+
+**Trigger:** Reaching streak milestone (7, 14, 30, 60, 100 days)
+
+**Timing:** Immediate on achievement
+
+**Content:**
+```
+🔥 STREAK MILESTONE: 30 DAYS!
+
+Congratulations, Time Keeper!
+You've been dedicated for a full month!
+
+🏆 Rewards Unlocked:
+• +25% XP Bonus (permanent)
+• Epic Capsule earned
+• "Dedicated" badge added
+
+Your streak: 30 days
+Next milestone: 60 days (+30% XP)
+
+[Claim Rewards] → Jolt Time
+```
+
+**Why Valuable:**
+- Celebration of achievement
+- Clear next goal
+- Meaningful rewards
+
+---
+
+### 12. Comeback Reward
+
+**Trigger:** Player returns after 3+ days absence
+
+**Timing:** On return login
+
+**Content:**
+```
+👋 Welcome Back, Time Keeper!
+
+We missed you! While you were away:
+• 7 days of daily rewards saved
+• Egypt Week event happened
+• New artifacts discovered
+
+🎁 Welcome Back Chest:
+• 7 Daily Capsules
+• 500 Chrono Dust
+• +50% XP for 24 hours
+
+Your streak bonus (+25% XP) is still intact!
+
+[Claim Welcome Back] → Jolt Time
+```
+
+**Why Valuable:**
+- Catches up returning players
+- Rewards loyalty despite absence
+- No punishment for taking break
+
+---
+
+### 13. Weekend Bonus Reminder
+
+**Trigger:** Friday 6PM or Saturday 10AM local
+
+**Timing:** Friday/Saturday
+
+**Content:**
+```
+🌟 WEEKEND BONUS STARTS IN:
+
+🏖️ SATURDAY & SUNDAY SPECIALS:
+• 2x XP on all activities
+• +10% Capsule luck
+• -25% Energy costs
+• Double fragments!
+
+Time remaining until weekend: 14 hours
+
+[Preview Weekend Rewards] → Jolt Time
+```
+
+**Why Valuable:**
+- Creates anticipation
+- Clear reward preview
+- Encourages weekend play
+
+---
+
+### 14. Seasonal Event Start
+
+**Trigger:** New season begins
+
+**Timing:** Season start + Day 3 reminder
+
+**Content:**
+```
+📅 NEW SEASON: "RISE OF CIVILIZATIONS"
+
+8 Weeks of Historical Adventures!
+
+🎁 FREE Track Rewards:
+• New artifacts
+• Chrono Dust
+• Exclusive frames
+
+💎 Premium Track ($4.99):
+• Legendary cosmetics
+• +20% Season XP boost
+• Exclusive badge
+
+Season starts: NOW
+[Enter Season] → Jolt Time
+```
+
+**Why Valuable:**
+- Clear season overview
+- Both tracks explained
+- Immediate engagement opportunity
+
+---
+
+### 15. Limited-Time Mission
+
+**Trigger:** Special mission available for 24-48 hours
+
+**Timing:** Mission start + 24h reminder
+
+**Content:**
+```
+⚡ LIMITED MISSION: "Roman Engineering"
+
+Only available: 47 hours left!
+
+🏛️ Complete challenging Rome missions:
+• Restore the Colosseum
+• Build Roman Roads
+• Win the Great Battle
+
+Rewards:
+• "Roman Engineer" Title
+• Epic Capsule
+• 1000 Chrono Dust
+
+[Accept Mission] → Jolt Time
+```
+
+**Why Valuable:**
+- Creates urgency (fair, not manipulative)
+- Clear timeframe
+- Exclusive rewards
 
 ---
 

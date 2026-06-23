@@ -70,6 +70,9 @@ The main monetization for the project is **Telegram AdsGram advertisements**:
 1. Rewarded video ads
 2. Interstitial ads
 3. Event-based ads
+4. Daily bonus ads
+
+**See:** `knowledge/adsgram.md` for detailed AdsGram integration.
 
 ### Secondary Revenue: User Purchases
 - Cosmetic items only
@@ -82,6 +85,34 @@ The main monetization for the project is **Telegram AdsGram advertisements**:
 - Never design the game around aggressive monetization
 - Always preserve player experience quality
 - Focus on high retention and long-term growth
+
+### Game Economy
+The game uses a multi-currency system:
+- **Time Energy** — Primary gameplay resource
+- **Chrono Dust** — Soft currency for upgrades
+- **Time Shards** — Premium currency (paid only)
+- **Experience** — Player level progression
+
+**See:** `knowledge/economy.md` for detailed economy design.
+
+### Retention Systems
+- Daily login rewards with streak bonuses
+- Comeback rewards for returning players
+- Weekend bonus events
+- Seasonal content updates
+- Limited-time missions
+- Push notifications via Telegram bot
+
+**See:** `knowledge/retention.md` and `knowledge/notifications.md` for detailed retention systems.
+
+### Notifications
+Telegram bot push notifications are carefully designed:
+- Maximum 4 notifications per day
+- Value-first messaging
+- Full user control
+- Never spam or manipulative
+
+**See:** `knowledge/notifications.md` for notification types and rules.
 
 ## Technical Stack
 
