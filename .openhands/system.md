@@ -123,6 +123,16 @@ Complete Telegram integration architecture:
 
 **See:** `knowledge/telegram-architecture.md` for ecosystem details.
 
+### Artifacts System
+The heart of Jolt Time - historical artifact collection:
+- 6 rarity tiers (Common to Mythic)
+- 10 historical eras (Mesopotamia to Future)
+- Upgrade system (Level 1-5)
+- Set bonuses for complete collections
+- Fair balance: Skill > Money
+
+**See:** `knowledge/artifacts.md` for detailed artifact design.
+
 ## Technical Stack
 
 ### Frontend

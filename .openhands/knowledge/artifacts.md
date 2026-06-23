@@ -2,11 +2,144 @@
 
 ## Overview
 
-Artifacts are the core collectibles in Jolt Time. Each artifact represents real historical objects from various eras, providing both gameplay value and educational content. The game teaches history through collecting, ensuring every artifact has historical authenticity and educational value.
+Artifacts are the **heart of Jolt Time**. 
+
+Players collect historical objects from different eras, learning history while playing. Artifacts should feel collectible, beautiful, valuable, upgradeable, and useful in battles.
+
+The game must encourage **collecting rather than selling**.
 
 ---
 
-## Artifact Structure
+## Artifact Philosophy
+
+### Core Principles
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ARTIFACT PHILOSOPHY                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  🎯 COLLECTIBLE                                            │
+│     • Every artifact has unique value                       │
+│     • No duplicate selling encouraged                       │
+│     • Duplicates contribute to power                        │
+│                                                             │
+│  ✨ BEAUTIFUL                                               │
+│     • Stunning visual design                                │
+│     • Rarity-based effects                                 │
+│     • Animated reveals                                      │
+│                                                             │
+│  💎 VALUABLE                                               │
+│     • Meaningful in gameplay                                │
+│     • Historical significance                                │
+│     • Set completion rewards                                │
+│                                                             │
+│  ⬆️ UPGRADEABLE                                            │
+│     • Level up artifacts                                    │
+│     • Increase power over time                              │
+│     • Visual improvements                                    │
+│                                                             │
+│  ⚔️ USEFUL IN BATTLES                                      │
+│     • Affect combat performance                             │
+│     • Strategic choices                                      │
+│     • Set bonuses matter                                    │
+│                                                             │
+│  📚 EDUCATIONAL                                             │
+│     • Real historical objects                               │
+│     • Accurate facts                                        │
+│     • Museum-quality descriptions                           │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Collection Over Selling
+
+**Design Decision:** Players should never feel compelled to sell artifacts.
+
+**Mechanics:**
+- Duplicates automatically convert to upgrade material
+- No selling option in game
+- Collection completion is the primary goal
+- "All artifacts owned" is an achievable milestone
+
+---
+
+## Rarities
+
+### Rarity System
+
+| Rarity | Color | Drop Chance | Power Range | Visual Effects | Prestige |
+|--------|-------|-------------|-------------|----------------|----------|
+| **Common** | Gray | 50% | 8-15 | None | Low |
+| **Uncommon** | Green | 25% | 14-20 | Soft glow | Medium-Low |
+| **Rare** | Blue | 15% | 20-28 | Particle stream | Medium |
+| **Epic** | Purple | 7% | 28-38 | Swirling aura | High |
+| **Legendary** | Gold | 2.5% | 38-45 | Flame wisps | Very High |
+| **Mythic** | Rainbow | 0.5% | 45-50 | Prismatic | Legendary |
+
+### Rarity Visual Effects
+
+```
+COMMON (Gray)
+├── No special effects
+├── Simple card border
+└── Basic icon design
+
+UNCOMMON (Green #22C55E)
+├── Soft green glow
+├── Subtle shimmer animation
+└── Premium card border
+
+RARE (Blue #3B82F6)
+├── Blue particle stream
+├── Shimmer effect (3s loop)
+├── Enhanced card glow
+└── Special reveal animation
+
+EPIC (Purple #A855F7)
+├── Swirling purple aura
+├── Pulsing effect (2s loop)
+├── Epic border animation
+└── Premium reveal with particles
+
+LEGENDARY (Gold #F59E0B)
+├── Golden flame wisps
+├── Intense glow effect
+├── Legendary border animation
+└── Dramatic reveal sequence
+
+MYTHIC (Rainbow)
+├── Prismatic color shift
+├── Particle explosion
+├── Rainbow border animation
+├── Ultimate reveal with special effects
+└── Achievement notification
+```
+
+### Rarity Drop Protection
+
+```yaml
+pity_system:
+  every_10_capsules:
+    guarantee: "At least 1 Rare or higher"
+    
+  every_50_capsules:
+    guarantee: "At least 1 Epic or higher"
+    
+  every_100_capsules:
+    guarantee: "At least 1 Legendary"
+    
+  every_500_capsules:
+    guarantee: "At least 1 Mythic"
+    
+  set_completion:
+    when_9_of_10:
+      guarantee: "Remaining artifact from set"
+```
+
+---
+
+## Artifact Attributes
 
 ### Base Artifact Schema
 
@@ -50,6 +183,530 @@ interface Artifact {
 | **Documents** | Written records | Scroll, Tablet, Charter |
 | **Religious** | Spiritual items | Idol, Altar, Relic |
 | **Architecture** | Building elements | Column, Arch, Tile |
+
+---
+
+## Eras (Artifact Groups)
+
+Artifacts are organized by historical eras. Each era contains unique artifacts representing the civilization's history.
+
+### Era Timeline
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          HISTORICAL ERAS                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ANCIENT ERA                                                               │
+│  ├── Mesopotamia (3500 BCE)        ████                                     │
+│  └── Ancient Egypt (2500 BCE)      ██████                                   │
+│                                     │                                       │
+│  CLASSICAL ERA                                                        │       │
+│  ├── Ancient Greece (500 BCE)       ████████                                │
+│  └── Roman Empire (100 CE)          ███████████                            │
+│                                     │                                       │
+│  MEDIEVAL ERA                                                             │
+│  ├── Viking Age (800 CE)            ██████████████                        │
+│  └── Medieval Europe (1200 CE)      ████████████████                      │
+│                                     │                                       │
+│  RENAISSANCE ERA                                                         │
+│  └── Renaissance Italy (1500 CE)    █████████████████                     │
+│                                     │                                       │
+│  INDUSTRIAL ERA                                                          │
+│  └── Industrial Revolution (1850 CE) ███████████████████                  │
+│                                     │                                       │
+│  MODERN ERA                                                              │
+│  └── Modern Era (1950 CE)           █████████████████████                 │
+│                                     │                                       │
+│  FUTURE ERA                                                              │
+│  └── Future (2100 CE+)             ████████████ (Optional)                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Era Progression
+
+| Era | Artifacts | Sets | Unlock Level | Difficulty |
+|-----|-----------|------|--------------|------------|
+| Mesopotamia | 10 | 2 | 1 | Easy |
+| Ancient Egypt | 15 | 3 | 5 | Easy |
+| Ancient Greece | 12 | 2 | 10 | Medium |
+| Roman Empire | 14 | 3 | 15 | Medium |
+| Viking Age | 8 | 2 | 20 | Hard |
+| Medieval Europe | 12 | 2 | 25 | Hard |
+| Renaissance Italy | 10 | 2 | 30 | Hard |
+| Industrial Revolution | 8 | 2 | 35 | Hard |
+| Modern Era | 6 | 1 | 40 | Very Hard |
+| Future | 3 | 1 | 50 | Expert |
+
+### Era Themes
+
+```
+MESOPOTAMIA:
+"The Cradle of Civilization"
+Theme: First cities, cuneiform, ziggurats
+Color: Sand/Lapis
+
+ANCIENT EGYPT:
+"The Empire of Eternity"
+Theme: Pyramids, pharaohs, the afterlife
+Color: Gold/Lapis
+
+ANCIENT GREECE:
+"The Age of Reason"
+Theme: Philosophy, democracy, Olympics
+Color: Marble/Blue
+
+ROMAN EMPIRE:
+"The Eternal City"
+Theme: Legions, engineering, law
+Color: Crimson/Bronze
+
+VIKING AGE:
+"Sons of Thor"
+Theme: Exploration, sagas, raids
+Color: Steel/Frost
+
+MEDIEVAL EUROPE:
+"The Age of Knights"
+Theme: Castles, chivalry, crusades
+Color: Forest Green/Stone
+
+RENAISSANCE ITALY:
+"The Rebirth"
+Theme: Art, science, exploration
+Color: Purple/Gold
+
+INDUSTRIAL REVOLUTION:
+"The Steam Age"
+Theme: Machines, factories, progress
+Color: Brass/Patina
+
+MODERN ERA:
+"The Atomic Age"
+Theme: Space race, technology, globalization
+Color: Silver/Red
+
+FUTURE ERA:
+"The Time Paradox"
+Theme: Temporal mechanics, paradoxes
+Color: Prismatic/Cyan
+```
+
+---
+
+## Upgrade System
+
+### Level Up Mechanics
+
+Players can upgrade artifacts to increase their power.
+
+```
+UPGRADE SYSTEM:
+
+Artifact Level: 1 → 5 (max)
+
+Each level increases:
+• +10% base power
+• +5% stat bonuses
+• Visual enhancement
+
+Level Requirements:
+┌─────────────────────────────────────────────────────────────┐
+│ Level 1 → 2:  50 Dust + 1 duplicate                       │
+│ Level 2 → 3: 100 Dust + 2 duplicates                     │
+│ Level 3 → 4: 200 Dust + 3 duplicates                     │
+│ Level 4 → 5: 400 Dust + 5 duplicates                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Upgrade Resources
+
+| Resource | Source | Usage |
+|----------|--------|-------|
+| **Chrono Dust** | Quests, missions, events | All upgrades |
+| **Time Shards** | Premium purchase only | Premium upgrades only |
+| **Duplicates** | Capsules | Required for upgrades |
+
+### Visual Improvements
+
+```
+LEVEL 1: Base appearance
+
+LEVEL 2: Enhanced glow + subtle particles
+
+LEVEL 3: Animated effects + border upgrade
+
+LEVEL 4: Legendary border + ambient particles
+
+LEVEL 5: Ultimate form + aura effect
+```
+
+### Upgrade Rules
+
+```
+✅ CAN DO:
+• Level up any owned artifact
+• Combine duplicates to upgrade
+• Increase artifact power
+• Unlock visual improvements
+
+❌ CANNOT DO:
+• Sell artifacts for currency
+• Purchase specific artifacts
+• Skip upgrade requirements
+• Transfer levels between artifacts
+```
+
+---
+
+## Collection System
+
+### Collection Progress
+
+Players see their collection progress as a percentage.
+
+```
+COLLECTION DISPLAY:
+
+┌─────────────────────────────────────────────────────────────┐
+│                    YOUR COLLECTION                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Total Artifacts:    47 / 98     (48%)                    │
+│  Total Sets:         8 / 18      (44%)                    │
+│  Total Power:        1,234                               │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │ ████████████████████░░░░░░░░░░░░░░░░░░░░  48%      │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ERA PROGRESS:                                              │
+│  Ancient Egypt   ████████████████░░░  80%                   │
+│  Mesopotamia     ████████████░░░░░░░░░  50%                   │
+│  Ancient Greece  ████░░░░░░░░░░░░░░░░  20%                   │
+│  Roman Empire    ██░░░░░░░░░░░░░░░░░░  10%                   │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Era Completion Rewards
+
+| Era Completion | Reward |
+|---------------|--------|
+| Complete 1 set | Badge + Frame |
+| Complete 2 sets | +10% Energy gain |
+| Complete all sets | Era Title + Aura |
+
+### Collection Achievements
+
+| Achievement | Requirement | Reward |
+|-------------|-------------|--------|
+| Collector I | Collect 10 artifacts | Badge |
+| Collector II | Collect 25 artifacts | Badge |
+| Collector III | Collect 50 artifacts | Frame |
+| Collector IV | Collect 75 artifacts | Title |
+| Collector V | Collect all artifacts | Special Aura |
+
+### Collection Bonuses
+
+```
+SET COMPLETION BONUSES:
+
+Complete Common Set:     +5% Time Energy gain
+Complete Uncommon Set:   +10% Time Energy gain
+Complete Rare Set:       +15% Time Energy gain + Unique Frame
+Complete Epic Set:       +20% Time Energy gain + Badge
+Complete Legendary Set:  +25% Time Energy gain + Title
+Complete Mythic:         +30% Time Energy gain + Aura
+Complete All Sets:       +50% Time Energy gain + Master Aura
+```
+
+---
+
+## Artifact Sets
+
+### Set System
+
+Artifacts from the same civilization may belong to sets. Completing sets provides powerful bonuses.
+
+### Era Sets
+
+#### Ancient Egypt Sets
+
+```
+ROYAL SYMBOLS SET (3/3) ✅
+├── Ankh
+├── Was Scepter
+└── Shen Ring
+Bonus: +10% Energy, "Royal Egyptian" Frame
+
+DIVINE SYMBOLS SET (4/6) [67%]
+├── Scarab Beetle ✓
+├── Eye of Horus
+├── Lotus Charm ✓
+├── Djed Pillar
+├── Ibis Statue
+└── Sun Disk
+Progress: 4/6
+
+BURIAL TREASURES SET (2/5) [40%]
+├── Pharaoh's Mask ✓
+├── Canopic Jar
+├── Ushabti
+├── Book of Dead
+└── Amulets
+Progress: 2/5
+```
+
+### Cross-Era Sets (Future)
+
+```
+TEMPORAL TRAVELER SET (0/8) [0%]
+Requires artifacts from 4+ eras
+├── Chrono Fragment (Future)
+├── Ancient Compass (Mesopotamia)
+├── Renaissance Gear (Renaissance)
+└── ... more to be added
+Bonus: +20% All Stats, "Time Master" Title
+```
+
+### Set Bonus Tiers
+
+```
+TIER 1 (2 artifacts):
+• +5% specific stat
+
+TIER 2 (4 artifacts):
+• +10% specific stat
+• Minor visual enhancement
+
+TIER 3 (Complete):
+• +15-25% specific stat
+• Full set visual
+• Unique frame/border
+```
+
+---
+
+## Mythic Artifacts
+
+### Mythic Rules
+
+Mythic artifacts are the **rarest and most powerful** in the game.
+
+```
+MYTHIC RULES:
+
+❌ NEVER sold directly
+❌ NEVER in regular capsules
+❌ NEVER purchasable with real money
+
+✅ ONLY obtainable through:
+   • Special events (one per year)
+   • Legendary achievements
+   • Collection milestones
+   • Contest rewards
+   • Season championships
+```
+
+### Mythic Examples
+
+| Artifact | Era | How to Obtain |
+|----------|-----|---------------|
+| Temporal Rift Shard | Future | Complete all sets |
+| Alexander's Crown | Ancient Greece | Season Champion |
+| Rosetta Stone | Egypt | 1-year anniversary |
+| Ark of the Covenant | Israel | Museum completion |
+| Leonardo's Sketchbook | Renaissance | Contest winner |
+
+### Mythic Display
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ✨ MYTHIC ARTIFACT ✨                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│                    ╔═══════════════╗                       │
+│                    ║   [PRISMATIC  ║                       │
+│                    ║    DISPLAY]   ║                        │
+│                    ╚═══════════════╝                       │
+│                                                             │
+│  "Temporal Rift Shard"                                       │
+│  ════════════════════                                       │
+│  Future Era • Mythic                                         │
+│  Power: 50                                                  │
+│                                                             │
+│  "Crystal from a fractured timeline.                        │
+│   Each contains pure time energy."                          │
+│                                                             │
+│  ════════════════════                                       │
+│  ABILITIES:                                                 │
+│  • Timeline Stabilization                                    │
+│  • +50% Energy Regen                                        │
+│  • Paradox Protection                                       │
+│  ════════════════════                                       │
+│                                                             │
+│  OWNED BY: 0.1% of players                                 │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Future NFT Support
+
+### TON Blockchain Integration (Future Phase)
+
+NFT support is planned for future development phases.
+
+```
+PHASING:
+
+Phase 1 (Now):
+• Game works 100% without blockchain
+• All artifacts are database records
+• Full gameplay without NFTs
+
+Phase 2 (Planned):
+• Optional TON NFT minting
+• Prove ownership on blockchain
+• Trade/sell on TON marketplace
+
+Phase 3 (Future):
+• NFT-enhanced cosmetics
+• NFT-gated displays
+• Blockchain collection history
+```
+
+### NFT Philosophy
+
+```
+PRINCIPLES:
+
+1. GAMEPLAY FIRST
+   • NFTs never required for gameplay
+   • All content accessible without blockchain
+   • Full game experience for non-crypto users
+
+2. OWNERSHIP ENHANCEMENT
+   • Blockchain proves true ownership
+   • Tradeable outside game
+   • Provably rare collectibles
+
+3. PLAYER CHOICE
+   • NFT minting is optional
+   • Can play without ever touching crypto
+   • No forced blockchain interaction
+
+4. TRANSPARENCY
+   • Clear NFT rarity/availability
+   • On-chain rarity verification
+   • Public smart contract
+```
+
+### NFT Types
+
+| NFT Type | Description | Benefit |
+|----------|-------------|---------|
+| **Collector NFT** | Mint your artifact collection | Proof of ownership |
+| **Event NFT** | Special event participation | Exclusive cosmetics |
+| **Achievement NFT** | Milestone achievements | Rare trading items |
+| **Limited NFT** | Time-limited releases | Ultra-rare items |
+
+### NFT Restrictions
+
+```
+NFTs CANNOT:
+• Grant gameplay advantages
+• Skip progression
+• Provide power boosts
+• Unlock paywalled content
+
+NFTs CAN:
+• Prove ownership
+• Be traded externally
+• Display in profile
+• Provide cosmetic badges
+```
+
+---
+
+## Balance Rules
+
+### Core Balance Principles
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    BALANCE FUNDAMENTALS                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ⚖️ SKILL > MONEY                                           │
+│     • Artifacts enhance skill, don't replace it              │
+│     • Strategic teams matter more than rarest items          │
+│     • Player skill determines battle outcomes                │
+│                                                             │
+│  🎯 NO DOMINANCE                                            │
+│     • No single artifact dominates the meta                  │
+│     • Multiple viable strategies exist                        │
+│     • Power creep carefully controlled                        │
+│                                                             │
+│  ⚡ FAIR PROGRESSION                                        │
+│     • Free players can collect everything                     │
+│     • Paid players progress faster (cosmetic only)           │
+│     • No content locked behind paywalls                       │
+│                                                             │
+│  📊 META ROTATION                                           │
+│     • Regular balance updates                                 │
+│     • No forever-tier artifacts                              │
+│     • Set bonuses adjusted to keep fresh                      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Balance Checks
+
+```
+Before adding any artifact:
+
+[ ] Is this too powerful compared to similar rarities?
+[ ] Does this break existing team compositions?
+[ ] Can free players obtain this reasonably?
+[ ] Does this encourage collecting or buying?
+[ ] Is this historically accurate?
+[ ] Does this fit the era theme?
+[ ] Will this still be balanced in 6 months?
+```
+
+### Anti-Pay-to-Win Rules
+
+```
+PAY-TO-WIN (PROHIBITED):
+
+❌ Cannot buy artifacts with real money
+❌ Cannot buy energy with real money
+❌ Cannot buy level-ups with real money
+❌ Cannot buy mission completions
+❌ Cannot buy era unlocks
+❌ Cannot buy competitive advantages
+
+PAY-TO-SUPPORT (ALLOWED):
+
+✅ Can buy cosmetics
+✅ Can buy premium currency
+✅ Can buy season pass
+✅ Can watch ads for bonuses
+✅ Can support development
+```
+
+### Balance Metrics
+
+| Metric | Target | Warning |
+|--------|--------|---------|
+| Win rate variance | <5% | >10% = imbalance |
+| Top tier diversity | >3 artifacts | <2 = dominance |
+| Free player satisfaction | >80% | <60% = paywall |
+| Collection completion (F2P) | 70% in 6 months | <50% = too grindy |
 
 ---
 
