@@ -350,15 +350,73 @@ Purely cosmetic profile customization:
 
 **See:** `.openhands/knowledge/player-profile.md` for complete cosmetics specification.
 
-### Hall of Fame System
-Leaderboards celebrating top players:
-- **Categories:** Highest Level, Top Collectors, Museum Masters, Achievement Hunters, Battle Champions
-- **Display:** Top 100 for most categories, Top 50 for specialized
-- **Era-Specific:** Separate leaderboards per era for collection depth
-- **Rewards:** "Hall of Fame" badge for Top 10, featured public leaderboard, monthly/weekly champions
-- **Optional Competition:** No gameplay advantages for leaderboard position
+### Leaderboards and Rankings
+Comprehensive ranking and competitive systems:
+- **Global Leaderboards:** All-time rankings for level, artifact collection, achievement score, museum contribution, and battle victories (never reset)
+- **Seasonal Leaderboards:** 12-week seasonal competitions tracking seasonal XP, battles, quests, and event participation
+- **Regional Rankings:** Global, country-specific, and friends-only leaderboard views
+- **Weekly Challenges:** Short-term goals reset every Monday (Battle Champion, Quest Master, Artifact Hunter, etc.)
+- **Competitive Philosophy:** Encourages participation, rewards effort, avoids toxicity, supports casual players
+- **Anti-Abuse Rules:** Server-side validation, exploit detection, suspicious activity review, leaderboard integrity enforcement
+- **Telegram Notifications:** Rank promotions, season endings, leaderboard rewards — maximum 4 notifications per day
 
-**See:** `.openhands/knowledge/player-profile.md` for complete Hall of Fame specification.
+**See:** `.openhands/knowledge/leaderboards.md` for complete leaderboard and ranking specification.
+
+### Arena Ranks
+Competitive PvP ranking system with cosmetic recognition:
+- **Ranks:** Bronze → Silver → Gold → Platinum → Diamond → Master → Grandmaster → Time Legend (each with V, IV, III, II, I subdivisions)
+- **Rating Range:** 0 (Bronze) to 7000+ (Time Legend)
+- **Seasonal Soft Reset:** End of season rating reduced by 15%
+- **Rewards:** Rank-specific profile frames, badges, titles, and currency rewards (all cosmetic or minor currency only)
+- **Fair Matchmaking:** Rating-based matching within ±200 rating range
+
+**See:** `.openhands/knowledge/pvp-arena.md` for complete arena rank specification.
+
+### PvP Arena System
+Comprehensive competitive battle system:
+- **Battle Modes:** Casual (practice), Ranked (rating), Seasonal Arena (limited-time events), Special Event Arena (themed competitions)
+- **Matchmaking:** Rating-based (±200 range), account level, recent performance, with 60s expansion
+- **Rank Promotion:** Rating thresholds + promotional series (best of 3-5), 200-point demotion buffer
+- **Arena Streaks:** Win streak bonuses (+10% to +150% coins), streak protection, best streak records
+- **Arena Statistics:** Total wins/losses, win rate, peak rating, seasonal records, match history
+- **Anti-Abuse:** Server-side validation, behavioral analysis, exploit prevention, suspicious activity review
+- **Spectator (Future):** Replay system, battle history, friend spectating planned
+
+**See:** `.openhands/knowledge/pvp-arena.md` for complete PvP Arena specification.
+
+### Seasonal Competitions
+Time-limited competitive events driving engagement:
+- **Season Duration:** 12 weeks (4 seasons per year: Spring, Summer, Autumn, Winter themed)
+- **Season Transition:** 3-day grace period with double rewards, fresh leaderboards, new cosmetics
+- **Seasonal Rewards:** Profile frames, badges, titles, cosmetics, and currency — distributed across all participation levels
+- **Seasonal Reset Rules:** Seasonal scores zero, permanent scores preserved
+- **Hall of Fame Integration:** Season winners permanently enshrined
+
+**See:** `.openhands/knowledge/leaderboards.md` for complete seasonal competition specification.
+
+### Battle Pass System
+Seasonal progression system rewarding engagement:
+- **Season Duration:** 30 days per season, 12 seasons per year
+- **Progression Levels:** 50 levels (10 bonus levels for premium)
+- **XP Sources:** Daily quests (25-50 XP), weekly quests (100-200 XP), battles (10-20 XP), events (50-100 XP)
+- **Free Track:** Season frames (Bronze/Silver/Gold), Chrono Coins (~10,000), Chrono Dust (~200), Event Tokens (~1,500)
+- **Premium Pass (99 Jolt Crystals):** Animated frames, auras, backgrounds, exclusive titles — cosmetic only, no combat advantages
+- **Catch-Up Mechanics:** 2x XP weekends, event boosts, grace period for new players, miss-day forgiveness
+- **Bonus Levels:** 10 additional levels (51-60) for premium holders with repeatable rewards
+- **Season Themes:** Each season has unique theme (Egyptian Gold, Viking, Roman Empire, Renaissance) influencing cosmetics and events
+- **Season Archive:** Past seasons preserved with rewards, top finishers, and theme history
+
+**See:** `.openhands/knowledge/battle-pass.md` for complete Battle Pass specification.
+
+### Hall of Fame System
+Permanent records of legendary achievements:
+- **Categories:** Season Winners, Event Champions, Top Collectors, Museum Masters, Battle Legends, Achievement Hunters
+- **Display:** Portrait + stats for champions, milestone-based entries for collectors
+- **Permanent Records:** Hall of Fame data never resets
+- **Privacy:** Players can opt out of public Hall of Fame display
+- **Anti-Fraud:** Subject to same anti-abuse rules as all competitive systems
+
+**See:** `.openhands/knowledge/leaderboards.md` for complete Hall of Fame specification.
 
 ### Gacha System (Pack Opening)
 Artifact acquisition through pack opening:
@@ -411,21 +469,46 @@ Structured objectives driving player engagement:
 
 **See:** `knowledge/quests.md` for detailed quest design.
 
-### Energy and Daily Reward System
-Player pacing through energy management and daily reward progression:
-- Maximum 100 energy, regenerates 1 per 3 minutes
-- Energy consumed by: PvP battles (15), Story battles (5-20), Event battles (10)
-- 30-day reward calendar with escalating rewards
-- Daily streak system (up to 1.5x bonus at 100 days)
-- Welcome rewards for Days 1-7 onboarding
-- Optional AdsGram energy bonuses (never required)
+### Energy System
+Comprehensive energy and resource pacing system:
+- **Main Energy:** Maximum 100 (base), regenerates 1 per 3 minutes, level-based increases up to 260
+- **Arena Tickets:** 5 max, regenerates daily at midnight UTC
+- **Expedition Keys:** 3 max, regenerates 1 per 8 hours
+- **Event Tokens:** Season-specific, 500 max, earned through events
+- **Level Scaling:** Energy capacity increases from 100 (Lv.1) to 260 (Lv.100)
+- **Offline Progress:** Energy continues regenerating, capped at 2x normal gain
+- **Overflow Protection:** Resources cap at maximum, no waste of earned rewards
+- **AdsGram Optional:** Bonus energy from ads, never mandatory
 
 **Connected Systems:**
 - Quests: Quest rewards include energy restoration
 - Battles: Energy gate for all battle types
 - Artifact Progression: Fragments from rewards upgrade artifacts
 
-**See:** `knowledge/energy-system.md` for detailed energy and reward design.
+**See:** `.openhands/knowledge/energy-system.md` for complete energy system specification.
+
+### Timers and Cooldowns
+Activity pacing through strategic cooldown design:
+- **PvP Arena Cooldowns:** 30s after win, 10s after loss, 5-minute break after 5 consecutive losses
+- **Expedition Timers:** Short (30 min), Long (2 hours), Special (4 hours), Boss (24 hours)
+- **Weekly Boss Cooldowns:** Era Boss (7 days), World Boss (3 days), Challenge Boss (24 hours)
+- **Cooldown Reduction:** Premium subscription (-20%), AdsGram ads (-50% next cooldown)
+- **Seasonal Soft Reset:** Arena rating reduced 15% at season end
+- **Daily Limits:** 10 free PvP battles, unlimited story battles, 20 event battles
+- **Weekly Caps:** Competitive points (10,000), fragments from battles (500)
+
+**See:** `.openhands/knowledge/energy-system.md` for complete timer and cooldown specification.
+
+### Activity Limits
+Healthy engagement caps promoting balanced gameplay:
+- **Daily Battle Limits:** PvP (10 free), Story (unlimited, energy-gated), Event (20)
+- **Session Guidelines:** Quick (5-15 min), Standard (15-30 min), Extended (30-60 min), Weekend (60-120 min)
+- **Anti-Addiction Measures:** No forced break timers, no streak threats, no loss aversion messaging
+- **Weekly Caps:** Prevents excessive grinding, maintains collection pacing
+- **Overflow Prevention:** Resources queue or convert at cap, never lost
+- **Offline Rewards:** Accumulated while away, claimed on return
+
+**See:** `.openhands/knowledge/energy-system.md` for complete activity limits specification.
 
 ### Museum and Encyclopedia System
 Signature educational feature combining collection with history education:
@@ -462,6 +545,21 @@ Community features leveraging Telegram's native social ecosystem:
 - AdsGram remains primary revenue source; referrals support organic growth
 
 **See:** `.openhands/knowledge/social-system.md` for complete social systems specification.
+
+### Guild System
+Community-building features for cooperative gameplay:
+- **Guild Creation:** Level 15+ requirement, 5,000 Chrono Coins, unique name/tag, preset icons
+- **Guild Roles:** Leader (1), Officer (up to 5), Member (up to 44) with distinct permissions
+- **Guild Levels:** XP from member activity (quests, battles, events), unlocks cosmetics and features up to Level 30
+- **Guild Missions:** Daily/weekly cooperative objectives with shared rewards for all active members
+- **Guild Wars:** Bi-weekly 3-day wars, 5v5 format, separate war rating, free entry (no energy cost)
+- **Guild Leaderboards:** Track guild level, activity score, war performance, seasonal champions
+- **Guild Chat:** Real-time messaging with moderation rules and anti-toxicity guidelines
+- **Guild Rewards:** Guild frames, banners, badges, titles — all cosmetic only, no combat advantages
+- **Guild Achievements:** Founding, activity, combat, collection, and event achievements
+- **AdsGram Optional:** Bonus guild mission attempts, contribution boosts — never mandatory
+
+**See:** `.openhands/knowledge/guilds.md` for complete guild system specification.
 
 ## Technical Stack
 
@@ -507,6 +605,20 @@ Community features leveraging Telegram's native social ecosystem:
 - Smooth transitions (300ms standard)
 - Loading states for all async operations
 - Graceful error handling
+
+### Event System
+Comprehensive temporary event and seasonal content system:
+- **Event Categories:** Daily, Weekly, Monthly, Seasonal, Holiday, Community, Anniversary
+- **Major Seasonal Events:** Spring Blossom Festival, Summer Solstice, Autumn Harvest Moon, Winter Wonderland (14-16 days each)
+- **Holiday Events:** New Year, Valentine's, Easter, Halloween, Christmas with themed decorations and cosmetics
+- **Historical Events:** Era-focused weeks (Egypt, Greece, Rome, Vikings, Renaissance) reinforcing educational identity
+- **Event Currency:** Event Tokens (2,000 max, 14-day expiration) and Festival Coins (500 max, 30-day expiration)
+- **Event Missions:** Collection, Battle, Social, Discovery, Expedition, Story missions with token rewards
+- **Event Rewards:** Profile frames, badges, titles, auras, artifact skins — all cosmetic only, no pay-to-win
+- **Event Archive:** Past events documented with themes, rewards, and leaderboard history
+- **Event Philosophy:** Fresh content every 2-3 weeks, rewards participation, avoids grinding, respects player time
+
+**See:** `.openhands/knowledge/events.md` for complete event system specification.
 
 ## Security
 
