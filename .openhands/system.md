@@ -66,13 +66,28 @@ Jolt Time is a Telegram-first, mobile-first educational entertainment experience
 ## Monetization Strategy
 
 ### Primary Revenue: AdsGram
-The main monetization for the project is **Telegram AdsGram advertisements**:
-1. Rewarded video ads
-2. Interstitial ads
-3. Event-based ads
-4. Daily bonus ads
+The main monetization for the project is **Telegram AdsGram advertisements**. This is the primary revenue source that sustains the project's development.
 
-**See:** `knowledge/adsgram.md` for detailed AdsGram integration.
+**AdsGram Monetization Model:**
+- Players watch ads and receive in-game rewards (Time Shards, Chrono Coins, Event Tokens, Energy)
+- Revenue (real money) flows entirely to the project — players do NOT earn money
+- All ad rewards are purely in-game currencies and bonuses
+- Ads are never required for gameplay progression
+
+**Key Revenue Streams:**
+1. Rewarded video ads (high CPM, player-initiated)
+2. Interstitial ads (medium CPM, natural breaks only)
+3. Event-based ads (premium rates during events)
+4. Daily bonus ads (high engagement, enhanced rewards)
+
+**AdsGram Compliance:**
+- Player-respecting ad experience
+- Strict frequency caps (max 5 rewarded ads/day, 8 interstitials/hour)
+- Skip options on all non-rewarded ads
+- No ads during active gameplay
+- GDPR-ready, privacy-first approach
+
+**See:** `.openhands/knowledge/adsgram.md` for complete AdsGram specification.
 
 ### Secondary Revenue: User Purchases
 - Cosmetic items only
@@ -86,33 +101,144 @@ The main monetization for the project is **Telegram AdsGram advertisements**:
 - Always preserve player experience quality
 - Focus on high retention and long-term growth
 
-### Game Economy
-The game uses a multi-currency system:
-- **Time Energy** — Primary gameplay resource
-- **Chrono Dust** — Soft currency for upgrades
-- **Time Shards** — Premium currency (paid only)
-- **Experience** — Player level progression
+### Economy and Currency System
+The game uses a comprehensive multi-currency economy designed around fairness, sustainability, and player respect:
 
-**See:** `knowledge/economy.md` for detailed economy design.
+**Main Currencies:**
+- **Time Shards** — Primary progression currency, used for acceleration and upgrades
+- **Chrono Coins** — Workhorse currency for pack opening and everyday purchases
+- **Prestige Points** — Rewarded for long-term mastery and collection milestones
+- **Event Tokens** — Limited-time currency for seasonal event content
 
-### Retention Systems
-- Daily login rewards with streak bonuses
-- Comeback rewards for returning players
-- Weekend bonus events
-- Seasonal content updates
-- Limited-time missions
-- Push notifications via Telegram bot
+**Premium Currencies:**
+- **Jolt Crystals** — Purchasable premium currency for cosmetics and convenience only
 
-**See:** `knowledge/retention.md` and `knowledge/notifications.md` for detailed retention systems.
+**Soft Currencies:**
+- **Research Points** — Earned through educational activities, unlocks study features
+- **Museum Points** — Earned through museum progression, unlocks museum cosmetics
 
-### Notifications
-Telegram bot push notifications are carefully designed:
-- Maximum 4 notifications per day
-- Value-first messaging
-- Full user control
-- Never spam or manipulative
+**Core Principles:**
+- No pay-to-win mechanics — no currency purchases gameplay power
+- All currencies earnable through gameplay
+- Sustainable sinks prevent long-term inflation
+- Clear caps and limits maintain economy health
 
-**See:** `knowledge/notifications.md` for notification types and rules.
+**Premium Subscription: Jolt Time Plus**
+- Optional monthly subscription ($2.99-$9.99/month)
+- Benefits: extra inventory slots, additional quests, exclusive cosmetics, reduced cooldowns
+- NO gameplay advantages — all benefits are cosmetic or convenience
+
+**Anti-Inflation Controls:**
+- Spending sinks for every currency
+- Balancing rules with regular monitoring
+- Reward limitations (daily/weekly/monthly caps)
+- Event economy controls with seasonal resets
+
+**See:** `.openhands/knowledge/economy-system.md` for complete economy and currency specification.
+
+### Daily Rewards System
+The daily rewards system provides consistent engagement through a 30-day calendar:
+- **30-Day Calendar:** Progressive rewards with special milestones on days 7, 14, 21, and 30
+- **Special Reward Days:** Rare/Epic/Legendary packs on key milestones
+- **Visual Calendar:** Pulsing animations, claim tracking, streak indicators
+- **Daily Capsules:** Guaranteed rarity tiers based on day of week
+- **Weekend Bonuses:** Double XP, reduced energy costs, enhanced drops
+
+**See:** `.openhands/knowledge/daily-systems.md` for complete daily rewards specification.
+
+### Login Streak System
+Streak system rewards consistent engagement with escalating benefits:
+- **Streak Counter:** Tracks consecutive days, grace period scales with streak length
+- **Streak Milestones:** Benefits at days 3, 7, 14, 30, 60, 100
+- **Streak Benefits:** XP bonus (+5% to +40%), energy bonus, milestone capsules
+- **Streak Protection:** Temporal Shields extend grace periods, recovery options available
+- **Compassionate Design:** Preserved bonuses after loss, no shame messaging
+
+**See:** `.openhands/knowledge/daily-systems.md` for complete streak system specification.
+
+### Daily and Weekly Missions
+Structured objectives that refresh automatically:
+- **Daily Missions:** 3 missions per day (Easy/Medium/Hard), auto-refresh at UTC midnight
+- **Weekly Missions:** Larger rewards, reset Monday, medium to legendary difficulty
+- **Monthly Objectives:** Collection, battle, progression, and museum goals
+- **Reward Structure:** XP, Chrono Coins, fragments, cosmetics, event tokens
+
+**See:** `.openhands/knowledge/daily-systems.md` for complete mission system specification.
+
+### Comeback Rewards
+Returning players receive generous welcome-back bonuses:
+- **Inactivity Thresholds:** 1-3 days (1.5x), 4-7 days (2x + Free Capsule), 8-14 days (2.5x + Rare), 30+ days (3x + Legendary)
+- **Preserved Progress:** All artifacts, collection, museum, and streak bonus level maintained
+- **Welcome Back Chest:** Accumulated daily rewards converted to catch-up package
+
+**See:** `.openhands/knowledge/daily-systems.md` for complete comeback rewards specification.
+
+### Push Notifications
+Telegram Bot notifications designed for re-engagement without spam:
+- **Maximum 4 notifications per day** — never exceeded
+- **Value-First Messaging:** Every notification provides genuine value
+- **User Control:** Granular settings, quiet hours, one-click disable
+- **Notification Types:** Daily reminders, energy restored, quest available, events, streak milestones
+- **Anti-Spam Rules:** No fear tactics, no streak threats, no manipulative language
+
+**See:** `.openhands/knowledge/daily-systems.md` and `.openhands/knowledge/notifications.md` for complete notification specification.
+
+### Retention Philosophy
+Jolt Time is designed to be fair, grind-friendly, and non-predatory:
+- **Reward Active Players:** Daily rewards, streak bonuses, milestone celebrations
+- **Avoid Addiction Mechanics:** No artificial urgency, no FOMO manipulation
+- **Avoid Punishment Systems:** Soft streak reset, preserved bonuses, generous comebacks
+- **Healthy Sessions:** 5-20 minute optimal play sessions, break reminders
+- **No Pay-to-Win:** All currencies earnable through gameplay, cosmetics optional
+
+**See:** `.openhands/knowledge/daily-systems.md` for complete retention philosophy.
+
+### Achievement System
+Comprehensive goal-setting framework providing long-term motivation:
+- **8 Achievement Categories:** Collection, Battles, Progression, Economy, Social, AdsGram, Activity, Special
+- **4 Rarity Tiers:** Common (Easy), Rare (Medium), Epic (Hard), Legendary (Very Hard)
+- **125 Total Achievements** with multi-stage progress tracking
+- **Reward Types:** XP, Chrono Dust, Badges, Frames, Titles, Exclusive Cosmetics
+- **Hidden Achievements:** Discoverable through natural gameplay, special titles and cosmetics
+- **Achievement Showcase:** Display up to 4 badges + frame + title on profile
+- **Statistics Integration:** Lifetime stats, progress tracking, completion percentages
+- **Long-Term Goals:** Designed for 1+ years of progression (First Week → First Year → Endgame)
+
+**See:** `.openhands/knowledge/achievements.md` for complete achievement specification.
+
+### Player Titles
+Cosmetic rewards for achievement milestones:
+- **Collection Titles:** "Time Explorer", "Artifact Hunter", "Collector", "Master Collector"
+- **Battle Titles:** "Battle Legend", "Untouchable", "Unstoppable"
+- **Era Titles:** "World Traveler", "Guardian of Time"
+- **Special Titles:** "Time Traveler", "Jolt Master", "Historian", "Museum Curator"
+- **Titles Display:** Shown under player name in profile and leaderboards
+- **One Active Title:** Players choose which title to display
+
+**See:** `.openhands/knowledge/achievements.md` for complete titles specification.
+
+### Collection Goals
+Milestone-based objectives for long-term progression:
+- **Artifact Collection:** 10, 50, 100, 200, all 82 artifacts milestones
+- **Era Completion:** Per-era 100% completion with milestone rewards
+- **Set Completion:** 1, 3, 6, all artifact sets
+- **Rarity Completion:** All Common, Uncommon, Rare, Epic, Legendary, Mythic
+- **Multi-Stage Progress:** Visible progress bars, stage rewards at each tier
+- **Collection Statistics:** Real-time tracking of owned/total by era, rarity, category
+
+**See:** `.openhands/knowledge/achievements.md` for complete collection goals specification.
+
+### Completion Tracking
+Visual progress toward complete game mastery:
+- **Total Achievements:** X/125 completed (percentage)
+- **Achievement Score:** Cumulative points from all achievements
+- **Collection Completion:** 67/82 artifacts (82%)
+- **Era Progress:** Per-era percentage with visual progress bars
+- **Rarity Breakdown:** Artifacts by rarity tier
+- **Statistics Dashboard:** Battles, economy, social, activity lifetime stats
+- **Achievement Gallery:** Filterable view of all achievements by category/rarity/status
+
+**See:** `.openhands/knowledge/achievements.md` for complete completion tracking specification.
 
 ### Telegram Ecosystem
 Complete Telegram integration architecture:
@@ -178,8 +304,61 @@ Rewards long-term dedication and collection mastery:
 - Prestige score calculated from: Museum Collections (+25-100/era), Completed Eras (+50/era), Mythic Artifacts (+500/each), Legendary Artifacts (+100/each), Epic Artifacts (+25/each), Achievements (+5-500 each)
 - 10 prestige levels: Novice Collector (0) → Master of Time (100,000)
 - Prestige benefits: profile borders (Bronze→Silver→Gold→Platinum→Prismatic), inventory slots (+10 to +100), Chrono Aura at max level
+- Enter Prestige after Level 100 with 50%+ collection, preserves all progress except level
 
 **See:** `.openhands/knowledge/inventory-system.md` for complete prestige specification.
+
+### Player Profile System
+Central hub for player identity and progression showcase:
+- **Profile Display:** Avatar, nickname, Telegram username, level, title, join date, favorite artifact, collection %
+- **Profile Tabs:** Profile, Stats, Cosmetics, Badges
+- **Favorite Artifact:** Select any owned artifact to display publicly, change anytime
+- **Visibility Controls:** Public, Friends Only, Private options
+- **Share Profile:** Generate shareable profile card via Telegram
+
+**See:** `.openhands/knowledge/player-profile.md` for complete profile specification.
+
+### Account Level System
+Progression from Level 1 to Level 100:
+- **XP Curve:** Formula `base_xp * (level ^ 1.5)` for escalating requirements
+- **XP Sources:** Battles (25-100), quests (100-750), achievements (200-5000), collection (10-50), events (200-1000)
+- **Level Rewards:** Chrono Dust every 5 levels, cosmetic badges at 10/25/50/75, frames at 50/75/100
+- **Unlocks:** New eras, features, and content gated by level milestones
+
+**See:** `.openhands/knowledge/player-profile.md` for complete level system specification.
+
+### Statistics System
+Comprehensive lifetime player tracking:
+- **Play Time:** Total hours, average per day, most active period
+- **Battles:** Won/lost/win rate, best streak, weekly count
+- **Collection:** Total artifacts, by rarity, by era, completion %
+- **Quests:** Daily/weekly completed, total
+- **Economy:** Dust earned/spent, shards earned
+- **Streaks:** Current, longest, total login days
+- **Privacy:** Full stats visible to player only; others see simplified view
+
+**See:** `.openhands/knowledge/player-profile.md` for complete statistics specification.
+
+### Cosmetics and Badges System
+Purely cosmetic profile customization:
+- **Profile Frames:** Bronze (L10), Silver (L25), Gold (L50), Platinum (L75), Prismatic (L100)
+- **Animated Borders:** Fire, Water, Electric, Chrono effects from events/prestige
+- **Backgrounds:** Era-themed and abstract patterns from season pass/events
+- **Auras:** Chrono Glow, Golden, Prismatic unlocked via prestige milestones
+- **Badge Showcase:** 3 slots unlocked at 10/30/50 achievements
+- **Anti-P2W:** All cosmetics purely visual, no gameplay advantages
+
+**See:** `.openhands/knowledge/player-profile.md` for complete cosmetics specification.
+
+### Hall of Fame System
+Leaderboards celebrating top players:
+- **Categories:** Highest Level, Top Collectors, Museum Masters, Achievement Hunters, Battle Champions
+- **Display:** Top 100 for most categories, Top 50 for specialized
+- **Era-Specific:** Separate leaderboards per era for collection depth
+- **Rewards:** "Hall of Fame" badge for Top 10, featured public leaderboard, monthly/weekly champions
+- **Optional Competition:** No gameplay advantages for leaderboard position
+
+**See:** `.openhands/knowledge/player-profile.md` for complete Hall of Fame specification.
 
 ### Gacha System (Pack Opening)
 Artifact acquisition through pack opening:
@@ -267,21 +446,22 @@ Signature educational feature combining collection with history education:
 
 ### Social System
 Community features leveraging Telegram's native social ecosystem:
-- Friend system: Add/remove friends, view profiles, send gifts, challenge
-- Referral system: Unique codes, milestone rewards (coins, energy, fragments)
-- Leaderboards: Player Level, Museum, Artifacts, PvP, Weekly, Seasonal
-- Player profiles: Avatar, level, title, collection %, achievements
-- Titles system: Cosmetic titles (Time Traveler, Museum Master, etc.)
-- Activity feed: Discovery, level up, milestones, achievements
-- Sharing: Artifact cards, milestones, profiles via Telegram
+- **Friends System:** Add/remove friends (100 max), view profiles, view favorite artifacts, online status
+- **Friends Activity Feed:** Level ups, new artifacts, achievements, museum milestones, event participation
+- **Friend Bonuses:** Daily gifts (10-50 coins), collection bonuses, streak bonuses — small and fair
+- **Referral System:** Personal invite links, milestone rewards (cosmetic only), anti-abuse protection
+- **Founder Program:** Legendary Founder badge, exclusive frame, "Founder" title for early players
+- **Gift System:** Daily limits (5 coin/3 energy per friend), abuse protection, cosmetic gifts
+- **Social Achievements:** First Friend, Popular, Community Builder, Time Ambassador
+- **Telegram Bot Integration:** Friend requests, gifts, referral rewards, community events
+- **Leaderboards:** Level, Collection, Museum, Achievements, Battles (optional competition)
 
-**Connected Systems:**
-- Quests: Social quests, referral milestones, leaderboard challenges
-- Museum: Guild contributions, friend comparison, shared progress
-- Progression: Social achievements, title unlocks, activity celebrations
-- Future: Guild system, guild wars, cooperative events, chat
+**Community Philosophy:**
+- Encourage friendship, promote healthy competition, avoid toxicity
+- All social features cosmetic-only — no pay-to-win advantages
+- AdsGram remains primary revenue source; referrals support organic growth
 
-**See:** `knowledge/social-system.md` for detailed social design.
+**See:** `.openhands/knowledge/social-system.md` for complete social systems specification.
 
 ## Technical Stack
 
