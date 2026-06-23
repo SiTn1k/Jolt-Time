@@ -126,12 +126,80 @@ Complete Telegram integration architecture:
 ### Artifacts System
 The heart of Jolt Time - historical artifact collection:
 - 6 rarity tiers (Common to Mythic)
-- 10 historical eras (Mesopotamia to Future)
-- Upgrade system (Level 1-5)
-- Set bonuses for complete collections
-- Fair balance: Skill > Money
+- 6 historical eras (Ancient World to Modern Era)
+- Upgrade system (Level 1-10 with fragment progression)
+- 8 artifact types (Weapon, Armor, Document, Relic, Scientific Item, Royal Artifact, Military Artifact, Cultural Artifact)
+- Collection percentage tracking with milestone rewards
+- Museum display mechanics
 
 **See:** `knowledge/artifacts.md` for detailed artifact design.
+
+### Quest System
+Structured objectives driving player engagement:
+- 6 quest categories: Main Story, Daily, Weekly, Achievement, Event, Era
+- 4 difficulty tiers: Easy, Medium, Hard, Legendary
+- Reward types: Coins, Energy, Fragments, XP, Premium Currency, Event Tokens
+- Daily streak system with bonus multipliers
+- Push notifications via Telegram bot (max 4/day)
+- Optional AdsGram integration (never forced)
+
+**Connected Systems:**
+- Battles: Win tracking, PvP milestones, era-specific battles
+- Artifact Collection: New artifact detection, set completion, power thresholds
+- Events: Seasonal quests, collaboration missions, limited-time objectives
+
+**See:** `knowledge/quests.md` for detailed quest design.
+
+### Energy and Daily Reward System
+Player pacing through energy management and daily reward progression:
+- Maximum 100 energy, regenerates 1 per 3 minutes
+- Energy consumed by: PvP battles (15), Story battles (5-20), Event battles (10)
+- 30-day reward calendar with escalating rewards
+- Daily streak system (up to 1.5x bonus at 100 days)
+- Welcome rewards for Days 1-7 onboarding
+- Optional AdsGram energy bonuses (never required)
+
+**Connected Systems:**
+- Quests: Quest rewards include energy restoration
+- Battles: Energy gate for all battle types
+- Artifact Progression: Fragments from rewards upgrade artifacts
+
+**See:** `knowledge/energy-system.md` for detailed energy and reward design.
+
+### Museum and Encyclopedia System
+Signature educational feature combining collection with history education:
+- 7 era sections: Ancient World, Classical, Middle Ages, Renaissance, Industrial, Modern, Future Archive
+- 165+ museum entries with historical context, facts, and significance
+- Completion tracking with milestone rewards (25%, 50%, 75%, 100%)
+- Encyclopedia search by era, country, civilization, rarity, type
+- Favorites system (max 20 artifacts)
+- Future: audio narration, video content, premium themes
+
+**Connected Systems:**
+- Artifacts: Every collected artifact unlocks museum entry
+- Quests: Museum visit quests and collection milestones
+- Rewards: Completion bonuses and era-specific rewards
+- Progression: 75% completion unlocks Future Archive
+
+**See:** `knowledge/museum.md` for detailed museum design.
+
+### Social System
+Community features leveraging Telegram's native social ecosystem:
+- Friend system: Add/remove friends, view profiles, send gifts, challenge
+- Referral system: Unique codes, milestone rewards (coins, energy, fragments)
+- Leaderboards: Player Level, Museum, Artifacts, PvP, Weekly, Seasonal
+- Player profiles: Avatar, level, title, collection %, achievements
+- Titles system: Cosmetic titles (Time Traveler, Museum Master, etc.)
+- Activity feed: Discovery, level up, milestones, achievements
+- Sharing: Artifact cards, milestones, profiles via Telegram
+
+**Connected Systems:**
+- Quests: Social quests, referral milestones, leaderboard challenges
+- Museum: Guild contributions, friend comparison, shared progress
+- Progression: Social achievements, title unlocks, activity celebrations
+- Future: Guild system, guild wars, cooperative events, chat
+
+**See:** `knowledge/social-system.md` for detailed social design.
 
 ## Technical Stack
 
