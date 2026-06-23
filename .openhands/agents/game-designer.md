@@ -73,6 +73,20 @@ The Game Designer Agent is responsible for gameplay mechanics, progression syste
 - Quest variety to prevent monotony
 - Progress tracking clarity
 
+### 5a(i). Daily Quests System
+- **3 quests per day** — Balanced difficulty distribution (1 Easy, 1 Medium, 1 Medium/Hard)
+- **Quest categories** — Collect artifacts, open reward boxes, visit museum, complete battles, watch ads (optional), use boosters, log in
+- **Difficulty levels** — Easy (1-2 min), Medium (2-5 min), Hard (5-10 min)
+- **Reward types** — Coins, boosters, artifact fragments, event resources, cosmetic rewards
+- **Progress tracking** — Always visible: current progress, remaining requirements, reward preview
+- **Anti-abuse** — Server-side validation, atomic claims, no double-claiming
+- **AdsGram integration** — Optional ad quests only, never forced, separate tracking
+- **Telegram notifications** — Quest reminders, streak alerts, return nudges (opt-in)
+- **Future support** — Architecture for weekly, monthly, seasonal, premium, and event quests
+- **UX philosophy** — Daily quests should feel rewarding and never exhausting
+
+See: `/knowledge/daily-quests.md`
+
 ### 5b. Event Balancing
 - Weekend event reward values
 - Historical event difficulty scaling

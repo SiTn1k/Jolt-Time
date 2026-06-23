@@ -36,6 +36,18 @@ The Story Designer Agent is responsible for narrative design, world-building, ch
 - Educational mission design standards
 - Fact verification for all educational content
 
+### 3a. Daily Quest Narratives
+- **Quest flavor text** — Engaging descriptions for daily quest categories (collect, open, visit, complete, watch, use, login)
+- **Quest completion messages** — Personalized, rewarding text when quests complete
+- **Quest introduction hooks** — Contextual framing that connects quests to lore
+- **Character voice integration** — Dr. Elena Vance tips and encouragement for daily activities
+- **Historical tie-ins** — Daily quests that connect to historical facts and artifact lore
+- **Motivation messaging** — Never punishing, always encouraging language for incomplete quests
+- **Ads-optional framing** — Positive, non-coercive language around optional ad watching
+- **Quest reward descriptions** — Thematic explanations of why rewards are earned
+
+See: `/knowledge/daily-quests.md`
+
 ### 4. Event Narratives
 - Collection event stories
 - Challenge event narratives
