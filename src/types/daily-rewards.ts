@@ -14,16 +14,28 @@
  */
 
 /**
+ * Reward types that can be awarded in daily rewards.
+ */
+export enum DailyRewardType {
+  ENERGY = 'energy',
+  COINS = 'coins',
+  COMMON_CAPSULE = 'common_capsule',
+  RARE_CAPSULE = 'rare_capsule',
+  CHRONO_CHEST = 'chrono_chest'
+}
+
+/**
  * Daily reward definition from database.
  */
 export interface DailyReward {
   id: string;
   dayNumber: number;
-  coinsReward: number;
-  energyReward: number;
-  timeShardsReward: number;
-  boosterType?: string;
-  boosterAmount: number;
+  rewardType: DailyRewardType;
+  rewardAmount: number;
+  coinsReward?: number;
+  energyReward?: number;
+  capsuleType?: 'common' | 'rare';
+  isSpecial?: boolean;
   eventId?: string;
   isPremiumOnly: boolean;
   createdAt: Date;
@@ -36,6 +48,7 @@ export interface DailyReward {
 export interface UserDailyReward {
   id: string;
   userId: string;
+  currentDay: number;
   currentStreak: number;
   lastClaimDate?: Date;
   totalClaims: number;
@@ -51,14 +64,12 @@ export interface DailyRewardHistory {
   id: string;
   userId: string;
   rewardDay: number;
-  streakAtClaim: number;
+  rewardType: DailyRewardType;
   coinsAmount: number;
   energyAmount: number;
-  timeShardsAmount: number;
-  boosterType?: string;
-  boosterAmount: number;
+  capsuleType?: 'common' | 'rare';
+  isSpecial: boolean;
   totalValue: number;
-  multiplier: number;
   claimedAt: Date;
   eventId?: string;
 }
@@ -155,68 +166,103 @@ export enum BoosterType {
 
 /**
  * Default weekly reward cycle.
- * Day 1-7 with escalating rewards.
+ * Day 1-7 with specific rewards per requirements:
+ * Day 1: 50 Energy
+ * Day 2: 100 Coins
+ * Day 3: 1 Common Capsule
+ * Day 4: 150 Coins
+ * Day 5: 100 Energy
+ * Day 6: 1 Rare Capsule
+ * Day 7: Chrono Chest (Special)
  */
 export const DEFAULT_WEEKLY_REWARDS: Omit<DailyReward, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     dayNumber: 1,
-    coinsReward: 100,
-    energyReward: 0,
-    timeShardsReward: 0,
-    boosterAmount: 0,
+    rewardType: DailyRewardType.ENERGY,
+    rewardAmount: 50,
+    energyReward: 50,
     isPremiumOnly: false
   },
   {
     dayNumber: 2,
-    coinsReward: 150,
-    energyReward: 25,
-    timeShardsReward: 0,
-    boosterAmount: 0,
+    rewardType: DailyRewardType.COINS,
+    rewardAmount: 100,
+    coinsReward: 100,
     isPremiumOnly: false
   },
   {
     dayNumber: 3,
-    coinsReward: 200,
-    energyReward: 0,
-    timeShardsReward: 5,
-    boosterAmount: 0,
+    rewardType: DailyRewardType.COMMON_CAPSULE,
+    rewardAmount: 1,
+    capsuleType: 'common',
     isPremiumOnly: false
   },
   {
     dayNumber: 4,
-    coinsReward: 100,
-    energyReward: 50,
-    timeShardsReward: 0,
-    boosterAmount: 0,
+    rewardType: DailyRewardType.COINS,
+    rewardAmount: 150,
+    coinsReward: 150,
     isPremiumOnly: false
   },
   {
     dayNumber: 5,
-    coinsReward: 250,
-    energyReward: 25,
-    timeShardsReward: 0,
-    boosterType: BoosterType.EXPEDITION_BOOST,
-    boosterAmount: 1,
+    rewardType: DailyRewardType.ENERGY,
+    rewardAmount: 100,
+    energyReward: 100,
     isPremiumOnly: false
   },
   {
     dayNumber: 6,
-    coinsReward: 300,
-    energyReward: 50,
-    timeShardsReward: 10,
-    boosterAmount: 0,
+    rewardType: DailyRewardType.RARE_CAPSULE,
+    rewardAmount: 1,
+    capsuleType: 'rare',
     isPremiumOnly: false
   },
   {
     dayNumber: 7,
-    coinsReward: 500,
-    energyReward: 100,
-    timeShardsReward: 25,
-    boosterType: BoosterType.MULTIPLIER,
-    boosterAmount: 2,
+    rewardType: DailyRewardType.CHRONO_CHEST,
+    rewardAmount: 1,
+    isSpecial: true,
     isPremiumOnly: false
   }
 ];
+
+/**
+ * Reward display information for UI.
+ */
+export interface RewardDisplayInfo {
+  dayNumber: number;
+  rewardType: DailyRewardType;
+  rewardAmount: number;
+  label: string;
+  icon: string;
+  isSpecial: boolean;
+  description: string;
+}
+
+/**
+ * Get display information for a reward.
+ */
+export function getRewardDisplayInfo(reward: DailyReward): RewardDisplayInfo {
+  const info: Record<number, Omit<RewardDisplayInfo, 'dayNumber' | 'rewardType' | 'rewardAmount'>> = {
+    1: { label: 'Energy', icon: '⚡', isSpecial: false, description: '50 Energy' },
+    2: { label: 'Coins', icon: '🪙', isSpecial: false, description: '100 Coins' },
+    3: { label: 'Common Capsule', icon: '📦', isSpecial: false, description: '1 Common Capsule' },
+    4: { label: 'Coins', icon: '🪙', isSpecial: false, description: '150 Coins' },
+    5: { label: 'Energy', icon: '⚡', isSpecial: false, description: '100 Energy' },
+    6: { label: 'Rare Capsule', icon: '💎', isSpecial: false, description: '1 Rare Capsule' },
+    7: { label: 'Chrono Chest', icon: '🏆', isSpecial: true, description: 'Special Reward' }
+  };
+
+  const dayInfo = info[reward.dayNumber] || { label: 'Unknown', icon: '❓', isSpecial: false, description: '' };
+
+  return {
+    dayNumber: reward.dayNumber,
+    rewardType: reward.rewardType,
+    rewardAmount: reward.rewardAmount,
+    ...dayInfo
+  };
+}
 
 /**
  * Streak calculation helper.

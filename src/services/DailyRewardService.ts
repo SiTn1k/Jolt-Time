@@ -4,29 +4,33 @@
  * Core service for managing daily login rewards.
  * 
  * Features:
- * - Weekly reward cycle (7 days) with escalating rewards
- * - Streak tracking with reset on missed days
+ * - Weekly reward cycle (7 days)
+ * - Streak tracking (progress continues even if missed - per requirements)
  * - Duplicate claim prevention
  * - Event support for special reward cycles
  * - Premium user variants
- * - AdsGram multiplier support
  * 
- * Reward Cycle Architecture:
- * - Default: 7-day weekly cycle
- * - Days 1-6: Escalating rewards
- * - Day 7: Premium reward chest
- * - After Day 7: Cycle restarts from Day 1
+ * Reward Calendar:
+ * Day 1: 50 Energy
+ * Day 2: 100 Coins
+ * Day 3: 1 Common Capsule
+ * Day 4: 150 Coins
+ * Day 5: 100 Energy
+ * Day 6: 1 Rare Capsule
+ * Day 7: Chrono Chest (Special)
  * 
- * The architecture is designed to support:
- * - Weekly cycles (7 days)
- * - Monthly cycles (30 days)
- * - Seasonal cycles (90 days)
- * - Special event cycles
+ * Rules:
+ * - Rewards collected once per day
+ * - If player misses one day, progress does NOT reset (per requirements)
+ * - After Day 7, cycle starts again from Day 1
+ * - Server validates rewards
+ * - Impossible to claim twice in one day
  */
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import {
   DailyReward,
+  DailyRewardType,
   UserDailyReward,
   CanClaimResult,
   ClaimResult,
@@ -34,7 +38,8 @@ import {
   RewardCycleConfig,
   calculateStreak,
   getDayInCycle,
-  DEFAULT_WEEKLY_REWARDS
+  DEFAULT_WEEKLY_REWARDS,
+  getRewardDisplayInfo
 } from '../types/daily-rewards';
 
 /**
@@ -72,8 +77,7 @@ export class DailyRewardService {
    * Get the current day number in the reward cycle for a user.
    * 
    * This considers:
-   * - User's total claims
-   * - Current streak
+   * - User's current day in the cycle (stored in user_daily_rewards)
    * - Cycle length
    * 
    * @param userId - User ID
@@ -86,17 +90,18 @@ export class DailyRewardService {
       return 1;
     }
 
-    // Get day in cycle based on total claims
-    return getDayInCycle(userReward.totalClaims, this.cycleLength);
+    // Use the currentDay field from user record
+    return userReward.currentDay || 1;
   }
 
   /**
    * Check if a user can claim their daily reward.
    * 
    * Checks:
-   * 1. User exists
-   * 2. User hasn't already claimed today
-   * 3. User is within claim window (reset at midnight UTC)
+   * 1. User hasn't already claimed today (server validation)
+   * 2. User is within claim window (reset at midnight UTC)
+   * 
+   * Note: Progress does NOT reset if player misses a day (per requirements)
    * 
    * @param userId - User ID
    * @returns CanClaimResult with details
@@ -105,7 +110,7 @@ export class DailyRewardService {
     // Get user's current status
     const userReward = await this.getUserRewardStatus(userId);
     
-    // If no record exists, user can claim
+    // If no record exists, user can claim Day 1
     if (!userReward) {
       return {
         canClaim: true,
@@ -114,7 +119,7 @@ export class DailyRewardService {
       };
     }
 
-    // Check if already claimed today
+    // Check if already claimed today (server-side validation)
     const now = new Date();
     const today = new Date(now.getTime());
     today.setUTCHours(0, 0, 0, 0);
@@ -125,43 +130,27 @@ export class DailyRewardService {
       lastClaim.setUTCHours(0, 0, 0, 0);
       
       if (lastClaim.getTime() === today.getTime()) {
-        // Already claimed today
-        // Calculate when next claim is available (tomorrow midnight UTC)
+        // Already claimed today - impossible to claim twice
         const tomorrow = new Date(today);
         tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
 
         return {
           canClaim: false,
           reason: 'Already claimed today',
-          currentDay: getDayInCycle(userReward.totalClaims, this.cycleLength),
+          currentDay: userReward.currentDay,
           currentStreak: userReward.currentStreak,
           nextClaimTime: tomorrow
         };
       }
     }
 
-    // Check if streak should reset (missed a day)
-    const streakCalc = calculateStreak(lastClaim, now);
+    // Note: We do NOT reset progress if player missed a day
+    // Progress continues regardless (per requirements)
     
-    if (streakCalc.shouldReset) {
-      // Streak resets, but they can still claim (starting fresh)
-      const newStreak = 1;
-      const newDay = 1;
-
-      return {
-        canClaim: true,
-        currentDay: newDay,
-        currentStreak: newStreak
-      };
-    }
-
-    // Can claim!
-    const currentDay = getDayInCycle(userReward.totalClaims, this.cycleLength);
-
     return {
       canClaim: true,
-      currentDay,
-      currentStreak: userReward.currentStreak
+      currentDay: userReward.currentDay || 1,
+      currentStreak: userReward.currentStreak || 0
     };
   }
 
