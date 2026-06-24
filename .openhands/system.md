@@ -397,6 +397,353 @@ Progression from Level 1 to Level 100:
 
 **See:** `.openhands/knowledge/player-profile.md` for complete level system specification.
 
+### Story Mode and Narrative System
+Story Mode is the narrative heart of Jolt Time, transforming artifact collection into an epic journey through human history. Players become Time Explorers investigating temporal anomalies and protecting history's integrity.
+
+**Main Lore:**
+- **Jolt Time:** A hidden network of temporal waypoints across history, protected by the Jolt Archive
+- **Temporal Anomalies:** Fractures in reality appearing throughout history, expelling artifacts from their native eras
+- **First Disturbance:** Cataclysmic future event whose ripple effects cascade backward through time
+- **Time Explorers:** Players recruited by the Archive to investigate anomalies and recover artifacts
+
+**Main Factions:**
+- **Jolt Archive** — "History is humanity's greatest treasure" — Primary ally, focuses on preservation and knowledge
+- **Time Keepers** — "If history changes, humanity suffers" — Vigilantes protecting timeline integrity
+- **Lost Historians** — "Every story deserves to be told" — Scholars stranded across time, chronicling history
+- **Chrono Raiders** — "Time is the ultimate commodity" — Antagonists stealing and selling artifacts
+
+**Story Chapters:**
+- **Chapter 1: The First Disturbance** — Introduction to Jolt Time, first expedition to Mesopotamia
+- **Chapter 2: Ancient Echoes** — Investigation deepens, journey to Ancient Egypt, first major confrontation
+- **Chapter 3: Rise of the Chrono Raiders** — Full Raider threat revealed, Classical Greece and Rome
+- **Chapter 4: Secrets of the Timeline** — Chronoscope fragments gathered, First Disturbance truth emerges
+- **Future Chapters:** Structure documented for easy expansion (Chapters 5-8 outlined)
+
+**Story Missions:**
+- Expeditions (time-limited era journeys)
+- Artifact recoveries (find and return displaced artifacts)
+- Historical investigations (research clues, puzzle-solving)
+- Boss encounters (multi-phase strategic battles)
+
+**Historical Characters:**
+- Guide characters (mysterious Archive recruiter, Curator Mira as mentor)
+- Faction allies (Lost Historian Scribe Emeka, Time Keeper Sevris)
+- Antagonists (Captain Vex, The Clockmaker, The Collector)
+- Historical figure echoes (respectful appearances in context)
+
+**Story Rewards (Cosmetic Only, Non P2W):**
+- Titles: "Time Initiate", "Echo Seeker", "Chrono Striker", "Timeline Guardian"
+- Profile Frames: Bronze temporal, Silver anomaly, Gold clockwork, Platinum chronoscope
+- Museum Decorations: Chapter-themed displays
+- Badges and achievements for completion
+
+**Story Statistics:**
+- Chapters completed, missions completed, progress percentage
+- Favorite chapter, lore entries discovered, historical facts learned
+
+**Lore Library:**
+- "Archive Vault" in-game name, accessible from main menu
+- Categories: Chapter Lore, Character Profiles, Era Knowledge, World Lore
+- Features: Reading progress, search, optional audio narration
+
+**Telegram Notifications:**
+- Maximum 2 story notifications per week
+- Triggers: New chapter release, major mission complete, important discoveries
+- User controls: Enable/disable, frequency settings, quiet hours
+
+**Narrative Philosophy:**
+- Inspire curiosity about history
+- Celebrate human achievement across all eras
+- Encourage exploration and discovery
+- Create emotional attachment to the world
+- Mysterious but optimistic tone
+
+**Future Features (Documented Only):**
+- Branching storylines with meaningful choices
+- Faction reputation system
+- Player choices with permanent consequences
+- World-changing events based on collective action
+
+**See:** `.openhands/knowledge/story-mode.md` for complete story mode specification.
+
+### Boss Battle System
+Boss Battles are the most challenging encounters in Jolt Time—epic confrontations that punctuate the player's journey through history. Bosses are never historical figures from real history, but rather temporal threats, corrupted artifacts, and faction antagonists.
+
+**Boss Categories:**
+- **Story Bosses** — Primary antagonists of each chapter, appear at key narrative moments
+- **Era Bosses** — Guard the depths of each historical era with era-themed mechanics
+- **Expedition Bosses** — Available during time-limited expedition events with enhanced rewards
+- **Event Bosses** — Seasonal and special event bosses with unique mechanics
+- **World Bosses** — Community-wide challenges (future feature, documented only)
+
+**Elite Enemy Types:**
+- **Chrono Raiders** — Criminal operatives exploiting temporal anomalies (Scout, Brute, Sapper, Tech, Captain variants)
+- **Timeline Corruptors** — Entities born from temporal anomalies (Fracture Leech, Paradox Wisp, Time Scar, Echo Stalker)
+- **Temporal Guardians** — Ancient protectors corrupted by temporal energy (Sentinel of Ages, Era Wardens, Keeper Remnants)
+- **Lost Collectors** — Independent artifact collectors with neutral-to-hostile intentions
+
+**Boss Difficulty Levels:**
+- **Normal** — Accessible to casual players, clear patterns, 3-5 minute encounters
+- **Elite** — Faster patterns, additional mechanics, 5-8 minute encounters, requires 75% recommended power
+- **Legendary** — Aggressive patterns, complex multi-phase, 8-15 minute encounters, requires 100% power
+
+**Historical Encounter Philosophy:**
+- Real historical figures are NEVER villains (appear as allies/guides/echoes only)
+- Bosses focus on temporal phenomena, corrupted artifacts, and faction antagonists
+- No real figures portrayed disrespectfully
+- Timeline anomalies are neutral threats, not evil forces
+
+**Boss Rewards (Cosmetic Only, Non P2W):**
+- Titles (Legendary completion): "Shadowslayer", "Titanbreaker"
+- Profile Frames (Elite/Legendary): Boss-themed borders
+- Badges: Defeat badges per boss
+- Museum Decorations: Boss-themed trophies
+- Rare Artifacts: Boss-specific drops with lore
+- Lore Entries: Origin and context revealed on defeat
+
+**Boss Statistics:**
+- Total bosses defeated, by difficulty, attempts per boss
+- Fastest/average victory times, damage dealt/taken
+- Favorite boss, completion percentages
+- Unique cosmetics and lore entries collected
+
+**Story Integration:**
+- Chapter bosses appear at narrative climaxes
+- Era bosses conclude each historical era
+- Boss encounters tied to major revelations and milestones
+
+**Replay Philosophy:**
+- First victory grants story progression and full rewards
+- Repeat victories grant reduced rewards (20% of first clear)
+- Daily/weekly caps on boss rewards
+- Leaderboard competition for speed/damage records
+
+**Telegram Notifications:**
+- Maximum 2 boss notifications per week
+- Triggers: New boss available, achievements, event warnings
+- User controls for enable/disable, filters, quiet hours
+
+**Future Features (Documented Only):**
+- Raid bosses (multi-phase, 8-16 players)
+- Guild world bosses (coordinated guild combat)
+- Cooperative encounters (multiplayer infrastructure)
+- Seasonal bosses (limited-time events)
+- Mythical timeline bosses (post-story ultimate challenges)
+
+**See:** `.openhands/knowledge/boss-battles.md` for complete boss battle specification.
+
+### Battle Pass and Seasonal Progression System
+The Battle Pass provides structured seasonal goals with 10-week seasons, dual reward tracks, and meaningful progression milestones while respecting player time.
+
+**Battle Pass Structure:**
+- **Free Track:** Available to all players, provides essential progression rewards (currency, fragments, boosters)
+- **Premium Track:** Requires one-time purchase per season ($4.99-$9.99), unlocks exclusive cosmetic rewards
+- **Shared Progression:** Both tracks share the same XP bar and level progression (50 levels per season)
+- **Season Duration:** 10 weeks (70 days) — enough for casual players, urgent without pressure
+
+**Seasonal Progression:**
+- Each season has a distinct historical theme (Age of Egypt, Roman Chronicles, Viking Horizons, Renaissance Awakening)
+- 50 levels total per season with increasing XP requirements
+- Season events (3-4 major) provide bonus XP and limited-time rewards
+- Legacy system: Past season cosmetics become permanent "Legacy" items
+
+**XP Sources (Natural Progression):**
+- Daily missions (50-200 XP), Weekly missions (200-500 XP)
+- Battle victories (25-100 XP), Boss defeats (100-500 XP)
+- Artifact collection (10-50 XP), Story chapter completion (500-1000 XP)
+- Events provide catch-up XP, not required grinding
+
+**Reward Types:**
+- Free Track: Chrono Coins, Time Shards, Fragments, Boosters
+- Premium Track: Cosmetic-only (skins, frames, badges, emotes, museum decorations)
+- **Critical:** Premium never provides combat advantages, only visual prestige
+
+**Anti-FOMO Philosophy:**
+- Casual players (1-2 hrs/day) reach 70-80% of rewards naturally
+- No daily login requirements to stay competitive
+- Events provide catch-up without excessive grinding
+- Legacy items remain forever — no permanently lost content
+
+**Season Archive:**
+- Players access past seasons to view earned rewards
+- Legacy items (past premium items) remain usable
+- Future legacy rewards possible for dedicated players
+
+**AdsGram Integration:**
+- Optional rewards: Bonus XP, progression boosts, additional daily progress
+- Never required for season access or rewards
+- Maximum 3 rewarded ads per week, clearly labeled optional
+
+**Future Features (Documented Only):**
+- Elite Battle Pass (higher tier premium tier)
+- Legacy season rewards (multi-season achievements)
+- Collaborative season events (community-wide)
+- Guild season challenges (guild competition)
+
+**See:** `.openhands/knowledge/battle-pass.md` for complete Battle Pass specification.
+
+### Guild System
+The Guild System transforms Jolt Time into a community experience with shared goals, cooperative missions, and seasonal guild wars.
+
+**Guild Creation:**
+- Requires Level 10+, 500 Chrono Coins, unique name
+- Member limits scale with guild level (10→100)
+- Public (searchable) or Private (invite-only) options
+
+**Guild Roles & Permissions:**
+- **Leader:** Full control (kick, promote, disband, transfer)
+- **Officer:** Invite members, manage missions, coordinate wars
+- **Member:** Participate in missions, donate, chat
+
+**Guild Progression:**
+- Guild XP earned through member activity (level ups, missions, wars)
+- Levels 1-7 with increasing member limits (10→100)
+- **Cosmetic rewards only:** Banners, emblems, trophies, badges, frames
+
+**Guild Missions:**
+- Daily missions (3/day), Weekly missions (5/week), Seasonal missions (10/season)
+- Categories: Battle, Collection, Activity, Progression
+- Shared progress across all guild members
+
+**Guild Wars:**
+- Seasonal format (4-week seasons aligned with Battle Pass)
+- Matchmaking by guild level and season points (fair, no P2W)
+- Minimum 50% member participation required
+- Rewards: Trophies, frames, badges, coins (cosmetic-only)
+
+**Guild Leaderboards:**
+- Categories: Guild Level, Total XP, Season Points, War Win Rate
+- Weekly and seasonal rankings
+- Filters: All, Season, War
+
+**Guild History:**
+- Member roster and former leaders
+- Achievement timeline and war history
+- Milestone records
+
+**Community Philosophy:**
+- Promotes teamwork and healthy competition
+- No mandatory time commitments
+- Rewards participation over victory
+- Casual players welcome, no exclusion by power level
+
+**Future Features (Documented Only):**
+- Guild Raids (cooperative PvE encounters)
+- Guild Museums (shared achievement display)
+- Guild Chat (in-game communication)
+- Guild Alliances (inter-guild cooperation)
+- Cooperative Expeditions (guild-wide events)
+
+**See:** `.openhands/knowledge/guild-system.md` for complete guild specification.
+
+### PvP Arena and Ranked League System
+The PvP Arena brings competitive gameplay to Jolt Time, offering players opportunities to test skills, strategies, and collections against others.
+
+**PvP Modes:**
+- **Casual Arena:** Relaxed play, no ranking consequences, quick matches
+- **Ranked Arena:** Competitive matches affecting league ranking, best-of-3 format
+- **Seasonal Competitions:** Limited-time events with unique rewards
+- **Practice Mode:** Offline AI practice (future feature)
+
+**League Structure (7 Tiers):**
+- Bronze → Silver → Gold → Platinum → Diamond → Master → Chrono Legend
+- Each tier has 3 divisions (I, II, III)
+- Points-based progression (win +15-25, loss -15)
+- Demotion protection within divisions
+
+**Matchmaking Philosophy:**
+- Matches players by rank points, recent performance, win rate
+- Skill over spending—artifact power is one factor, not dominant
+- New players protected from smurfing
+- Fair matches prioritized over quick finds
+
+**Seasonal Rankings:**
+- 10-week seasons (aligned with Battle Pass)
+- End-of-season rewards based on final rank
+- Top 100 get placement matches for new season
+
+**PvP Rewards (Cosmetic-Only for Competitive):**
+- Ranked: Coins, XP, Season Tokens per match
+- Weekly: Bonus coins and fragments for participation
+- Seasonal: Badges, frames, titles based on league
+- **No pay-to-win:** All competitive advantages from skill, not purchases
+
+**Casual Player Support:**
+- 10-match daily cap for full rewards
+- Demotion protection, no mandatory daily play
+- Casual mode available for pressure-free fun
+- Rewards accumulate over time without grinding
+
+**Anti-Toxicity:**
+- Sportsmanship endorsements and rewards
+- Progressive penalties for reports (warning → ban → permanent)
+- Chat filtering and spam detection
+- Fair play enforcement and cheat detection
+
+**Future Features (Documented Only):**
+- Practice Mode (offline AI)
+- Battle History (match records)
+- Replay System (watch recorded matches)
+- Spectator Mode (watch live matches)
+- World Championships, Esports Events, Guild Tournaments
+
+**See:** `.openhands/knowledge/pvp-system.md` for complete PvP specification.
+
+### Tournament and Championship System
+The Tournament System creates a layered competitive ecosystem from daily events to legendary championships.
+
+**Tournament Categories:**
+- **Daily Tournaments** — Single elimination, quick (30-60 min), free entry with daily ticket
+- **Weekly Tournaments** — Double elimination, weekend events, better rewards
+- **Seasonal Championships** — Group stage + knockout, top 100 qualify, premium rewards
+- **Community Tournaments** — Player-organized events (8-512+ participants)
+- **Invitational Events** — Elite competitions for top-ranked players (Chrono Legends, Master Masters)
+
+**Tournament Formats:**
+- Single Elimination (one loss = out) — Daily tournaments
+- Double Elimination (two losses = out) — Weekly tournaments
+- Group Stage + Knockout — Seasonal championships
+- League Format (round-robin) — Future/esports
+
+**Entry Philosophy:**
+- Entry pathways: Normal participation, seasonal qualification, ranking requirements
+- No pay-to-enter (always free)
+- Fair brackets based on ranking
+- Anti-abuse: smurf detection, account linking
+
+**Championship Titles:**
+- Arena Champion, Daily Victor, Weekly Champion
+- Seasonal Legend, Chrono Master, Grand Historian
+- Time Conqueror (10 championship wins), Chrono Legend (invitational wins)
+
+**Tournament Rewards (Cosmetic-Only):**
+- Badges (unique per tournament), Profile frames, Animated effects
+- Chrono Coins, Fragments, Tournament Tickets
+- Titles: "[Season] Champion", "Time Conqueror", etc.
+
+**Seasonal Championships:**
+- Qualification Phase: Top 100 seasonal rankings qualify
+- Finals Phase: Top 32 → Quarterfinals → Semifinals → Finals
+- Regional competitions (future)
+
+**Spectator Features (Future):**
+- Live Viewing (in-game spectator mode)
+- Battle Replays (recorded match playback)
+- Match History (comprehensive records)
+
+**Community Philosophy:**
+- Sportsmanship first, fair competition
+- Multiple paths to glory (daily grinders, casuals, skilled players)
+- Anti-toxicity: progressive penalties, fair play enforcement
+
+**Future Features (Documented Only):**
+- World Championships (annual global tournament)
+- Esports Support (professional competitive circuit)
+- Creator Tournaments (influencer-hosted events)
+- Guild Championships (guild-vs-guild events)
+
+**See:** `.openhands/knowledge/tournaments.md` for complete tournament specification.
+
 ### Statistics System
 Comprehensive lifetime player tracking:
 - **Play Time:** Total hours, average per day, most active period
