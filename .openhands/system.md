@@ -136,6 +136,249 @@ The game uses a comprehensive multi-currency economy designed around fairness, s
 
 **See:** `.openhands/knowledge/economy-system.md` for complete economy and currency specification.
 
+### Marketplace System
+The player-to-player marketplace enables buying, selling, and trading of artifacts, cosmetics, and collectibles:
+
+- **Marketplace Categories:** Artifact Market, Cosmetic Market, Event Collectibles, Museum Decorations, Limited Items
+- **Supported Currencies:** Chrono Coins (primary), Event Tokens (limited items), TON (future)
+- **Listing System:** Duration options (24h, 3d, 7d, 14d), price range per rarity tier, single and multi-quantity listings
+- **Search and Filter:** Filter by rarity, era, category, price range; sort by price, recently listed, ending soon
+- **Marketplace Statistics:** Total trades, most traded items, rarest collectibles, marketplace activity metrics
+- **Telegram Bot Notifications:** Sale completion, purchase completion, expired listings — max 3/day, fully customizable
+
+**See:** `.openhands/knowledge/marketplace.md` for complete marketplace specification.
+
+### Trading Economy
+The trading economy provides legitimate channels for item exchange while maintaining economic balance:
+
+- **Trading Philosophy:** Completely optional participation; no gameplay progression requires trading
+- **Economy Strengthening:** Additional Chrono Coins and Event Token sinks; enables collectors to complete sets
+- **Marketplace Fees:** Percentage-based fees per transaction; scaled by item value; supports project development
+- **Anti-Inflation Controls:** Price ceilings per rarity tier; marketplace cooling periods; supply monitoring
+
+**See:** `.openhands/knowledge/marketplace.md` for complete trading economy specification.
+
+### Transaction History
+Players have complete visibility into their marketplace activities:
+
+- **Purchased Items:** Item name, rarity, seller ID, price, date, item provenance (future)
+- **Sold Items:** Item name, rarity, buyer ID, price, date, marketplace fee deducted
+- **Total Earnings:** Gross/net earnings by period (daily, weekly, monthly, all-time); breakdown by category
+- **Export Features:** Transaction history export; tax reporting summaries (future)
+
+**See:** `.openhands/knowledge/marketplace.md` for complete transaction history specification.
+
+### Marketplace Protection
+Comprehensive safeguards maintain marketplace integrity and prevent abuse:
+
+- **Duplicate Item Prevention:** Ownership verification, listing locks, one-item-one-sale enforcement
+- **Suspicious Transaction Detection:** Price anomaly detection, rapid trading pattern monitoring, account linking detection
+- **Exploit Abuse Prevention:** Listing exploits, currency exploits, inventory manipulation, race condition protection
+- **Artificial Inflation Control:** Price ceilings, marketplace cooling, supply/demand monitoring, anti-manipulation algorithms
+
+**See:** `.openhands/knowledge/marketplace.md` for complete marketplace protection specification.
+
+### NFT System
+The NFT system provides true digital ownership for collectibles through optional TON blockchain integration:
+
+- **NFT Categories:** Historical Artifacts, Cosmetic Items, Limited Collections, Anniversary Collectibles, Founder Items
+- **Ownership Philosophy:** Players own their collectibles, trade freely, preserve collections long-term
+- **Minting Philosophy:** Optional minting for in-game items; no gameplay item requires blockchain
+- **Limited Collections:** Founder, anniversary, and collaboration NFTs remain mostly cosmetic
+- **Museum Integration:** NFT items display with provenance tracking and blockchain verification badges
+
+**See:** `.openhands/knowledge/nft-system.md` for complete NFT system specification.
+
+### TON Integration
+Future TON blockchain connectivity for Web3-enhanced experiences:
+
+- **Wallet Connection:** Future Telegram TON wallet integration via Telegram Passport
+- **TON Payments:** Potential purchase of Jolt Crystals and premium items using TON
+- **NFT Marketplace:** In-app TON marketplace for blockchain-verified item trading
+- **Technical Approach:** TON Connect SDK, NFT metadata standards, smart contract patterns
+
+**See:** `.openhands/knowledge/nft-system.md` for complete TON integration specification.
+
+### Digital Ownership
+Blockchain-verified ownership for players who want verifiable asset control:
+
+- **Verifiable Ownership:** Immutable blockchain proof independent of game servers
+- **Provenance Tracking:** Complete ownership history for collected items
+- **Collection Preservation:** Mirrored database ensures items persist if blockchain unavailable
+- **Cross-Platform Potential:** Future item portability between compatible platforms
+
+**See:** `.openhands/knowledge/nft-system.md` for complete digital ownership specification.
+
+### Optional Web3 Features
+All blockchain features are entirely optional; Web2 players enjoy complete game experience:
+
+- **No Mandatory Adoption:** No gameplay content locked behind NFT ownership
+- **Equal Gameplay:** All progression achievable without any Web3 engagement
+- **Fairness Philosophy:** No pay-to-win; Web2 and Web3 players compete equally
+- **AdsGram Separation:** NFT systems are tertiary revenue; never replace AdsGram primary revenue
+
+**See:** `.openhands/knowledge/nft-system.md` for complete optional Web3 features specification.
+
+### Wallet System
+The wallet system provides optional payment infrastructure for players who want to support the project:
+
+- **Wallet Features:** Connect/disconnect wallet, wallet status display, transaction history
+- **Payment Categories:** Battle Pass, cosmetics, subscriptions, event bundles, future NFT transactions
+- **Security:** Encrypted connections, no private key storage, fraud detection, PCI compliance
+- **Transaction History:** Purchase history, rewards received, completed payments, export options (future)
+
+**See:** `.openhands/knowledge/wallet-system.md` for complete wallet system specification.
+
+### Payment Infrastructure
+Comprehensive payment processing supporting multiple payment methods:
+
+- **Supported Systems:** Telegram Stars (current), TON Wallet (future), TON Connect (future), additional providers (future)
+- **Purchase Flow:** Select purchase → Choose payment method → Process transaction → Grant rewards → Confirm
+- **Security Architecture:** Encrypted transactions, secure storage, audit logging, fraud detection
+- **Performance:** Purchase completion < 3s, wallet connection < 5s, transaction history load < 2s
+
+**See:** `.openhands/knowledge/wallet-system.md` for complete payment infrastructure specification.
+
+### Telegram Stars Support
+Telegram Stars serve as the primary payment currency for in-app purchases:
+
+- **Purchase Categories:** Premium cosmetics, subscriptions, convenience items, event bundles, Battle Pass
+- **Stars Integration:** Native Telegram payment API, instant delivery, receipt storage via Telegram
+- **Usage Principles:** Stars never create pay-to-win advantages; cosmetics and convenience only
+- **AdsGram Separation:** Distinct revenue streams; no conversion between Stars and AdsGram rewards
+
+**See:** `.openhands/knowledge/wallet-system.md` for complete Telegram Stars specification.
+
+### TON Connect Support
+Future TON blockchain wallet connection via TON Connect protocol:
+
+- **Wallet Connection:** Future Telegram TON wallet integration via TON Connect SDK
+- **Future Transactions:** TON transfers, NFT minting fees, marketplace transactions
+- **Technical Approach:** TON Connect SDK, wallet session management, secure token refresh
+- **Implementation Timeline:** TON integration is future work; no current timeline set
+
+**See:** `.openhands/knowledge/wallet-system.md` for complete TON Connect specification.
+
+### Subscription System
+Jolt Time Plus premium subscription rewards loyal players with convenience and cosmetic benefits:
+
+- **Subscription Types:** Monthly ($2.99-$4.99) and Yearly ($24.99-$39.99) with Telegram Stars
+- **Exclusive Benefits:** Profile frames, cosmetic rewards, monthly bonuses, museum decorations, premium titles
+- **Daily Premium:** Daily Chrono Coins, cosmetic gifts, collector rewards (no combat advantages)
+- **Cancellation:** Cancel anytime; keep earned cosmetics; no core progression lost
+
+**See:** `.openhands/knowledge/subscription-system.md` for complete subscription specification.
+
+### Jolt Time Plus
+Premium membership tier providing comfort without pay-to-win:
+
+- **Convenience Features:** +20 inventory slots, +2 quest capacity, 10% cooldown reduction, priority support
+- **Cosmetic Rewards:** Exclusive frames, badges, titles, sticker packs, subscriber cosmetics
+- **Monthly Resources:** Chrono Coins bonus, Museum Points, free energy refill
+- **Balance Rules:** No XP multipliers, no drop rate increases, no competitive advantages
+
+**See:** `.openhands/knowledge/subscription-system.md` for complete Jolt Time Plus specification.
+
+### Premium Rewards
+Ongoing rewards for Jolt Time Plus subscribers:
+
+- **Daily Bonuses:** Chrono Coins (10-25/day), cosmetic gifts, collector rewards
+- **Monthly Cosmetics:** One exclusive cosmetic item per month
+- **Subscriber Badge:** Visible premium status indicator
+- **Display Slots:** Temporary additional showcase slots
+
+**See:** `.openhands/knowledge/subscription-system.md` for complete premium rewards specification.
+
+### Loyalty Rewards
+Long-term subscriber recognition and appreciation:
+
+- **Milestone Badges:** 1 month (Bronze), 3 months (Silver), 6 months (Gold), 12 months (Platinum), 24 months (Diamond), 60 months (Mythic)
+- **Anniversary Cosmetics:** Exclusive frame and badge at 1-year anniversary, annual limited items
+- **Long-Term Appreciation:** Early access to features, subscriber events, Hall of Fame recognition
+- **Preserved on Cancellation:** All earned badges and cosmetics retained
+
+**See:** `.openhands/knowledge/subscription-system.md` for complete loyalty rewards specification.
+
+### Creator System
+The creator system recognizes and celebrates community members who contribute to Jolt Time:
+
+- **Creator Categories:** Lore creators, event creators, community artists, historians, content creators
+- **Contribution Types:** Fan art, historical articles, community events, educational content, museum concepts
+- **Recognition:** Creator badges (Bronze to Diamond), special titles, contributor pages, community spotlights
+- **Rewards:** Profile cosmetics, exclusive badges, anniversary recognition — all cosmetic, no gameplay advantages
+
+**See:** `.openhands/knowledge/creator-system.md` for complete creator system specification.
+
+### Community Contributions
+Jolt Time encourages creativity, community participation, and educational contributions:
+
+- **World Expansion:** Creators help grow the Jolt Time universe through diverse contributions
+- **Inclusivity:** All players can become creators; multiple paths to recognition
+- **Quality Guidelines:** Content should respect history, avoid harmful material, support positive communities
+- **Non-Commercial:** Recognition and appreciation are primary rewards; no direct revenue sharing (future potential)
+
+**See:** `.openhands/knowledge/creator-system.md` for complete community contributions specification.
+
+### Creator Recognition
+Comprehensive recognition celebrates creator contributions without gameplay advantages:
+
+- **Creator Badges:** Contributor, Creator, Expert Creator, Master Creator, Legendary Creator tiers
+- **Profile Titles:** Lore Keeper, Event Master, Community Artist, Historian, Content Creator, Legendary Contributor
+- **Community Spotlights:** Weekly and monthly features on official channels and in-game boards
+- **Non-Material Rewards:** Social media features, direct communication with dev team, early access invitations
+
+**See:** `.openhands/knowledge/creator-system.md` for complete creator recognition specification.
+
+### Future Creator Economy
+Future systems may introduce creator compensation and collaboration tools:
+
+- **Creator Collections:** Quality creators propose branded items (future)
+- **Creator Events:** Player-organized community tournaments and showcases (future)
+- **Revenue Sharing:** Percentage of sales from creator items (future, aspirational)
+- **Collaboration Tools:** Creator matching, project boards, mentorship programs (future)
+
+**See:** `.openhands/knowledge/creator-system.md` for complete future creator economy specification.
+
+### Admin Panel
+Internal administrative interface for managing Jolt Time operations:
+
+- **Admin Roles:** Super Admin, Administrator, Moderator, Support Team with hierarchical permissions
+- **Player Management:** View profiles, review reports, investigate suspicious activity, apply sanctions
+- **Moderation Actions:** Warnings, temporary restrictions, temporary bans, permanent bans with escalation philosophy
+- **Privacy Principles:** Access only necessary information, respect player privacy, avoid unnecessary data exposure
+
+**See:** `.openhands/knowledge/admin-panel.md` for complete admin panel specification.
+
+### Moderation Tools
+Comprehensive tools for maintaining community standards:
+
+- **Moderation Actions:** Progressive discipline from warnings to permanent bans
+- **Escalation Path:** First offense → repeated offense → severe offense → continued violations
+- **Support Tools:** Review tickets, investigate issues, assist players with account recovery
+- **Report Processing:** Automated triage, evidence review, action decision, outcome communication
+
+**See:** `.openhands/knowledge/admin-panel.md` for complete moderation tools specification.
+
+### Support Systems
+Tools enabling support team to assist players effectively:
+
+- **Ticket Management:** Queue, priority triage, category routing, SLA tracking
+- **Investigation Tools:** Account diagnostics, transaction lookup, progress verification
+- **Compensation:** Item grants, currency adjustments, refund processing (all logged)
+- **Escalation Path:** Route complex issues to specialists
+
+**See:** `.openhands/knowledge/admin-panel.md` for complete support systems specification.
+
+### Audit Logs
+Comprehensive logging ensures administrative accountability:
+
+- **Administrator Actions:** User modifications, sanctions, item grants, economy adjustments
+- **Moderation History:** Warnings, restrictions, bans, appeals with evidence preservation
+- **Security Events:** Login attempts, permission escalations, data access, role changes
+- **Critical Actions:** Permanent bans, data exports, rollbacks require enhanced documentation
+
+**See:** `.openhands/knowledge/admin-panel.md` for complete audit logs specification.
+
 ### Daily Rewards System
 The daily rewards system provides consistent engagement through a 30-day calendar:
 - **30-Day Calendar:** Progressive rewards with special milestones on days 7, 14, 21, and 30
