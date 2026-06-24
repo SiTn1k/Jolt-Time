@@ -647,6 +647,21 @@ Time-traveling historical exploration with risk/reward decisions:
 
 **See:** `.openhands/knowledge/expeditions.md` for complete expedition system specification.
 
+### World Map System
+Central navigation hub representing humanity's timeline as an explorable journey through history:
+- **World Map Philosophy:** The map embodies Jolt Time's identity as a time-traveling educational experience; players feel the weight of millennia and excitement of discovering civilizations
+- **Main Historical Eras:** 9 eras spanning from Ancient Egypt (3100 BCE) to Future Era — each with unique atmosphere, visual identity, artifact themes, and easy future expansion
+- **Era Structure:** Each era contains expeditions, artifact collections, museum sets, story chapters, special events, and regional nodes
+- **Era Progression Rules:** Clear unlock requirements (player level + total artifacts + collection progress), gradual revelation creating anticipation, multiple progression paths
+- **Region Nodes:** Specific historical locations within each era (e.g., Giza, Alexandria, Valley of the Kings for Egypt) with unique activities and unlock conditions
+- **Era Completion System:** Partial (30%), Standard (60%), Full (100%), and Mastery tiers with cosmetic rewards — badges, frames, auras, titles
+- **Era Statistics:** Exploration progress, favorite era, regions visited, artifacts collected, achievement tracking
+- **Educational Philosophy:** Every era teaches history, encourages curiosity, presents civilizations respectfully; museum entries provide factual information
+- **Telegram Notifications:** Era unlocks, region availability, completion milestones — never spam, respect daily caps
+- **AdsGram Optional:** Extra exploration energy, bonus expedition attempts, temporary boosts — always optional
+
+**See:** `.openhands/knowledge/world-map.md` for complete world map and era navigation specification.
+
 ### Shop System
 Comprehensive in-game store providing cosmetic purchases and optional convenience items:
 - **Shop Categories:** Featured Offers, Cosmetics, Profile Decorations, Museum Decorations, Event Shop, Resource Shop, Special Bundles
@@ -772,17 +787,35 @@ Primary revenue source providing optional player rewards:
 
 ### Event System
 Comprehensive temporary event and seasonal content system:
-- **Event Categories:** Daily, Weekly, Monthly, Seasonal, Holiday, Community, Anniversary
+- **Event Categories:** Daily, Weekly, Monthly, Seasonal, Holiday, Community, Anniversary, Collaboration
 - **Major Seasonal Events:** Spring Blossom Festival, Summer Solstice, Autumn Harvest Moon, Winter Wonderland (14-16 days each)
+- **Seasonal Themes:** Four seasons with unique visual themes, rewards, and storylines
 - **Holiday Events:** New Year, Valentine's, Easter, Halloween, Christmas with themed decorations and cosmetics
-- **Historical Events:** Era-focused weeks (Egypt, Greece, Rome, Vikings, Renaissance) reinforcing educational identity
+- **Historical Events:** Era-focused weeks (Mesopotamia, Egypt, Greece, Rome, Vikings, Renaissance) reinforcing educational identity, includes historical facts and museum integration
+- **Collaboration Events:** Museum partnerships, creator showcases, educational institution events
 - **Event Currency:** Event Tokens (2,000 max, 14-day expiration) and Festival Coins (500 max, 30-day expiration)
-- **Event Missions:** Collection, Battle, Social, Discovery, Expedition, Story missions with token rewards
-- **Event Rewards:** Profile frames, badges, titles, auras, artifact skins — all cosmetic only, no pay-to-win
-- **Event Archive:** Past events documented with themes, rewards, and leaderboard history
-- **Event Philosophy:** Fresh content every 2-3 weeks, rewards participation, avoids grinding, respects player time
+- **Event Missions:** Daily objectives, weekly objectives, milestone rewards with Collection, Battle, Social, Discovery, Expedition, Story mission types
+- **Event Rewards:** Profile frames, badges, titles, auras, artifact skins, museum decorations, collectibles, anniversary items — all cosmetic only, no pay-to-win
+- **Event Shop:** Exchange event currencies for exclusive cosmetics, decorations, collectibles, and anniversary items
+- **Event Statistics:** Participation rates, rewards claimed, completed missions, event popularity tracking
+- **Event Archive:** Past events documented with themes, rewards, leaderboard history, historical rewards viewable by future players
+- **Event Philosophy:** Creates excitement, rewards participation, avoids excessive grinding, supports casual players
+- **Future Features:** Global events, guild events, live community events, creator events (documented for future implementation)
 
 **See:** `.openhands/knowledge/events.md` for complete event system specification.
+
+### Limited-Time Content System
+Comprehensive framework for exclusive content that creates excitement without punishing late joiners:
+- **Limited-Time Content Categories:** Seasonal Rewards, Anniversary Rewards, Founder Rewards, Collaboration Rewards, Historical Event Rewards
+- **Anniversary Events:** Year 1 (Chrono Origins), Year 2 (Temporal Evolution), Major Milestone Celebrations with 30-day durations
+- **Founder Rewards:** Founding Member Badge, Chrono Pioneer Title, Temporal Guardian Frame — cosmetic-only, based on early participation
+- **Legacy Collections:** View past events, historical rewards, old seasons with Heritage alternatives available
+- **Returning Content Philosophy:** Recolored variants, anniversary editions, rerun events ensure players can obtain similar rewards
+- **Heritage Shop:** Permanent shop for past limited-time items using Festival Coins and Anniversary Tokens
+- **Anti-FOMO Philosophy:** Respects player time, avoids unhealthy urgency, celebrates participation over exclusivity
+- **Fair Play Promise:** All limited rewards cosmetic-only, missed events return, tokens convert to permanent currency
+
+**See:** `.openhands/knowledge/limited-content.md` for complete limited-time content specification.
 
 ## Security
 

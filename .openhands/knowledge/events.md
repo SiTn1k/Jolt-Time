@@ -66,6 +66,21 @@ Annual celebrations marking Jolt Time's launch:
 - **Duration:** 30 days
 - **Special:** Major content reveals, founding player recognition
 
+### Collaboration Events
+
+Partnership events with external brands, creators, or institutions:
+- **Frequency:** 1-2 per year
+- **Duration:** 7-14 days
+- **Types:**
+  - **Brand Collaborations** — Partner with historical brands, museums, educational institutions
+  - **Creator Events** — Special events designed with content creators
+  - **IP Partnerships** — Themed content from licensed intellectual properties (future)
+- **Rewards:** Exclusive collaboration cosmetics, limited-edition badges, unique frames
+- **Examples:**
+  - Museum Partnership Week (collaboration with real museums)
+  - Creator Showcase Events (featuring community creators)
+  - Educational Institution Events (partnering with schools or universities)
+
 ---
 
 ## 2. Major Seasonal Events
@@ -591,6 +606,87 @@ All event rewards are cosmetic or convenience-focused. No gameplay advantages.
 
 ---
 
+## 7b. Event Shop
+
+The Event Shop allows players to exchange earned event currencies for exclusive items.
+
+### Shop Categories
+
+| Category | Items Available | Currency Used |
+|----------|----------------|---------------|
+| Cosmetics | Profile frames, auras, badges | Event Tokens |
+| Decorations | Museum decorations, profile banners | Event Tokens / Festival Coins |
+| Collectibles | Limited-edition artifacts, historical items | Festival Coins |
+| Anniversary Items | Founding player exclusives, anniversary badges | Special Anniversary Tokens |
+| Artifact Skins | Cosmetic overlays for collected artifacts | Event Tokens |
+
+### Event Shop Display
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  🏪 SPRING FESTIVAL SHOP                                        │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  Your Balance: 1,450 Spring Tokens                             │
+│  Festival Coins: 200                                            │
+│                                                                 │
+│  ════════════════════════════════════════════════════════════  │
+│  EXCLUSIVE COSMETICS                                            │
+│  ════════════════════════════════════════════════════════════  │
+│                                                                 │
+│  🌸 Cherry Blossom Frame                                       │
+│     500 Tokens | Epic | Complete event missions               │
+│                                                                 │
+│  ✨ Spring Aura                                                 │
+│     300 Tokens | Rare | Top 25% on leaderboard                │
+│                                                                 │
+│  🏅 Blossom Champion Badge                                      │
+│     150 Tokens | Uncommon | Complete 5 missions               │
+│                                                                 │
+│  ════════════════════════════════════════════════════════════  │
+│  MUSEUM DECORATIONS                                             │
+│  ════════════════════════════════════════════════════════════  │
+│                                                                 │
+│  🏛️ Spring Garden Decoration                                   │
+│     200 Tokens | Rare | Limited quantity (500)                 │
+│                                                                 │
+│  🎨 Ancient Vase Display                                        │
+│     100 Festival Coins | Epic | Unlimited                      │
+│                                                                 │
+│  ════════════════════════════════════════════════════════════  │
+│  COLLECTIBLES                                                   │
+│  ════════════════════════════════════════════════════════════  │
+│                                                                 │
+│  🏺 Replica Scarab (Egypt Week 2025)                           │
+│     50 Festival Coins | Rare | Previous event item             │
+│                                                                 │
+│  📿 Heritage Necklace (Anniversary 2025)                       │
+│     100 Anniversary Tokens | Legendary | Founding members only │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Shop Mechanics
+
+| Aspect | Specification |
+|--------|---------------|
+| Availability | Open during active events, 7 days after event ends |
+| Quantity Limits | Limited items (500-1000 max), unlimited items available too |
+| Restocking | Limited items don't restock once sold out |
+| Pricing | Fair rates aligned with mission token earnings |
+| Exclusivity | Some items available only during specific events |
+
+### Limited-Edition Items
+
+| Item Type | Scarcity | Price | Notes |
+|-----------|----------|-------|-------|
+| Founder's Badge | 100 total | 0 (earned) | First anniversary only |
+| Anniversary Frame | 500 total | 500 Tokens | Second anniversary only |
+| Collaboration Badge | 1,000 total | 300 Tokens | Museum partnership |
+| Historical Replica | Unlimited | Festival Coins | Previous events |
+
+---
+
 ## 8. Event Archive
 
 Past events remain documented for reference and nostalgia.
@@ -647,6 +743,103 @@ Each archived event shows:
 | 2024 | Blossom Festival | Solstice | Harvest Moon | Wonderland |
 | 2025 | Blossom Festival | Solstice | Harvest Moon | Wonderland |
 | 2026 | Blossom Festival | Solstice | Harvest Moon | Wonderland |
+
+### Archive Accessibility
+
+Future players can view:
+- Complete event details (theme, duration, description)
+- Historical rewards with acquisition methods
+- Previous event leaderboard standings
+- Screenshot gallery of event content
+- Anniversary history and founding player recognition
+- Community goal outcomes and participation statistics
+
+### Event Archives Data Retention
+
+| Data Type | Retention | Access |
+|-----------|-----------|--------|
+| Event Details | Permanent | All players |
+| Reward History | Permanent | Owner only |
+| Leaderboard Results | Permanent | All players |
+| Screenshots | 2 years | All players |
+| Statistics | Aggregate only | All players |
+
+---
+
+## 8b. Event Statistics
+
+Event statistics track participation, effectiveness, and player engagement across all events.
+
+### Tracked Metrics
+
+| Metric Category | Data Points |
+|----------------|-------------|
+| **Participation Rates** | Total participants, unique participants, return rate, completion rate |
+| **Rewards Claimed** | Total rewards distributed, reward tier distribution, unclaimed rewards |
+| **Completed Missions** | Mission completion rate, average missions per player, popular missions |
+| **Event Popularity** | Engagement score, session length during events, event-related actions |
+| **Community Goals** | Goal completion rate, total contribution, average contribution per player |
+
+### Event Analytics Dashboard
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  📊 EVENT ANALYTICS — SPRING FESTIVAL 2026                       │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  PARTICIPATION                                                  │
+│  ─────────────────────────────────────────────────────────────  │
+│  Total Participants: 12,847                                     │
+│  Unique Participants: 10,234                                    │
+│  Return Rate: 78.7%                                            │
+│  Completion Rate: 62.3%                                         │
+│                                                                 │
+│  REWARDS DISTRIBUTION                                           │
+│  ─────────────────────────────────────────────────────────────  │
+│  Total Rewards Claimed: 45,892                                 │
+│  • Common (Badge): 15,234 (33.2%)                              │
+│  • Uncommon (Stickers): 12,847 (28.0%)                         │
+│  • Rare (Frame): 8,234 (17.9%)                                 │
+│  • Epic (Aura): 6,847 (14.9%)                                  │
+│  • Legendary (Title): 2,730 (5.9%)                             │
+│                                                                 │
+│  MISSION COMPLETION                                             │
+│  ─────────────────────────────────────────────────────────────  │
+│  Average Missions/Player: 6.4 / 10                             │
+│  Most Popular: "Win 5 battles" — 94% completion                │
+│  Least Popular: "Top 10% leaderboard" — 8% completion           │
+│                                                                 │
+│  EVENT POPULARITY                                               │
+│  ─────────────────────────────────────────────────────────────  │
+│  Engagement Score: 8.7/10                                      │
+│  Avg Session Length: +23% during event                          │
+│  Event Actions: 2.4M total                                     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Player Event Statistics
+
+Each player can view their own event history:
+
+| Stat | Description |
+|------|-------------|
+| Events Participated | Total events joined |
+| Events Completed | Events where all missions finished |
+| Total Rewards Earned | Count of event rewards received |
+| Favorite Event Type | Most participated category |
+| Streak (Event) | Consecutive events participated |
+| Historical Events | Count of era-specific events completed |
+
+### Event Effectiveness Metrics
+
+| Metric | Target Range | Action if Off |
+|--------|-------------|---------------|
+| Participation Rate | 40-70% of DAU | Adjust mission difficulty |
+| Completion Rate | 50-80% | Balance reward distribution |
+| Return Rate | 70%+ | Improve onboarding |
+| Reward Claim Rate | 85%+ | Simplify claim process |
+| Engagement Score | 7+/10 | Add more interactive elements |
 
 ---
 
@@ -987,6 +1180,66 @@ event_currency:
     expiration_days: 30
     conversion_rate: 5  # coins per dust
 ```
+
+---
+
+## 17. Future Event Features
+
+Future event features are documented here for planning purposes but are NOT part of the current implementation.
+
+### Global Events
+
+Worldwide competitions where all players compete together:
+- **Concept:** All players worldwide work toward shared goals or compete on global leaderboards
+- **Status:** Future feature
+- **Requirements:**
+  - Global infrastructure for real-time aggregation
+  - Anti-cheat systems for fair competition
+  - Regional server synchronization
+- **Potential Rewards:** Exclusive global winner frames, world champion titles
+
+### Guild Events
+
+Guild-focused events for coordinated group participation:
+- **Concept:** Events designed for guilds to complete together, with guild-level rewards
+- **Status:** Future feature
+- **Requirements:**
+  - Active guild system with stable membership
+  - Guild leaderboard infrastructure
+  - Coordinated participation tracking
+- **Potential Rewards:** Guild banners, guild frames, collective trophies
+
+### Live Community Events
+
+Real-time events that unfold as the community progresses:
+- **Concept:** Dynamic events that react to community actions in real-time
+- **Status:** Future feature
+- **Requirements:**
+  - Real-time event orchestration system
+  - Live progress visualization
+  - Dynamic difficulty adjustment
+- **Potential Rewards:** Live event exclusive cosmetics, participation certificates
+
+### Creator Events
+
+Events designed with and for content creators:
+- **Concept:** Community creators help design events or host their own mini-events
+- **Status:** Future feature
+- **Requirements:**
+  - Creator partnership program
+  - Event creation tooling
+  - Community voting systems
+- **Potential Rewards:** Creator co-branded items, community creator badges
+
+### Cross-Platform Events
+
+Events that span multiple platforms or Telegram Mini Apps:
+- **Concept:** Collaborative events across partnered mini-apps
+- **Status:** Future consideration
+- **Requirements:**
+  - Cross-platform partnership agreements
+  - Shared event infrastructure
+  - Unified reward systems
 
 ---
 
