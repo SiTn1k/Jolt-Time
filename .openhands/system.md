@@ -255,6 +255,49 @@ Complete Telegram integration architecture:
 
 **See:** `knowledge/telegram-architecture.md` for ecosystem details.
 
+### Telegram Bot System
+Centralized bot ecosystem for player communication and engagement:
+- **Bot Responsibilities:** Send notifications, deep link navigation, deliver rewards, remind inactive players, announce events, provide support, track referrals
+- **Bot Commands:** `/start`, `/help`, `/profile`, `/settings`, `/rewards`, `/referral`, `/news`, `/support`, `/stats`, `/plus`, `/showcase`
+- **Deep Link System:** Standard start, referral tracking, profile/missions/events/museum/battle/shop navigation, artifact-specific links, guild invites
+- **Notification Categories:** Daily reminders, event notifications, energy restored, expedition completed, arena rewards, mission resets, battle pass reminders, seasonal announcements
+- **User Settings:** Master toggle, category enable/disable, quiet hours (10PM-8AM), timezone-aware delivery, quick mute options
+- **Anti-Spam Rules:** Maximum 4 notifications/day, no repeats, no quiet hours delivery, friendly non-aggressive tone, value-first messaging
+- **Referral Integration:** Link generation, milestone tracking, reward delivery notifications
+
+**See:** `.openhands/knowledge/telegram-bot.md` for complete bot system specification.
+
+### Push Notifications
+Timely, relevant alerts that enhance player experience without becoming spam:
+- **Daily Reminders:** 20+ hour inactive triggers, daily reward/energy/mission status, streak protection
+- **Event Notifications:** Event start/end, seasonal announcements, historical festivals, community events
+- **Progress Notifications:** Level ups, achievement unlocks, artifact discoveries, battle pass tier completion
+- **Reward Notifications:** Expedition completions, arena season rewards, event rewards, referral bonuses
+- **AdsGram Alerts:** Optional bonus opportunities, seasonal double-reward weekends, enhanced pack availability
+- **Frequency Control:** Maximum 4/day, one per category per 12 hours, priority queue when at cap
+- **Timing:** User timezone-aware, optimal engagement windows (10AM, 6PM), quiet hours bypass only for critical
+
+**See:** `.openhands/knowledge/notifications.md` for complete notification specification.
+
+### Reminder System
+Friendly re-engagement system for inactive players with compassionate design:
+- **Inactivity Tiers:** 20-24h (gentle), 24-48h (friendly), 3-7d (value), 7-14d (welcome back), 14-30d (grand return), 30+d (legendary)
+- **Message Philosophy:** Always welcoming, never accusatory, focus on future not past, preserve benefits when possible
+- **Comeback Rewards:** Small/medium/large chests based on absence, streak protection, XP multipliers (50-150%)
+- **Welcome Back Packages:** Missed daily rewards, event rewards (free track), exclusive returner cosmetics
+- **Never Do:** Threaten lost progress, guilt-trip about absence, use manipulative tactics, send excessive reminders
+
+**See:** `.openhands/knowledge/telegram-bot.md` for complete reminder specification.
+
+### Deep Links
+Notification-borne links that open specific Mini App screens with context:
+- **Link Formats:** `/start` (main), `/start ref_{id}` (referral), `/start event_{id}` (event), `/start profile/missions/museum/battle/shop` (screens), `/start guild_{id}` (guild)
+- **Deep Link Processing:** Parse parameters, validate tokens, verify authentication, route to appropriate handler, pass context to Mini App
+- **Notification Integration:** Every notification includes relevant deep link, inline keyboard buttons for one-tap navigation
+- **Mini App Context:** Links pass parameters (ref, screen, event, guild) as URL query params for seamless routing
+
+**See:** `.openhands/knowledge/telegram-bot.md` for complete deep link specification.
+
 ### Artifacts System
 The heart of Jolt Time - historical artifact collection:
 - 6 rarity tiers (Common to Mythic) with distinct colors, drop rates, visual effects, and multipliers
@@ -604,6 +647,84 @@ Time-traveling historical exploration with risk/reward decisions:
 
 **See:** `.openhands/knowledge/expeditions.md` for complete expedition system specification.
 
+### Shop System
+Comprehensive in-game store providing cosmetic purchases and optional convenience items:
+- **Shop Categories:** Featured Offers, Cosmetics, Profile Decorations, Museum Decorations, Event Shop, Resource Shop, Special Bundles
+- **Featured Offers:** Daily/weekly featured bundles, flash sales, seasonal promotions, starter packs, welcome back offers
+- **Cosmetics:** Profile frames, animated borders, backgrounds, badges, titles, visual effects — all purely visual, no gameplay advantages
+- **Profile Decorations:** Avatar accessories, name effects, level badges, animated frames, themed backgrounds
+- **Museum Decorations:** Museum themes (Ancient Temple, Classical Gallery, Medieval Castle, etc.), display cases, lighting, pedestals
+- **Event Shop:** Exchange event currencies (Event Tokens, Festival Coins) for exclusive cosmetics, titles, badges, limited collectibles
+- **Resource Shop:** Chrono Coins for convenience items (inventory expansion, mission refresh, daily boosts) and cosmetic bundles
+- **Purchase Currencies:** Telegram Stars, TON (crypto), Chrono Coins (earned gameplay), Event Tokens (earned gameplay)
+- **Daily Rotation:** Featured items refresh every 24 hours, weekly spotlight on new categories, flash sales 2-3x per week
+- **Purchase History:** Full visibility into subscriptions, past purchases, owned cosmetics with easy restoration
+- **Telegram Bot Notifications:** Flash sale alerts, new arrivals, event start/ending, seasonal bundles — max 4/day, anti-spam
+- **Fair Monetization Philosophy:** No pay-to-win, players never required to spend, cosmetics-only focus, long-term sustainability over aggressive monetization
+
+**See:** `.openhands/knowledge/shop-system.md` for complete shop system specification.
+
+### Cosmetic Economy
+Player expression through visual customization with zero gameplay impact:
+- **Profile Cosmetics:** Frames (Bronze→Prismatic), animated borders (Nebula, Flame, Frost, Storm), backgrounds (era-themed, animated)
+- **Badge System:** Achievement badges, collection badges, event badges, seasonal badges — all cosmetic recognition
+- **Title System:** Traveler, Explorer, Collector, Scholar, Legendary, Event Master, Time Keeper, Founding Member
+- **Visual Effects:** Particle auras, gradient borders, holograms, constellation backgrounds, lightning effects, chrono swirls
+- **Museum Themes:** Complete museum visual overhauls (Ancient Temple, Classical Gallery, Renaissance Salon, Future Archive)
+- **Anti-P2W Guarantee:** All cosmetics purely visual expression, no stat bonuses, no gameplay advantages, competitive integrity maintained
+- **Chrono Coins Earning:** Daily missions (50-200 coins), weekly achievements (500), event participation (200-500), streak milestones (100-500)
+- **Chrono Coins Spending:** Basic cosmetics (50-150), premium cosmetics (200-400), convenience items (100-500) — all earnable through play
+
+**See:** `.openhands/knowledge/shop-system.md` for complete cosmetic economy specification.
+
+### Jolt Time Plus
+Optional premium subscription providing cosmetic bonuses and quality-of-life improvements:
+- **Subscription Tiers:** Monthly ($2.99), Quarterly ($7.99), Annual ($24.99)
+- **Cosmetic Bonuses:** 2 extra cosmetic loadout slots (5 total), Plus-exclusive badge monthly, Plus-only profile frames, exclusive color options
+- **Profile Customization:** Animated profile backgrounds, custom nameplate styles, profile sound effects
+- **Museum Exclusives:** Plus-exclusive museum theme, premium display case styles, artifact showcase rotation
+- **Quality of Life:** +1 daily mission refresh, extended login grace period (48h→72h), priority support queue, no interstitial ads
+- **Subscription Exclusions:** Never provides Time Energy advantages, Chrono Dust bonuses, artifact acquisition boosts, battle advantages, gacha luck, competitive power
+- **Trial Period:** 7-day free trial before conversion to paid subscription
+
+**See:** `.openhands/knowledge/shop-system.md` for complete subscription specification.
+
+### Telegram Stars Support
+Native Telegram payment integration for premium purchases:
+- **Payment Method:** Telegram Stars balance for in-app purchases
+- **Purchase Flow:** Seamless integration via Telegram payment API
+- **Supported Items:** All Jolt Crystals packs (50, 150, 500, 1500 stars)
+- **Regional Pricing:** Auto-adjusted by Telegram based on user location
+- **Refund Handling:** Via standard Telegram refund policy
+- **Security:** Full Telegram payment security and buyer protection
+
+**See:** `.openhands/knowledge/shop-system.md` for complete Telegram Stars specification.
+
+### TON Payments
+Cryptocurrency payment option via The Open Network integration:
+- **Payment Method:** TON wallet connection through Telegram
+- **Supported Assets:** TON coin and supported Telegram stars tokens
+- **Use Cases:** Premium bundles, Jolt Crystals packs, special offers
+- **Security:** Secure wallet connection via Telegram's native integration
+- **Pricing:** Dynamic conversion based on market rates at time of purchase
+- **Advantages:** Fast transactions, low fees, permissionless
+
+**See:** `.openhands/knowledge/shop-system.md` for complete TON payment specification.
+
+### AdsGram Reward System
+Primary revenue source providing optional player rewards:
+- **Rewarded Video Ads:** Player-initiated, 5/day max, +50-100 Chrono Coins, extra packs, boosts — 1-hour cooldown
+- **Interstitial Ads:** Automatic at natural breaks, 1 per 3 minutes, skip after 5 seconds, never interrupts gameplay
+- **Enhanced Daily Pack:** 1/day, upgrades Basic Pack to Rare Pack equivalent when watched
+- **Event Bonus Ads:** 1/day during events, upgrades Event Pack with Epic guarantee
+- **Premium Event Ads:** Special events with themed ad experiences and premium rates
+- **Reward Preview:** Always shown before ad, player chooses to watch or continue free
+- **Never Mandatory:** All rewards optional, gameplay progression never requires watching ads
+- **Frequency Caps:** Maximum 24 interstitials/day, 5 rewarded/day, strict cooldown enforcement
+- **Player Respect:** No guilt-tripping for skipping, clear value proposition, thank players for watching
+
+**See:** `.openhands/knowledge/adsgram.md` for complete AdsGram specification.
+
 ## Technical Stack
 
 ### Frontend
@@ -665,12 +786,225 @@ Comprehensive temporary event and seasonal content system:
 
 ## Security
 
-- HTTPS only
-- Input validation (client + server)
-- Row Level Security in database
-- Secure authentication via Telegram
-- Rate limiting
-- No sensitive data in client storage
+### Security System
+Comprehensive protection framework for Jolt Time:
+- **Account Protection:** Telegram identity as primary account system, session management with JWT tokens (7-day expiration), concurrent session limits (3 max), impossible travel detection
+- **Anti-Bot Protection:** Impossible activity speed detection, automated pattern recognition, abnormal resource generation monitoring, exploit attempt detection with 5-level response (monitor → challenge → restrict → suspend → ban)
+- **Rate Limiting:** API requests (100/min standard, 200/min authenticated), reward claims (daily caps enforced server-side), referral limits (100 max per user), gift system limits (10/day, 5/friend/day)
+- **Anti-Spam Rules:** Friend request limits (20/day, 100 pending max), guild invitation limits (30/day), notification caps (4/day max), quiet hours (10PM-8AM), no repeat messages
+- **Economy Protection:** Duplicate reward prevention with idempotency keys, exploit abuse detection, suspicious transaction monitoring, currency inflation prevention with per-player caps
+- **Violation Categories:** Level 1 (warning), Level 2 (restriction 1-24h), Level 3 (suspension 1-7 days), Level 4 (permanent ban) with escalation rules
+- **Logging & Privacy:** Security event logging, 90-day retention, sensitive data protection, GDPR-ready practices, minimal data collection (Telegram ID only)
+
+**See:** `.openhands/knowledge/security-system.md` for complete security specification.
+
+### Anti-Bot Protection
+Automated detection systems for bot and automation:
+- **Activity Speed Detection:** Normal 1-5 actions/min, suspicious 6-15, likely bot 16-30, confirmed bot 30+
+- **Pattern Recognition:** Same action sequences (70-90%+ repetition), 24/7 activity, perfect timing
+- **Technical Detection:** Multiple IPs (10+/day suspicious), device fingerprint anomalies, emulator detection
+- **Response Framework:** Monitor → CAPTCHA challenge → Restriction → Suspension → Permanent Ban
+- **Fair Play:** Manual review before severe penalties, clear evidence required, appeal process available
+
+### Anti-Spam Rules
+Protection against spam and abusive behavior:
+- **Friend Requests:** 20 outgoing/day, 100 pending max, auto-decline threshold for same user
+- **Guild Invitations:** 30/day for leaders, 20/day for recipients, recruitment spam detection
+- **Notifications:** Maximum 4 per 24 hours, one per category per 12 hours, quiet hours respected
+- **Guild Chat (Future):** 10 messages/min, flood detection (5 identical messages), content filtering
+- **Never Sent:** Duplicate notifications, notifications to inactive users (>30 days), excessive sequences
+
+### Economy Protection
+Safeguards for game economy integrity:
+- **Duplicate Prevention:** Server-side claim tracking, idempotency keys, cooldown enforcement
+- **Exploit Detection:** Clock manipulation, modified client, replay attacks, state manipulation
+- **Transaction Monitoring:** Currency flow anomalies, rapid accumulation, cross-account transfers
+- **Inflation Prevention:** Total supply monitoring, per-player caps (Coins 1M, Dust 500K), sink rate analysis
+- **AdsGram Protection:** Timing pattern detection, automated farming detection, fake reward prevention
+
+### Privacy Philosophy
+Minimal data collection with maximum protection:
+- **Data Minimization:** Only Telegram ID required, game progress and state stored, technical data minimal
+- **Never Collect:** Phone numbers, email addresses, location data, contacts
+- **Player Rights:** Right to know (privacy policy), right to access (view data), right to delete (30 days), right to rectify
+- **Third-Party:** No user data to advertisers, anonymized stats only, Telegram auth standard flow
+
+### Fraud Prevention
+Anti-fraud and abuse protection:
+- **Referral Protection:** Fake account detection (behavioral, technical), self-referral prevention (same ID, IP, device), farming detection (mass referrals, coordinated patterns)
+- **AdsGram Abuse:** Timing pattern analysis, automated farming detection, exploit prevention via SDK validation
+- **Payment Fraud (Future):** Payment velocity monitoring, geographic anomaly detection, device risk scoring
+
+### Incident Response
+Security incident handling procedures:
+- **P1 Critical:** Active exploitation, data breach, service down — immediate 24/7 response
+- **P2 High:** Confirmed exploit abuse, large-scale botting — within 4 hours
+- **P3 Medium:** Suspected abuse, anomaly detected — within 24 hours
+- **P4 Low:** False positive investigation, minor violation — within 72 hours
+- **Emergency Controls:** Account isolation, economy freezes, point-in-time recovery capability
+
+## Analytics System
+
+### Product Metrics
+Core user activity and engagement tracking:
+- **User Activity:** DAU/WAU/MAU tracking, daily trends, cohort analysis
+- **Session Metrics:** Average session length (target 8-15 min casual), sessions per day (target 1.5-3), play time distribution by hour
+- **Growth Tracking:** New registrations, activation rate, acquisition funnel, day-over-day/week-over-week/month-over-month growth rates
+
+**See:** `.openhands/knowledge/analytics.md` for complete metrics specification.
+
+### Retention Tracking
+Player retention and churn analysis:
+- **Cohort Analysis:** Users grouped by signup date, tracked through Day 0/1/7/14/30 retention
+- **Key Metrics:** D1 retention (target >30%), D7 (target >12%), D30 (target >6%)
+- **Churn Segments:** At-risk (3-6 days), Churned (7-29 days), Dormant (30-89 days), Reactivated
+- **Reactivation:** Return rates, time to return, returning player value
+
+**See:** `.openhands/knowledge/analytics.md` for complete retention tracking specification.
+
+### Gameplay Metrics
+In-game activity and progression tracking:
+- **Battle Analytics:** Total battles, win rates, rating progression, rank distribution, skill progression
+- **Expedition Metrics:** Success rates, era popularity, risk preference distribution, completion time
+- **Collection Analytics:** Artifact acquisition rate, rarity distribution, duplicate rate, era completion
+- **Mission Tracking:** Completion rates by difficulty, progression pacing, Battle Pass tier distribution
+
+**See:** `.openhands/knowledge/analytics.md` for complete gameplay metrics specification.
+
+### Economy Monitoring
+In-game economy health and balance tracking:
+- **Currency Flow:** Chrono Coin generation sources, sink destinations, generation/sink ratio (target 1.0-1.2)
+- **Resource Tracking:** Time Shard generation, usage patterns, conversion rates
+- **Inflation Prevention:** Supply growth monitoring, per-player caps, sink efficiency
+- **Health Indicators:** Supply metrics, flow velocity, alert thresholds (green/yellow/red)
+
+**See:** `.openhands/knowledge/analytics.md` for complete economy monitoring specification.
+
+### AdsGram Analytics
+Ad performance and revenue tracking (primary revenue system):
+- **Impression Metrics:** Total impressions, fill rate (target >95%), viewability rate (target >70%)
+- **Completion Metrics:** Completion rate, skip rate, average watch time, rewarded vs interstitial distribution
+- **Revenue Metrics:** Daily revenue, RPM, effective CPM, revenue per DAU (target >$0.04)
+- **Engagement Profiles:** Non-viewers, light (1-2/day), regular (3-5/day), power (5+/day) segments
+
+**See:** `.openhands/knowledge/adsgram.md` for complete AdsGram specification.
+
+### Monetization Analytics
+Purchase and revenue tracking:
+- **Conversion Metrics:** Payer rate (target 1-3% of DAU), ARPU, ARPPU, LTV by cohort
+- **Purchase Breakdown:** Telegram Stars distribution, TON adoption, Battle Pass upgrade rate, subscription metrics
+- **Revenue Streams:** AdsGram (60-70%), Stars, TON, Battle Pass, Subscriptions
+- **Cohort Revenue:** 7/30/90-day revenue per signup cohort, LTV by acquisition source
+
+**See:** `.openhands/knowledge/analytics.md` for complete monetization analytics specification.
+
+### Event Metrics
+Event participation and effectiveness tracking:
+- **Participation:** Total participants, participation rate, active vs highly active
+- **Seasonal Tracking:** Active players, average tier reached, completion rate, premium adoption
+- **Completion Analysis:** Challenge completion rate, time to complete, reward redemption rates, popular items
+- **Event Effectiveness:** ROI per event, engagement depth, return visitor rate
+
+**See:** `.openhands/knowledge/events.md` for complete event system specification.
+
+### Notification Metrics
+Push notification performance tracking:
+- **Delivery:** Sent, delivered, failed, bounced, delivery rate (target >98%)
+- **Engagement:** Open rate (target 35-50%), click rate (target 15-25%), deep link success
+- **Reactivation:** Return within 24h rate, sustained return rate, cost-benefit analysis
+- **Preferences:** Opt-out rate (target <10%), category opt-outs, quiet hours usage
+
+**See:** `.openhands/knowledge/notifications.md` for complete notification specification.
+
+### Player Segments
+Behavioral player categorization:
+- **New Players (Day 0-7):** Focus on onboarding, early engagement hooks
+- **Active Players:** Any activity in 24 hours, content freshness focus
+- **Collectors:** >70% collection, rare finds, museum depth focus
+- **PvP Players:** >50% sessions include battles, competitive balance focus
+- **Social Players:** High friend count/guild activity, social features focus
+- **Returning Players:** Previously churned (7+ days), welcome back experience focus
+
+**See:** `.openhands/knowledge/analytics.md` for complete segment analysis.
+
+### Dashboard Philosophy
+Analytics visualization principles:
+- **Executive Dashboard:** Growth metrics, revenue overview, retention curves, key milestones
+- **Game Health:** Economy metrics, content engagement, balance indicators, feature usage
+- **Technical Stability:** API response times (P50/P95/P99), error rates, server load, uptime (>99.9%)
+- **Business Intelligence:** Revenue streams, ad performance, purchase funnel, cohort analysis
+- **Privacy:** Minimal data collection, aggregated insights over individual tracking, GDPR compliance
+
+### Future Analytics Features
+Planned advanced analytics capabilities:
+- **A/B Testing Framework:** Feature flags, statistical significance calculator, multi-variant testing (Phase 2+)
+- **Predictive Analytics:** LTV prediction, churn risk scoring, content preference prediction (Phase 3+)
+- **Churn Prediction:** Risk score per player, intervention recommendations, effectiveness tracking (Phase 2+)
+- **Recommendation System:** Personal content suggestions, optimal timing, friend activity insights (Phase 3+)
+
+## Localization System
+
+### Multi-Language Support
+International-first localization architecture:
+- **Supported Languages:** Ukrainian (uk), English (en), Polish (pl), German (de), Spanish (es), French (fr) at launch
+- **Translation Architecture:** Centralized JSON files per language, namespace organization (common, profile, battle, museum, notification, bot, event, historical, error, adsgram)
+- **String Key Design:** Format {screen}.{component}.{element}.{variant}, no hardcoded text ever
+- **Plural Forms:** Language-specific plural rules (English 2 forms, Ukrainian 3 forms, Polish 3 forms, German 2 forms, French 2 forms, Spanish 2 forms)
+- **Fallback Chain:** User Language → English (en) → System Default, never show untranslated keys
+
+**See:** `.openhands/knowledge/localization.md` for complete localization specification.
+
+### Regional Adaptation
+Locale-aware formatting and cultural adaptation:
+- **Date Formats:** DD.MM.YYYY (Ukrainian/Polish/German), MM/DD/YYYY (English), DD/MM/YYYY (Spanish/French)
+- **Time Formats:** 24-hour default with 12-hour option based on Telegram locale preference
+- **Number Formatting:** Locale-aware decimal/thousands separators (1,234.56 US vs 1.234,56 German)
+- **Currency Formatting:** Locale-aware symbol placement and decimal handling
+- **Time Zone:** Display in user's local timezone, UTC reference for server times
+
+**See:** `.openhands/knowledge/localization.md` for complete regional adaptation specification.
+
+### Telegram Bot Localization
+Bot messages and commands in all supported languages:
+- **Language Detection:** User preference (database) → Telegram locale → Default (English)
+- **Command Localization:** Commands universal (/start, /help), response content localized
+- **Inline Keyboard:** Text buttons translated, icons universal
+- **Notification Templates:** All notification categories translated with variable placeholders
+- **AdsGram Messages:** Reward descriptions translated, SDK handles ad content
+
+**See:** `.openhands/knowledge/localization.md` for complete bot localization specification.
+
+### Historical Content Localization
+Educational content translation preserving meaning and accuracy:
+- **Translation Rules:** Human translation required, native speaker review, historical consultant verification
+- **Cultural Adaptation:** Idioms adapted naturally, cultural context provided, proper nouns preserved
+- **Quality Standards:** B1-B2 reading level target, technical terms explained or contextualized
+- **Content Examples:** Artifact descriptions maintain historical authenticity while remaining accessible
+
+**See:** `.openhands/knowledge/localization.md` for complete historical content specification.
+
+### Player Language Settings
+User control over language preferences:
+- **Language Picker:** Available in settings, instant preview, immediate application
+- **Auto-Detection:** Uses Telegram locale on first login if supported, falls back to English
+- **Manual Override:** Available anytime, change takes effect immediately without reload
+- **Preview System:** Shows key UI elements in new language before confirming
+
+**See:** `.openhands/knowledge/localization.md` for complete settings specification.
+
+### Accessibility Philosophy
+Clear, understandable language for all players worldwide:
+- **Simple Language:** B1-B2 reading level target, clear sentence structures, avoid idioms
+- **Screen Reader Compatible:** Proper heading hierarchy, aria labels, correct language attributes
+- **Cultural Sensitivity:** Avoid stereotypes, respect cultural differences in historical content
+- **Transparency:** Players always understand game text and notifications
+
+### Future Localization Features
+Planned language system expansions:
+- **RTL Language Support:** Arabic and Hebrew with full RTL mirroring and typography (Phase 3+)
+- **Asian Languages:** Japanese, Korean, Chinese with proper character support and vertical text option (Phase 3+)
+- **Regional Variants:** Spanish (LatAm vs Spain), English (US vs UK), Portuguese (Brazil vs Portugal) (Phase 2+)
+- **Community Translation:** Volunteer translation program with native speaker review workflow (Phase 2+)
 
 ## Compliance
 
