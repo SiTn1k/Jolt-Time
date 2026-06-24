@@ -3446,6 +3446,61 @@ Roadmaps provide direction without restricting future creativity. The project ev
 
 **See:** `.openhands/knowledge/roadmap.md` for complete technical growth specification.
 
+## AI Systems
+
+Jolt Time approaches AI as a future enhancement layer designed to improve player experience without replacing player agency.
+
+### AI Philosophy
+
+- **Assist, Don't Replace:** AI enhances experience while preserving player creativity and achievement
+- **Improve UX, Don't Manipulate:** AI optimizes for satisfaction, not psychological manipulation
+- **Support Developers:** AI reduces manual work for routine operational tasks
+- **Transparency:** Players know when AI is involved in decisions
+
+**See:** `.openhands/knowledge/ai-systems.md` for complete AI architecture.
+
+### AI Assistant
+
+Future in-app assistant may help players with:
+
+- Tutorial guidance and FAQs
+- Museum and event explanations
+- Troubleshooting and support
+
+Interface: Chat-style within app, accessible from help menu.
+
+### Recommendation Systems
+
+Personalized suggestions for:
+
+- Missions aligned with player progress
+- Events matching player interests
+- Museum improvements and educational content
+
+Principles: Player-first recommendations, transparent logic, non-invasive delivery.
+
+### AI Analytics
+
+Operational intelligence supporting game development:
+
+- Balance analysis and anomaly detection
+- Retention pattern identification
+- Trend detection across player segments
+
+All analytics use aggregated data; individual player privacy preserved.
+
+### AI Moderation
+
+Community safety support with human oversight:
+
+- Spam detection and suspicious behavior flagging
+- Report prioritization for faster response
+- Pre-screening of user-generated content
+
+Human moderators review all AI flags; appeals always involve humans.
+
+**See:** `.openhands/knowledge/ai-systems.md` for complete AI system specifications.
+
 ## Project Vision
 
 This document describes what Jolt Time stands for and why the project exists. It serves as a reference for all future decisions.
@@ -3485,6 +3540,62 @@ This document describes what Jolt Time stands for and why the project exists. It
 - **Avoid Misinformation** — Corrections addressed promptly, expert consultants review content
 
 **See:** `.openhands/knowledge/project-vision.md` for complete historical philosophy.
+
+## Historical Content Pipeline
+
+Jolt Time maintains rigorous standards for historical content creation and review.
+
+### Content Categories
+
+| Category | Purpose | Priority |
+|----------|---------|----------|
+| **Historical Artifacts** | Real artifacts with accurate descriptions | Highest |
+| **Historical Events** | Real events in engaging presentation | Highest |
+| **Educational Articles** | In-depth historical context | Medium |
+| **Museum Descriptions** | Concise summaries for collected items | High |
+
+### Content Creation Workflow
+
+```
+Research → Drafting → Review → Publication → Maintenance
+```
+
+- **Research:** Source identification, verification, cultural sensitivity review
+- **Drafting:** Initial creation, lore integration, accessibility formatting
+- **Review:** Historical review, editorial review, cultural review, gameplay review
+- **Publication:** QA pass, localization prep, asset integration
+- **Maintenance:** Accuracy monitoring, player feedback, periodic audits
+
+**See:** `.openhands/knowledge/historical-content.md` for complete content pipeline specifications.
+
+### Educational Content Standards
+
+- **Accuracy Over Speed:** New eras release only when content is verified
+- **Quality Over Quantity:** Fewer well-crafted artifacts beats many shallow ones
+- **Learning Over Gating:** Historical context enhances rather than blocks progress
+- **Source Requirements:** Primary sources preferred, peer-reviewed for controversial topics
+
+### Historical Review Process
+
+All content undergoes multi-layer review:
+
+| Review Type | Focus | Reviewers |
+|-------------|-------|-----------|
+| Historical Review | Factual accuracy | Historical consultants |
+| Editorial Review | Writing quality | Content editors |
+| Cultural Review | Sensitivity | Cultural advisors |
+| Gameplay Review | Integration | Game designers |
+
+### Museum Content Guidelines
+
+Descriptions follow strict guidelines:
+
+- **Length:** 50-150 words
+- **Structure:** Hook → Context → Significance
+- **Tone:** Engaging but informative
+- **Reading Level:** 13+
+
+**See:** `.openhands/knowledge/historical-content.md` for museum content standards.
 
 ### Monetization Philosophy
 
@@ -3562,6 +3673,160 @@ When facing difficult decisions, Jolt Time asks:
 - Does this fit the vision?
 
 **See:** `.openhands/knowledge/project-vision.md` for complete guiding questions.
+
+## State Management Architecture
+
+Jolt Time uses Zustand for state management with a modular, domain-driven architecture.
+
+### Zustand Stores
+
+| Store | File | Responsibility |
+|-------|------|----------------|
+| Player Store | `src/stores/playerStore.ts` | Profile, statistics, progression, status |
+| Economy Store | `src/stores/economyStore.ts` | Currencies, inventory, rewards, marketplace |
+| Museum Store | `src/stores/museumStore.ts` | Collections, artifacts, decorations |
+| Event Store | `src/stores/eventStore.ts` | Active events, missions, event progress |
+| PvP Store | `src/stores/pvpStore.ts` | Arena, tournaments, rankings |
+| Social Store | `src/stores/socialStore.ts` | Friends, guilds, leaderboards, referrals |
+| Settings Store | `src/stores/settingsStore.ts` | Game, display, and account settings |
+| UI Store | `src/stores/uiStore.ts` | Modals, loading, notifications, temporary states |
+
+**See:** `.openhands/knowledge/state-management.md` for complete architecture specification.
+
+### Persistent State Philosophy
+
+- **Persistent Data:** Player, Economy, Museum, and Settings stores sync to Supabase on meaningful changes
+- **Temporary Data:** UI and matchmaking states exist only during the session
+- **Session Data:** Form drafts, expanded sections survive navigation but not app restart
+
+### UI State Management
+
+The UI Store handles all ephemeral presentation state:
+
+- **Modals:** Type-safe modal stack with props passthrough
+- **Loading States:** Hierarchical loading (global, screen, operation)
+- **Notifications:** Toast queue with auto-dismiss and manual dismissal
+- **Temporary Selections:** Item selections, drag state, form drafts
+
+## Component Library
+
+Jolt Time maintains a comprehensive React component library for consistent UI implementation.
+
+### UI Architecture
+
+| Layer | Responsibility |
+|-------|----------------|
+| Base Components | Primitives (Button, Input, Card, Badge, Avatar, Progress) |
+| Layout Components | Page structure (PageLayout, Section, Grid, Container) |
+| Form Components | User input (TextField, Select, Checkbox, Slider, Toggle) |
+| Game Components | Game UI (ArtifactCard, MissionCard, BattleCard, CurrencyDisplay) |
+| Social Components | Social features (FriendCard, GuildCard, LeaderboardEntry) |
+| Modal Components | Overlays (ConfirmModal, RewardPopup, InfoModal) |
+| Navigation Components | App navigation (BottomNav, Header, Tabs, Breadcrumbs) |
+
+**See:** `.openhands/knowledge/component-library.md` for complete component specifications.
+
+### Reusable Components
+
+All components follow consistent patterns:
+
+- **Composability** — Small components combine into larger ones
+- **Single Responsibility** — Each component does one thing well
+- **TypeScript Types** — Full type safety with documented prop interfaces
+- **CSS Variables** — Theme integration via design tokens
+
+### Design Consistency Standards
+
+- **Visual Language:** Premium dark futuristic with cyan (#00D9FF) primary, mint (#00FFE5) accent, gold (#FFD700) premium
+- **Glow Effects:** Soft glow on interactive elements, consistent shadow system
+- **Animation:** Standard timings (150ms/250ms/400ms) with ease-out easing
+- **Touch Targets:** Minimum 44x44px for all interactive elements
+- **Accessibility:** WCAG 2.1 AA compliance, keyboard navigation, screen reader support
+
+**See:** `.openhands/knowledge/ui-style.md` for complete design standards.
+
+## Design System
+
+The Jolt Time design system establishes visual language and global standards ensuring consistency across all application surfaces.
+
+### UI Tokens
+
+| Token Category | Examples | Implementation |
+|----------------|----------|----------------|
+| **Colors** | `--primary: #00D9FF`, `--bg-card: #131B2E` | CSS custom properties |
+| **Typography** | `--font-size-h1: 28px`, `--line-height-body: 1.5` | CSS custom properties |
+| **Spacing** | `--space-4: 16px`, `--space-8: 32px` | 8px base unit system |
+| **Border Radius** | `--radius-md: 12px`, `--radius-lg: 16px` | Consistent corner scales |
+| **Shadows** | `--shadow-md`, `--shadow-glow` | Elevation levels |
+| **Animation** | `--duration-normal: 250ms`, `--ease-out` | Standardized timing |
+
+**See:** `.openhands/knowledge/design-system.md` for complete token specifications.
+
+### Theme Support
+
+The design system supports multiple themes:
+
+- **Dark Theme (Default):** Premium dark futuristic with deep blue-black backgrounds
+- **Light Theme (Future):** Optional implementation with adjusted contrast
+- **Seasonal Themes (Future):** Limited-time event visual treatments
+- **Premium Themes (Future):** Subscriber-exclusive visual upgrades
+
+Theme implementation uses CSS custom properties with `[data-theme]` attribute selector.
+
+### Visual Standards
+
+| Standard | Value | Usage |
+|----------|-------|-------|
+| **Primary Color** | #00D9FF (Cyan) | Interactive elements, key actions |
+| **Accent Color** | #00FFE5 (Mint) | Secondary accents, achievements |
+| **Premium Color** | #FFD700 (Gold) | Rare items, premium features |
+| **Card Radius** | 16px | Consistent card appearance |
+| **Button Height** | 48px | Standard button sizing |
+| **Touch Target** | 44x44px minimum | All interactive elements |
+
+**See:** `.openhands/knowledge/design-system.md` for complete visual standards.
+
+## UX Architecture
+
+Jolt Time delivers a cohesive Telegram Mini App experience optimized for mobile-first usage.
+
+### Navigation Structure
+
+| Area | Access | Content |
+|------|--------|---------|
+| **Home** | Bottom nav | Daily quests, active events, currency display, quick actions |
+| **Museum** | Bottom nav | Museum display, artifact collection, chronicle wall |
+| **Events** | Bottom nav | Current events, leaderboards, season pass |
+| **Profile** | Bottom nav | Statistics, achievements, settings, premium |
+
+**See:** `.openhands/knowledge/navigation.md` for complete navigation specifications.
+
+### UX Design Principles
+
+- **Intuitive Movement:** Bottom navigation with instant tab switching, push navigation for depth
+- **Minimal Friction:** Maximum 3 taps to any feature, one-handed usage optimized
+- **Touch-Friendly:** 44x44px minimum touch targets, bottom-third primary actions
+
+### Reward Experience
+
+Rewards follow consistent patterns for satisfaction and clarity:
+
+- **Celebration Animation:** Reward type determines presentation (currency, artifact, achievement)
+- **Clear Communication:** Item name, quantity, and rarity immediately visible
+- **Quick Dismiss:** Clear next action with minimal wait times
+
+**See:** `.openhands/knowledge/ux-architecture.md` for complete reward UX specifications.
+
+### Mobile Interaction Standards
+
+| Standard | Value | Implementation |
+|----------|-------|----------------|
+| **Touch Target** | 44x44px minimum | All interactive elements |
+| **Button Height** | 48px standard | Full-width on mobile |
+| **Transitions** | 250-300ms | ease-out easing |
+| **Skeleton Loading** | Shimmer animation | Content placeholders |
+
+**See:** `.openhands/knowledge/component-library.md` for loading state specifications.
 
 ## Compliance
 
