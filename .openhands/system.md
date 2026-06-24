@@ -57,6 +57,7 @@ The Master Index is the official starting point for understanding the entire Jol
 - **DevOps** — Deployment, backup, admin tooling
 - **Documentation** — Standards, project vision, roadmap, testing
 - **Future Concepts** — Creator ecosystem, Web3, educational partnerships
+- **Narrative & Lore** — Lore Bible, Universe Encyclopedia, Narrative Standards, Historical Timeline
 
 **See:** `.openhands/knowledge/master-index.md#documentation-categories`
 
@@ -126,6 +127,16 @@ The Master Index is the official starting point for understanding the entire Jol
 - Educational partnerships
 - API ecosystem
 - Physical merchandise
+
+### Automated Event Generator
+Dynamic event systems support content production through automated generation and scheduling:
+
+- **Event Categories:** Seasonal, Historical, Community, Weekend, Limited-Time events
+- **Event Generation Workflow:** Templates, reward pools, mission pools, content schedules
+- **Event Rotation Systems:** Seasonal rotations, event calendars, recurring activities
+- **Event Scheduling:** Annual, seasonal, monthly, weekly planning horizons
+
+**See:** `.openhands/knowledge/event-generator.md` for complete automated event generator specification.
 
 ## Monetization Strategy
 
@@ -764,6 +775,14 @@ Story Mode is the narrative heart of Jolt Time, transforming artifact collection
 - Encourage exploration and discovery
 - Create emotional attachment to the world
 - Mysterious but optimistic tone
+
+**Lore Bible Authority:**
+- All narrative content must comply with the Lore Bible
+- Story Mode and Narrative System align with established universe canon
+- Historical accuracy and educational value are primary concerns
+- Character and faction details must remain consistent
+
+**See:** `.openhands/knowledge/lore-bible.md` for the complete Lore Bible (single source of truth for all narrative decisions).
 
 **Future Features (Documented Only):**
 - Branching storylines with meaningful choices
