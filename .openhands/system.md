@@ -2758,6 +2758,175 @@ Jolt Time monitors API health for optimal player experience.
 
 **See:** `.openhands/knowledge/api-architecture.md` for complete API monitoring specification.
 
+## Database Schema
+
+Jolt Time maintains a comprehensive database architecture designed for scalability, maintainability, and long-term growth. The database is one of the most critical parts of the project.
+
+**See:** `.openhands/knowledge/database-schema.md` for the complete Database Schema Master Plan.
+
+### Database Categories
+
+The Jolt Time database is organized into eight distinct categories:
+
+- **Player Tables** — Core player identity, progression, settings, and statistics
+- **Economy Tables** — Currencies, inventories, transactions, and marketplace systems
+- **Museum Tables** — Artifacts, collections, evolution, and display systems
+- **Event Tables** — Time-limited events, participation, and reward tracking
+- **PvP Tables** — Battle history, rankings, tournaments, and ratings
+- **Social Tables** — Friends, guilds, chats, and leaderboards
+- **Analytics Tables** — Player metrics, monetization tracking, and AdsGram statistics
+- **Administration Tables** — Audit logging, moderation, and system configuration
+
+### Table Architecture
+
+The database architecture follows these core principles:
+
+- **Logical Separation** — Each category has distinct access patterns, retention policies, and scaling requirements
+- **Reference Tables** — Static data (catalogs, definitions) separated from player-specific data
+- **Immutable Ledgers** — Transaction tables never change — they only grow
+- **Soft Deletes** — No data destruction — only deactivation via is_active flags
+- **Extensibility** — JSONB columns enable optional data without schema changes
+
+### Relationship Standards
+
+Clear relationships prevent data anomalies and simplify queries:
+
+- **One-to-One** — Primary key of parent is also the foreign key in child (e.g., profiles → player_stats)
+- **One-to-Many** — Foreign key on the "many" side referencing the parent (e.g., profiles → player_artifacts)
+- **Many-to-Many** — Junction table with two foreign keys (e.g., friendships, guild_memberships)
+
+### Migration Philosophy
+
+Migrations are first-class artifacts with full version control and rollback support:
+
+- **Versioning** — Timestamp-based migration files (YYYYMMDDHHMMSS)
+- **Safety Rules** — Always include DOWN migration, use CONCURRENTLY for large indexes, test before production
+- **Zero-Downtime** — Multi-phase migrations: add nullable, backfill, add constraints
+- **Verification** — Rollback procedures tested before production deployment
+
+### Future Expansion
+
+The schema supports future systems without major refactoring:
+
+- **Sharding** — Horizontal partitioning for tables exceeding 100 million rows
+- **Archival Tables** — Hot/warm/cold storage tiers with appropriate retention policies
+- **Data Warehouses** — External analytics via BigQuery, ClickHouse, or S3 archival
+- **Historical Snapshots** — Point-in-time state tracking for rollback and analysis
+
+**See:** `.openhands/knowledge/database-schema.md` for complete database architecture specification.
+
+## Supabase Tables
+
+Jolt Time maintains comprehensive table specifications documenting every database table used by the project.
+
+**See:** `.openhands/knowledge/supabase-tables.md` for the complete Supabase Tables reference.
+
+### Table Documentation
+
+Every table is documented with:
+
+- **Purpose** — What the table stores and why it exists
+- **Primary Key Philosophy** — Key selection rationale
+- **Relationships** — All foreign key connections
+- **Important Fields** — Key columns with types and purposes
+
+### Player Tables
+
+- `profiles` — Primary player identity
+- `player_stats` — Aggregated lifetime statistics
+- `player_settings` — User preferences
+- `player_progression` — Era and story progress
+- `player_daily_state` — Daily reset state
+- `player_achievements` — Unlocked achievements
+
+### Economy Tables
+
+- `currencies` — Currency definitions
+- `player_currencies` — Per-player balances
+- `transactions` — Immutable economic ledger
+- `marketplace_listings` — Active marketplace
+- `marketplace_transactions` — Completed trades
+- `pack_definitions` — Purchasable pack templates
+
+### Museum Tables
+
+- `artifacts` — Artifact catalog
+- `artifact_evolution_trees` — Evolution paths
+- `player_artifacts` — Player inventory
+- `museum_collections` — Collection definitions
+- `player_museum_collections` — Collection progress
+- `museum_displays` — Display slot definitions
+- `player_museum_displays` — Museum layout
+
+### Event Tables
+
+- `events` — Event definitions
+- `player_events` — Participation progress
+- `event_rewards` — Reward tier definitions
+- `player_event_rewards` — Claimed rewards
+- `battle_pass_seasons` — Season definitions
+- `player_battle_pass` — Season progress
+
+### PvP Tables
+
+- `battle_history` — Match records
+- `player_rankings` — Current rank info
+- `leagues` — League definitions
+- `leaderboards` — Leaderboard configurations
+- `leaderboard_snapshots` — Historical snapshots
+- `tournaments` — Tournament definitions
+- `player_tournaments` — Tournament participation
+
+### Social Tables
+
+- `friendships` — Friend relationships
+- `friend_requests` — Pending requests
+- `guilds` — Guild data
+- `guild_members` — Membership records
+- `guild_ranks` — Rank definitions
+- `guild_applications` — Pending applications
+- `chat_rooms` — Chat room definitions
+- `chat_messages` — Chat history
+
+### Analytics Tables
+
+- `player_session_logs` — Session tracking (DAU)
+- `player_retention_events` — Retention milestones
+- `revenue_events` — Purchase events
+- `ads_views` — AdsGram view records
+- `ads_statistics` — Aggregated ad metrics
+- `user_ad_settings` — Ad preferences
+- `economy_snapshots` — Periodic economy state
+
+### Admin Tables
+
+- `admin_audit_log` — Sensitive operation audit
+- `moderation_actions` — Moderation actions
+- `system_settings` — Feature flags
+- `data_exports` — GDPR export requests
+- `bot_users` — Telegram bot users
+- `bot_logs` — Bot operation logs
+- `notification_cooldowns` — Rate limiting
+- `notification_queue` — Deferred notifications
+- `cron_job_status` — Job tracking
+
+### Row-Level Security Philosophy
+
+Every table follows RLS principles:
+
+- **Player Access** — Players can only access their own data via `auth.uid() = user_id`
+- **Admin Access** — Service role bypasses RLS for administrative operations
+- **Protected Tables** — `transactions`, `ads_views`, `battle_history` only accept service role inserts
+- **Public Tables** — Reference tables (`currencies`, `artifacts`, `events`) are publicly readable
+
+### Database Reference
+
+**Related Documentation:**
+- `knowledge/database-schema.md` — Database architecture philosophy
+- `knowledge/supabase-tables.md` — Complete table specifications
+- `knowledge/adsgram.md` — AdsGram integration
+- `knowledge/backup-system.md` — Backup procedures
+
 ## Localization System
 
 Jolt Time is designed for international players with comprehensive localization support.
