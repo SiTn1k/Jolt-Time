@@ -37,6 +37,70 @@ Jolt Time is a Telegram-first, mobile-first educational entertainment experience
 6. **Performance First** — All features must preserve performance
 7. **Premium UX** — Every interaction feels polished
 
+## Master Index
+
+The Master Index is the official starting point for understanding the entire Jolt Time ecosystem. It provides a unified navigation structure connecting all documentation.
+
+**See:** `.openhands/knowledge/master-index.md` for the complete master index.
+
+### Global Documentation Structure
+
+- **Core Gameplay** — Energy, progression, quests, achievements, eras, story
+- **Economy Systems** — Currencies, marketplace, inventory, wallet
+- **Museum Systems** — Artifacts, collections, evolution, museum design
+- **Social Features** — Friends, guilds, leaderboards, referrals
+- **PvP Systems** — Arena, tournaments, expeditions, battle pass
+- **Monetization** — AdsGram, Telegram Stars, subscriptions
+- **Infrastructure** — API, database, Telegram integration
+- **Security** — Authentication, data protection, fraud prevention
+- **Analytics** — Metrics, tracking, retention analysis
+- **DevOps** — Deployment, backup, admin tooling
+- **Documentation** — Standards, project vision, roadmap, testing
+- **Future Concepts** — Creator ecosystem, Web3, educational partnerships
+
+**See:** `.openhands/knowledge/master-index.md#documentation-categories`
+
+### Documentation Navigation
+
+**For Developers:**
+- Start with API Architecture for backend
+- Database Schema for data models
+- Telegram Architecture for platform integration
+- Security System for security considerations
+
+**For Designers:**
+- UI Style for design system
+- Screens for specifications
+- Navigation for user flows
+- Accessibility for inclusive design
+
+**For Product Managers:**
+- Project Vision for mission and principles
+- Roadmap for phases and milestones
+- Economy System for balance and currencies
+- Monetization for revenue strategy
+
+**See:** `.openhands/knowledge/master-index.md#navigation-structure`
+
+### Architecture Overview
+
+- **Frontend** — Telegram Mini App (TypeScript, React, CSS)
+- **Backend** — Supabase (PostgreSQL, Edge Functions, Auth, Realtime)
+- **Bot** — Telegram Bot (Node.js, Bot API)
+- **Integrations** — AdsGram, Telegram Stars, TON (optional)
+
+**See:** `.openhands/knowledge/master-index.md#architecture-overview`
+
+### System Relationships
+
+- Economy ↔ Marketplace — Currency generation and sinks
+- Battle Pass ↔ Events ↔ Economy — Seasonal content integration
+- Analytics ↔ Monetization — Data-driven revenue optimization
+- Notifications ↔ Telegram Bot — Push delivery and engagement
+- Progression ↔ Energy ↔ Daily Systems — Core loop interconnection
+
+**See:** `.openhands/knowledge/master-index.md#system-relationships**
+
 ## Project Phases
 
 ### Phase 1: Foundation
@@ -2756,6 +2820,52 @@ Jolt Time's infrastructure supports language detection, preference storage, and 
 
 **See:** `.openhands/knowledge/localization.md` for complete multi-language infrastructure specification.
 
+## Accessibility System
+
+Jolt Time is designed to be comfortable for as many players as possible. Accessibility improvements benefit all users, not only specific groups.
+
+### Accessibility Categories
+
+- **Visual Accessibility** — Scalable text, high contrast themes, clear iconography, color-blind friendly design
+- **Text Accessibility** — Readable fonts, consistent terminology, simple language, 4.5:1+ contrast ratios
+- **Input Accessibility** — 44x44px minimum touch targets, tap alternatives to swipes, keyboard navigation
+- **Cognitive Accessibility** — Clear progression, gradual mechanic introduction, memory aids, undo support
+- **Notification Accessibility** — Concise messages (160 char max), frequency caps, plain language, user control
+
+**See:** `.openhands/knowledge/accessibility.md` for complete accessibility specification.
+
+### Inclusive UX
+
+Jolt Time prioritizes clarity, welcome, and accessibility-first design:
+
+- **Universal Design** — Design for the majority; accommodate the margins
+- **Clear Navigation** — Consistent patterns, obvious hierarchy, breadcrumb trails
+- **Understandable Layouts** — Visual grouping, progressive disclosure, adequate white space
+- **Simple Language** — Plain English default, explained jargon, consistent terminology
+- **Mobile Accessibility** — One-handed usage, touch-friendly elements, responsive layouts
+- **Optional Features** — Larger text scaling (125%/150%/200%), reduced animations, simplified beginner mode
+
+### Accessibility Settings
+
+Player-configurable accessibility options:
+
+- **Theme Selection** — Dark (default), light, system-follow options
+- **Text Scaling** — 100%, 125%, 150%, 200% with live preview
+- **Reduced Motion** — Toggle to disable decorative animations
+- **High Contrast Mode** — Enhanced contrast for bright environments
+- **Simplified Interface** — Beginner mode with hidden complexity
+- **Notification Preferences** — Per-category controls, quiet hours, digest option
+
+### Mobile Accessibility
+
+Telegram Mini App mobile-first accessibility:
+
+- **One-Handed Usage** — Bottom navigation, thumb-reachable actions, easy back navigation
+- **Touch-Friendly** — 48px minimum primary buttons, extended tap areas, gesture alternatives
+- **Responsive** — Adapts to all Telegram-supported screens, respects safe areas, supports orientation
+
+**See:** `.openhands/knowledge/accessibility.md` for complete mobile accessibility specification.
+
 ## Regional Expansion
 
 Jolt Time plans for future international growth and regional customization.
@@ -2779,6 +2889,510 @@ Jolt Time plans for future international growth and regional customization.
 - **Preserve Educational Value** — Accurate information, expert verification, source attribution
 
 **See:** `.openhands/knowledge/localization.md` for complete regional expansion specification.
+
+## Performance Optimization
+
+Jolt Time should feel fast, responsive, and stable on both modern and older mobile devices. Performance always has higher priority than unnecessary visual complexity.
+
+### Loading Systems
+
+- **Progressive Loading** — Show meaningful content immediately, skeleton screens within 100ms
+- **Feedback During Loading** — Loading indicators, progress bars, optimistic UI
+- **Avoiding Blank Screens** — Cached content, fallback content, error recovery
+- **Startup Speed** — Minimal bootstrap JS, preconnect to Telegram CDN, signal ready quickly
+
+**See:** `.openhands/knowledge/performance.md` for complete loading systems specification.
+
+### Caching Philosophy
+
+- **Local Caching** — Service worker for static assets, local storage for preferences, memory cache for frequently accessed data
+- **API Caching** — Response caching with ETag support, stale-while-revalidate, cache-control headers
+- **Asset Caching** — Immutable assets with long-term cache, image caching, bundle splitting
+
+**See:** `.openhands/knowledge/performance.md` for complete caching architecture specification.
+
+### Mobile Performance
+
+- **Older Device Support** — Target 2018-era mid-range devices, graceful degradation, feature detection
+- **Low Memory Handling** — Stay under 150MB RAM typical, 200MB maximum, stream large data
+- **Unstable Connections** — Offline capability, retry logic, queue operations, incremental loading
+- **60fps Target** — Maintain smooth frame rate, GPU-accelerated animations, no layout thrashing
+
+**See:** `.openhands/knowledge/performance.md` for complete mobile performance specification.
+
+### Performance Metrics
+
+- **Loading Times** — FCP under 1.5s, LCP under 2.5s, TTI under 3.5s, CLS under 0.1
+- **API Response Times** — Median under 100ms, 95th percentile under 200ms, error rate under 0.1%
+- **Rendering Speed** — 60fps target, frame time 16.67ms, paint under 8ms
+- **Continuous Monitoring** — Real user monitoring, synthetic monitoring, regression prevention
+
+**See:** `.openhands/knowledge/performance.md` for complete performance metrics specification.
+
+### Telegram Mini App Performance
+
+- **Mini App Launch** — Full initialization under 2 seconds, early hints, streaming HTML
+- **Navigation Speed** — Instant navigation with skeletons, prefetch routes, keep-alive state
+- **User Interactions** — Touch response within 100ms, haptic feedback, smooth scrolling
+
+**See:** `.openhands/knowledge/performance.md` for complete Telegram Mini App optimization specification.
+
+### AdsGram Performance
+
+- **Reliable Loading** — Preload ads in reward flow, parallel loading, timeout handling, fallback ads
+- **Non-Blocking** — Background loading, instant reward grant, clear skip option
+- **Graceful Recovery** — Auto-retry with backoff, grant reward if ad fails, fallback content
+
+**See:** `.openhands/knowledge/performance.md` for complete AdsGram performance specification.
+
+### Failure Handling
+
+- **Slow Connections** — Fixed timeout budgets, progress indication, quality reduction
+- **API Failures** — Graceful degradation, circuit breakers, fallback data, clear error messages
+- **Temporary Outages** — Offline mode, queue operations, read-only fallback, auto-recovery
+
+**See:** `.openhands/knowledge/performance.md` for complete failure handling specification.
+
+### Future Performance Expansion
+
+- **CDN Support** — Edge caching, geographic distribution, origin shield (future)
+- **Advanced Caching** — Predictive cache, ML-based prefetching, user profiles (future)
+- **Offline Mode** — Full offline core, background sync, conflict resolution (future)
+- **Predictive Loading** — Behavior analysis, route prefetching, dynamic bundles (future)
+
+**See:** `.openhands/knowledge/performance.md` for complete future expansion specification.
+
+## Offline Support
+
+Jolt Time is primarily an online experience. However, temporary internet interruptions should not create a frustrating user experience.
+
+### Offline Mode
+
+- **Temporary Offline** — Seamless transition within 2-3 seconds, non-intrusive status indicator, core gameplay continues
+- **Cached Data** — Player profile, museum data, settings, previously loaded content available offline
+- **Read-Only Access** — View collections, browse content, review progress during offline
+- **Action Queuing** — All player actions saved to local queue immediately for later sync
+
+**See:** `.openhands/knowledge/offline-system.md` for complete offline mode specification.
+
+### Synchronization System
+
+- **Safe Sync** — Sequential processing, server validation, failure isolation
+- **Duplicate Prevention** — Idempotency keys, server-side deduplication, reward locks
+- **Conflict Resolution** — Server authority, last-write-wins default, merge strategy
+- **Rollback Support** — Ability to rollback failed sync operations
+
+**See:** `.openhands/knowledge/offline-system.md` for complete synchronization specification.
+
+### Connection Recovery
+
+- **Auto Reconnection** — Network detection, heartbeat checks, quick retry with backoff
+- **Retry Mechanisms** — Exponential backoff with jitter, maximum retry limits, circuit breaker
+- **Recovery Notifications** — Connection restored toast, sync progress, completion confirmation
+- **Partial Sync** — Sync incrementally as data becomes available
+
+**See:** `.openhands/knowledge/offline-system.md` for complete connection recovery specification.
+
+### Cached Data Philosophy
+
+- **Local Cache** — Service worker for static assets, localStorage for preferences, IndexedDB for structured data
+- **Cache Integrity** — Verify cache contents before use, handle stale data gracefully
+- **Cache Management** — Respect browser storage quotas, allow user cache clearing
+- **Content Distribution** — Previously loaded historical content, images, UI components cached
+
+**See:** `.openhands/knowledge/offline-system.md` for complete cached data philosophy.
+
+### Data Integrity
+
+- **Inventory Protection** — Server authority, ownership verification, atomic transactions
+- **Currency Protection** — Balance validation, negative prevention, concurrent update safety
+- **Progression Protection** — XP validation, level verification, anti-exploit measures
+
+**See:** `.openhands/knowledge/offline-system.md` for complete data integrity specification.
+
+### Telegram Mini App Limitations
+
+- **Requires Internet** — Real-time gameplay, AdsGram ads, multiplayer, marketplace, purchases
+- **Unavailable Offline** — New artifact collection, quest progression, live events, guild activities
+- **Available Offline** — Browse cached content, view collections, review progress, edit settings
+
+**See:** `.openhands/knowledge/offline-system.md` for complete limitations documentation.
+
+### Future Offline Expansion
+
+- **Offline Collections** — Enhanced catalog browsing, collection management, wishlist editing
+- **Advanced Local Storage** — IndexedDB migration, structured data, query capability
+- **Background Synchronization** — Service worker sync, periodic sync, push sync
+- **Partial Offline Gameplay** — Single-player mode, offline quests, practice mode
+
+**See:** `.openhands/knowledge/offline-system.md` for complete future expansion specification.
+
+## Testing Strategy
+
+Quality should always have higher priority than release speed. Player trust depends on stability and reliability.
+
+### Testing Categories
+
+- **Unit Testing** — Component isolation, pure function testing, edge case coverage, 80%+ coverage for critical paths
+- **Integration Testing** — API integration, service integration, database operations, Telegram/Supabase integration
+- **UI Testing** — User flows, form validation, navigation, state management, responsive design
+- **Regression Testing** — Feature parity, API compatibility, database migrations, cross-browser/platform testing
+- **Manual QA** — Gameplay review, edge cases, usability, localization verification, exploratory testing
+- **Load Testing** — Baseline performance, stress/spike/soak testing, concurrency testing
+
+**See:** `.openhands/knowledge/testing.md` for complete testing categories specification.
+
+### QA Systems
+
+- **Quality Philosophy** — Prioritize stability, reduce bugs, protect player progress
+- **Test Environments** — Development (local), Staging (production mirror), Production (canary deployment)
+- **Bug Severity** — Critical (data loss, exploits), High (major features broken), Medium (workarounds exist), Low (minor issues)
+- **Test Metrics** — Discovered/resolved bugs, release quality, regression frequency
+
+**See:** `.openhands/knowledge/testing.md` for complete QA systems specification.
+
+### Regression Protection
+
+Protect critical player systems from regressions:
+
+- **Inventory Protection** — Item operations, quantity changes, concurrent access, audit trail
+- **Economy Protection** — Currency operations, balance limits, transaction atomicity, rate limiting
+- **Reward Protection** — Delivery verification, duplicate prevention, reward limits, rollback recovery
+- **Progression Protection** — XP/level calculations, prestige, achievements, progress persistence
+
+**See:** `.openhands/knowledge/testing.md` for complete regression protection specification.
+
+### Release Validation
+
+- **Major Systems Review** — Architecture, security, performance, accessibility, migration, integration reviews
+- **Critical Bug Resolution** — Zero critical bugs, zero high bugs on main path before release
+- **Rollback Procedures** — Automated rollback, database rollback, feature flag rollback, communication plan
+- **Release Criteria** — Clear criteria must be met before any release
+
+**See:** `.openhands/knowledge/testing.md` for complete release validation specification.
+
+### Performance Testing
+
+- **Loading Speed** — FCP under 1.5s, TTI under 3.5s, LCP under 2.5s, bundle size budget
+- **API Performance** — Median under 100ms, P95 under 200ms, query optimization
+- **Stability Under Load** — Concurrent users, sustained load, memory/CPU stability, graceful degradation
+
+**See:** `.openhands/knowledge/testing.md` for complete performance testing specification.
+
+### AdsGram QA
+
+- **Reward Delivery** — Successful reward grant, correct amounts, currency update, idempotency verification
+- **Callback Validation** — Signature verification, server-side validation, replay prevention, fraud detection
+- **Failed Ad Recovery** — Retry mechanism, user notification, skip option, fallback content
+
+**See:** `.openhands/knowledge/testing.md` for complete AdsGram QA specification.
+
+### Telegram Bot Testing
+
+- **Notifications** — Message delivery, correct content, timing, user preferences, format validation
+- **Scheduled Events** — Event triggering, timezone handling, concurrent events, missed event handling
+- **Reminder Systems** — Reminder delivery, snooze/dismiss handling, quiet hours
+
+**See:** `.openhands/knowledge/testing.md` for complete Telegram bot testing specification.
+
+### Future QA Expansion
+
+- **Automated UI Tests** — End-to-end automation, cross-platform testing, visual comparison, CI integration
+- **AI-Assisted Testing** — Bug prediction, test generation, flaky test detection, log analysis
+- **Visual Regression Testing** — Screenshot comparison, responsive/theme/localization testing
+- **Continuous Quality Monitoring** — Real-time monitoring, alerting, trend analysis, quality dashboards
+
+**See:** `.openhands/knowledge/testing.md` for complete future QA expansion specification.
+
+## Documentation Standards
+
+Documentation is one of the most valuable assets of the project. Good documentation simplifies development, onboarding, and long-term maintenance.
+
+### Documentation Philosophy
+
+- **Clarity** — Simple language, active voice, short sentences, concrete examples
+- **Organization** — Logical structure, consistent format, clear hierarchy, cross-references
+- **Future Support** — Context-rich, decision history, assumptions documented, troubleshooting included
+
+**See:** `.openhands/knowledge/documentation.md` for complete documentation philosophy.
+
+### Knowledge Base Structure
+
+- **Feature Documents** — Overview, specifications, user flows, technical design, API reference, testing notes
+- **Architecture Documents** — System overview, component specs, data flow, integration, decisions
+- **Guides** — Getting started, setup, deployment, troubleshooting, contributing, style guide
+- **Reference Materials** — API reference, database schema, configuration, glossary, cheatsheets
+
+**See:** `.openhands/knowledge/documentation.md` for complete knowledge base structure.
+
+### Documentation Categories
+
+- **Game Design** — Game concept, feature specs, user flows, balance rules, content specs
+- **Technical** — Architecture, components, data flow, security, performance, code organization
+- **API** — Endpoints, examples, authentication, rate limits, errors, versioning
+- **Database** — Schema, tables, relationships, migrations, data dictionary
+- **DevOps** — Deployment, configuration, monitoring, incident response, scaling
+- **Business** — Analytics, monetization, AdsGram infrastructure, legal compliance
+
+**See:** `.openhands/knowledge/documentation.md` for complete category specifications.
+
+### Writing Standards
+
+- **Consistent Terminology** — Single glossary, same term for same concept, defined abbreviations
+- **Avoid Ambiguity** — Specific not general, concrete not abstract, complete sentences
+- **Easy to Understand** — 6th grade reading level, short paragraphs, headers for navigation
+
+**See:** `.openhands/knowledge/documentation.md` for complete writing standards.
+
+### Documentation Versioning
+
+- **Updates** — Living documents, update responsibility, review cycles, staleness prevention
+- **Change History** — Revision log, change dates/authors/reasons, major changes highlighted
+- **Future Revisions** — Review triggers, deprecation notices, archive process, feedback loop
+
+**See:** `.openhands/knowledge/documentation.md` for complete versioning philosophy.
+
+### Developer Onboarding
+
+- **Project Architecture** — System components, data flow, technology stack, external services
+- **Folder Structure** — Root organization, naming conventions, code organization, assets
+- **Core Systems** — Getting started, key abstractions, common patterns, debugging tips
+
+**See:** `.openhands/knowledge/documentation.md` for complete onboarding documentation.
+
+### Cross-Reference Philosophy
+
+- **Related Systems** — Explicit links, dependency notes, interaction patterns
+- **Dependencies** — External/internal dependencies, version requirements, fallback behavior
+- **Future Features** — Planned features, extensibility points, known limitations
+
+**See:** `.openhands/knowledge/documentation.md` for complete cross-reference philosophy.
+
+### Documentation Metrics
+
+- **Coverage** — Feature coverage, API coverage, critical path documentation
+- **Staleness** — Tracking, thresholds, automated detection
+- **Update Frequency** — Update rate, response time, update quality
+
+**See:** `.openhands/knowledge/documentation.md` for complete metrics specification.
+
+### Future Documentation Expansion
+
+- **Auto Generation** — Code comments to docs, API spec generation, schema documentation
+- **AI Assistant** — Chat interface, search enhancement, doc completeness suggestions
+- **Contributor Portal** — Community wiki, discussion forums, contribution workflow
+- **Interactive Knowledge Base** — Runnable examples, interactive diagrams, searchable
+
+**See:** `.openhands/knowledge/documentation.md` for complete future expansion specification.
+
+## Project Roadmap
+
+Roadmaps provide direction without restricting future creativity. The project evolves gradually and sustainably.
+
+### Development Phases
+
+- **Phase 1 — Core Gameplay** — Core loop, first era (Mesopotamia), Telegram integration, basic UI, shard system
+- **Phase 2 — Social Systems** — Friends, guilds, leaderboards, daily systems, notifications, community events
+- **Phase 3 — Competitive Features** — PvP arena, tournaments, guild battles, expeditions, ranked seasons
+- **Phase 4 — Economy Expansion** — Battle pass, artifact evolution, museum system, marketplace, premium cosmetics
+- **Phase 5 — Global Ecosystem** — Creator system, global events, educational partnerships, cross-platform, API ecosystem
+
+**See:** `.openhands/knowledge/roadmap.md` for complete development phases specification.
+
+### Milestone Planning
+
+- **Realistic Goals** — Honest assessment, buffer time, scope control, risk awareness
+- **Quality Priority** — No rushing, testing standards, performance budgets, bug standards
+- **Long-Term Growth** — Technical debt management, scalability, flexibility, team health
+
+**See:** `.openhands/knowledge/roadmap.md` for complete milestone philosophy.
+
+### Priority Categories
+
+- **Critical Systems** — Core loop, Telegram Mini App, database, authentication, basic economy, error handling
+- **Core Features** — Era progression, artifact collection, daily systems, UI, notifications, leaderboards
+- **Quality-of-Life** — Settings, tutorial, help system, accessibility, offline support, performance
+- **Experimental** — New ideas needing validation before promotion
+- **Future Vision** — Web3, creator tools, educational programs, cross-platform, global events
+
+**See:** `.openhands/knowledge/roadmap.md` for complete priority categories.
+
+### Feature Classification
+
+- **Implemented** — Fully functional, tested, documented, supported, stable, monitored
+- **Planned** — Specifications written, scope defined, resources considered, priority set
+- **In Development** — Active work, testing, documentation, review, iteration, stabilization
+- **Future Vision** — Exploratory, validated need, rough direction, no commitment, flexibility
+
+**See:** `.openhands/knowledge/roadmap.md` for complete feature classification.
+
+### Release Philosophy
+
+- **No Rushing** — Feature freeze, buffer time, scope adjustment over rushing
+- **Stability Priority** — Testing requirements, performance thresholds, rollback plan, gradual rollout
+- **Player Trust** — Transparency, data safety, reward integrity, fair play, consistency
+
+**See:** `.openhands/knowledge/roadmap.md` for complete release philosophy.
+
+### Community Feedback
+
+- **Player Feedback** — Listening channels, sentiment analysis, specific requests, response
+- **Analytics** — Usage metrics, funnel analysis, engagement, retention, monetization
+- **Project Goals** — Vision alignment, strategic fit, resource efficiency, long-term view
+
+**See:** `.openhands/knowledge/roadmap.md` for complete community feedback philosophy.
+
+### Success Metrics
+
+- **Player Growth** — DAU/MAU, new users, growth rate, geographic distribution
+- **Retention** — Day 1/7/30 retention, churn rate, engagement trend, session duration
+- **Feature Adoption** — Feature usage, engagement, retention, drop-off points
+- **Community** — Social mentions, in-game social, content creation, NPS score
+
+**See:** `.openhands/knowledge/roadmap.md` for complete success metrics.
+
+### Future Vision
+
+- **Global Events** — Cross-time events, community goals, real-time events, cultural celebrations
+- **Creator Ecosystem** — Custom artifacts, story content, event creation, guide creation
+- **Web3 Features** — NFT artifacts, true ownership, trading platform, provenance (optional)
+- **Partnerships** — Museum partners, educational institutions, cultural organizations
+- **Educational Programs** — Curriculum integration, museum programs, teacher resources
+
+**See:** `.openhands/knowledge/roadmap.md` for complete future vision specification.
+
+### Business Growth
+
+- **AdsGram** — Integration maintenance, reward integrity, user experience, revenue optimization
+- **Subscriptions** — Jolt Time Plus, value proposition, subscriber experience, retention
+- **Telegram Stars** — Purchase flow, product catalog, pricing strategy, transaction handling
+
+**See:** `.openhands/knowledge/roadmap.md` for complete business growth specification.
+
+### Technical Growth
+
+- **Scalability** — Horizontal scaling, database scaling, CDN usage, caching layers, queues
+- **Maintainability** — Clean code, documentation, testing, code review, technical debt
+- **Modular Architecture** — Service boundaries, loose coupling, API contracts, feature flags
+
+**See:** `.openhands/knowledge/roadmap.md` for complete technical growth specification.
+
+## Project Vision
+
+This document describes what Jolt Time stands for and why the project exists. It serves as a reference for all future decisions.
+
+**Core Philosophy:** Jolt Time exists to make history exciting, accessible, and fun for everyone. Learning about the past should feel like an adventure, not a chore.
+
+### Mission Statement
+
+- **Why Jolt Time Exists** — Spark curiosity about history, democratize knowledge, build lasting memories
+- **Value Provided** — Engaging historical experiences, collection satisfaction, social connections, educational value
+- **What Makes It Unique** — Time travel framework, collectible depth, social experience, universal appeal
+
+**See:** `.openhands/knowledge/project-vision.md` for complete mission statement.
+
+### Core Principles
+
+- **Accessibility** — Everyone deserves to play; mobile-first, free-to-play, multiple languages
+- **Fairness** — No pay-to-win; cosmetics only; equal opportunity
+- **Educational Value** — Accurate history, inspire curiosity, teach cause and effect
+- **Long-Term Sustainability** — Sustainable monetization, regular content, stable infrastructure
+- **Respect for Players** — No dark patterns, honest communication, genuine appreciation
+
+**See:** `.openhands/knowledge/project-vision.md` for complete core principles.
+
+### Player Philosophy
+
+- **Reward Curiosity** — Hidden content, historical facts, achievements encourage exploration
+- **Encourage Collecting** — Artifacts tell stories, collections have goals, rarity creates excitement
+- **Promote Positive Communities** — Guilds foster teamwork, events bring players together, no toxic mechanics
+
+**See:** `.openhands/knowledge/project-vision.md` for complete player philosophy.
+
+### Historical Philosophy
+
+- **Respectful** — Cultures portrayed with nuance, sensitivity readers review content
+- **Educational Value** — Verified facts, context, primary sources inspire research
+- **Avoid Misinformation** — Corrections addressed promptly, expert consultants review content
+
+**See:** `.openhands/knowledge/project-vision.md` for complete historical philosophy.
+
+### Monetization Philosophy
+
+- **Core Principle** — Monetization enhances but never gate-keeps; no pay-to-win ever
+- **AdsGram** — Rewarded ads optional, generous rewards, frequency caps, no gameplay interruption
+- **Telegram Stars** — Premium cosmetics, battle pass, event content
+- **Subscriptions** — Jolt Time Plus comfort/convenience only, no competitive advantages
+
+**See:** `.openhands/knowledge/project-vision.md` for complete monetization philosophy.
+
+### Community Philosophy
+
+- **Cooperation** — Guilds require teamwork, community goals celebrated together
+- **Creativity** — Customization options, museum display creativity, multiple playstyles
+- **Healthy Competition** — Leaderboards inspire without hostility, sportsmanship rewarded
+
+**See:** `.openhands/knowledge/project-vision.md` for complete community philosophy.
+
+### Technical Philosophy
+
+- **Maintainability** — Well-documented, consistent patterns, modular architecture
+- **Scalability** — Horizontal scaling, CDN, caching, graceful traffic handling
+- **Reliability** — 99.9%+ uptime, automatic failover, data integrity guarantees
+
+**See:** `.openhands/knowledge/project-vision.md` for complete technical philosophy.
+
+### Content Philosophy
+
+- **Consistent Universe** — Time travel logic consistent, era authenticity maintained
+- **Preserve Quality** — Every new feature meets standards, UI consistency
+- **Avoid Feature Overload** — New features serve clear purposes, core loop understandable
+
+**See:** `.openhands/knowledge/project-vision.md` for complete content philosophy.
+
+### Growth Philosophy
+
+- **Grow Gradually** — Phased rollout, lessons learned, sustainable pace
+- **Quality Over Speed** — No rushing, testing takes time, polish distinguishes good from great
+- **Protect Trust** — Promises kept, transparency, consistent quality
+
+**See:** `.openhands/knowledge/project-vision.md` for complete growth philosophy.
+
+### Future Vision
+
+- **Global Communities** — Worldwide events, cultural exchange, regional celebrations
+- **Educational Partnerships** — Museum collaborations, school curriculum, teacher resources
+- **Creator Ecosystems** — Custom artifacts, community content, strategy guides
+- **Web3 Features** — NFT artifacts, true ownership, optional participation (future)
+
+**See:** `.openhands/knowledge/project-vision.md` for complete future vision.
+
+### Decision-Making Philosophy
+
+- **Player Feedback** — Multiple channels, sentiment analysis, community managers
+- **Analytics** — Usage patterns, funnel analysis, retention signals
+- **Long-Term Health** — Technical debt weighed, feature bloat avoided, sustainability prioritized
+
+**See:** `.openhands/knowledge/project-vision.md` for complete decision-making philosophy.
+
+### Legacy Philosophy
+
+- **Memorable** — Unique experiences, emotional connections, friendships formed
+- **Educational** — Curiosity sparked, facts remembered, appreciation for cultures
+- **Sustainable** — Stable foundation, loyal community, business sustainability
+
+**See:** `.openhands/knowledge/project-vision.md` for complete legacy philosophy.
+
+### Guiding Questions
+
+When facing difficult decisions, Jolt Time asks:
+- Does this serve the player?
+- Does this respect the player's time?
+- Does this maintain trust?
+- Does this preserve quality?
+- Does this fit the vision?
+
+**See:** `.openhands/knowledge/project-vision.md` for complete guiding questions.
 
 ## Compliance
 
