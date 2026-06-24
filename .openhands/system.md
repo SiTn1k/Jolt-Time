@@ -1006,6 +1006,643 @@ Planned language system expansions:
 - **Regional Variants:** Spanish (LatAm vs Spain), English (US vs UK), Portuguese (Brazil vs Portugal) (Phase 2+)
 - **Community Translation:** Volunteer translation program with native speaker review workflow (Phase 2+)
 
+## Settings System
+
+### Settings Architecture
+Jolt Time provides comprehensive settings across multiple categories:
+- **General Settings** — Core application behavior, audio, display, data management
+- **Notification Settings** — Full control over push notifications with category toggles and quiet hours
+- **Language Settings** — Interface language, regional preferences, audio language options
+- **Accessibility Settings** — Text size, contrast, motion reduction, screen reader support
+- **Privacy Settings** — Profile visibility, analytics participation, data control
+- **Visual Settings** — Animation intensity, haptics, battery saving, quality presets
+
+All settings are persisted per user in Supabase and apply across both Telegram Mini App and Telegram Bot.
+
+**See:** `.openhands/knowledge/settings.md` for complete settings specification.
+
+### Settings Persistence
+- **Real-time Sync** — Settings changes apply immediately across all sessions
+- **Platform Independent** — Settings apply to both Mini App and Bot
+- **Offline Capable** — Core settings cached locally, sync when online
+- **Reset Options** — Per-section and global reset to defaults available
+
+**See:** `.openhands/knowledge/settings.md` for complete settings persistence specification.
+
+## Accessibility Features
+
+### Accessibility Philosophy
+Jolt Time is committed to remaining comfortable for all players:
+- **Universal Comfort** — No forced experience; players always have choices
+- **Graceful Degradation** — Core gameplay accessible even with all options enabled
+- **Device Inclusivity** — Support both flagship and budget devices
+- **Independence** — All features playable without requiring precise timing
+- **Color-Friendly Design** — Never rely on color alone; pair with icons, shapes, text
+- **No Visual Overload** — Progressive disclosure, priority hierarchy, readable typography
+
+### Accessibility Settings
+Player-configurable accessibility options:
+- **Text Size** — Larger text mode (+25%), fine-grained slider (80%-150%)
+- **Color & Contrast** — High contrast mode, dark/light theme, reduce transparency
+- **Motion Controls** — Reduce animations, disable all animations, pause background effects
+- **Screen Reader Support** — ARIA labels, heading hierarchy, focus indicators, live regions
+
+### Supporting Different Play Styles
+| Play Style | Supported Through |
+|------------|-------------------|
+| Casual | Quick sessions, flexible timers, forgiving mechanics |
+| Dedicated | Deep content, achievement systems, collection tracking |
+| Competitive | Leaderboards, fair matching, transparent mechanics |
+| Social | Friends, guilds, shared experiences |
+| Exploratory | Museum, lore, historical content depth |
+
+### Future Accessibility Features
+Planned accessibility expansions:
+- **Enhanced Screen Reader** — Comprehensive narration of visual content
+- **Advanced Color Themes** — Custom accent colors, preset themes
+- **Customizable Layouts** — Drag-and-drop dashboard, widget selection
+- **Cognitive Support** — Task breakdown, visual guides, simplified mode
+- **Input Alternatives** — Voice control, controller support, switch access
+
+**See:** `.openhands/knowledge/settings.md` for complete accessibility specification.
+
+## Privacy Settings
+
+### Privacy Architecture
+Player control over data and visibility:
+- **Notification Privacy** — Online status, activity status, last seen controls
+- **Analytics Participation** — Voluntary opt-in to anonymous gameplay analytics
+- **Connected Services** — View and manage Telegram profile links, third-party connections
+- **Data Rights** — GDPR-compliant data export, account deletion with grace period
+
+### Profile Visibility
+Players choose who can see their profile:
+- **Public Profile** — Visible to all players, shown on leaderboards
+- **Friends Only** — Visible to approved friends, hidden from public
+- **Private Profile** — Only visible to self, all stats hidden
+
+Granular visibility controls for leaderboards, collection progress, museum level, achievements, activity status, and friend requests.
+
+### Privacy Compliance
+- **GDPR Ready** — Full data export and deletion capabilities
+- **Minimal Collection** — Aggregated insights over individual tracking
+- **Consent Management** — Clear opt-in/opt-out for all data uses
+- **Transparency** — Clear privacy policy with version history
+
+**See:** `.openhands/knowledge/settings.md` for complete privacy specification.
+
+## Personalization
+
+### Profile Customization
+Players personalize their Jolt Time identity:
+- **Display Name** — Customizable nickname
+- **Avatar Frame** — Achievement-based decorative frames
+- **Bio/About** — Optional personal description
+- **Favorite Color** — Theme accent preference
+- **Time Traveler Title** — Gameplay-earned titles displayed on profile
+
+### Content Personalization
+- **Favorite Artifact Display** — Pin artifacts to showcase
+- **Favorite Historical Era** — Set preferred era for quick access and notifications
+- **Museum Showcase** — Customize display order, exhibition focus, tour guide mode
+- **Dashboard Customization** — Quick access widgets, pinned quests, activity feed
+
+### Visual Personalization
+- **Animation Intensity** — Full / Reduced / Minimal / None
+- **Haptic Feedback** — Full / Light / Minimal / None
+- **Theme Accents** — Era-specific theme options (future)
+- **Reduced Effects Mode** — Single toggle for comprehensive effect reduction
+
+### Personalization Philosophy
+- Comfort and identity expression over competitive advantage
+- Settings affect personal experience only, never relative power
+- Optional features that enhance without limiting
+
+**See:** `.openhands/knowledge/settings.md` for complete personalization specification.
+
+## Quality of Life
+
+### QoL Design Principles
+- **Comfort Over Speed** — Quality of life > marginal time savings
+- **Optional Only** — No mandatory accessibility requirements
+- **No Competitive Advantage** — Settings affect personal experience only
+- **Performance Preservation** — Visual settings respect device capabilities
+- **Battery Awareness** — Power-saving options for mobile devices
+
+### What Settings Should NOT Affect
+To maintain competitive integrity:
+- Progression speed (no XP or currency acceleration)
+- Resource availability (no increased drops or rewards)
+- Combat balance (no battle outcome manipulation)
+- Leaderboard standing (no unfair advantages)
+- Collection probability (no gacha/capsule odds changes)
+
+### What Settings CAN Affect
+- Visual experience (animations, effects, themes)
+- Audio experience (sounds, music, haptics)
+- Notification frequency (push notification preferences)
+- Interface layout (dashboard customization, quick access)
+- Accessibility features (text size, contrast, motion)
+- Privacy (profile visibility, data sharing)
+
+**See:** `.openhands/knowledge/settings.md` for complete quality of life philosophy.
+
+## Friends System
+
+### Friends Architecture
+The friends system enables positive social connections between players:
+- **Friend Management** — Send requests, accept/decline, remove friends
+- **Friends List** — Organized display with nickname, level, favorite era, online status
+- **Favorite Friends** — Mark important friends (Best Friends, Guild Friends, Real-Life Friends)
+- **Social Statistics** — Friendship metrics, referral tracking, interaction counts
+
+### Friend Management
+- **Request Methods:** Username search, QR code, Telegram contact sync, in-game actions
+- **Request Handling:** Accept, decline (silent), decline & block options
+- **Removal:** No notification to removed friend, can re-request immediately
+
+### Friend Limits
+- **Base Limit:** 100 friends (Free), 200 (Jolt Time Plus), 500 (Premium)
+- **At Limit Handling:** Clear UX for managing existing friends
+- **Future Expansion:** Friendship tiers, guild integration, social score unlocks
+
+### Friendly Interactions
+- **Greetings** — Daily greetings with preset messages, no gameplay rewards
+- **Achievement Reactions** — Celebrate friend milestones with emoji reactions
+- **Gift-Giving** — Daily free gifts, random coin amounts, no pressure mechanics
+- **Museum Milestones** — Visit, celebrate, share interactions
+
+### Privacy Controls
+- **Request Filters:** Everyone / Friends of Friends / No One
+- **Profile Visibility:** Friend-only information (online status, museum progress, collections)
+- **Interaction Controls:** Granular controls for each action type
+- **Blocking:** Silent block, no notification to blocked player
+
+**See:** `.openhands/knowledge/friends-system.md` for complete friends system specification.
+
+### Social Statistics
+- **Friendship Metrics:** Total friends, longest friendship, mutual friends
+- **Referral Tracking:** Referrals joined, active referrals, pending rewards
+- **Interaction Stats:** Gifts sent/received, battles, celebrations
+
+**See:** `.openhands/knowledge/friends-system.md` for complete social statistics specification.
+
+## Social Features
+
+### Social Philosophy
+Jolt Time social features are designed around positive interactions:
+- **Optional Participation** — No social feature mandatory for progression
+- **Positive Framing** — Celebration of progress, no shame mechanics
+- **Privacy First** — Players control all visibility and interaction settings
+- **Cooperation Over Competition** — Group goals, shared achievements
+
+### Positive Community Design
+- **Encouraging Kindness:** Positive language, gift-giving is beneficial not mandatory
+- **Avoiding Toxicity:** No public shame, no negative leaderboard highlighting
+- **Supporting Cooperation:** Asynchronous options, no real-time voice requirements
+
+### Friend Interactions
+- **Greetings System:** Daily greetings, preset messages, no gameplay rewards
+- **Achievement Reactions:** Celebrate milestones with emoji reactions
+- **Gift-Giving:** Daily free gifts between friends, surprise coin values
+
+### Anti-Toxicity Measures
+- No public leaderboard shame (bottom scorers not highlighted)
+- Battle results shown privately, not broadcast
+- Competitive balance without punitive matchmaking
+- Graduated consequences for community violations
+
+**See:** `.openhands/knowledge/social-system.md` for complete social system overview.
+
+## Friend Requests
+
+### Request Flow
+- **Sending:** Username search, QR code, contact sync, in-game buttons
+- **Accepting:** Notification, dedicated tab, immediate connection
+- **Declining:** Silent decline option, no notification to sender
+- **Removing:** Confirmation required, no notification to removed friend
+
+### Request Privacy
+- Requests expire after 30 days
+- Declined players can re-send after 7 days
+- Blocked players cannot send requests
+- Privacy settings control who can send requests
+
+### Request Notifications
+- Push notification when request received
+- Bot notification when Mini App closed
+- Maximum 3 friend notifications per day per category
+- Quiet hours respected
+
+**See:** `.openhands/knowledge/friends-system.md` for complete friend request specification.
+
+## Privacy Controls
+
+### Profile Privacy
+Player-controlled visibility of personal information:
+- **Public:** Display name, level, avatar frame, title
+- **Friends Only:** Online status, favorite era, museum progress, achievements
+- **Private Mode:** Hide all non-public information
+
+### Interaction Privacy
+Granular control over who can perform each action:
+- View full profile, send requests, send gifts, challenge to battle
+- All actions have "Everyone / Friends Only / Nobody" options
+
+### Data Privacy
+- Blocked players cannot see any profile information
+- Blocking is silent (no notification)
+- Report feature for inappropriate behavior
+- GDPR-compliant data export and deletion
+
+**See:** `.openhands/knowledge/friends-system.md` for complete privacy controls specification.
+
+## Future Social Features
+
+Planned social system expansions (documented only, not implemented):
+- **Direct Messages** — Private 1-on-1 messaging with history
+- **Friend Activity Feed** — Unified feed of friend activities
+- **Shared Expeditions** — Cooperative expeditions with team rewards
+- **Friend Challenges** — Weekly non-zero-sum challenges
+
+### Future Recommendations
+- **Guild Recommendations** — Based on Telegram group membership
+- **Mutual Friends** — "You have 5 mutual friends with @player"
+- **Event Teammates** — Matched by past event participation
+
+**See:** `.openhands/knowledge/friends-system.md` for future social features specification.
+
+## Gifts System
+
+### Gifts Architecture
+Daily gift exchange between friends to strengthen community bonds:
+- **Gift Types:** Chrono Coins (10-50), Energy (5-20), Expedition Keys (rare), Social Tokens (rare)
+- **Daily Gifts:** One gift per friend per day, reset at UTC midnight
+- **Gift Categories:** Daily, Event, Anniversary, Friendship Rewards
+
+### Daily Gift Limits
+- **Free Players:** 20 gifts per day, 1 per friend
+- **Jolt Time Plus:** 50 gifts per day, 1 per friend
+- **Receiving:** Unlimited (10 unclaimed max)
+- **Anti-Abuse:** Minimum Level 5, 7-day account age required
+
+### Gift Categories
+- **Daily Gifts:** Standard random contents, available every day
+- **Event Gifts:** Enhanced contents during seasonal events
+- **Anniversary Gifts:** Special gifts on friendship milestones (7/30/100/365 days)
+- **Friendship Rewards:** Cosmetic badges and titles for positive interactions
+
+### Gift History
+- Complete record of sent and received gifts
+- Filterable by type (sent/received/milestones)
+- Milestone timeline with anniversary dates
+- Stats summary (total gifts, longest friendship, most exchanges)
+
+**See:** `.openhands/knowledge/gifts-system.md` for complete gifts system specification.
+
+## Social Rewards
+
+### Active Friendship Rewards
+Weekly bonuses for maintaining active friendships:
+- **Criteria:** Both players active (gift/greeting) in past 7 days, both Level 10+
+- **Rewards:** 50-500 coins + 3-10 Social Tokens based on active friend count
+
+### Helping Friends Rewards
+- **Help Quests:** Help friend complete quests → Both benefit
+- **Rewards:** 5-50 coins + 1-5 Social Tokens per help
+- **Weekly Cap:** 3 helps per week
+
+### Long-Term Interaction Rewards
+- **6 Month Loyalty:** 500 coins + Epic Fragment
+- **1 Year Loyalty:** 1000 coins + Legendary Fragment
+- **2+ Years:** 2000 coins + Exclusive Badge
+
+### Reward Balance Philosophy
+- Cosmetic rewards preferred over competitive advantages
+- No gameplay power from social rewards
+- Helpers and recipients both benefit
+
+**See:** `.openhands/knowledge/gifts-system.md` for complete social rewards specification.
+
+## Friendship Milestones
+
+### Time-Based Milestones
+| Days | Title | Reward |
+|------|-------|--------|
+| 7 | New Friend | 25 coins + badge |
+| 30 | Friend | 50 coins + badge |
+| 100 | Good Friend | 100 coins + badge |
+| 365 | Best Friend | 500 coins + badge |
+| 730 | Old Friend | 1000 coins + badge |
+
+### Interaction Milestones
+- **10 Gifts Sent:** "Generous" badge
+- **50 Gifts Sent:** "Philanthropist" badge
+- **100 Gifts Received:** "Popular" badge
+- **500 Achievements Reacted:** "Encourager" badge
+
+### Milestone Rewards Philosophy
+- Badges and titles preferred over currency
+- Recognition over compensation
+- Maximum 1000 coins per milestone year
+- No Legendary+ artifacts as milestone rewards
+
+**See:** `.openhands/knowledge/gifts-system.md` for complete milestone specification.
+
+## Gift History
+
+### History Features
+- **Sent Gifts:** Recipient, date, contents for all sent gifts
+- **Received Gifts:** Sender, date, contents, claim status
+- **Milestone Timeline:** Chronological list of all milestones
+- **Stats Summary:** Total sent/received, longest friendship, most exchanges
+
+### History Privacy
+- Only sender/receiver can view gift details
+- No public gift history
+- Exportable for personal records
+
+**See:** `.openhands/knowledge/gifts-system.md` for complete gift history specification.
+
+## Anti-Abuse Systems
+
+### Abuse Prevention
+- **Fake Accounts:** Telegram account age check, profile completion, bot detection
+- **Self-Gifting:** Cannot gift self, cross-account detection
+- **Automated Loops:** Max 2 gifts per pair per day, burst detection
+
+### Rate Limiting
+- Maximum 5 gifts to same friend per week
+- Burst: 10 gifts in 1 hour → 1 hour cooldown
+- Daily cap enforcement regardless of client
+
+### Penalties
+- First offense: Warning
+- Second offense: 24-hour gift suspension
+- Third offense: 7-day suspension + review
+
+**See:** `.openhands/knowledge/gifts-system.md` for complete anti-abuse specification.
+
+## Referral System
+
+### Referral Architecture
+Organic growth through player recommendations with mutual benefits:
+- **Personal Codes:** Unique 10-character referral code per player (JOLT_XXXXXXXX)
+- **Invite Links:** Telegram deep links (https://t.me/JoltTimeBot?start=REF_XXX)
+- **Share Options:** Copy link, Telegram share, QR code generation
+
+### Referral Rewards
+Both inviter and invited receive rewards at milestones:
+- **Signup:** Inviter 50 Coins + 20 Energy, Invited 100 Coins + 50 Energy
+- **Level 5:** Inviter 100 Coins + 5 Fragments, Invited 150 Coins
+- **Level 10:** Inviter 200 Coins + Rare Fragment, Invited 250 Coins + 10 Fragments
+- **Level 20:** Inviter 300 Coins + Epic Fragment, Invited 500 Coins
+
+### Referral Milestones
+Milestone-based rewards for referral counts:
+| Invited Count | Title | Badge | Bonus |
+|---------------|-------|-------|-------|
+| 1 | First Friend | Connector | 50 Coins |
+| 5 | Scout | Scout | 100 Coins + 5 Fragments |
+| 10 | Ambassador | Ambassador | 250 Coins + Rare Fragment |
+| 25 | Advocate | Advocate | 500 Coins + 2 Rare Fragments |
+| 50 | Champion | Champion | 1000 Coins + Epic Fragment |
+| 100 | Legend | Legend | 2000 Coins + Epic Fragment + Badge |
+
+### Activation Rules
+Rewards activate only when referred player meets requirements:
+- Tutorial 100% complete
+- Level 3+ threshold
+- 3+ sessions logged
+- 2+ days active
+- 1+ mission completed
+
+### Referral Statistics
+- Total invited, active referrals, conversion rate
+- Pending and lifetime rewards earned
+- Referral dashboard with share options
+- Attribution persists for 30 days
+
+**See:** `.openhands/knowledge/referral-system.md` for complete referral system specification.
+
+## Invite Links
+
+### Link Structure
+- **Format:** `https://t.me/JoltTimeBot?start=REF_JOLT_XXXXXXXX`
+- **Code Format:** `REF_JOLT_XXXXXXXX` (10 characters)
+- **Attribution:** Stored for 30 days, applies to first conversion
+
+### Bot Commands
+- `/start REF_XXX` — Join via referral
+- `/invite` — Open referral dashboard
+- `/mycode` — Display personal referral code
+- `/referrals` — View referral statistics
+
+### Share Methods
+- Copy link button
+- Share to Telegram chat
+- QR code generation
+- Native Telegram share sheet
+
+**See:** `.openhands/knowledge/referral-system.md` for complete invite link specification.
+
+## Referral Rewards
+
+### Reward Distribution
+- **Immediate:** Signup rewards claimed instantly
+- **Milestone:** Progression rewards claimed when threshold reached
+- **Pending:** Rewards held 30 days if not claimed
+
+### Reward Caps
+- Maximum 5000 Chrono Coins from referrals per month
+- Maximum 50 fragments from referrals per month
+- Excess rewards roll over to next month
+
+### Quality Milestones
+Active referral bonuses for engaged referred players:
+- 5 Active: 100 Coins (5 referred reach Level 10+)
+- 10 Active: 250 Coins + Rare Fragment
+- 25 Active: 500 Coins + Epic Fragment
+
+**See:** `.openhands/knowledge/referral-system.md` for complete reward specification.
+
+## Growth Systems
+
+### Growth Philosophy
+Organic growth through genuine player recommendations:
+- **Primary Channels:** Friends, communities, Telegram sharing, positive experiences
+- **Avoided:** Spam, misleading claims, pressure tactics, fake urgency
+
+### Referral Leaderboards
+Friendly competition without toxicity:
+- **Weekly:** Updated Monday, top 10 get bonus rewards
+- **Monthly:** 1st of month, featured in game
+- **Lifetime:** Hall of Fame permanent display
+- **Non-Toxic:** No shame for low counts, celebration over pressure
+
+### Anti-Abuse for Referrals
+- Self-referral prevention (Telegram ID, device, phone matching)
+- Fake account detection (account age, bot patterns, behavioral analysis)
+- Rate limiting (max 10/day, 50/month)
+- Pattern detection for coordinated abuse
+
+### AdsGram vs. Referrals
+Referral systems must NOT replace AdsGram:
+- **Referrals:** Organic growth through player recommendations
+- **AdsGram:** Primary revenue for project sustainability
+- Both serve different purposes
+
+**See:** `.openhands/knowledge/referral-system.md` for complete growth systems specification.
+
+## Achievement System
+
+### Achievement Categories
+Eight achievement categories covering all gameplay aspects:
+- **Collection** — Artifact gathering, set completion, rarity collection
+- **Battles** — Combat wins, streaks, era-specific, boss battles
+- **Progression** — Level milestones, feature unlocks
+- **Economy** — Currency earning, spending, marketplace
+- **Social** — Friends, gift-giving, guilds, referrals
+- **AdsGram** — Ad engagement achievements (all optional)
+- **Activity** — Login streaks, daily completions, missions, events
+- **Special** — Hidden discoveries, seasonal events, anniversaries
+
+### Achievement Rarity Tiers
+| Rarity | Difficulty | Reward Multiplier | Examples |
+|--------|------------|-------------------|----------|
+| Common | Very Easy | 1.0x | First artifact, first battle |
+| Rare | Easy | 1.5x | 50 artifacts, 50 battles |
+| Epic | Medium | 2.0x | 200 artifacts, 500 battles |
+| Legendary | Hard | 3.0x | All artifacts, 1000 battles |
+
+Total: 125 achievements (43 Common, 41 Rare, 32 Epic, 9 Legendary)
+
+### Achievement Rewards
+| Rarity | XP Range | Dust Range | Cosmetics |
+|--------|----------|------------|----------|
+| Common | 25-100 | 10-50 | — |
+| Rare | 100-300 | 50-150 | Badge |
+| Epic | 500-1500 | 250-750 | Badge + Frame |
+| Legendary | 2000-5000 | 1000-2500 | Badge + Frame + Title |
+
+### Hidden Achievements
+Secret achievements discovered through natural gameplay:
+- Lucky Find (first Mythic artifact)
+- First Legendary, Serendipity (Epic duplicate)
+- Market Windfall, Perfectionist, Scholar, Explorer
+- Time Traveler (play at midnight on New Year)
+
+### Achievement Statistics
+- Total achievements completed
+- Progress per category
+- Rare achievements earned
+- Highest achievement tier
+- Multi-stage progress tracking
+
+**See:** `.openhands/knowledge/achievements.md` for complete achievement specification.
+
+## Title System
+
+### Available Titles
+Titles earned through achievements, displayed on player profiles:
+- **Time Explorer** — World Traveler achievement (all eras unlocked)
+- **Artifact Hunter** — Expert Collector achievement (100 artifacts)
+- **Museum Curator** — Complete all museum sets
+- **Battle Veteran** — 500 battle wins
+- **Historian** — Read all museum entries
+- **Guild Commander** — Become guild leader
+- **Chrono Master** — Level 50 achievement
+- **Collector** — Legendary Collector (all 82 artifacts)
+- **Battle Legend** — 1000 battle wins
+- **Economy Master** — Earn/spend 100,000 dust
+
+### Title Display
+- One active title at a time
+- Select from all earned titles
+- Displayed below player name on profile
+- Visible in leaderboards and friend lists
+
+**See:** `.openhands/knowledge/achievements.md` for complete title specification.
+
+## Badge Collection
+
+### Badge Categories
+Collectible achievement badges organized by type:
+- **Milestone Badges** — Reaching specific counts (10, 50, 100 wins)
+- **Event Badges** — Participation in special events
+- **Anniversary Badges** — Game anniversary celebrations
+- **Limited-Time Badges** — Seasonal and promotional events
+- **Rare Badges** — Hidden achievements, special discoveries
+
+### Badge Display
+- Players collect earned badges in Gallery
+- Filter by category, rarity, earned status
+- Sort by recent, rarity, name
+- Badge showcase slots on profile (4 slots)
+
+### Badge Rarity
+| Rarity | Color | Examples |
+|--------|-------|----------|
+| Common | Gray | First Find, First Victory |
+| Rare | Blue | Battle Veteran, 30-day streak |
+| Epic | Purple | Expert Collector, Boss Crusher |
+| Legendary | Gold | All artifacts, 1000 battles |
+
+**See:** `.openhands/knowledge/achievements.md` for complete badge specification.
+
+## Player Showcase
+
+### Profile Showcase
+Players display achievements in their profile:
+- **Featured Title** — Selected from earned titles
+- **Showcase Badges** — Up to 4 badges displayed
+- **Active Frame** — Decorative profile border
+- **Achievement Progress** — Total count and percentage
+
+### Showcase Slots
+| Slot | Unlocked By | Items Allowed |
+|------|-------------|---------------|
+| Badge Slot 1 | Default | Any badge |
+| Badge Slot 2 | 10 achievements | Any badge |
+| Badge Slot 3 | 30 achievements | Any badge |
+| Badge Slot 4 | 50 achievements | Any badge |
+| Frame | Epic achievement | Achievement frames |
+| Title | Legendary achievement | Achievement titles |
+
+### Achievement Gallery
+- Complete list of all achievements
+- Filter: All, Earned, Locked
+- Sort: Recent, Rarity, Name
+- Progress bar per category
+- Multi-stage progress tracking
+
+**See:** `.openhands/knowledge/achievements.md` for complete showcase specification.
+
+## Achievement Long-Term Motivation
+
+### Motivation Philosophy
+Achievements provide long-term motivation without forcing grinding:
+- **Reward Dedication** — Recognize sustained engagement
+- **Celebrate Milestones** — Every accomplishment feels special
+- **Encourage Exploration** — Guide players to discover features
+- **Avoid Excessive Grinding** — Maximum caps prevent unhealthy patterns
+
+### Goal Timelines
+| Player Type | Goals | Retention Mechanism |
+|-------------|-------|---------------------|
+| Casual | Common/Rare, early milestones | Quick wins, daily engagement |
+| Regular | Rare/Epic, mid milestones | Weekly/monthly goals |
+| Hardcore | Epic/Legendary, late milestones | Long-term mastery |
+| Collector | All collection achievements | Completionist drive |
+
+### Anti-Burnout Guidelines
+- No repetitive grinds beyond 100 actions
+- Multiple paths to earn achievements
+- Achievements align with natural play patterns
+- Flexible completion requirements
+
+**See:** `.openhands/knowledge/achievements.md` for complete philosophy specification.
+
 ## Compliance
 
 - Telegram Mini App guidelines compliance
