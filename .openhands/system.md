@@ -2397,6 +2397,389 @@ Support staff access only necessary information, respect player privacy, and avo
 
 **See:** `.openhands/knowledge/support-system.md` for complete support system specification.
 
+## Backup System
+
+Jolt Time maintains comprehensive backup infrastructure to protect player progress and ensure business continuity.
+
+### Backup Philosophy
+
+- **Protect Player Progress** — Every player achievement, collected artifact, and progression milestone must be preservable
+- **Prevent Accidental Loss** — Implement safeguards against human error during maintenance operations
+- **Support Recovery Procedures** — Document clear, tested recovery procedures for various failure scenarios
+
+### Backup Categories
+
+- **Database Backups** — Player accounts, inventories, museum collections, economy data, event progress, social data, quest progress, subscription records
+- **Configuration Backups** — Game configuration, event configuration, economy configuration, system settings, Telegram bot settings, AdsGram configuration
+- **Event Data Backups** — Active events, event history, seasonal content, tournament records
+- **Analytics Backups** — Player analytics, economy analytics, AdsGram analytics, system performance metrics
+- **Logs and Audit Backups** — Transaction logs, security logs, admin audit logs, deployment logs
+
+### Backup Frequency
+
+- **Daily Backups** — Full database snapshots, configuration captures, incremental logs (30-day retention minimum)
+- **Weekly Backups** — Weekly full backups, analytics aggregation, economy and security audits (90-day retention minimum)
+- **Long-Term Archives** — Monthly and yearly snapshots for historical preservation (7-year retention for financial data)
+
+### Recovery Priorities
+
+1. Player Accounts (highest priority)
+2. Inventories
+3. Museum Collections
+4. Economy Data
+5. Event Progress (lowest priority)
+
+**See:** `.openhands/knowledge/backup-system.md` for complete backup system specification.
+
+## Disaster Recovery
+
+Jolt Time maintains disaster recovery capabilities to minimize player impact from system failures.
+
+### Recovery Scenarios
+
+- **Database Corruption** — Detection, isolation, clean backup restoration, transaction log application, integrity verification
+- **Accidental Deletion** — Immediate response, backup restoration, reconciliation of missing transactions
+- **Infrastructure Failures** — Failure assessment, service continuity activation, component recovery, verification
+- **Deployment Issues** — Issue detection, rollback decision framework, version rollback, monitoring
+
+### Recovery Procedures
+
+All recovery procedures follow documented steps with verification checkpoints. Recovery operations require multiple team member verification. Post-recovery validation confirms system health before returning to service.
+
+**See:** `.openhands/knowledge/backup-system.md` for complete disaster recovery specification.
+
+## Rollback Procedures
+
+Critical systems support safe, controlled rollback capabilities.
+
+### Rollback Philosophy
+
+- **Database Schema Changes** — Full rollback capability with up/down migration scripts tested before production
+- **Configuration Changes** — Versioned configurations with instant rollback support and full audit trail
+- **Economy Changes** — Rollback support for economy configurations with pre-change snapshots preserved
+- **Feature Releases** — Feature flag rollback without code deployment, previous stable version maintained
+
+### Version History
+
+- All changes maintain complete version history
+- Configuration versions are immutable once deployed
+- Database migrations preserve previous states
+- Rollback always returns to verified working state
+
+**See:** `.openhands/knowledge/backup-system.md` for complete rollback specification.
+
+## Data Protection
+
+Jolt Time prioritizes data protection as a core operational principle.
+
+### Protection Principles
+
+- **Player Information Security** — Backups secured with restricted access, encryption at rest and in transit
+- **Avoid Unnecessary Exposure** — Backups not used for analytics without sanitization, test environments use synthetic data
+- **Respect Data Security** — GDPR-ready compliance, secure deletion of expired backups, regular security audits
+
+### Protected Data Categories
+
+- **Player Progress** — Accounts, inventories, collections, achievements, and progression
+- **Economy Data** — Currency balances, transactions, marketplace records
+- **AdsGram Records** — Reward history, ad completion records, monetization statistics
+- **Telegram Bot Settings** — Notification schedules, reminder preferences, message templates
+- **Audit Records** — Transaction logs, security logs, administrative action records
+
+### Privacy Philosophy
+
+- Personally identifiable information minimized in non-essential contexts
+- Backup retention periods enforced automatically
+- Cross-border data transfers subject to appropriate safeguards
+
+**See:** `.openhands/knowledge/backup-system.md` for complete data protection specification.
+
+## DevOps Infrastructure
+
+Jolt Time maintains comprehensive DevOps infrastructure for reliable and efficient operations.
+
+### Infrastructure Categories
+
+- **Frontend Infrastructure** — Telegram Mini App hosting, static assets, CDN distribution, build artifacts
+- **Backend Infrastructure** — API servers, business logic services, authentication, webhooks, background workers
+- **Database Infrastructure** — Supabase PostgreSQL, connection pooling, query optimization, schema management
+- **Telegram Bot Infrastructure** — Bot server, notification delivery, scheduled tasks, webhook integration
+- **Monitoring Systems** — Application monitoring, infrastructure monitoring, alerting, dashboards
+
+### Environment Structure
+
+- **Development Environment** — Local development, relaxed constraints, frequent resets
+- **Staging Environment** — Pre-production testing, mirrors production configuration, synthetic data
+- **Production Environment** — Live game serving all players, restricted access, enhanced monitoring
+
+**See:** `.openhands/knowledge/devops.md` for complete DevOps infrastructure specification.
+
+## Deployment Systems
+
+Jolt Time deployment practices prioritize stability and player experience.
+
+### Deployment Philosophy
+
+- **Minimize Downtime** — Rolling updates, backward-compatible migrations, health checks
+- **Support Rollback Procedures** — Every deployment reversible, quick rollback capability (< 15 minutes)
+- **Avoid Breaking Player Progress** — Schema changes never destroy data, backward-compatible APIs
+
+### Deployment Safety
+
+- Deployments during low-traffic windows when possible
+- Staged rollouts across player segments
+- Feature flags enable quick disable without redeployment
+- Post-deployment monitoring for anomalies
+
+**See:** `.openhands/knowledge/devops.md` for complete deployment systems specification.
+
+## Monitoring Systems
+
+Jolt Time monitors infrastructure and application health continuously.
+
+### Monitoring Categories
+
+- **Server Health** — Uptime, resource utilization, network metrics, process monitoring
+- **API Performance** — Response times (P50, P95, P99), request volume, endpoint analysis, error rates
+- **Database Performance** — Query performance, connection pool usage, storage metrics, backup status
+- **Error Rate Monitoring** — Error classification, trend analysis, player impact assessment
+
+### Logging Philosophy
+
+- **Application Logs** — Request logging, error logging, business events, security events
+- **Deployment Logs** — Deployment events, configuration changes, infrastructure changes
+- **Critical Failures** — System crashes, data issues, security incidents, revenue impact
+
+**See:** `.openhands/knowledge/devops.md` for complete monitoring systems specification.
+
+## CI/CD Philosophy
+
+Jolt Time uses continuous integration and deployment for efficient, safe releases.
+
+### Pipeline Architecture
+
+**Automated Testing:**
+- Unit testing with 80%+ coverage for critical paths
+- Integration testing with test database
+- Smoke testing post-deployment
+
+**Build Pipelines:**
+- TypeScript compilation with strict mode
+- Dependency verification and security scanning
+- Docker image building for applicable services
+
+**Deployment Pipelines:**
+- Automated staging deployment on merge
+- Canary release to initial player segment
+- Progressive rollout with monitoring
+- Automated rollback on failure detection
+
+**See:** `.openhands/knowledge/devops.md` for complete CI/CD specification.
+
+## Scalability Support
+
+Jolt Time infrastructure designed for growth and expansion.
+
+### Scalability Principles
+
+- **Player Growth Support** — Horizontal scaling, database connection pooling, caching strategy, load balancing
+- **Future Expansion Support** — Modular design, API gateway ready, event-driven architecture
+- **Horizontal Growth** — Stateless services, shared nothing architecture, distributed caching, read replicas
+
+### Supabase Scalability
+
+- Automatic failover and high availability
+- Connection handling and query optimization
+- Regional deployment options for latency optimization
+
+**See:** `.openhands/knowledge/devops.md` for complete scalability specification.
+
+## API Architecture
+
+Jolt Time maintains a robust API architecture for frontend-backend communication and third-party integrations.
+
+### API Categories
+
+- **Internal APIs** — Frontend API, Backend Services API, Bot API, Admin API, Webhook Handlers
+- **External APIs** — Telegram Bot API, Telegram Mini Apps API, AdsGram API, Payment Provider APIs
+- **Telegram APIs** — Bot API, Mini Apps API, Login Widget, Payments API, Passport API
+- **Payment APIs** — Telegram Stars API, TON Connect API (future), Payment Webhooks, Subscription Management
+- **Analytics APIs** — In-Game Analytics, AdsGram Analytics, Economy Analytics, Performance Analytics
+
+### API Communication
+
+- **Frontend-Backend** — RESTful API calls with Telegram initData authentication
+- **Backend-Database** — Supabase client with connection pooling and transaction support
+- **Backend-Bot** — Message queue for notifications, shared state for context
+- **Bot-Telegram** — Direct Bot API calls, webhook receivers, file handling
+
+**See:** `.openhands/knowledge/api-architecture.md` for complete API architecture specification.
+
+## External Integrations
+
+Jolt Time integrates with multiple external services for platform functionality.
+
+### Integration Partners
+
+- **Telegram Bot API** — Notifications, commands, callbacks, payments
+- **Telegram Mini Apps** — In-game experience, user data, purchases, sharing
+- **AdsGram** — Rewarded video ads, reward callbacks, completion verification, analytics
+- **Supabase** — Database, authentication, real-time subscriptions, file storage
+- **Telegram Stars** — In-app purchases, refunds, receipts, subscription management
+- **TON Connect** — Future wallet integration, blockchain transactions, NFT support
+
+### Integration Security
+
+- All external API communication uses secure protocols (HTTPS)
+- Webhook payloads verified for authenticity
+- Rate limiting protects against external service abuse
+- Comprehensive logging for integration debugging
+
+**See:** `.openhands/knowledge/api-architecture.md` for complete external integrations specification.
+
+## API Security
+
+Jolt Time protects all API endpoints against common vulnerabilities and attacks.
+
+### Security Measures
+
+- **Request Protection** — HTTPS only, input validation, injection prevention, CSRF protection
+- **Authentication Security** — Telegram initData validation, timestamp checks, session tokens
+- **Sensitive Operations** — Additional verification for payments, account changes, destructive actions
+- **Rate Limiting** — Abuse prevention, spam prevention, overload protection
+
+### Authentication Architecture
+
+- **Telegram Authentication** — initData validation with hash verification
+- **Session Management** — Token-based sessions with expiration and refresh
+- **Future Accounts** — Support for multi-platform login and account linking
+
+**See:** `.openhands/knowledge/api-architecture.md` for complete API security specification.
+
+## Service Communication
+
+Jolt Time services communicate through well-defined interfaces for maintainability.
+
+### Communication Patterns
+
+- **Synchronous Communication** — Direct API calls for real-time responses
+- **Asynchronous Communication** — Message queues for notifications and background tasks
+- **Event-Driven Communication** — Game events trigger downstream processing
+- **Shared State Access** — Services access shared data through Supabase
+
+### Versioning and Responses
+
+- **Versioning** — URL-based versioning for major versions, backward compatibility required
+- **Response Format** — Consistent success/error format with predictable structure
+- **Error Handling** — Categorized errors (400, 401, 403, 404, 429, 500) with recovery guidance
+
+**See:** `.openhands/knowledge/api-architecture.md` for complete service communication specification.
+
+## API Monitoring
+
+Jolt Time monitors API health for optimal player experience.
+
+### Monitoring Metrics
+
+- **Response Times** — P50, P95, P99 latency per endpoint (< 200ms target for P95)
+- **Failure Rates** — Error tracking by endpoint, type distribution, player impact
+- **Endpoint Usage** — Request volumes, usage trends, optimization insights
+
+### Performance Targets
+
+- API responses < 200ms for P95
+- Critical endpoints < 100ms for P95
+- Database queries < 50ms for P95
+- Slow query alerts for > 1s queries
+
+**See:** `.openhands/knowledge/api-architecture.md` for complete API monitoring specification.
+
+## Localization System
+
+Jolt Time is designed for international players with comprehensive localization support.
+
+### Localization Categories
+
+- **Interface Localization** — Navigation, buttons, forms, tooltips, error messages, settings
+- **Story Localization** — Historical narratives, character dialogues, artifact lore, museum descriptions
+- **Event Localization** — Event names, rules, rewards, achievements, leaderboard labels
+- **Notification Localization** — Daily reminders, event alerts, achievement messages, streak reminders
+- **Educational Content Localization** — Historical facts, cultural context, era backgrounds, biographies
+
+### Translation Philosophy
+
+- **Preserve Meaning** — Semantic equivalence, contextual accuracy, educational value maintained
+- **Natural Language** — Idioms appropriate to target language, cultural adaptation, native expression
+- **Avoid Machine-Like Wording** — Human review, native speaker validation, consistent voice
+
+**See:** `.openhands/knowledge/localization.md` for complete localization system specification.
+
+## Internationalization Support
+
+Jolt Time supports multiple languages with consistent quality and cultural sensitivity.
+
+### Supported Languages
+
+**Initial Languages:**
+- Ukrainian (uk) — Primary market, full localization
+- English (en) — Global fallback, full localization
+- Polish, German, Spanish, French — Secondary languages
+
+**Future Languages:**
+- Portuguese, Italian, Japanese, Korean, Chinese Simplified
+- Arabic, Hebrew — RTL language support planned
+
+### Language Architecture
+
+- Modular translation file structure per language
+- Consistent key naming conventions across all translations
+- Fallback chain support (missing → English)
+- Easy language addition through established pipeline
+
+**See:** `.openhands/knowledge/localization.md` for complete internationalization specification.
+
+## Multi-Language Infrastructure
+
+Jolt Time's infrastructure supports language detection, preference storage, and dynamic content localization.
+
+### Language Infrastructure
+
+- **Language Detection** — Telegram user language, player profile preference, browser settings
+- **Preference Storage** — Language stored in Supabase user profile, respects player choice
+- **Dynamic Content** — All bot notifications in player language, dates/times localized
+
+### Date and Time Localization
+
+- **Time Zones** — Player time zone stored, all times in local time, auto-detection available
+- **Regional Formats** — Date formats (US/EU/ISO), number formatting, currency display
+- **Standards Compliance** — Unicode, CLDR locale data, ISO date/time standards
+
+**See:** `.openhands/knowledge/localization.md` for complete multi-language infrastructure specification.
+
+## Regional Expansion
+
+Jolt Time plans for future international growth and regional customization.
+
+### Future Expansion
+
+- **Regional Events** — Local holiday events, cultural celebrations, regional historical themes
+- **Local Partnerships** — Educational institutions, cultural organizations, historical societies
+- **Country-Specific Campaigns** — Targeted marketing, local influencers, regional press
+
+### Accessibility Philosophy
+
+- **Readable Text** — Clear fonts, appropriate sizes, sufficient contrast, scalable options
+- **Understandable Language** — Simple sentence structure, explained jargon, consistent terminology
+- **Inclusive Terminology** — Cultural inclusivity, gender-neutral language, respectful representation
+
+### Historical Content Philosophy
+
+- **Respectful Representation** — Cultural sensitivity, balanced perspectives, inclusive language
+- **Avoid Cultural Bias** — Multiple viewpoints, non-Eurocentric focus, diverse contributions
+- **Preserve Educational Value** — Accurate information, expert verification, source attribution
+
+**See:** `.openhands/knowledge/localization.md` for complete regional expansion specification.
+
 ## Compliance
 
 - Telegram Mini App guidelines compliance
