@@ -156,14 +156,20 @@ Streak system rewards consistent engagement with escalating benefits:
 
 **See:** `.openhands/knowledge/daily-systems.md` for complete streak system specification.
 
-### Daily and Weekly Missions
-Structured objectives that refresh automatically:
-- **Daily Missions:** 3 missions per day (Easy/Medium/Hard), auto-refresh at UTC midnight
-- **Weekly Missions:** Larger rewards, reset Monday, medium to legendary difficulty
-- **Monthly Objectives:** Collection, battle, progression, and museum goals
-- **Reward Structure:** XP, Chrono Coins, fragments, cosmetics, event tokens
+### Mission System
+Structured objectives that guide player progression:
+- **Daily Missions:** 3 missions per day (1 Easy, 1 Medium, 1 Hard), auto-refresh at UTC midnight, 10-20 min to complete
+- **Weekly Missions:** 5 missions per week, larger rewards, reset Monday, medium to hard difficulty
+- **Mission Chains:** Multi-step objectives (2-5 steps) with bonus rewards upon completion
+- **Mission Refresh:** 1 free refresh daily, premium refreshes via Jolt Crystals, balance philosophy
+- **Streak System:** Consecutive daily/weekly/monthly engagement tracking, grace periods, temporal shields, escalating benefits (+5% to +40% XP)
+- **Reward Types:** XP, Chrono Coins, Time Shards, Battle Pass XP, cosmetics, event currency — no P2W
+- **Casual-Friendly:** Multiple sessions supported, no mandatory grinding, 60-100% rewards based on engagement level
+- **Telegram Notifications:** Daily reset, chain completion, streak milestones, weekly rewards — max 4/day
+- **AdsGram Optional:** Mission refresh boost, reward boost, XP boost — never mandatory
+- **Future Expansions:** Monthly missions, guild missions, co-op missions, world missions (documented only)
 
-**See:** `.openhands/knowledge/daily-systems.md` for complete mission system specification.
+**See:** `.openhands/knowledge/missions.md` for complete mission system specification.
 
 ### Comeback Rewards
 Returning players receive generous welcome-back bonuses:
@@ -261,6 +267,22 @@ The heart of Jolt Time - historical artifact collection:
 
 **See:** `.openhands/knowledge/artifact-system.md` for complete artifact specification.
 
+### Artifact Evolution System
+Deep progression mechanics for collected artifacts:
+- **Artifact Levels:** Level 1-70 (by rarity), 2% stat increase per level, XP from battles/expeditions, level milestones unlock visual upgrades
+- **Artifact Evolution:** Rarity progression (Common→Uncommon→Rare→Epic→Legendary→Mythic), requires duplicates + resources, 100% power increase per tier, permanent upgrades
+- **Artifact Fusion:** Combine two same-type artifacts for specialized variants, trait inheritance (up to 2 traits), stat optimization, set completion flexibility
+- **Visual Progression:** Glow intensity, particle effects, animated borders, aura effects, prestige visuals (Golden, Prismatic, Chrono), cosmetic only
+- **Artifact Traits:** Passive bonuses (Ancient Wisdom, Battle Spirit, Explorer Bonus, Museum Value, Lucky Charm), innate + acquired, no P2W advantages
+- **Special Variants:** Golden (rarity mastery), Event Edition (limited events), Anniversary Edition (annual), Founder Edition (pre-launch)
+- **Resource Economy:** Chrono Coins, Time Shards, fragments, Mythic Essence, balanced costs preventing excessive grinding
+- **Collection Philosophy:** Short/medium/long-term goals, anti-frustration measures, no pay-to-win, progression pacing over months
+- **Statistics Tracking:** Total upgrades, levels gained, highest level, evolutions, fusions, traits, variants
+- **Telegram Notifications:** Evolution success, legendary upgrades, rare fusions, visual unlocks, max 4/day, anti-spam
+- **AdsGram Optional:** XP boost, fragment bonus, evolution discounts, level skip — never mandatory, purely convenience
+
+**See:** `.openhands/knowledge/artifact-evolution.md` for complete artifact evolution specification.
+
 ### Inventory System
 Player-facing artifact management system:
 - Artifact storage with virtualized grid/list view for 1000+ items
@@ -288,16 +310,21 @@ Tracks player progress across all artifacts:
 **See:** `.openhands/knowledge/inventory-system.md` for complete collection specification.
 
 ### Museum System
-Special artifact designation system:
-- Museum artifacts: permanently retained, cannot be sold, cannot convert to fragments
-- Auto-promotion: first artifact of each rarity automatically becomes museum piece
-- Manual promotion: player can promote additional artifacts within capacity limits
-- Museum capacity: 20 base + 5 per era completed (e.g., 5 eras complete = 45 slots)
-- Museum score: each museum artifact contributes to prestige calculation
-- Cosmetic unlocks: era-specific frames and badges based on museum completeness
-- Museum sections: Hall of Ages, Rarity Gallery, Category Hall, Favorites, Recently Added
+Personal museum featuring historical wings and educational exhibits:
+- **Personal Museum:** Player's own museum displaying collected artifacts, completed collections, favorite exhibits, curator level
+- **Historical Wings:** 6 wings (Egypt, Greece, Rome, Viking, Medieval, Renaissance) unlocking by player level progression, unique atmosphere per era
+- **Artifact Donations:** Permanently donate artifacts for museum score (+10-500 by rarity), XP, collection completion — irreversible but rewarding
+- **Collection Sets:** Era-themed artifact sets (Rosetta Stone, Pharaoh's Mask, etc.) with completion rewards (badges, frames, titles)
+- **Museum Levels:** Curator progression from Novice to Legendary (Level 1-30+), unlocking rooms, decorations, visual upgrades, cosmetics
+- **Museum Prestige:** Cosmetic-only prestige system at Level 30+, resets display for Chrono/Prismatic decorations — purely visual
+- **Museum Statistics:** Exhibits, level, score, collections, rare artifacts, donation counts, streaks — comprehensive tracking
+- **Museum Leaderboards:** Rankings for level, collection completion, rare count, score — weekly and all-time tracking
+- **Visitor System (Future):** Friends visiting museums, likes/reactions, popularity rankings — documented for future expansion
+- **Educational Focus:** Every exhibit teaches real history with authentic facts, significance, current location, related topics
+- **Telegram Notifications:** Collection completion, level ups, rare donations, wing unlocks — max 4/day, anti-spam
+- **AdsGram Optional:** Exhibit XP boost, collection hints, score bonus — never mandatory, purely convenience
 
-**See:** `.openhands/knowledge/inventory-system.md` for complete museum specification.
+**See:** `.openhands/knowledge/museum-system.md` for complete museum specification.
 
 ### Prestige System
 Rewards long-term dedication and collection mastery:
@@ -560,6 +587,22 @@ Community-building features for cooperative gameplay:
 - **AdsGram Optional:** Bonus guild mission attempts, contribution boosts — never mandatory
 
 **See:** `.openhands/knowledge/guilds.md` for complete guild system specification.
+
+### Expedition System
+Time-traveling historical exploration with risk/reward decisions:
+- **Era System:** 6 historical eras (Ancient Egypt, Greece, Rome, Viking Age, Medieval Europe, Renaissance) with unique atmospheres, artifacts, and educational content
+- **Expedition Duration Types:** 15 minutes (quick), 1 hour (daily), 4 hours (evening), 8 hours (overnight), 12 hours (special) with proportional reward scaling
+- **Resource Costs:** Expedition Energy (50 max, +1/30 min) or Expedition Keys (3 max, +1/8 hrs) with distinct risk/reward profiles
+- **Risk System:** Standard (guaranteed), Risky (+50% rewards, 15% fail), Perilous (+100% rewards, 30% fail) — fair failure with no harsh penalties
+- **Rare Discoveries:** Legendary artifacts, hidden stories, historical documents, secret collections — exciting but never required for progression
+- **Era Progression:** Unlock requirements based on level and collection completion; new eras become available through gameplay
+- **Historical Education:** Pre-expedition briefings, post-expedition learning, museum integration — every expedition teaches something real
+- **Telegram Notifications:** Expedition completion, rare discoveries, era unlocks — maximum 4 per day, never spammy
+- **Statistics Tracking:** Completed expeditions, success rate, rare discoveries, favorite era, expedition history
+- **AdsGram Optional:** Speed boosts, reward bonuses, energy restoration — never mandatory, purely convenience
+- **Future Expansions:** Co-op expeditions, guild expeditions, world events, special boss expeditions (documented, not planned)
+
+**See:** `.openhands/knowledge/expeditions.md` for complete expedition system specification.
 
 ## Technical Stack
 
