@@ -92,6 +92,123 @@ The Master Index is the official starting point for understanding the entire Jol
 
 **See:** `.openhands/knowledge/master-index.md#architecture-overview`
 
+### Folder Architecture
+
+The Jolt Time codebase follows a comprehensive folder architecture designed for scalability, maintainability, and predictability.
+
+#### Top-Level Structure
+
+| Directory | Purpose |
+|-----------|---------|
+| `src/` | Frontend application source code |
+| `public/` | Static public assets |
+| `docs/` | External documentation |
+| `scripts/` | Build and deployment scripts |
+| `tests/` | Cross-cutting test files |
+| `supabase/` | Backend configuration and migrations |
+| `assets/` | Global shared assets |
+| `.openhands/` | Agent knowledge and system docs |
+
+#### Frontend Structure (`src/`)
+
+| Directory | Purpose |
+|-----------|---------|
+| `app/` | App-level setup and providers |
+| `pages/` | Route-level page components |
+| `features/` | Feature-based self-contained modules |
+| `components/` | Shared UI components |
+| `hooks/` | Custom React hooks |
+| `services/` | External service integrations |
+| `repositories/` | Data access layer (Supabase) |
+| `stores/` | Zustand state management |
+| `utils/` | Utility functions |
+| `types/` | TypeScript type definitions |
+| `constants/` | Application constants |
+
+#### Feature-Based Architecture
+
+Features are self-contained modules that encapsulate all related functionality:
+
+```
+src/features/{feature-name}/
+├── index.ts
+├── components/
+├── hooks/
+├── services/
+├── stores/
+├── types/
+├── utils/
+└── constants/
+```
+
+Core features include: museum, events, pvp, profile, economy, guilds, marketplace, social, rewards, quests, world-map, battle-pass.
+
+#### Component Architecture
+
+| Layer | Components |
+|-------|------------|
+| UI Primitives | Button, Input, Card, Badge, Avatar, Progress |
+| Layout | PageLayout, Section, Grid, Container, Flex, Stack |
+| Form | TextField, Select, Checkbox, Slider, Toggle |
+| Game | ArtifactCard, CurrencyDisplay, EnergyBar, MissionCard |
+| Social | FriendCard, GuildCard, LeaderboardEntry |
+| Navigation | BottomNav, Header, Tabs, Breadcrumbs |
+
+#### Service Layer Structure
+
+```
+src/services/
+├── telegram/     # Telegram platform services
+├── ads/          # AdsGram integration
+├── analytics/   # Analytics services
+├── api/          # API service layer
+└── notification/# Notification services
+```
+
+#### Store Structure
+
+| Store | Module | Persistence |
+|-------|--------|-------------|
+| Player Store | `player/` | Full sync |
+| Economy Store | `economy/` | Full sync |
+| Museum Store | `museum/` | Full sync |
+| Events Store | `events/` | Partial |
+| PvP Store | `pvp/` | Real-time only |
+| Social Store | `social/` | Partial |
+| Settings Store | `settings/` | Full sync |
+| UI Store | `ui/` | Session only |
+
+#### Backend Structure
+
+```
+supabase/
+├── functions/     # Edge Functions
+├── migrations/     # Database migrations
+├── seeds/          # Database seeds
+├── rpc/            # RPC Function definitions
+├── triggers/       # Database triggers
+└── views/          # Database views
+```
+
+#### Naming Standards
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Components | PascalCase | `ArtifactCard.tsx` |
+| Hooks | `use` prefix | `usePlayer.ts` |
+| Services | camelCase | `telegramBot.ts` |
+| Stores | `Store` suffix | `playerStore.ts` |
+| Utils | camelCase | `formatCurrency.ts` |
+| Constants | SCREAMING_SNAKE_CASE | `MAX_ENERGY.ts` |
+
+#### Scaling Philosophy
+
+- **10 Features:** Baseline feature modules
+- **50 Features:** Extended feature set with domain grouping
+- **100+ Features:** Enterprise structure with domain groups
+
+**See:** `.openhands/knowledge/folder-architecture.md` for complete folder architecture specification.
+
 ### System Relationships
 
 - Economy ↔ Marketplace — Currency generation and sinks
@@ -3763,6 +3880,140 @@ All components follow consistent patterns:
 - **Accessibility:** WCAG 2.1 AA compliance, keyboard navigation, screen reader support
 
 **See:** `.openhands/knowledge/ui-style.md` for complete design standards.
+
+## React Hooks Architecture
+
+Jolt Time uses a comprehensive React hooks architecture to bridge components with business logic, state management, and platform integrations.
+
+### Hook Categories
+
+| Category | Purpose | Location | Examples |
+|----------|---------|----------|----------|
+| **Data Hooks** | Fetch domain data | `hooks/data/` | `usePlayer`, `useMuseum`, `useEvents` |
+| **Feature Hooks** | Feature business logic | `features/*/hooks/` | `useBattle`, `useGuild`, `useMarketplace` |
+| **Telegram Hooks** | Platform integration | `hooks/telegram/` | `useTelegramUser`, `useTelegramTheme`, `useTelegramBackButton` |
+| **UI Hooks** | UI state management | `hooks/ui/` | `useModal`, `useToast`, `useForm`, `usePagination` |
+| **Analytics Hooks** | Tracking and metrics | `hooks/analytics/` | `useAnalytics`, `useEventTracking`, `useAdsTracking` |
+| **Utility Hooks** | Generic utilities | `hooks/utils/` | `useDebounce`, `useLocalStorage`, `useCountdown` |
+
+### Data Hooks
+
+Data hooks provide access to domain data through Zustand stores and Supabase:
+
+| Hook | Store | Purpose |
+|------|-------|---------|
+| `usePlayer` | Player Store | Player profile and progression |
+| `useMuseum` | Museum Store | Museum and collections |
+| `useInventory` | Economy Store | Inventory and items |
+| `useEvents` | Event Store | Active events and missions |
+| `useLeaderboard` | Social Store | Rankings and scores |
+| `useEnergy` | Player Store | Energy state and management |
+| `useCurrency` | Economy Store | Currency balances |
+| `useGuild` | Social Store | Guild membership |
+| `useFriends` | Social Store | Friends list |
+
+### Telegram Hooks
+
+Telegram hooks provide access to the Telegram Web App SDK:
+
+| Hook | Purpose |
+|------|---------|
+| `useTelegramUser` | Access Telegram user information |
+| `useTelegramTheme` | Theme and color scheme |
+| `useTelegramViewport` | Viewport dimensions and changes |
+| `useTelegramBackButton` | Back button control |
+| `useTelegramShare` | Share functionality |
+| `useTelegramHaptic` | Haptic feedback |
+| `useTelegramMainButton` | Main button control |
+| `useTelegramStorage` | Telegram storage access |
+
+### Analytics Hooks
+
+Analytics hooks support tracking and monetization monitoring:
+
+| Hook | Purpose |
+|------|---------|
+| `useAnalytics` | Central tracking interface |
+| `useEventTracking` | Game event participation tracking |
+| `useAdsTracking` | AdsGram ad views and revenue tracking |
+| `useScreenTracking` | Screen view tracking |
+| `useMonetizationTracking` | Revenue and conversion tracking |
+
+### Hook Standards
+
+| Standard | Pattern |
+|----------|---------|
+| **Naming** | `use{Entity}` or `useTelegram{Feature}` or `use{UIElement}` |
+| **State** | Always expose `isLoading`, `error`, `isError` |
+| **Actions** | Always expose `refetch`, `retry` for async hooks |
+| **Types** | Export full TypeScript types for all hooks |
+
+### Hook Philosophy
+
+- **Single Responsibility** — Each hook does one thing well
+- **Composability** — Hooks compose with other hooks
+- **Predictability** — Same inputs produce same outputs
+- **Testability** — Every hook is testable in isolation
+
+**See:** `.openhands/knowledge/react-hooks.md` for complete hooks architecture specification.
+
+## Services Layer Architecture
+
+The Services Layer is the business logic core of Jolt Time, acting as the intermediary between UI/hooks and data/external systems.
+
+### Service Architecture
+
+| Category | Services | Purpose |
+|---------|----------|---------|
+| **Player Services** | ProfileService, ProgressionService, SettingsService, StatisticsService | Player identity and progression |
+| **Economy Services** | CurrencyService, RewardService, InventoryService, MarketplaceService | In-game economy |
+| **Museum Services** | ArtifactService, CollectionService, ExhibitionService, MuseumExpansionService | Museum and artifacts |
+| **Event Services** | EventService, MissionService, RewardDistributionService, SeasonalEventService | Events and missions |
+| **PvP Services** | BattleService, TournamentService, RankingService, MatchmakingService | Competitive gameplay |
+| **Social Services** | FriendsService, GuildService, ReferralService, LeaderboardService | Social features |
+| **Telegram Services** | TelegramUserService, TelegramNotificationService, TelegramDeepLinkService | Telegram integration |
+| **Analytics Services** | AnalyticsService, RetentionService, MonetizationService, AdsGramAnalyticsService | Tracking and metrics |
+
+### Business Logic Layer
+
+```
+Components → Hooks → Services → Repositories/External APIs
+```
+
+**Key Rules:**
+- Components NEVER call Supabase, AdsGram, or Telegram directly
+- All business logic flows through services
+- Services use repositories for data access
+- Services use external APIs for platform integration
+
+### Service Communication
+
+| From | To | Communication |
+|------|-----|---------------|
+| Hook | Service | Method call |
+| Service | Repository | Interface call |
+| Service | External API | SDK call |
+| Service | Other Service | Limited cross-calls |
+
+### Transaction Management
+
+Services manage atomic operations:
+
+| Operation Type | Transaction Required |
+|---------------|---------------------|
+| Currency transfer | Yes (debit + credit) |
+| Inventory update | Yes (remove + add) |
+| Reward distribution | Yes (multi-currency) |
+| Level up | Yes (XP + level + rewards) |
+| Single read/update | No |
+
+### Service Categories
+
+- **Game Services:** Player, Economy, Museum, Events, PvP
+- **Platform Services:** Social, Telegram, Analytics
+- **Utility Services:** Common patterns, validators
+
+**See:** `.openhands/knowledge/services-layer.md` for complete services architecture specification.
 
 ## Design System
 
