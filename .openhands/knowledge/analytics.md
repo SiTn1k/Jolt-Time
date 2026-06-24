@@ -191,26 +191,43 @@ CHURN METRICS:
 
 ## 3. Gameplay Metrics
 
-### 3.1 Battle Metrics
+### 3.1 PvP Battle Metrics
 
 ```
-BATTLE ANALYTICS:
+PVP ANALYTICS:
 ┌─────────────────────────────────────────────────────────────────┐
-│  BATTLE VOLUME                                                  │
+│  BATTLE COUNTS                                                  │
 │  ─────────────────────────────────────────────────────────────  │
 │  Total Battles: Daily/Weekly/Monthly counts                    │
-│  Battles per DAU: Total battles / DAU                         │
-│  Battle Distribution: Casual vs Ranked vs Event                  │
+│  Battles per DAU: Total battles / DAU                          │
+│  Battle Distribution: Casual vs Ranked vs Event                │
+│  Battle Trend: Battle count changes over time                   │
 │                                                                 │
-│  BATTLE OUTCOMES:                                              │
-│  Win Rate: Wins / Total Battles                                │
-│  Average Battle Duration: Mean seconds per battle                │
+├─────────────────────────────────────────────────────────────────┤
+│  WIN RATES                                                      │
+│  ─────────────────────────────────────────────────────────────  │
+│  Overall Win Rate: Wins / Total Battles                        │
+│  Win Rate by Rank: Win rates across rank tiers                 │
+│  Win Rate by Era: Win rates by artifact era                    │
+│  Average Battle Duration: Mean seconds per battle               │
 │  Turn Distribution: Turns per battle histogram                   │
 │                                                                 │
-│  SKILL PROGRESSION:                                            │
-│  Rating Distribution: Bell curve analysis                       │
-│  Rating Progression: Average rating change per day/week          │
-│  Rank Distribution: % in each rank tier                        │
+├─────────────────────────────────────────────────────────────────┤
+│  LEAGUE DISTRIBUTION                                            │
+│  ─────────────────────────────────────────────────────────────  │
+│  League Breakdown: % of players in each league tier             │
+│  League Progression: Time to advance between leagues            │
+│  Demotion Rate: Players dropping leagues per season             │
+│  League Activity: Players participating in league battles       │
+│                                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│  SEASONAL PARTICIPATION                                         │
+│  ─────────────────────────────────────────────────────────────  │
+│  Season Active Players: Players with any season activity        │
+│  Season Battle Count: Total battles during season               │
+│  Season Win Rate: Win rate during season                        │
+│  Season Completion: % reaching final season tier                 │
+│  Off-Season Activity: Battles during non-competitive periods    │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -618,9 +635,98 @@ COMPLETION METRICS:
 
 ---
 
-## 8. Notification Metrics
+## 8. Marketplace Metrics
 
-### 8.1 Delivery Metrics
+### 8.1 Trade Volume Analytics
+
+```
+MARKETPLACE ANALYTICS:
+┌─────────────────────────────────────────────────────────────────┐
+│  TRADE VOLUME                                                    │
+│  ─────────────────────────────────────────────────────────────  │
+│  Total Trades: Daily/Weekly/Monthly transaction counts           │
+│  Trade Value: Total Chrono Coins exchanged                       │
+│  Average Trade Size: Coins per transaction                       │
+│  Trade Velocity: Trades per listed item                          │
+│                                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│  CATEGORY BREAKDOWN                                            │
+│  ─────────────────────────────────────────────────────────────  │
+│  By Category: Artifact Market, Cosmetic Market, Event items       │
+│  By Rarity: Common through Mythic distribution                  │
+│  By Era: Trade volume by historical era                          │
+│  Seasonal Items: Limited event item trades                       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 8.2 Active Listings Analytics
+
+```
+LISTING ANALYTICS:
+┌─────────────────────────────────────────────────────────────────┐
+│  LISTING METRICS                                                 │
+│  ─────────────────────────────────────────────────────────────  │
+│  Active Listings: Currently available items                       │
+│  New Listings: Items listed in last 24h/7d/30d                 │
+│  Expired Listings: Items reaching end date                       │
+│  Sold Listings: Items successfully traded                        │
+│  Cancelled Listings: Listings removed before sale                │
+│                                                                 │
+│  LISTING BEHAVIOR:                                             │
+│  Average Listing Duration: Time to sell                         │
+│  Relisting Rate: Items relisted after expiry                    │
+│  Price Adjustment Frequency: Sellers adjusting prices            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 8.3 Item Popularity Analytics
+
+```
+ITEM POPULARITY:
+┌─────────────────────────────────────────────────────────────────┐
+│  POPULAR ITEMS                                                   │
+│  ─────────────────────────────────────────────────────────────  │
+│  Most Traded: Items with highest trade frequency               │
+│  Highest Value: Items with highest average sale price           │
+│  Fastest Selling: Items with shortest time-to-sell              │
+│  Search Volume: Search terms and item queries                  │
+│                                                                 │
+│  RARITY DISTRIBUTION:                                          │
+│  Trades by Rarity: Volume and value by rarity tier             │
+│  Rare Item Activity: Mythic and Legendary trade patterns        │
+│  Common Item Volume: Bulk trading of common items              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 8.4 Transaction Analytics
+
+```
+TRANSACTION ANALYTICS:
+┌─────────────────────────────────────────────────────────────────┐
+│  TRANSACTION COUNTS                                              │
+│  ─────────────────────────────────────────────────────────────  │
+│  Daily Transactions: Completed trades per day                   │
+│  Transaction Rate: Trades as % of active players               │
+│  Peak Trading Hours: When trades most frequently occur         │
+│  Weekend vs Weekday: Trading pattern differences               │
+│                                                                 │
+│  TRANSACTION VALUE:                                            │
+│  Average Transaction Size: Coins per trade                      │
+│  Total Marketplace Volume: All-time coins traded               │
+│  Fee Revenue: Marketplace fees collected                        │
+│  Buyer vs Seller: Ratio of marketplace participants            │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 9. Notification Metrics
+
+### 9.1 Delivery Metrics
 
 ```
 NOTIFICATION DELIVERY:
@@ -686,9 +792,9 @@ NOTIFICATION PREFERENCES:
 
 ---
 
-## 9. Player Segments
+## 10. Player Segments
 
-### 9.1 Segment Definitions
+### 10.1 Segment Definitions
 
 ```
 PLAYER SEGMENTS:
@@ -760,9 +866,9 @@ SEGMENT METRICS:
 
 ---
 
-## 10. Dashboard Philosophy
+## 11. Dashboard Philosophy
 
-### 10.1 Executive Dashboard
+### 11.1 Executive Dashboard
 
 ```
 EXECUTIVE OVERVIEW:
@@ -784,7 +890,7 @@ EXECUTIVE OVERVIEW:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 10.2 Game Health Dashboard
+### 11.2 Game Health Dashboard
 
 ```
 GAME HEALTH MONITORING:
@@ -813,7 +919,7 @@ GAME HEALTH MONITORING:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 10.3 Technical Stability Dashboard
+### 11.3 Technical Stability Dashboard
 
 ```
 TECHNICAL MONITORING:
@@ -840,7 +946,7 @@ TECHNICAL MONITORING:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 10.4 Business Intelligence Dashboard
+### 11.4 Business Intelligence Dashboard
 
 ```
 MONETIZATION DASHBOARD:
@@ -870,9 +976,9 @@ MONETIZATION DASHBOARD:
 
 ---
 
-## 11. Privacy Philosophy
+## 12. Privacy Philosophy
 
-### 11.1 Data Collection Principles
+### 12.1 Data Collection Principles
 
 ```
 PRIVACY-FIRST ANALYTICS:
@@ -894,7 +1000,7 @@ PRIVACY-FIRST ANALYTICS:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 11.2 Data Handling
+### 12.2 Data Handling
 
 ```
 DATA MANAGEMENT:
@@ -922,9 +1028,9 @@ DATA MANAGEMENT:
 
 ---
 
-## 12. Future Analytics Features
+## 13. Future Analytics Features
 
-### 12.1 A/B Testing Framework
+### 13.1 A/B Testing Framework
 
 ```
 FUTURE: A/B TESTING PLATFORM
@@ -957,7 +1063,7 @@ Timeline: Phase 2+
 Status: Design consideration only
 ```
 
-### 12.2 Predictive Analytics
+### 13.2 Predictive Analytics
 
 ```
 FUTURE: PREDICTIVE ANALYTICS
@@ -990,7 +1096,7 @@ Timeline: Phase 3+
 Status: Research/planning only
 ```
 
-### 12.3 Churn Prediction
+### 13.3 Churn Prediction
 
 ```
 FUTURE: CHURN PREDICTION SYSTEM
@@ -1022,7 +1128,7 @@ Timeline: Phase 2+
 Status: Requires baseline data first
 ```
 
-### 12.4 Recommendation System
+### 13.4 Recommendation System
 
 ```
 FUTURE: PERSONALIZED RECOMMENDATIONS
@@ -1057,9 +1163,9 @@ Status: Design consideration only
 
 ---
 
-## 13. Analytics Architecture
+## 14. Analytics Architecture
 
-### 13.1 Data Flow
+### 14.1 Data Flow
 
 ```
 ANALYTICS PIPELINE:
@@ -1108,7 +1214,7 @@ ANALYTICS PIPELINE:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 13.2 Key Events Schema
+### 14.2 Key Events Schema
 
 ```
 CORE EVENT TYPES:
@@ -1145,9 +1251,9 @@ CORE EVENT TYPES:
 
 ---
 
-## 14. Quality Standards
+## 15. Quality Standards
 
-### 14.1 Data Quality
+### 15.1 Data Quality
 
 ```
 QUALITY CHECKS:
@@ -1174,7 +1280,7 @@ QUALITY CHECKS:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 14.2 Metric Definitions
+### 15.2 Metric Definitions
 
 ```
 METRIC GOVERNANCE:
@@ -1199,6 +1305,51 @@ METRIC GOVERNANCE:
 │  • Data source and freshness                                   │
 │  • Known limitations or caveats                                │
 │  • Related metrics                                              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 16. Project Philosophy
+
+### 16.1 Data-Driven Decision Making
+
+```
+DECISION-MAKING FRAMEWORK:
+┌─────────────────────────────────────────────────────────────────┐
+│  ANALYTICS-FIRST APPROACH                                        │
+│  ─────────────────────────────────────────────────────────────  │
+│  Jolt Time makes decisions based on:                            │
+│  • Player Feedback — Direct player input and suggestions        │
+│  • Analytics — Behavioral data and metrics trends               │
+│  • Healthy Growth — Sustainable long-term project health        │
+│                                                                 │
+│  DECISION PRIORITY:                                            │
+│  1. Player Experience — Never compromise player trust           │
+│  2. Data Evidence — Decisions backed by analytics               │
+│  3. Sustainability — Long-term health over short-term gains     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 16.2 Balanced Perspective
+
+```
+BALANCED DECISIONS:
+┌─────────────────────────────────────────────────────────────────┐
+│  AVOIDING EXTREMES                                              │
+│  ─────────────────────────────────────────────────────────────  │
+│  • Not analytics-over-everything — Player voice matters         │
+│  • Not just player complaints — Look at actual behavior        │
+│  • Not short-term revenue — Build for long-term trust          │
+│  • Not data harvesting — Minimal collection, maximum insight    │
+│                                                                 │
+│  HEALTHY GROWTH INDICATORS:                                     │
+│  • Improving retention reflects healthy product                │
+│  • Rising engagement shows genuine value                        │
+│  • Sustainable revenue supports project longevity               │
+│  • Player trust is the ultimate metric                         │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```

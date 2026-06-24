@@ -1476,7 +1476,16 @@ Core user activity and engagement tracking:
 
 **See:** `.openhands/knowledge/analytics.md` for complete metrics specification.
 
-### Retention Tracking
+### Analytics Categories
+Comprehensive tracking across all game systems:
+- **Player Analytics:** DAU, MAU, retention rates, session length, progression statistics
+- **Economy Analytics:** Currency generation, spending, inflation risks, item circulation
+- **Event Analytics:** Participation rates, reward claims, event popularity, mission completion
+- **Monetization Analytics:** Subscription activity, Telegram Stars purchases, premium conversion rates
+- **AdsGram Analytics:** Impressions, completed views, reward claims, average revenue, participation rates
+- **Retention Analytics:** Cohort analysis, churn prediction, return rates, player lifecycle
+
+### Retention Metrics
 Player retention and churn analysis:
 - **Cohort Analysis:** Users grouped by signup date, tracked through Day 0/1/7/14/30 retention
 - **Key Metrics:** D1 retention (target >30%), D7 (target >12%), D30 (target >6%)
@@ -1530,6 +1539,24 @@ Event participation and effectiveness tracking:
 
 **See:** `.openhands/knowledge/events.md` for complete event system specification.
 
+### Marketplace Metrics
+Marketplace activity and trade analytics:
+- **Trade Volume:** Total trades, trade value, average trade size, trade velocity by category and rarity
+- **Active Listings:** Current listings, new listings, expired listings, sold listings, relisting rates
+- **Item Popularity:** Most traded items, highest value items, fastest selling, search volume
+- **Transaction Analytics:** Daily transactions, peak trading hours, marketplace fees collected
+
+**See:** `.openhands/knowledge/marketplace.md` for complete marketplace specification.
+
+### PvP Metrics
+Player-versus-player battle analytics:
+- **Battle Counts:** Total battles, battles per DAU, battle distribution (casual/ranked/event)
+- **Win Rates:** Overall win rate, win rate by rank and era, average battle duration
+- **League Distribution:** Player distribution across league tiers, league progression, demotion rates
+- **Seasonal Participation:** Season-active players, season battle counts, season completion rates
+
+**See:** `.openhands/knowledge/pvp-arena.md` for complete PvP specification.
+
 ### Notification Metrics
 Push notification performance tracking:
 - **Delivery:** Sent, delivered, failed, bounced, delivery rate (target >98%)
@@ -1564,6 +1591,62 @@ Planned advanced analytics capabilities:
 - **Predictive Analytics:** LTV prediction, churn risk scoring, content preference prediction (Phase 3+)
 - **Churn Prediction:** Risk score per player, intervention recommendations, effectiveness tracking (Phase 2+)
 - **Recommendation System:** Personal content suggestions, optimal timing, friend activity insights (Phase 3+)
+
+## Security System
+
+### Security Categories
+Comprehensive protection across all game systems:
+- **Account Security:** Player identities, sessions, account ownership, recovery
+- **Economy Security:** Duplicated rewards prevention, currency exploits, item duplication, inflation abuse
+- **Anti-Cheat Systems:** Impossible progression, automated farming, abnormal activity, exploit abuse detection
+- **Transaction Security:** Payment protection, refund abuse prevention, fraud detection
+- **Admin Security:** Administrator accounts, permissions, internal tools protection
+- **Database Protection:** Backup, redundancy, access controls, audit logging
+
+**See:** `.openhands/knowledge/security-system.md` for complete security specification.
+
+### Anti-Cheat Protection
+Detection and prevention of unfair advantages:
+- **Impossible Progression:** Speed analysis, pattern detection, statistical anomalies
+- **Automated Farming:** Bot behavior patterns, uniform timing, 24/7 activity detection
+- **Abnormal Activity:** Unusual resource generation, impossible achievements, anomalous patterns
+- **Exploit Abuse:** Client modification detection, invalid state transitions, race condition exploitation
+- **False Positive Prevention:** Manual review before severe penalties, grace periods, whitelist system
+
+**See:** `.openhands/knowledge/security-system.md` for complete anti-cheat specification.
+
+### Economy Security
+Protecting in-game economy integrity:
+- **Reward Protection:** Duplicate prevention, server-side validation, transaction integrity
+- **Currency Exploits:** Generation limits, sink monitoring, inflation detection
+- **Item Duplication:** Atomic transactions, ownership verification, cross-server checks
+- **Inflation Monitoring:** Supply tracking, value indicators, sink efficiency analysis
+
+**See:** `.openhands/knowledge/security-system.md` for complete economy security specification.
+
+### AdsGram Protection
+Protecting primary revenue system from abuse:
+- **Fake Ad Completions:** Completion validation, timestamp analysis, device correlation
+- **Automated Reward Farming:** Bot detection on reward claims, pattern recognition
+- **Multiple Account Abuse:** Cross-account detection, device fingerprinting, coordinated abuse
+- **Exploit Attempts:** Reward manipulation detection, timing exploitation prevention
+
+**See:** `.openhands/knowledge/adsgram.md` for complete AdsGram specification.
+
+### Moderation Escalation
+Progressive response to violations:
+- **Level 1 - Warning:** Minor infractions, monitoring only
+- **Level 2 - Temporary Restriction:** Feature restrictions, 1-24 hours
+- **Level 3 - Temporary Suspension:** Account suspended, 1-7 days
+- **Level 4 - Permanent Ban:** Account terminated, appeal available
+
+### Recovery Systems
+Disaster recovery and business continuity:
+- **Database Failures:** Backup strategy, point-in-time recovery, replication
+- **Rollback Procedures:** Scope assessment, approval process, communication protocols
+- **Recovery Scenarios:** Minor corruption, feature failure, database failure, security breach, economy exploitation
+
+**See:** `.openhands/knowledge/security-system.md` for complete disaster recovery specification.
 
 ## Localization System
 
@@ -2265,6 +2348,54 @@ Achievements provide long-term motivation without forcing grinding:
 - Flexible completion requirements
 
 **See:** `.openhands/knowledge/achievements.md` for complete philosophy specification.
+
+## Support System
+
+The Jolt Time support ecosystem provides players with accessible, responsive, and respectful assistance whenever they need help.
+
+### Support Categories
+
+- **Technical Issues** — App crashes, loading problems, feature malfunctions, connectivity
+- **Account Problems** — Login difficulties, account recovery, profile updates, security concerns
+- **Payment Questions** — Transaction confirmations, refund requests, subscription changes
+- **Bug Reports** — Gameplay bugs, glitches, reward errors, UI issues
+- **Gameplay Questions** — Feature explanations, progression guidance, strategy tips
+- **Report Player** — Cheating, offensive content, abuse, suspicious activity
+- **Suggestions and Feedback** — Feature ideas, quality-of-life requests, community feedback
+- **AdsGram Support** — Missing ad rewards, reward discrepancies, advertising questions
+
+### Ticket System
+
+Players can create support requests, view history, receive status updates, and review solved cases. Tickets progress through statuses: Open → In Review → Waiting for Response → Resolved → Closed.
+
+### Player Reports
+
+Structured reporting for violations including cheating, offensive nicknames, abuse, suspicious activity, and inappropriate behavior. Simple evidence requirements (screenshots, descriptions, timestamps) balance thorough investigation with player convenience.
+
+### Feedback Center
+
+Players submit ideas, suggestions, and quality-of-life requests. All feedback receives acknowledgment and consideration. Contributors are credited when ideas are implemented.
+
+### Support Statistics
+
+- Total tickets (daily, weekly, monthly with trends)
+- Average response time (target: under 4 hours first response)
+- Solved cases with resolution rates
+- Common issues identification for proactive solutions
+
+### FAQ Philosophy
+
+Frequently asked questions reduce support load while helping players find answers quickly. Categories include lost progress, login issues, reward problems, and event questions.
+
+### Telegram Bot Notifications
+
+Players receive notifications for ticket updates, solved requests, and important support responses. Maximum three support notifications per day. Never promotional. Players control notification preferences.
+
+### Privacy Principles
+
+Support staff access only necessary information, respect player privacy, and avoid unnecessary data exposure. Players maintain rights over their data.
+
+**See:** `.openhands/knowledge/support-system.md` for complete support system specification.
 
 ## Compliance
 
