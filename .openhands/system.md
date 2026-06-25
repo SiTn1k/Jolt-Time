@@ -4345,6 +4345,328 @@ interface JoltError {
 
 **See:** `.openhands/knowledge/error-handling.md` for complete error handling system specification.
 
+## Validation Layer Architecture
+
+The Validation Layer is the centralized authority for validating all data entering or leaving the Jolt Time system.
+
+### Core Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **Prevention** | Stop invalid operations before they affect game state |
+| **Integrity** | Protect economic balance and data consistency |
+| **UX Guidance** | Provide clear, actionable feedback to users |
+
+### Validation Categories
+
+| Category | Layer | Purpose |
+|----------|-------|---------|
+| **UI Validation** | Presentation | Real-time user input feedback |
+| **Form Validation** | Presentation | Structured form submission validation |
+| **Business Validation** | Service | Game-specific rules enforcement |
+| **API Validation** | Integration | Client-server communication validation |
+| **Database Validation** | Persistence | Entity and relationship integrity |
+| **Security Validation** | Infrastructure | Permission, fraud, and abuse prevention |
+
+### Business Validation
+
+Game-specific validation rules govern player actions:
+
+| Domain | Examples |
+|--------|----------|
+| **Economy** | Currency spending, earning caps, conversions |
+| **Rewards** | Daily rewards, achievement claims, ad rewards |
+| **Inventory** | Item add/remove, equip requirements, stack limits |
+| **Progression** | Level gates, era unlocks, feature prerequisites |
+| **Marketplace** | Listing creation, purchases, price bounds |
+
+### Security Validation
+
+| Check Type | Purpose |
+|------------|---------|
+| **Permission Checks** | Resource access authorization |
+| **Role Checks** | Operation authorization by player role |
+| **Fraud Prevention** | Speed cheating, macro detection, impossible actions |
+| **Abuse Prevention** | Rate limiting, spam detection |
+
+### Validation Standards
+
+All validation follows consistent standards:
+
+- **Results:** Standardized success/warning/failure/recovery outcomes
+- **Naming:** Predictable validator and error code patterns
+- **Testing:** Independently testable rules with edge case coverage
+- **Logging:** All validation failures logged for diagnostics
+
+### Telegram Platform Validation
+
+| Validation | Purpose |
+|------------|---------|
+| **Init Data** | Telegram authentication verification |
+| **Deep Links** | Direct navigation target validation |
+| **Referrals** | Referral fraud prevention |
+| **Sharing** | Share attribution and reward validation |
+
+### AdsGram Monetization Validation
+
+Revenue integrity validation for ad rewards:
+
+- **Reward Validation:** Amount, type, eligibility verification
+- **Callback Validation:** Cryptographic signature verification
+- **Duplicate Prevention:** Database constraints, idempotency keys
+- **Monetization Integrity:** View, impression, click validation
+
+**See:** `.openhands/knowledge/validation-layer.md` for complete validation layer architecture specification.
+
+## Data Integrity Rules
+
+Data integrity is enforced at multiple layers:
+
+| Layer | Enforcement |
+|-------|-------------|
+| **Database** | NOT NULL, UNIQUE, CHECK constraints; foreign keys |
+| **Application** | Repository validation, business rule enforcement |
+| **API** | Request/response schema validation, type safety |
+| **Client** | UI validation, form validation |
+
+**See:** `.openhands/knowledge/validation-layer.md` for complete data integrity rules.
+
+## Shared Types Architecture
+
+The Shared Types Architecture establishes TypeScript as the single source of truth for all data structures across the Jolt Time project.
+
+### Type Categories
+
+| Category | Purpose |
+|----------|---------|
+| **Domain Models** | Core business entities (Player, Artifact, Museum, Event, Guild, Season) |
+| **DTOs** | Data Transfer Objects for layer communication |
+| **API Contracts** | API response, RPC, Edge Function, Telegram integration types |
+| **Database Types** | Table models, query results, database entities |
+| **UI Types** | Forms, components, modals, navigation |
+| **Shared Utility Types** | Pagination, sorting, filtering, metadata, status |
+
+### Folder Structure
+
+```
+src/types/
+├── domain/      # Core business entities
+├── dto/         # Data Transfer Objects
+├── api/         # API contract types
+├── database/    # Database entity types
+├── ui/          # Presentation layer types
+└── shared/      # Cross-cutting utility types
+```
+
+### Type Standards
+
+| Standard | Description |
+|----------|-------------|
+| **Predictability** | Consistent naming, structure, and behavior |
+| **Safety** | Strict mode, no implicit any, exhaustive checks |
+| **Maintainability** | Single source of truth, clear documentation |
+
+### Domain Models
+
+Core business entities following standardized patterns:
+
+| Domain | Models |
+|--------|--------|
+| **Player** | Player, PlayerStats, PlayerPreferences |
+| **Artifact** | Artifact, ArtifactDefinition, ArtifactSet |
+| **Museum** | Museum, DisplaySlot, Collection |
+| **Economy** | Currency, Transaction, Wallet |
+| **Event** | GameEvent, Season, Tournament |
+| **Guild** | Guild, GuildMember, GuildRole |
+
+### API Contracts
+
+Standardized response wrappers:
+
+```typescript
+interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: ApiError;
+  metadata?: ResponseMetadata;
+}
+```
+
+### DTO Standards
+
+| DTO Type | Purpose |
+|----------|---------|
+| **Request DTOs** | Client → Server data transfer |
+| **Response DTOs** | Server → Client data transfer |
+| **Payload DTOs** | Service → Service communication |
+| **Transport DTOs** | External system communication |
+
+### AdsGram Types
+
+Monetization types for revenue system:
+
+- **Reward Events:** AdRewardEvent, AdRewardClaimed
+- **Monetization Tracking:** MonetizationEvent, MonetizationSummary
+- **Ad Responses:** AdShowResponse, AdRewardResponse
+- **Reward Verification:** RewardVerificationRequest, RewardVerificationResult
+
+**See:** `.openhands/knowledge/shared-types.md` for complete shared types architecture specification.
+
+## Feature Module Structure
+
+The Feature Module Architecture organizes Jolt Time around independent business domains.
+
+### Module Categories
+
+| Module | Purpose |
+|--------|---------|
+| **Player Module** | Profile, progression, achievements, statistics |
+| **Museum Module** | Artifacts, collections, exhibitions, museum expansion |
+| **Economy Module** | Currencies, inventory, rewards, transactions |
+| **Event Module** | Missions, events, seasons, event rewards |
+| **PvP Module** | Battles, rankings, leagues, seasons |
+| **Guild Module** | Guild management, members, activities, progression |
+| **Marketplace Module** | Listings, purchases, sales, analytics |
+| **Settings Module** | Preferences, notifications, privacy, account |
+
+### Standard Module Structure
+
+```
+src/features/{module}/
+├── components/     # React components
+├── hooks/          # Custom React hooks
+├── services/       # Business logic services
+├── repositories/   # Data access layer
+├── stores/         # Zustand state management
+├── types/          # TypeScript type definitions
+├── pages/          # Page components
+├── utils/          # Module-specific utilities
+└── constants/      # Module-specific constants
+```
+
+### Module Standards
+
+| Standard | Description |
+|----------|-------------|
+| **Ownership** | Modules own their complete business logic |
+| **Isolation** | Minimize cross-module dependencies |
+| **Scalability** | Modules scale independently |
+
+### Dependency Rules
+
+| Rule | Implementation |
+|------|---------------|
+| **Allowed** | Shared resources, domain types, utilities |
+| **Forbidden** | Direct module-to-module imports |
+| **Communication** | Event-based, service facades, shared state |
+
+### Module Scalability
+
+| Scale | Approach |
+|-------|----------|
+| **10 modules** | Single `features/` directory |
+| **50 modules** | Domain grouping (social/, combat/) |
+| **100+ modules** | Independent npm packages |
+
+### AdsGram Integration
+
+Modules support optional monetization:
+
+- **Reward Hooks:** `useAdReward()` per module
+- **Analytics:** Monetization event tracking
+- **Validation:** Server-side reward verification
+
+**See:** `.openhands/knowledge/feature-modules.md` for complete feature module architecture specification.
+
+## Frontend Coding Standards
+
+The Frontend Coding Standards establish official guidelines for all frontend development in Jolt Time.
+
+### Standards Categories
+
+| Category | Purpose |
+|----------|---------|
+| **React Standards** | Component structure, responsibilities, composition |
+| **TypeScript Standards** | Strict typing, interfaces, type safety |
+| **Component Standards** | Reusable, feature, and shared components |
+| **Hook Standards** | Logic encapsulation, reusability |
+| **State Management Standards** | Zustand stores, selectors, persistence |
+| **Styling Standards** | Design system, responsive layouts, accessibility |
+| **Testing Standards** | Unit, component, integration tests |
+
+### Coding Philosophy
+
+| Principle | Description |
+|-----------|-------------|
+| **Readable** | Code expresses intent clearly |
+| **Maintainable** | Easy to understand and modify |
+| **Scalable** | Supports feature growth |
+| **Predictable** | Consistent patterns throughout |
+
+### TypeScript Standards
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **Strict Mode** | TypeScript strict mode enabled |
+| **No Implicit Any** | All types explicitly defined |
+| **Interface Usage** | Interfaces for object shapes |
+| **Type Guards** | Runtime type validation |
+
+### Component Standards
+
+| Type | Location | Responsibility |
+|------|----------|----------------|
+| **UI Components** | `components/ui/` | Design system primitives |
+| **Feature Components** | `features/{feature}/components/` | Feature-specific UI |
+| **Shared Components** | `components/shared/` | Cross-feature components |
+
+### State Management
+
+| Pattern | Standard |
+|---------|----------|
+| **Store Access** | `useStore(state => state.property)` |
+| **Persistence** | Zustand persist middleware |
+| **Updates** | Immutable state updates |
+
+### Service Layer
+
+Components communicate through hooks and services:
+
+```
+Component → Hook → Service → Repository
+```
+
+Components MUST NOT access repositories directly.
+
+### Naming Conventions
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Components | PascalCase | `PlayerCard` |
+| Hooks | use prefix | `usePlayer` |
+| Services | PascalCase | `PlayerService` |
+| Types | PascalCase | `Player` |
+| Constants | SCREAMING_SNAKE_CASE | `MAX_ENERGY` |
+
+### Performance Standards
+
+| Technique | When to Use |
+|-----------|-------------|
+| **useCallback** | Callbacks in dependency arrays |
+| **useMemo** | Computed values from state |
+| **React.memo** | Pure components with props |
+| **Lazy Loading** | Heavy pages and components |
+
+### Error Handling
+
+| Pattern | Standard |
+|---------|----------|
+| **User Errors** | User-friendly messages |
+| **Recovery** | Provide recovery actions |
+| **Boundaries** | Graceful degradation |
+
+**See:** `.openhands/knowledge/frontend-coding-standards.md` for complete frontend coding standards.
+
 ## Design System
 
 The Jolt Time design system establishes visual language and global standards ensuring consistency across all application surfaces.
