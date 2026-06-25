@@ -4015,6 +4015,336 @@ Services manage atomic operations:
 
 **See:** `.openhands/knowledge/services-layer.md` for complete services architecture specification.
 
+## Repository Pattern Architecture
+
+The Repository Pattern establishes Jolt Time's **Data Access Layer** — the exclusive pathway for all database operations. This architectural decision ensures complete isolation between business logic and data persistence.
+
+### Core Architecture
+
+```
+Components → Hooks → Services → Repositories → Supabase
+```
+
+**Key Rules:**
+- Services MUST NEVER communicate directly with Supabase
+- All database operations MUST pass through repositories
+- Repositories encapsulate all data access logic
+- Repositories hide database implementation details
+
+### Repository Categories
+
+| Category | Repositories | Domain |
+|----------|-------------|--------|
+| **Player Repositories** | ProfileRepository, StatisticsRepository, SettingsRepository, ProgressionRepository | Player identity and state |
+| **Economy Repositories** | CurrencyRepository, InventoryRepository, TransactionRepository, MarketplaceRepository | In-game economy |
+| **Museum Repositories** | ArtifactRepository, CollectionRepository, MuseumRepository, ExhibitionRepository | Museum and artifacts |
+| **Event Repositories** | EventRepository, MissionRepository, RewardRepository, SeasonRepository | Event systems |
+| **PvP Repositories** | BattleRepository, TournamentRepository, RankingRepository, MatchmakingRepository | Competitive gameplay |
+| **Social Repositories** | FriendRepository, GuildRepository, LeaderboardRepository, ChatRepository | Social features |
+| **Analytics Repositories** | AnalyticsRepository, RetentionRepository, MonetizationRepository, AdsRepository | Data and metrics |
+
+### Folder Structure
+
+```
+src/
+└── repositories/
+    ├── base/                    # Base classes and interfaces
+    │   ├── BaseRepository.ts
+    │   └── RepositoryInterface.ts
+    ├── player/                  # Player domain
+    ├── economy/                 # Economy domain
+    ├── museum/                  # Museum domain
+    ├── events/                  # Events domain
+    ├── pvp/                     # PvP domain
+    ├── social/                 # Social domain
+    ├── analytics/              # Analytics domain
+    └── infrastructure/          # Cache and client infrastructure
+```
+
+### Repository Interface Standards
+
+All repositories follow consistent patterns:
+
+| Standard | Pattern |
+|----------|---------|
+| **Naming** | `{Entity}Repository` (e.g., `ProfileRepository`) |
+| **Singleton** | Factory function `get{Entity}Repository()` |
+| **Return Types** | `T \| null` for single, `T[]` for multiple, `boolean` for operations |
+| **Error Handling** | Repositories handle errors and return safe defaults |
+| **Data Mapping** | Private mapping methods transform database rows to domain objects |
+
+### Data Access Layer
+
+Repositories interact with Supabase through standardized patterns:
+
+| Pattern | Usage |
+|---------|-------|
+| `select()` | Read operations with filtering |
+| `insert()` | Create new records |
+| `update()` | Modify existing records |
+| `upsert()` | Create or update |
+| `rpc()` | Complex business logic via stored procedures |
+| Edge Functions | External API calls |
+
+### Infrastructure Isolation
+
+The Repository Layer provides complete infrastructure isolation:
+
+| Benefit | Description |
+|---------|-------------|
+| **Database Independence** | Switch databases without rewriting services |
+| **Schema Flexibility** | Evolve database without affecting business logic |
+| **Performance Tuning** | Optimize queries without service changes |
+| **Caching Support** | Add cache layer without modifying services |
+
+### Error Handling
+
+Repositories normalize database errors:
+
+```typescript
+// Standardized error handling pattern
+async getById(id: string): Promise<Entity | null> {
+  const { data, error } = await this.supabase
+    .from(this.tableName)
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error(`Repository: Error fetching ${this.tableName}:`, error);
+    return null;
+  }
+
+  return data ? this.mapRow(data) : null;
+}
+```
+
+### Transaction Management
+
+Repositories support atomic operations:
+
+| Operation | Pattern |
+|-----------|---------|
+| Single operation | Direct query |
+| Multi-step | `supabase.rpc()` with transaction |
+| Cross-table | Database-level transactions |
+
+### Testing Support
+
+Repositories are designed for independent testing:
+
+- **Dependency Injection:** Supabase client is injectable
+- **Mock-Friendly:** Clear method contracts
+- **Isolated:** No cross-dependencies between repositories
+
+### Caching Philosophy
+
+Repositories support future caching implementations:
+
+- **Local Cache:** Browser localStorage support
+- **Memory Cache:** Session-level caching
+- **Distributed Cache:** Redis-based caching ready
+
+**See:** `.openhands/knowledge/repository-pattern.md` for complete repository architecture specification.
+
+## API Client Layer Architecture
+
+The API Client Layer establishes Jolt Time's **External Communication Gateway** — a unified system for all requests to external services, databases, and third-party platforms.
+
+### Core Architecture
+
+```
+Services → Repositories → API Clients → External Systems
+```
+
+**Key Rules:**
+- Repositories and Services MUST NEVER directly construct raw requests
+- All communication with external systems MUST pass through standardized API Clients
+- API Clients centralize configuration, authentication, and error handling
+
+### API Client Categories
+
+| Category | Client | Purpose |
+|----------|--------|---------|
+| **Database Client** | SupabaseClient | PostgreSQL database access |
+| **RPC Client** | RpcClient | Supabase RPC function execution |
+| **Edge Client** | EdgeFunctionClient | Edge Function invocation |
+| **Platform Client** | TelegramClient | Telegram Bot API integration |
+| **Monetization Client** | AdsGramClient | AdsGram SDK communication |
+| **Analytics Client** | AnalyticsClient | Event tracking and metrics |
+
+### Folder Structure
+
+```
+src/
+├── api/
+│   ├── base/                    # Base classes and interfaces
+│   │   ├── BaseClient.ts
+│   │   ├── ClientConfig.ts
+│   │   └── types.ts
+│   ├── supabase/               # Database clients
+│   ├── rpc/                    # RPC client
+│   ├── edge-functions/         # Edge function client
+│   ├── telegram/               # Telegram client
+│   ├── adsgram/                # AdsGram client
+│   └── analytics/              # Analytics client
+```
+
+### External Communication Layer
+
+API Clients manage all external communications:
+
+| Client | External System | Communication |
+|--------|----------------|---------------|
+| SupabaseClient | Supabase PostgreSQL | Database queries |
+| RpcClient | Supabase RPC Functions | Stored procedures |
+| EdgeFunctionClient | Supabase Edge Functions | Serverless functions |
+| TelegramClient | Telegram Bot API | Bot messages, updates |
+| AdsGramClient | AdsGram SDK | Ad requests, rewards |
+| AnalyticsClient | Analytics Backend | Event tracking |
+
+### Request Lifecycle
+
+| Stage | Description |
+|-------|-------------|
+| **Request Creation** | Build request, add auth headers, serialize data |
+| **Validation** | Validate parameters, check required fields |
+| **Execution** | Apply retry policy, execute HTTP request |
+| **Response Handling** | Parse response, normalize data format |
+| **Result Return** | Return typed result, log, update metrics |
+
+### Response Standards
+
+All API Clients follow standardized response patterns:
+
+| Response Type | Format |
+|--------------|--------|
+| **Success** | `{ success: true, data: T, metadata?: ResponseMetadata }` |
+| **Error** | `{ success: false, error: { code, message, details } }` |
+| **Paginated** | `{ items: T[], total, page, pageSize, hasMore }` |
+
+### Authentication Philosophy
+
+API Clients manage authentication consistently:
+
+- **Session Management:** Token storage, refresh, and lifecycle
+- **Token Handling:** JWT validation, refresh tokens
+- **Secure Communications:** HTTPS-only, certificate validation
+
+### Error Handling
+
+All clients implement standardized error handling:
+
+| Error Type | Code | Retryable |
+|------------|------|-----------|
+| NetworkError | NETWORK_ERROR | Yes |
+| TimeoutError | TIMEOUT | Yes |
+| AuthenticationError | AUTH_ERROR | No |
+| RateLimitError | RATE_LIMIT | Yes |
+| ApiError | API_ERROR | Depends |
+
+### Performance Optimization
+
+API Clients support performance optimization:
+
+- **Request Deduplication:** Prevent duplicate simultaneous requests
+- **Caching:** Local, memory, and distributed cache support
+- **Request Batching:** Batch multiple requests into single call
+- **Network Optimization:** Compression, connection pooling
+
+**See:** `.openhands/knowledge/api-client-layer.md` for complete API client architecture specification.
+
+## Error Handling System Architecture
+
+The Error Handling System establishes Jolt Time's standardized approach to managing errors across all application layers.
+
+### Core Principles
+
+| Principle | Description |
+|-----------|-------------|
+| **Standardization** | All errors follow consistent patterns |
+| **Predictability** | Errors are traceable and diagnostic |
+| **User-Friendliness** | Players never see raw technical errors |
+| **Recoverability** | Errors support appropriate recovery strategies |
+
+### Error Categories
+
+| Category | Layer | Description |
+|----------|-------|-------------|
+| **UI Errors** | Presentation | Component rendering issues |
+| **Validation Errors** | Business Logic | Input validation failures |
+| **Service Errors** | Service Layer | Business logic failures |
+| **Repository Errors** | Data Layer | Data access failures |
+| **API Errors** | External Layer | External service failures |
+| **Database Errors** | Data Layer | Supabase failures |
+| **Telegram Errors** | Platform Layer | Telegram API failures |
+| **External Service Errors** | Integration Layer | Third-party failures |
+
+### Error Severity Levels
+
+| Level | Name | Behavior | Example |
+|-------|------|----------|---------|
+| **1** | Critical | Immediate alert, halt operation | Database crash |
+| **2** | High | Alert logged, operation failed | Payment failure |
+| **3** | Medium | Error logged, fallback activated | Cache miss |
+| **4** | Low | Error logged, operation continued | Analytics miss |
+| **5** | Informational | Logged for tracking | User action |
+
+### Layer Responsibilities
+
+| Layer | Responsibility |
+|-------|---------------|
+| **Components** | Display error messages, provide retry options |
+| **Hooks** | Transform errors, manage error state |
+| **Stores** | Global error state, error boundaries |
+| **Services** | Business rule validation, error translation |
+| **Repositories** | Data access errors, DB error translation |
+| **API Clients** | External errors, circuit breakers |
+
+### Error Response Structure
+
+```typescript
+interface JoltError {
+  id: string;              // Unique trace identifier
+  code: string;           // Machine-readable error code
+  category: ErrorCategory;
+  severity: ErrorSeverity;
+  message: LocalizedMessage;  // User-friendly message
+  recoverable: boolean;
+  recoveryAction?: RecoveryAction;
+  timestamp: Date;
+  traceId: string;        // For log correlation
+}
+```
+
+### Retry Strategy
+
+| Strategy | When Used | Behavior |
+|----------|-----------|----------|
+| **Automatic Retry** | Transient failures | System retries with backoff |
+| **Manual Retry** | After auto-retry exhausted | User clicks retry button |
+| **No Retry** | Non-recoverable | Show error message |
+
+### Network Error Handling
+
+| State | Detection | Handling |
+|-------|-----------|----------|
+| **Online** | navigator.onLine | Normal operation |
+| **Offline** | !navigator.onLine | Queue operations, show offline UI |
+| **Slow** | High latency | Increase timeouts |
+| **Unstable** | Frequent disconnects | Reduce requests, cache aggressively |
+
+### Monitoring Philosophy
+
+| Aspect | Purpose |
+|--------|---------|
+| **Logging** | Record all errors with context |
+| **Tracking** | Error frequency and distribution |
+| **Diagnostics** | Debug support with trace IDs |
+| **Alerting** | Future threshold-based alerts |
+
+**See:** `.openhands/knowledge/error-handling.md` for complete error handling system specification.
+
 ## Design System
 
 The Jolt Time design system establishes visual language and global standards ensuring consistency across all application surfaces.
