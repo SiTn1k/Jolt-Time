@@ -2957,6 +2957,68 @@ Jolt Time maintains comprehensive table specifications documenting every databas
 
 **See:** `.openhands/knowledge/supabase-tables.md` for the complete Supabase Tables reference.
 
+## Realtime Architecture
+
+Jolt Time leverages Supabase Realtime to provide live updates across the application. The Realtime Architecture defines how changes in the database are propagated to clients in real-time.
+
+**See:** `.openhands/knowledge/realtime-architecture.md` for the complete Realtime Architecture specification.
+
+### Realtime Categories
+
+The Realtime system is organized into seven distinct categories:
+
+- **Player Realtime** — Profile updates, progression, achievements, rewards
+- **Museum Realtime** — Artifact discoveries, collection progress, exhibitions
+- **Event Realtime** — Mission progress, event participation, seasonal updates
+- **PvP Realtime** — Battle results, rankings, leaderboards, promotions
+- **Guild Realtime** — Guild activity, progression, announcements, events
+- **Notification Realtime** — Reward notifications, mission completion, system events
+- **Analytics Realtime** — Session tracking, engagement metrics, retention events
+
+### Architecture Layers
+
+The Realtime Architecture consists of four distinct layers:
+
+- **Client Layer** — Websocket connections, channel subscriptions, event filtering
+- **Subscription Layer** — Channel management, permission validation, routing
+- **Event Processing Layer** — Event transformation, prioritization, queuing
+- **Database Event Layer** — PostgreSQL triggers, NOTIFY/pg_notify, event capture
+
+### Subscription Management
+
+Subscription management ensures efficient use of realtime infrastructure:
+
+- **Lifecycle** — Pending, Active, Reconnecting, Paused, Terminated states
+- **Creation** — Triggers based on user context and game state
+- **Cleanup** — Automatic cleanup on disconnect, logout, or channel exit
+- **Reconnection** — Exponential backoff with missed event replay
+
+### Event Processing
+
+Event processing ensures reliable and efficient event delivery:
+
+- **Validation** — Authenticity, schema, permissions, rate limits, deduplication
+- **Distribution** — Direct (1:1), Broadcast (1:N), Guild (1:M), Global (1:ALL)
+- **Prioritization** — Critical (< 50ms), High (< 100ms), Medium (< 500ms), Low (< 2s)
+
+### Realtime Security
+
+Realtime security ensures data privacy and prevents abuse:
+
+- **RLS Compatibility** — Row-Level Security policies apply to subscriptions
+- **Permission Validation** — Authentication and access validation for all events
+- **Event Isolation** — User, guild, event, and system event isolation
+
+### Realtime Scalability
+
+The architecture supports scaling from thousands to millions of users:
+
+- **10K Users** — Basic Supabase Pro, minimal infrastructure
+- **100K Users** — Horizontal scaling, subscription sharding, multi-region
+- **1M+ Users** — Enterprise deployment, global CDN, distributed infrastructure
+
+**See:** `.openhands/knowledge/realtime-architecture.md` for complete realtime architecture specification.
+
 ### Table Documentation
 
 Every table is documented with:
@@ -5445,6 +5507,252 @@ Scaling readiness ensures the database can grow from thousands to millions of us
 | **Sessions** | started_at | Composite with partition key |
 
 **See:** `.openhands/knowledge/database-indexing.md#15-scaling-philosophy`
+
+## Audit Logs System
+
+Jolt Time maintains a comprehensive Audit Logs System that serves as the authoritative source of historical system activity. Every critical action is traceable through the audit infrastructure.
+
+**See:** `.openhands/knowledge/audit-logs-system.md` for the complete Audit Logs System Architecture specification.
+
+### Audit Categories
+
+The Audit Logs System is organized into nine distinct categories:
+
+- **Player Activity Logs** — Account creation, profile changes, progression, achievements
+- **Economy Logs** — Currency transactions, inventory changes, marketplace operations
+- **Museum Logs** — Artifact acquisitions, collections, exhibitions, expansions
+- **Event Logs** — Mission completion, event participation, season progression
+- **PvP Logs** — Battle outcomes, ranking changes, tournament activities
+- **Guild Logs** — Guild activities, member management, guild rewards
+- **Monetization Logs** — Purchases, subscriptions, revenue events
+- **Administrative Logs** — Moderation actions, manual adjustments, configuration changes
+- **Security Logs** — Suspicious activity, permission violations, fraud detection
+
+### Architecture Layers
+
+The Audit Logs System consists of four distinct layers:
+
+- **Event Generation Layer** — Captures actions from applications, RPCs, Edge Functions, and database triggers
+- **Audit Processing Layer** — Transforms, enriches, and validates audit events
+- **Audit Storage Layer** — Persists events in append-only tables with tiered retention
+- **Audit Query Layer** — Provides access for investigations, analytics, and reporting
+
+### Audit Record Standards
+
+Every audit event follows standardized record formats:
+
+- **Event Identifier** — Unique ID format: `aud_{timestamp}_{random_suffix}`
+- **Timestamp** — Millisecond precision, UTC timezone
+- **Actor** — Identifies initiator (user, system, admin, api_key)
+- **Action** — Standardized format: `{CATEGORY}_{VERB}`
+- **Entity** — The object acted upon with type and identifier
+- **Result** — Status (SUCCESS/FAILURE/PARTIAL) with error details
+- **Metadata** — Correlation IDs, additional context, environment info
+
+### Activity Tracking
+
+Activity tracking captures all significant player and system actions:
+
+- **Player Actions** — Account lifecycle, profile changes, progression, achievements
+- **Economy Actions** — Currency movements, inventory updates, reward distributions
+- **Game Actions** — Museum activities, event participation, PvP battles, guild operations
+- **System Actions** — Administrative changes, configuration updates, security events
+
+### Security Logging
+
+Security logging tracks security-relevant events for threat detection:
+
+- **Authentication Events** — Login attempts, session management, token refresh
+- **Permission Events** — Authorization checks, violations, access denials
+- **Anomaly Detection** — Unusual patterns, suspicious activity, fraud indicators
+- **Investigation Support** — Complete event trails, correlation data, evidence preservation
+
+### Audit Governance
+
+Audit governance ensures data integrity and appropriate access:
+
+- **Immutability** — Append-only tables with INSERT-only permissions
+- **Access Control** — Tiered access (Operational, Investigative, Administrative, Executive)
+- **Access Auditing** — All audit access is logged and monitored
+- **Privacy Compliance** — Data minimization, PII handling, retention policies
+
+### Audit Retention Standards
+
+Audit logs follow tiered retention policies based on business needs:
+
+- **Short-Term (90 days)** — Player activity, economy transactions, session logs
+- **Medium-Term (1 year)** — Administrative actions, security events, moderation logs
+- **Long-Term (7+ years)** — Account creation, security incidents, payment records
+
+**See:** `.openhands/knowledge/audit-logs-system.md` for complete audit logging specification.
+
+## Database Archiving Strategy
+
+Jolt Time maintains a Database Archiving Strategy that ensures historical data remains accessible while maintaining database performance. The database should remain fast and efficient as historical data grows.
+
+**See:** `.openhands/knowledge/database-archiving.md` for the complete Database Archiving Strategy specification.
+
+### Archiving Categories
+
+The archiving system addresses seven distinct data categories:
+
+- **Player Historical Data** — Progression history, achievements, museum history, account activity
+- **Seasonal Data** — Completed seasons, leaderboards, rewards, statistics
+- **Event Data** — Completed events, mission history, participation records, rankings
+- **Audit Logs** — Player activity, economy transactions, administrative actions, security events
+- **Analytics Data** — Retention analytics, engagement metrics, historical reports, trends
+- **Monetization Data** — AdsGram rewards, revenue events, fraud investigation records
+- **System Data** — Configuration history, deployment records, performance logs
+
+### Data Lifecycle Management
+
+Data moves through four distinct lifecycle stages:
+
+- **Active Data** — Current data for daily operations (hot storage)
+- **Warm Data** — Recent history (90 days to 1 year, warm storage)
+- **Archived Data** — Historical records (1 to 7 years, cold storage)
+- **Long-Term Storage** — Critical records for compliance (7+ years, WORM storage)
+
+### Historical Data Standards
+
+Historical data archiving preserves complete platform history:
+
+- **Progression Archives** — Level history, era progression, milestone records
+- **Achievement Archives** — Unlock records, completion statistics, rarity tracking
+- **Event Archives** — Season records, mission history, participation tracking
+- **Economic Archives** — Transaction history, balance snapshots, economy trends
+
+### Archive Governance
+
+Archive governance ensures data integrity and appropriate access:
+
+- **Archive Protection** — Encryption at rest and in transit, access logging
+- **Access Control** — Tiered access (Operations, Analysts, Security, Compliance)
+- **Historical Integrity** — Immutable archives, chain of custody, integrity verification
+- **Retention Policies** — Automated enforcement, compliance verification, legal hold support
+
+### Archive Retention Policies
+
+Archive retention follows tiered policies based on data importance:
+
+- **Short-Term (90 days)** — Recent activity, session logs, transient data
+- **Medium-Term (1 year)** — Seasonal data, analytics aggregates, reports
+- **Long-Term (7+ years)** — Payment records, security incidents, compliance data
+- **Permanent** — Account creation records, legal holds
+
+**See:** `.openhands/knowledge/database-archiving.md` for complete database archiving specification.
+
+## Production Database Operations
+
+Jolt Time maintains Production Database Operations that define how the production database is operated, monitored, maintained, and protected. The operations framework serves as the operational handbook for database reliability and scalability.
+
+**See:** `.openhands/knowledge/production-database-operations.md` for the complete Production Database Operations specification.
+
+### Operational Governance
+
+Database operations are organized into seven categories:
+
+- **Deployment Operations** — Migration deployment, schema changes, release validation, rollback procedures
+- **Monitoring Operations** — Database health, query performance, connection usage, storage growth
+- **Backup Operations** — Automated backups, backup verification, retention policies, disaster recovery
+- **Recovery Operations** — Accidental deletion, data corruption, service outage, disaster recovery
+- **Maintenance Operations** — Index maintenance, archive maintenance, performance reviews, storage optimization
+- **Security Operations** — Access reviews, credential management, permission audits, anomaly detection
+- **Incident Operations** — Severity levels, escalation procedures, investigation workflows, resolution workflows
+
+### Environment Governance
+
+Standards for each deployment environment:
+
+- **Development** — Per-developer instances, synthetic data, rapid iteration, lightweight documentation
+- **Staging** — Shared production-like environment, anonymized data, full regression testing
+- **Production** — Maximum security, restricted access, controlled releases, 24/7 monitoring
+
+### Backup Strategy
+
+Comprehensive backup protection:
+
+- **Automated Backups** — Continuous WAL archiving, daily snapshots, weekly and monthly archives
+- **Backup Verification** — Daily checks, weekly restore tests, monthly full recovery drills
+- **Retention Policies** — 7 days (WAL), 30 days (daily), 12 months (weekly), 7 years (financial)
+- **Disaster Recovery** — Cross-region replication, tested runbooks, quarterly recovery drills
+
+### Recovery Strategy
+
+Recovery procedures for various scenarios:
+
+- **Accidental Deletion** — Point-in-time recovery, record restoration, integrity validation
+- **Data Corruption** — Corruption detection, isolation, restore from last known good
+- **Service Outage** — Restart, failover to replica, full restore as needed
+- **Disaster Recovery** — DR site activation, cross-region failover, full recovery workflow
+
+### Incident Management
+
+Structured incident response:
+
+- **Severity Levels** — Critical (immediate), High (30min), Medium (2hr), Low (24hr)
+- **Escalation Path** — On-Call DBA → Senior DBA → Engineering Manager → Director/VP
+- **Investigation Workflow** — Detection → Triage → Investigation → Resolution → Follow-up
+- **Resolution Workflow** — Immediate actions → Long-term fix → Closure → Post-mortem
+
+### Database Reliability Standards
+
+Operational KPIs for database reliability:
+
+- **Uptime** — 99.95% target, RTO < 30 minutes, RPO < 5 minutes
+- **Performance** — Average query < 50ms, P95 < 200ms, P99 < 500ms
+- **Backup** — 100% success rate, weekly verification, quarterly drills
+- **Recovery** — Tested quarterly, documented procedures, trained team
+
+**See:** `.openhands/knowledge/production-database-operations.md` for complete operational specification.
+
+## Data Warehouse Strategy
+
+Jolt Time maintains a Data Warehouse Strategy that serves as the central intelligence center for business intelligence, LiveOps analysis, growth analysis, and strategic decision making. Operational databases and analytical databases have different responsibilities.
+
+**See:** `.openhands/knowledge/data-warehouse-strategy.md` for the complete Data Warehouse Strategy specification.
+
+### Analytics Architecture
+
+The analytics system addresses eight distinct analytical categories:
+
+- **Player Analytics** — Acquisition, progression, engagement, churn analysis
+- **Economy Analytics** — Currency generation, spending, rewards, balance monitoring
+- **Museum Analytics** — Artifact collection rates, museum progression, exhibition popularity
+- **Event Analytics** — Participation rates, mission completion, seasonal engagement
+- **PvP Analytics** — Battle participation, ranking distribution, competitive retention
+- **Guild Analytics** — Guild engagement, member activity, social health
+- **Monetization Analytics** — AdsGram performance, reward engagement, revenue reporting
+- **Retention Analytics** — D1/D7/D30 retention, cohort analysis, lifetime value
+
+### ETL Standards
+
+ETL (Extract, Transform, Load) processes move data from operational systems to the warehouse:
+
+- **Extraction** — Scheduled data retrieval from operational DB, audit logs, realtime events, monetization systems
+- **Transformation** — Data cleaning, business rule application, aggregation, quality validation
+- **Loading** — Atomic warehouse loads with transactional integrity and audit trail
+- **Validation** — Schema validation, data validation, completeness checks, anomaly detection
+
+### Business Intelligence Layer
+
+The BI layer provides multiple reporting interfaces:
+
+- **Operational Dashboards** — Real-time game health monitoring, player status, economy metrics
+- **Executive Dashboards** — Daily strategic overview, revenue, retention, growth trajectory
+- **LiveOps Dashboards** — Event performance, content engagement, operational metrics
+- **Growth Dashboards** — Acquisition funnels, activation rates, retention cohorts, LTV analysis
+
+### Reporting Governance
+
+Reporting governance ensures data quality and appropriate access:
+
+- **Data Quality** — Consistency checks, anomaly detection, completeness validation
+- **Access Controls** — Role-based access, analytical permissions, PII protection
+- **Metric Standards** — Consistent definitions, standardized calculations, unified reporting
+- **Security** — Sensitive data protection, export restrictions, audit logging
+
+**See:** `.openhands/knowledge/data-warehouse-strategy.md` for complete data warehouse specification.
 
 ## Query Optimization Strategy
 
