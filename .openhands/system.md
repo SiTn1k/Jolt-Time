@@ -286,6 +286,52 @@ The main monetization for the project is **Telegram AdsGram advertisements**. Th
 - Optional premium subscription
 - Battle pass (future)
 
+### Telegram Stars Architecture
+Native Telegram Stars payment integration for Jolt Time monetization:
+- **Purchase Categories:** Direct purchases (Time Shards, Dust), Premium features (Plus subscription), Seasonal (Season Pass, Event Pass), Cosmetic (profiles, museum), Progression (XP boosts, skips), Supporter (badges, emotes)
+- **Architecture Layers:** Purchase Layer (invoice creation, Telegram API), Validation Layer (signature verification, idempotency), Reward Layer (item granting, inventory), Analytics Layer (events, metrics), Security Layer (fraud prevention, duplicate detection)
+- **Purchase Security:** HMAC signature validation, receipt idempotency, fraud pattern detection, duplicate purchase prevention
+- **Premium Features:** Jolt Time Plus (5 Stars/month or 45 Stars/year), exclusive cosmetics, quality-of-life features, ad-free option
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md` for complete Stars specification.
+
+### Stars Purchase Framework
+Purchase types and pricing structure for Telegram Stars:
+- **One-Time Purchases:** Micro (1-5 Stars), Small (10-25 Stars), Medium (50-100 Stars), Large (250-500 Stars), Premium (1000+ Stars)
+- **Premium Bundles:** Starter Bundle, Value Bundle, Collection Bundle, Event Bundle
+- **Seasonal Bundles:** Limited availability, themed content, exclusive cosmetics
+- **Special Offers:** Flash sales, first purchase discounts, milestone offers, return offers
+- **Season Pass:** 10 Stars (free + premium tracks), 8-12 week seasons, 50 levels
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#purchase-architecture`
+
+### Premium Systems
+Premium subscriptions and exclusive features:
+- **Jolt Time Plus:** Monthly (5 Stars) or Annual (45 Stars, 25% savings), enhanced daily rewards, premium badge, emotes, priority support, ad-free option, extended friend list
+- **Quality-of-Life:** Larger inventory capacity, advanced filters, custom notifications, idle timeout extension
+- **Exclusive Cosmetics:** Premium frames, animated backgrounds, achievement badges, profile animations
+- **Premium Conveniences:** Quick actions, auto-management, enhanced trading, priority event access
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#premium-features-architecture`
+
+### Monetization Governance
+Economic balance and fair monetization principles:
+- **Fair Progression:** Core content accessible without purchase, no paywalls on story, competitive integrity maintained
+- **Healthy Monetization:** Value-based pricing, no dark patterns, clear refund policies, no manipulation
+- **AdsGram + Stars Balance:** AdsGram for passive engagement, Stars for active premium, no overlap, different user segments
+- **Pay-to-Win Prevention:** No gameplay power via purchase, no direct win conditions, cosmetics and convenience only
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#economic-balance-philosophy`
+
+### Purchase Security Standards
+Security measures for Stars transactions:
+- **Transaction Validation:** HMAC signature verification, receipt ID uniqueness, user/item validation, price matching
+- **Fraud Prevention:** Rapid purchase detection, pattern anomaly alerts, refund tracking, user suspension
+- **Duplicate Prevention:** Receipt ID idempotency, subscription double-charge prevention, limited item ownership check
+- **Integrity Measures:** Server-side processing only, complete audit trail, automatic retry on failure, 24h refund processing
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#security-architecture`
+
 ### Critical Rules
 - **NEVER implement pay-to-win mechanics**
 - User monetization must NEVER dominate gameplay
@@ -690,6 +736,60 @@ Complete Telegram integration architecture:
 
 **See:** `knowledge/telegram-architecture.md` for ecosystem details.
 
+### Telegram SDK Architecture
+Centralized bridge between Mini App and Telegram platform:
+- **SDK Categories:** User, Theme, Navigation, Device, Sharing, Storage, Monetization
+- **Architecture Layers:** SDK Layer (raw API), Service Layer (business logic), Hook Layer (React), UI Layer (components)
+- **User Integration:** Telegram user/chat/session/identity with secure verification
+- **Theme Integration:** Detection, dark mode, color sync, dynamic updates
+- **Navigation Integration:** Back button, closing confirmation, navigation state, deep links
+- **Device Integration:** Viewport, safe areas, capabilities, orientation handling
+- **Storage Integration:** Cloud storage for preferences, settings, cross-device sync
+- **Error Handling:** Availability failures, unsupported features, degraded mode, recovery
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md` for complete SDK specification.
+
+### Telegram Integration Layer
+Core integration points between Mini App and Telegram platform:
+- **SDK Initialization:** Telegram.WebApp initialization, ready signal, expand viewport
+- **User Data:** initData extraction, secure verification, session management
+- **Theme Sync:** themeParams observer, color scheme detection, CSS variable injection
+- **Navigation:** BackButton control, confirmClose dialogs, viewport events
+- **Sharing:** share_url for invitations, achievements, museum, campaigns
+- **Storage:** cloudStorage API for persistent user data
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#sdk-architecture-layers`
+
+### Theme Integration
+Synchronization between Telegram theme and Jolt Time appearance:
+- **Theme Detection:** Telegram.themeParams, colorScheme detection
+- **Color Mapping:** Telegram colors → Jolt Time CSS variables
+- **Dark Mode:** Full dark theme support with automatic switching
+- **Dynamic Updates:** Real-time theme change observation via onEvent
+- **Fallback:** Default Jolt Time colors if Telegram theme unavailable
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#theme-integration-architecture`
+
+### Navigation Integration
+Back button and navigation control through Telegram SDK:
+- **Back Button:** showBackButton/hideBackButton, onBackButtonClick handler
+- **Closing Confirmation:** showConfirmClose/hideConfirmClose for unsaved work
+- **Navigation State:** Track screen history, back stack management
+- **Deep Link Navigation:** Extract start_param, route to appropriate screen
+- **Viewport Events:** onEvent('viewport_changed') for resize handling
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#navigation-integration-architecture`
+
+### Telegram UX Standards
+User experience standards for Telegram Mini App platform:
+- **Haptic Feedback:** Impact (light/medium/heavy/rigid), notification (success/warning/error), selection
+- **Main Button:** Dynamic text, loading state, disabled state, context-aware actions
+- **Safe Areas:** Content padding for notch/home indicator, env() CSS functions
+- **Loading States:** Skeleton screens, spinner indicators, progressive loading
+- **Error Handling:** User-friendly messages, recovery suggestions, graceful degradation
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#haptic-feedback-architecture`
+
 ### Telegram Bot System
 Centralized bot ecosystem for player communication and engagement:
 - **Bot Responsibilities:** Send notifications, deep link navigation, deliver rewards, remind inactive players, announce events, provide support, track referrals
@@ -701,6 +801,51 @@ Centralized bot ecosystem for player communication and engagement:
 - **Referral Integration:** Link generation, milestone tracking, reward delivery notifications
 
 **See:** `.openhands/knowledge/telegram-bot.md` for complete bot system specification.
+
+### Bot Commands Architecture
+Comprehensive command system for Telegram Bot interaction:
+- **Command Categories:** Core (start, help, app, menu), Player (profile, stats, achievements), Museum (museum, artifacts, collections), Event (events, missions, leaderboard), Social (referral, invite, guild), Support (support, faq, feedback), Administrative (announce, mod, broadcast)
+- **Command Architecture:** Command Layer (parsing), Routing Layer (handler resolution), Service Layer (business logic), Analytics Layer (usage tracking)
+- **Command Routing:** Pattern matching, subcommand support, alias resolution, fallback handling
+- **Permission System:** Guest (Level 0), Player (Level 2), Moderator (Level 3), Administrator (Level 4), System (Level 5)
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md` for complete command specification.
+
+### Command Routing
+Centralized routing system for bot command processing:
+- **Routing Standards:** Command parsing (/command subcommand --flag value), exact match priority, alias resolution, fallback to /help
+- **Subcommand Support:** /profile stats, /event list, /museum artifacts
+- **Validation:** Command existence, permission level, argument types, rate limits
+- **Error Handling:** Unknown commands (suggest similar), missing args (show usage), permission denied (explain access)
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#command-routing-standards`
+
+### Command Permissions
+Role-based permission system for bot commands:
+- **Permission Levels:** Guest (basic commands only), Player (authenticated), Moderator (view/warn/mute), Administrator (full access), System (automated)
+- **Player Commands:** All standard player commands, guild access (if member), support tickets, social features
+- **Moderator Commands:** /mod subcommands, user information view, warning/suspension, escalation
+- **Administrator Commands:** /announce, /broadcast, /diagnose, user management, configuration changes
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#permission-architecture`
+
+### Mini App Command Integration
+Bot commands as gateway to Mini App experience:
+- **Mini App Launching:** /app opens Mini App, /app {screen} opens specific screen (museum, battle, events, profile)
+- **Contextual Navigation:** Bot generates deep links with context (artifact ID, event ID), Mini App receives and renders appropriate screen
+- **Deep Link Routing:** t.me/jolttimebot?start=screen_{name} for direct navigation, start_param carries routing context
+- **Onboarding Integration:** /start triggers onboarding flow for new users, returning users directed to home with context
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#mini-app-integration-standards`
+
+### Command Analytics
+Tracking and measurement for bot command performance:
+- **Usage Analytics:** Command frequency, unique users per command, command sequences, session patterns
+- **Success Metrics:** Success rate per command, average response time, failure categorization (user error, permission, service unavailable)
+- **Conversion Tracking:** Command-to-Mini-App launch rate, Mini-App-to-registration rate, retention correlation
+- **Engagement Impact:** Session frequency from bot, commands per session, return rate after command
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#analytics-architecture`
 
 ### Push Notifications
 Timely, relevant alerts that enhance player experience without becoming spam:
@@ -732,6 +877,93 @@ Notification-borne links that open specific Mini App screens with context:
 - **Mini App Context:** Links pass parameters (ref, screen, event, guild) as URL query params for seamless routing
 
 **See:** `.openhands/knowledge/telegram-bot.md` for complete deep link specification.
+
+### Deep Link Ecosystem
+Strategic platform capability for user acquisition, retention, and viral expansion:
+- **Deep Link Categories:** Referral, Campaign, Event, Museum, Social Sharing, Re-engagement, Administrative
+- **Architecture Layers:** Link Generation, Link Processing, Routing, Analytics
+- **Link Processing:** URL parsing, parameter extraction, type resolution, context building
+- **Routing Standards:** Pattern matching, route registry, fallback handling, invalid link handling
+- **Security:** HMAC signatures, parameter validation, rate limiting, fraud prevention
+- **Scalability:** Millions of links, billions of clicks, large campaign volumes
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md` for complete ecosystem specification.
+
+### Referral System Architecture
+Comprehensive referral system as primary user acquisition engine:
+- **Referral Categories:** User (friend invitations), Campaign (marketing), Guild (recruitment), Event (participation), Influencer (creator), Partner (affiliate)
+- **Architecture Layers:** Referral Generation, Tracking, Attribution, Reward, Analytics
+- **Referral Lifecycle:** Invitation creation → delivery → acquisition → validation → eligibility → distribution
+- **Reward Tiers:** Signup (50 Dust), Tutorial (25 Dust), Level 5 (Capsule), Level 10 (Rare Capsule), Level 20 (Epic Capsule)
+- **Fraud Prevention:** Duplicate detection, self-referral prevention, fake account detection, abuse monitoring
+
+**See:** `.openhands/knowledge/referral-system-architecture.md` for complete referral specification.
+
+### Referral Attribution
+Determining referral ownership and reward assignment:
+- **First-Touch Attribution:** Marketing/campaign effectiveness, stored at first click
+- **Last-Touch Attribution:** Reward assignment, last click before signup
+- **Attribution Window:** 7-day conversion window from click to signup
+- **Attribution Validation:** Window check, duplicate detection, self-referral check, device fingerprint, behavioral analysis
+- **Ownership Rules:** First valid click owns referral, locked after conversion, non-transferable
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#referral-attribution-standards`
+
+### Referral Rewards
+Reward structure for referral participants:
+- **Inviter Rewards:** Signup (50 Dust), Tutorial (25 Dust), Level 5 (Common Capsule), Level 10 (Rare Capsule), Level 20 (Epic Capsule), Day 7 retention (+50% bonus)
+- **Invited Player Rewards:** 100 Chrono Dust, 5 Time Shards, +50 Max Energy (7 days), 1 Free Common Capsule
+- **Milestone Rewards:** 3/5/10/25/50/100 referrals unlock tier rewards (Capsules, badges, cosmetics, VIP titles)
+- **Quality Bonuses:** High-quality referrals (top 25%) get +25% bonus; Exceptional (top 10%) get +50% bonus
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#reward-architecture`
+
+### Referral Fraud Prevention
+Multi-layered fraud detection and prevention:
+- **Duplicate Detection:** Same Telegram ID, phone number, device fingerprint, IP range, timing patterns
+- **Self-Referral Prevention:** Same device fingerprint, IP address, Telegram ID, geographic location, creation timing
+- **Fake Account Detection:** Bot-like patterns, no Mini App activity, suspicious referral sources, rapid account creation
+- **Abuse Monitoring:** Real-time detection, batch pattern analysis, user reports, community trust signals, automated responses
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#fraud-prevention-architecture`
+
+### Referral Analytics
+Comprehensive tracking and measurement:
+- **Conversion Analytics:** CTR, signup conversion, activation rate, overall conversion, time to conversion
+- **Quality Analytics:** Day 1/7/30 retention, session duration, sessions per week, progression speed
+- **Efficiency Analytics:** Cost per referral (CPR), cost per activated user (CPA), revenue per referral, viral coefficient (K-factor)
+- **Retention Analytics:** Cohort analysis by referral month/type/source, retention curves, quality tier analysis
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#analytics-architecture
+
+### Campaign Architecture
+Marketing-driven deep link system for user acquisition and re-engagement:
+- **Campaign Types:** Marketing, Seasonal, Promotional, Influencer
+- **Seasonal Campaigns:** Christmas, Summer, Halloween, Anniversary, Lunar New Year
+- **Promotional Codes:** One-time, Limited, Unlimited, Exclusive variants
+- **Influencer Tracking:** Per-handle performance, conversion quality, payout tracking
+- **AdsGram Integration:** Monetization campaigns, reward campaigns, acquisition tracking, conversion attribution
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#campaign-deep-link-architecture`
+
+### Deep Link Analytics
+Comprehensive tracking and measurement system for deep link performance:
+- **Link Creation Analytics:** Type, creator, parameters, campaign, timestamp
+- **Link Usage Analytics:** Clicks, users, platform, device, location
+- **Conversion Funnel:** Click → Open → Signup → Tutorial → First Mission → Retention
+- **Campaign Metrics:** CPA, ROI, quality score, cohort analysis
+- **A/B Testing:** Link format, landing page, reward structure, copy variations
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#analytics-architecture`
+
+### Growth Link Standards
+Standards for deep links as primary growth channel:
+- **Viral Expansion:** Achievement sharing, collection showcases, referral rewards, leaderboard ranks
+- **User Journey:** First-time (context-aware onboarding), Returning (resume/context), Referred (enhanced bonus), Campaign (goal tracking)
+- **Future Expansions:** AI experiences, Creator economy, Web3 campaigns, NFT campaigns, Esports tournaments
+- **Long-term Philosophy:** Growth engine, viral coefficient > 1.0, CAC reduction, engagement optimization
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#long-term-philosophy`
 
 ### Artifacts System
 The heart of Jolt Time - historical artifact collection:
