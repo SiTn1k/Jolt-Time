@@ -4757,6 +4757,870 @@ Rewards follow consistent patterns for satisfaction and clarity:
 - GDPR-ready data handling
 - Privacy-first design
 
+## Database Migration Strategy
+
+Jolt Time employs a comprehensive database migration system for evolving the Supabase PostgreSQL database safely across all environments.
+
+### Migration Governance
+
+| Aspect | Standard |
+|--------|----------|
+| **File Location** | `src/database/migrations/` |
+| **Naming Pattern** | `{number}_{category}_{description}.sql` |
+| **Execution Order** | Sequential numbering (001, 002, ...) |
+| **Version Tracking** | `schema_migrations` table |
+
+### Migration Categories
+
+| Category | Purpose |
+|----------|---------|
+| **Schema Migrations** | Table creation, updates, relationships, constraints |
+| **Data Migrations** | Data transformation, normalization, correction, backfills |
+| **Index Migrations** | Index creation, updates, removal for performance |
+| **Security Migrations** | RLS policies, permissions, role management |
+| **Performance Migrations** | Partitioning, materialized views, query optimization |
+
+### Migration Philosophy
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Repeatable** | Idempotent operations with IF NOT EXISTS / IF EXISTS |
+| **Traceable** | Numbered files, author documentation, ticket references |
+| **Reversible** | Forward/backward pairs where possible |
+| **Production-Safe** | CONCURRENTLY for indexes, batching for large ops |
+
+### Environment Workflow
+
+| Environment | Trigger | Validation |
+|-------------|---------|------------|
+| **Local** | Manual via Supabase CLI | Developer testing |
+| **Staging** | PR merge to main | Automated tests |
+| **Production** | Manual promotion | Health checks + approval |
+
+**See:** `.openhands/knowledge/database-migrations.md` for complete migration strategy documentation.
+
+## Migration Lifecycle
+
+The migration lifecycle defines how database changes progress from planning through verification.
+
+### Lifecycle Stages
+
+| Stage | Activities | Output |
+|-------|------------|--------|
+| **Planning** | Define problem, assess impact, plan approach | Migration specification |
+| **Development** | Write migration SQL, create rollback, update types | Migration files |
+| **Testing** | Local test, integration test, performance validation | Test results |
+| **Deployment** | Apply to target environment with monitoring | Deployed migration |
+| **Verification** | Validate schema, data, performance, functionality | Deployment report |
+
+### Planning Requirements
+
+| Requirement | Description |
+|-------------|-------------|
+| **Impact Analysis** | Assess effect on existing data and queries |
+| **Rollback Planning** | Document reversal procedure before deployment |
+| **Timeline Estimate** | Project development and testing effort |
+| **Review Approvals** | Technical lead for architecture, security for access |
+
+### Deployment Gates
+
+| Gate | Requirement |
+|------|-------------|
+| **Staging** | All tests passing, integration validated |
+| **Production** | Staging verified, backup confirmed, team notified |
+
+## Rollback Standards
+
+Rollback procedures enable recovery from failed or problematic migrations.
+
+### Rollback Planning Requirements
+
+| Migration Type | Rollback Documentation |
+|-----------------|------------------------|
+| **Schema Changes** | SQL to reverse structural changes |
+| **Data Migrations** | Backup strategy or restoration procedure |
+| **Index Changes** | Index recreation DDL |
+| **Security Changes** | Previous policy/permission state |
+
+### Reversibility Limitations
+
+| Operation | Reversibility |
+|-----------|---------------|
+| ALTER TABLE ADD COLUMN | Fully reversible |
+| CREATE INDEX | Fully reversible (DROP INDEX) |
+| Data UPDATE/DELETE | Only via backup restore |
+| DROP TABLE | Only via backup restore |
+| TRUNCATE | Not reversible |
+
+### Emergency Recovery
+
+| Step | Action |
+|------|--------|
+| 1 | Assess failure scope and safety |
+| 2 | Determine rollback vs. forward fix |
+| 3 | Execute recovery procedure |
+| 4 | Notify team and document incident |
+| 5 | Plan corrective migration |
+
+## Schema Evolution
+
+Schema evolution manages changes to the database structure over time.
+
+### Table Creation Standards
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **Primary Key** | UUID with gen_random_uuid() |
+| **Timestamps** | created_at, updated_at with TIMESTAMPTZ |
+| **Naming** | snake_case for all identifiers |
+| **Indexes** | Index on foreign keys and common queries |
+
+### Table Update Standards
+
+| Change Type | Approach |
+|-------------|----------|
+| **Add Column** | ADD COLUMN IF NOT EXISTS, nullable first |
+| **Remove Column** | DROP COLUMN IF EXISTS |
+| **Rename Column** | Add new, copy data, deprecate old |
+| **Change Type** | Add new column, transform data, remove old |
+
+### Backward Compatibility
+
+| Strategy | When to Use |
+|----------|-------------|
+| **Nullable Columns** | New non-required fields |
+| **Separate Columns** | Data type changes with transformation |
+| **Views** | Hide schema changes from applications |
+| **Versioned APIs** | Major structural changes |
+
+### Relationship Standards
+
+| Pattern | Implementation |
+|---------|----------------|
+| **Foreign Key** | REFERENCES with ON DELETE CASCADE |
+| **Unique Constraint** | UNIQUE on business keys |
+| **Check Constraint** | CHECK for data validation |
+| **Partial FK** | Partial index + trigger validation |
+
+## Migration Governance
+
+Migration governance ensures consistent, safe database evolution through review and approval processes.
+
+### Review Requirements
+
+| Change Type | Required Review |
+|-------------|-----------------|
+| **Schema Changes** | Technical lead |
+| **Data Migrations** | Technical lead + data team |
+| **Security Changes** | Security team |
+| **Performance Changes** | Technical lead + DBA |
+
+### Approval Workflow
+
+| Environment | Approval Required |
+|-------------|-------------------|
+| **Local** | Developer self-approval |
+| **Staging** | PR approval |
+| **Production** | Manual approval + backup verification |
+
+### Documentation Requirements
+
+| Element | Required For |
+|---------|--------------|
+| **Migration Purpose** | All migrations |
+| **Author** | All migrations |
+| **Ticket Reference** | Feature-related migrations |
+| **Rollback Plan** | Data and schema migrations |
+| **Test Results** | Production migrations |
+
+## Supabase RPC Architecture
+
+RPC Functions serve as Jolt Time's **Database Business Logic Layer**, centralizing complex operations inside the database for consistency, security, and performance.
+
+### RPC Categories
+
+| Category | Purpose | Examples |
+|----------|---------|---------|
+| **Player RPCs** | Profile, progression, achievements, statistics | update_profile, calculate_progression |
+| **Economy RPCs** | Currency, rewards, inventory, marketplace | process_currency, distribute_reward |
+| **Museum RPCs** | Artifact acquisition, collections, exhibitions | acquire_artifact, update_collection |
+| **Event RPCs** | Missions, participation, seasons, leaderboards | complete_mission, update_leaderboard |
+| **PvP RPCs** | Battle resolution, rankings, matches | resolve_battle, update_ranking |
+| **Guild RPCs** | Guild management, progression, rewards | create_guild, process_guild_reward |
+| **Analytics RPCs** | Reporting, aggregation, metrics | record_event, calculate_retention |
+
+### RPC Philosophy
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Centralize Operations** | Complex logic executes in database, not client |
+| **Reduce Client Logic** | Clients focus on presentation; server handles rules |
+| **Improve Consistency** | Same rules enforced for all platforms |
+| **Improve Performance** | Database-level execution with indexes and optimization |
+
+### Folder Organization
+
+| Domain | Location | Purpose |
+|--------|----------|---------|
+| Player | `functions/player/` | Profile and progression operations |
+| Economy | `functions/economy/` | Currency and inventory operations |
+| Museum | `functions/museum/` | Artifact and collection operations |
+| Events | `functions/events/` | Mission and season operations |
+| PvP | `functions/pvp/` | Battle and ranking operations |
+| Guilds | `functions/guilds/` | Guild management operations |
+| Analytics | `functions/analytics/` | Metrics and reporting operations |
+
+**See:** `.openhands/knowledge/supabase-rpc-architecture.md` for complete RPC architecture documentation.
+
+## Database Business Logic Layer
+
+The RPC Architecture establishes the Database Business Logic Layer — the authoritative location for all business rules affecting data.
+
+### Layer Architecture
+
+```
+Client Request → Repository → RPC Function → Database
+                    ↓
+              Business Rules
+              Validation Logic
+              Transaction Management
+```
+
+### Layer Responsibilities
+
+| Layer | Responsibility | Scope |
+|-------|----------------|-------|
+| **RPC (Database)** | Business rules, validation, transactions | All data operations |
+| **Repository** | Data access, RPC invocation, data mapping | Supabase interaction |
+| **Service** | Presentation logic, UI formatting | Client integration |
+
+### RPC-Repository Integration
+
+| Pattern | Description |
+|---------|-------------|
+| **RPC Invocation** | Repository methods call RPC functions for business operations |
+| **Result Mapping** | Repository maps RPC results to domain objects |
+| **Error Propagation** | Repository converts RPC errors to domain exceptions |
+
+**See:** `.openhands/knowledge/supabase-rpc-architecture.md#13-repository-integration-standards`
+
+## Transaction Operations
+
+RPC Functions execute as atomic units of work with full transactional support.
+
+### Transaction Guarantees
+
+| Guarantee | Description |
+|-----------|-------------|
+| **Atomicity** | All operations succeed or all fail |
+| **Consistency** | Database transitions between valid states |
+| **Isolation** | Concurrent transactions don't interfere |
+| **Durability** | Committed changes persist |
+
+### Transaction Patterns
+
+| Pattern | Use Case |
+|---------|----------|
+| **Single Statement** | Simple operations (balance update) |
+| **Multi-Statement** | Complex operations (purchase with inventory) |
+| **Escrow** | Marketplace transactions with payment hold |
+| **Saga** | Distributed transactions across systems |
+
+### Rollback Safety
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **No Side Effects** | External calls outside transaction scope |
+| **Deterministic Rollback** | Clear failure path for all errors |
+| **Error Propagation** | Errors surface to client with context |
+
+**See:** `.openhands/knowledge/supabase-rpc-architecture.md#9-transaction-philosophy`
+
+## RPC Security Standards
+
+RPC security ensures business logic executes only for authorized users with valid inputs.
+
+### Security Layers
+
+| Layer | Protection |
+|-------|------------|
+| **Authentication** | Supabase auth.uid() for user identity |
+| **RLS Compatibility** | Policies evaluated with caller context |
+| **Permission Checks** | Role and ownership validation |
+| **Abuse Prevention** | Rate limiting and anomaly detection |
+| **Fraud Prevention** | Advisory locks and duplicate detection |
+
+### RLS Integration
+
+| Pattern | Usage |
+|---------|-------|
+| **SECURITY DEFINER** | Execute with function owner's privileges |
+| **auth.uid()** | Reference calling user in logic |
+| **SET search_path** | Prevent schema injection |
+| **Service Role** | Admin operations only |
+
+### Abuse Prevention Measures
+
+| Measure | Implementation |
+|---------|----------------|
+| **Rate Limiting** | Maximum calls per user per time period |
+| **Input Validation** | Strict format and range checking |
+| **Idempotency Keys** | Prevent duplicate operations |
+| **Anomaly Detection** | Flag unusual patterns for review |
+
+**See:** `.openhands/knowledge/supabase-rpc-architecture.md#10-security-standards`
+
+## RPC Governance
+
+RPC governance ensures consistent, safe RPC development through standards and review processes.
+
+### RPC Development Standards
+
+| Standard | Requirement |
+|----------|-------------|
+| **Naming** | Verb_Noun pattern (update_profile, process_currency) |
+| **Documentation** | Header comment with purpose, parameters, returns |
+| **Validation** | Input validation before any operation |
+| **Error Handling** | Standardized error responses |
+| **Audit Logging** | Log all state-changing operations |
+
+### Response Standards
+
+| Response Type | Structure |
+|--------------|-----------|
+| **Success** | `{ success: true, data: result, timestamp }` |
+| **Validation Error** | `{ success: false, error: VALIDATION_ERROR, details }` |
+| **Transaction Error** | `{ success: false, error: TRANSACTION_FAILED, reason }` |
+| **Security Error** | `{ success: false, error: ACCESS_DENIED, message }` |
+
+### Review Requirements
+
+| RPC Type | Required Review |
+|----------|-----------------|
+| **Player Operations** | Technical lead |
+| **Economy Operations** | Technical lead + security |
+| **Monetization Operations** | Security team |
+| **Admin Operations** | Admin + audit |
+
+### Performance Standards
+
+| Standard | Target |
+|----------|--------|
+| **Response Time** | < 100ms for simple operations |
+| **Batch Operations** | < 500ms for bulk operations |
+| **Concurrent Users** | Support 10x peak load |
+| **Database Efficiency** | Use indexes, avoid full scans |
+
+## Edge Functions Architecture
+
+Edge Functions serve as Jolt Time's **External Integration Layer**, handling server-side logic, external integrations, and background workflows.
+
+### Edge Function Categories
+
+| Category | Purpose | Examples |
+|----------|---------|---------|
+| **Telegram Functions** | Platform integration | Webhook processing, user sync, deep links |
+| **AdsGram Functions** | Revenue integration | Reward validation, fraud detection |
+| **Analytics Functions** | Event processing | Event ingestion, retention calculations |
+| **Notification Functions** | Message delivery | Scheduled notifications, reminders |
+| **Integration Functions** | Third-party APIs | Partner webhooks, content sync |
+| **Scheduled Functions** | Recurring tasks | Daily resets, leaderboard refresh |
+
+### Edge Function Philosophy
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Isolate Server Logic** | Business logic in Edge Functions, not clients |
+| **Secure Integrations** | API keys never exposed, validation required |
+| **Reduce Client Complexity** | Clients focus on presentation |
+| **Support Scaling** | Auto-scaling with demand |
+
+### Folder Organization
+
+| Domain | Location | Purpose |
+|--------|----------|---------|
+| Telegram | `functions/telegram/` | Telegram platform integration |
+| AdsGram | `functions/adsgram/` | Revenue system integration |
+| Analytics | `functions/analytics/` | Event processing and metrics |
+| Notifications | `functions/notifications/` | Message delivery |
+| Integrations | `functions/integrations/` | External service proxies |
+| Scheduled | `functions/scheduled/` | Automated recurring tasks |
+
+**See:** `.openhands/knowledge/edge-functions-architecture.md` for complete Edge Functions documentation.
+
+## External Integration Layer
+
+The External Integration Layer provides a secure gateway for all communications between Jolt Time and external systems.
+
+### Layer Architecture
+
+```
+Client → Edge Functions → External Services
+                ↓
+         Repositories/RPCs
+                ↓
+            Database
+```
+
+### Integration Responsibilities
+
+| Responsibility | Implementation |
+|----------------|----------------|
+| **Secret Management** | API keys stored in Supabase Vault |
+| **Request Validation** | Signature and schema validation |
+| **Error Handling** | Standardized error responses |
+| **Rate Limiting** | Per-user request limits |
+
+### External Integrations
+
+| Service | Integration Type | Functions |
+|---------|-----------------|-----------|
+| **Telegram** | Platform API | Webhooks, bot messages |
+| **AdsGram** | Revenue API | Reward callbacks, conversion tracking |
+| **Partner APIs** | Webhooks | Inbound event processing |
+
+**See:** `.openhands/knowledge/edge-functions-architecture.md#8-integration-function-architecture`
+
+## Scheduled Operations
+
+Scheduled Operations handle recurring tasks that run automatically without user interaction.
+
+### Scheduled Function Types
+
+| Type | Schedule | Examples |
+|------|----------|----------|
+| **Maintenance** | Daily/Weekly | Database cleanup, log archival |
+| **Refresh** | Hourly | Leaderboard updates, metrics aggregation |
+| **Reset** | Daily | Daily missions, daily rewards |
+| **Batch** | Every 5 min | Reward queue processing |
+
+### Scheduling Patterns
+
+| Schedule | Cron Expression | Use Case |
+|----------|----------------|----------|
+| Every 5 minutes | `*/5 * * * *` | Batch processing |
+| Hourly | `0 * * * *` | Leaderboard refresh |
+| Daily midnight | `0 0 * * *` | Daily reset |
+| Weekly Sunday | `0 0 * * 0` | Weekly cleanup |
+
+### Execution Guarantees
+
+| Guarantee | Implementation |
+|-----------|----------------|
+| **At-least-once** | Retry on failure with idempotent operations |
+| **Exclusive execution** | Advisory locks for single-instance tasks |
+| **Failure recovery** | Queue failed jobs for retry |
+
+**See:** `.openhands/knowledge/edge-functions-architecture.md#9-scheduled-function-architecture`
+
+## Edge Function Security
+
+Edge Function security ensures safe execution and protects against abuse.
+
+### Security Layers
+
+| Layer | Protection |
+|-------|------------|
+| **Authentication** | Supabase auth for user-facing functions |
+| **Signature Validation** | Webhook signature verification |
+| **Secret Storage** | Supabase Vault for sensitive data |
+| **Rate Limiting** | Per-user request throttling |
+
+### Request Validation
+
+| Validation | Purpose |
+|------------|---------|
+| **Signature Check** | Verify request authenticity |
+| **Schema Validation** | Ensure valid request structure |
+| **Authorization** | Verify user permissions |
+| **Rate Limit** | Prevent abuse |
+
+### Abuse Prevention
+
+| Measure | Implementation |
+|---------|----------------|
+| **Rate Limiting** | Maximum requests per user per minute |
+| **Idempotency** | Duplicate request detection |
+| **Input Sanitization** | Escape user inputs |
+| **Output Sanitization** | Mask sensitive data |
+
+**See:** `.openhands/knowledge/edge-functions-architecture.md#10-security-standards`
+
+## Server-Side Workflows
+
+Server-Side Workflows handle complex operations that require coordination between Edge Functions, RPCs, and external services.
+
+### Workflow Patterns
+
+| Pattern | Description | Use Case |
+|---------|-------------|----------|
+| **Request-Response** | Synchronous request/response | Simple API calls |
+| **Webhook Processing** | Async event handling | Telegram updates |
+| **Batch Processing** | High-volume async operations | Analytics aggregation |
+| **Callback Chaining** | Multi-step async flows | Reward processing |
+
+### Workflow Examples
+
+| Workflow | Components | Purpose |
+|----------|------------|---------|
+| **Reward Processing** | Validate → RPC → Notify | Ad reward distribution |
+| **Referral Flow** | Sync → Credit → Notify | Referral bonus award |
+| **Season End** | Calculate → Distribute → Reset | Season transition |
+
+### Error Handling
+
+| Error Type | Handling |
+|------------|----------|
+| **Transient** | Retry with exponential backoff |
+| **Validation** | Return error to client |
+| **External Service** | Queue for retry, alert |
+| **Security** | Reject, log, alert |
+
+### Monitoring
+
+| Metric | Target | Alert Threshold |
+|--------|--------|-----------------|
+| **Error Rate** | < 1% | > 1% |
+| **Latency p99** | < 500ms | > 2s |
+| **Timeout Rate** | < 1% | > 5% |
+
+**See:** `.openhands/knowledge/edge-functions-architecture.md#12-error-handling-standards`
+
+## Database Indexing Strategy
+
+The Database Indexing Strategy establishes standards for creating and maintaining indexes that support long-term performance and scalability.
+
+### Index Categories
+
+| Category | Purpose | Examples |
+|---------|---------|----------|
+| **Primary Indexes** | Entity identity, fast lookups | Primary key on `id` |
+| **Foreign Key Indexes** | JOIN optimization, referential integrity | `idx_orders_customer_id` |
+| **Search Indexes** | Text and pattern matching | trigram, full-text GIN |
+| **Composite Indexes** | Multi-column query optimization | `(owner_id, era_id)` |
+| **Analytics Indexes** | Aggregation optimization | `(user_id, created_at)` |
+| **Performance Indexes** | Specific bottleneck resolution | Targeted indexes |
+
+### Indexing Philosophy
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Improve Performance** | Indexes demonstrably speed up queries |
+| **Support Scalability** | B-tree scales logarithmically |
+| **Avoid Overhead** | Balance read benefit against write cost |
+
+### Scaling Targets
+
+| User Scale | Index Count | Index Storage |
+|------------|-------------|--------------|
+| **10,000 users** | 20-30 indexes | < 100MB |
+| **100,000 users** | 40-60 indexes | < 1GB |
+| **1,000,000+ users** | 80-120 indexes | < 10GB |
+
+**See:** `.openhands/knowledge/database-indexing.md` for complete indexing strategy.
+
+## Query Performance Standards
+
+Query performance standards ensure consistent, fast database operations across all Jolt Time systems.
+
+### Performance Targets
+
+| Query Type | Target | Critical Threshold |
+|------------|--------|-------------------|
+| **Primary key lookup** | < 1ms | < 5ms |
+| **Foreign key JOIN** | < 5ms | < 20ms |
+| **Indexed range query** | < 20ms | < 100ms |
+| **Aggregation (indexed)** | < 100ms | < 500ms |
+| **Full table scan** | Avoid | Fail if > 1s |
+
+### Query Optimization Rules
+
+| Rule | Description |
+|------|-------------|
+| **Use indexes** | All frequent queries must have indexes |
+| **Avoid SELECT *** | Fetch only required columns |
+| **Prefer equality** | Equality conditions before ranges |
+| **Limit results** | Use LIMIT for pagination |
+
+### Slow Query Handling
+
+| Threshold | Action |
+|-----------|--------|
+| **Warning** | Log and monitor |
+| **Critical** | Alert and prioritize fix |
+| **Breaking** | Immediate optimization required |
+
+**See:** `.openhands/knowledge/database-indexing.md#13-monitoring-standards`
+
+## Index Governance
+
+Index governance ensures indexes remain effective, efficient, and aligned with query patterns.
+
+### Creation Standards
+
+| Standard | Requirement |
+|----------|-------------|
+| **Justification** | Query evidence required |
+| **Naming** | `idx_{table}_{columns}` pattern |
+| **Documentation** | Purpose and query patterns documented |
+| **Testing** | Performance improvement verified |
+
+### Review Requirements
+
+| Review Type | Frequency | Owner |
+|-------------|-----------|-------|
+| **Utilization review** | Weekly | DBA |
+| **Slow query review** | Weekly | Development |
+| **Unused index review** | Monthly | DBA |
+| **Performance audit** | Quarterly | Team lead |
+
+### Cleanup Standards
+
+| Trigger | Action |
+|---------|--------|
+| **Zero scans for 30 days** | Drop index |
+| **Duplicate index** | Drop duplicate |
+| **Redundant index** | Drop redundant |
+
+**See:** `.openhands/knowledge/database-indexing.md#14-maintenance-philosophy`
+
+## Search Optimization
+
+Search optimization enables efficient text-based queries across artifacts, players, and content.
+
+### Search Index Types
+
+| Type | Use Case | Performance |
+|------|----------|-------------|
+| **B-tree (LIKE)** | Prefix matching | < 5ms |
+| **pg_trgm** | Fuzzy matching | < 20ms |
+| **GIN Full-text** | Text search | < 50ms |
+
+### Searchable Domains
+
+| Domain | Search Type | Index |
+|--------|-------------|-------|
+| **Artifacts** | Name, description | trigram + full-text |
+| **Players** | Username, display name | trigram |
+| **Content** | Quest titles, lore | full-text |
+| **Guilds** | Guild names | trigram |
+
+### Optimization Strategies
+
+| Strategy | When to Use |
+|----------|-------------|
+| **Covering index** | Query touches indexed columns only |
+| **Partial index** | Query filters to data subset |
+| **Expression index** | Computed column queries |
+
+**See:** `.openhands/knowledge/database-indexing.md#11-search-optimization-philosophy`
+
+## Scaling Readiness
+
+Scaling readiness ensures the database can grow from thousands to millions of users without performance degradation.
+
+### Scaling Milestones
+
+| Scale | Primary Focus | Advanced Focus |
+|-------|--------------|----------------|
+| **10K users** | Primary/foreign key indexes | Common query patterns |
+| **100K users** | Composite indexes | Partial indexes |
+| **1M+ users** | Table partitioning | Expression indexes, compression |
+
+### Scaling Strategies
+
+| Strategy | Trigger | Implementation |
+|----------|---------|----------------|
+| **Add composite index** | Multi-column filters | Composite covering index |
+| **Add partial index** | Data subset queries | Partial index on active rows |
+| **Partition table** | > 10M rows | Range partitioning by date |
+| **Add expression index** | Computed columns | Expression index |
+
+### Partitioning Considerations
+
+| Table Type | Partition Key | Local Index Strategy |
+|------------|--------------|---------------------|
+| **Transactions** | created_at | Composite with partition key |
+| **Events** | start_time | Composite with partition key |
+| **Sessions** | started_at | Composite with partition key |
+
+**See:** `.openhands/knowledge/database-indexing.md#15-scaling-philosophy`
+
+## Query Optimization Strategy
+
+The Query Optimization Strategy establishes standards for writing efficient queries that scale across all Jolt Time systems.
+
+### Query Categories
+
+| Category | Frequency | Optimization Focus |
+|----------|-----------|-------------------|
+| **Read Queries** | Very High | Index utilization, minimal columns |
+| **Write Queries** | High | Transaction safety, atomic operations |
+| **Aggregation Queries** | Medium | Pre-computation, covering indexes |
+| **Analytics Queries** | Low | Partition pruning, batch processing |
+| **Search Queries** | Medium | Text indexes, result limiting |
+| **Realtime Queries** | Very High | Caching, efficient polling |
+
+### Optimization Philosophy
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Minimize Database Load** | Select only needed columns, limit results |
+| **Minimize Latency** | < 20ms for reads, < 100ms for writes |
+| **Maximize Scalability** | Index utilization, O(log n) complexity |
+| **Avoid Complexity** | Simple queries, prefer JOINs over subqueries |
+
+**See:** `.openhands/knowledge/query-optimization.md` for complete query optimization documentation.
+
+## Read Query Standards
+
+Read queries retrieve data efficiently while minimizing database load.
+
+### Profile Retrieval
+
+| Pattern | Standard |
+|---------|----------|
+| Get by ID | Primary key lookup with explicit columns |
+| Get by telegram_id | Unique index with LIMIT |
+| Search by name | trigram index with result limit |
+
+### Artifact Retrieval
+
+| Pattern | Standard |
+|---------|----------|
+| Get player's artifacts | Composite index (owner_id, era_id) with LIMIT |
+| Get artifact details | Primary key JOIN with related data |
+| Get collection progress | Aggregation with cached value |
+
+### Inventory Retrieval
+
+| Pattern | Standard |
+|---------|----------|
+| Get inventory items | Composite index with pagination |
+| Get currency balances | Direct lookup from player record |
+| Get recent transactions | Covering index (user_id, created_at DESC) |
+
+### Event and Leaderboard Retrieval
+
+| Pattern | Standard |
+|---------|----------|
+| Get active events | Partial index (status = 'active') |
+| Get top leaderboard | Composite index with LIMIT |
+| Get player's rank | Covering index for position |
+
+**See:** `.openhands/knowledge/query-optimization.md#3-read-query-standards`
+
+## Write Query Standards
+
+Write queries modify database state efficiently while ensuring data integrity.
+
+### Progression Updates
+
+| Standard | Implementation |
+|----------|----------------|
+| Atomic increment | `experience = experience + $1` |
+| Level up check | Conditional UPDATE with RETURNING |
+| Achievement unlock | INSERT with ON CONFLICT DO NOTHING |
+
+### Reward Processing
+
+| Standard | Implementation |
+|----------|----------------|
+| Credit currency | Atomic UPDATE with balance check |
+| Grant item | UPSERT with quantity increment |
+| Multiple rewards | Batch INSERT with ON CONFLICT |
+
+### Inventory and Marketplace
+
+| Standard | Implementation |
+|----------|----------------|
+| Add item | UPSERT with quantity |
+| Remove item | UPDATE with quantity check |
+| Marketplace listing | INSERT with item lock |
+
+**See:** `.openhands/knowledge/query-optimization.md#4-write-query-standards`
+
+## Pagination Standards
+
+Pagination enables efficient access to large datasets without overwhelming clients or databases.
+
+### Pagination Patterns
+
+| Pattern | Use Case | Performance |
+|---------|----------|-------------|
+| **Cursor pagination** | Large datasets, deep pages | Constant time |
+| **LIMIT/OFFSET** | Small datasets, known size | Degrades with OFFSET |
+| **Keyset pagination** | Time-ordered lists | O(log n) |
+
+### Cursor Pagination
+
+| Element | Implementation |
+|---------|----------------|
+| Cursor | Encoded position (typically base64) |
+| Query | `WHERE created_at < $cursor ORDER BY created_at DESC` |
+| Response | Include next cursor if more results |
+
+### Pagination Rules
+
+| Rule | Limit |
+|------|-------|
+| Default page size | 20-50 items |
+| Maximum page size | 100 items |
+| Search results | 50 items |
+| Analytics exports | 10,000 items |
+
+### Infinite Scroll Implementation
+
+| Phase | Action |
+|-------|--------|
+| Initial load | Fetch first page immediately |
+| Scroll threshold | Prefetch next page |
+| Pull to refresh | Fetch first page, replace cache |
+
+**See:** `.openhands/knowledge/query-optimization.md#12-pagination-philosophy`
+
+## Performance Governance
+
+Performance governance ensures consistent, efficient database operations through standards and monitoring.
+
+### Performance Targets
+
+| Query Type | Target | Critical Threshold |
+|------------|--------|-------------------|
+| **Simple read** | < 20ms | < 50ms |
+| **Indexed read** | < 10ms | < 20ms |
+| **Write operation** | < 50ms | < 200ms |
+| **Aggregation** | < 100ms | < 500ms |
+
+### Anti-Patterns Prohibited
+
+| Anti-Pattern | Problem | Solution |
+|--------------|---------|----------|
+| **N+1 queries** | One query per item | JOIN or batch |
+| **SELECT *** | Excessive data | Explicit columns |
+| **No LIMIT** | Memory exhaustion | Always limit |
+| **Unindexed JOIN** | Full table scan | Add index |
+
+### Monitoring Standards
+
+| Metric | Frequency | Owner |
+|--------|-----------|-------|
+| Slow queries (> 100ms) | Daily | DBA |
+| Query frequency | Weekly | Development |
+| Index utilization | Monthly | DBA |
+| Buffer cache hit rate | Weekly | DBA |
+
+### Query Review Process
+
+| Phase | Requirement |
+|-------|-------------|
+| **Development** | Follow query standards |
+| **PR Review** | Performance review for complex queries |
+| **Staging** | EXPLAIN ANALYZE verification |
+| **Production** | Monitoring and optimization |
+
+**See:** `.openhands/knowledge/query-optimization.md#13-monitoring-standards`
+
 ---
 
 *Building the future through the lens of the past.*
