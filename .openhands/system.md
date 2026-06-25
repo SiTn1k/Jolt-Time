@@ -45,15 +45,15 @@ The Master Index is the official starting point for understanding the entire Jol
 
 ### Global Documentation Structure
 
-- **Core Gameplay** — Energy, progression, quests, achievements, eras, story
+- **Core Gameplay** — Energy, progression, quests, achievements, eras, story, Prestige System Architecture, Prestige Progression Framework, Prestige Rewards, Prestige Analytics, Prestige Governance, Global Historical Map Architecture, Exploration Framework, Civilization Framework, Historical Region Framework, Exploration Analytics
 - **Economy Systems** — Currencies, marketplace, inventory, wallet
 - **Museum Systems** — Artifacts, collections, evolution, museum design
-- **Social Features** — Friends, guilds, leaderboards, referrals
-- **PvP Systems** — Arena, tournaments, expeditions, battle pass
+- **Social Features** — Friends, guilds, leaderboards, referrals, Guild Wars Architecture, Territory Systems, Guild Progression Framework, Guild Competition Systems, Guild Analytics, World Bosses Architecture, Cooperative Event Framework, Contribution Systems, Boss Reward Systems, World Boss Analytics
+- **PvP Systems** — Arena, tournaments, expeditions, battle pass, Seasons 2.0 Architecture, Seasonal Progression, Seasonal Rewards, Season Lifecycle Management, Seasonal Analytics
 - **Monetization** — AdsGram, Telegram Stars, subscriptions
 - **Infrastructure** — API, database, Telegram integration
 - **Security** — Authentication, data protection, fraud prevention
-- **Analytics** — Metrics, tracking, retention analysis
+- **Analytics** — Metrics, tracking, retention analysis, Telegram Analytics Layer, Acquisition Analytics, Community Analytics, Monetization Analytics, Telegram Intelligence Framework
 - **DevOps** — Deployment, backup, admin tooling
 - **Documentation** — Standards, project vision, roadmap, testing
 - **Future Concepts** — Creator ecosystem, Web3, educational partnerships
