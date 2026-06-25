@@ -50,13 +50,14 @@ The Master Index is the official starting point for understanding the entire Jol
 - **Museum Systems** — Artifacts, collections, evolution, museum design, Artifact Fusion Architecture, Collection Progression Framework, Fusion Progression Systems, Artifact Economy Framework, Fusion Analytics, Museum Expansion Architecture, Hall Expansion Framework, Exhibition Framework, Museum Prestige Systems, Museum Analytics
 - **Social Features** — Friends, guilds, leaderboards, referrals, Guild Wars Architecture, Territory Systems, Guild Progression Framework, Guild Competition Systems, Guild Analytics, World Bosses Architecture, Cooperative Event Framework, Contribution Systems, Boss Reward Systems, World Boss Analytics
 - **PvP Systems** — Arena, tournaments, expeditions, battle pass, Seasons 2.0 Architecture, Seasonal Progression, Seasonal Rewards, Season Lifecycle Management, Seasonal Analytics
-- **Monetization** — AdsGram, Telegram Stars, subscriptions
+- **Monetization** — AdsGram Optimization Architecture, Ad Placement Framework, Rewarded Ad Systems, Monetization Governance, AdsGram Analytics, Premium Subscription Architecture, Premium Benefits Framework, Subscription Governance, Premium Analytics, Recurring Revenue Systems, Telegram Stars Economy Architecture, Stars Consumption Framework, Stars Pricing Governance, Monetization Balance Framework, Stars Analytics, Telegram Stars, subscriptions
 - **Infrastructure** — API, database, Telegram integration
 - **Security** — Authentication, data protection, fraud prevention
-- **Analytics** — Metrics, tracking, retention analysis, Telegram Analytics Layer, Acquisition Analytics, Community Analytics, Monetization Analytics, Telegram Intelligence Framework
+- **Analytics** — Metrics, tracking, retention analysis, Telegram Analytics Layer, Acquisition Analytics, Community Analytics, Monetization Analytics, AdsGram Analytics, Telegram Intelligence Framework
 - **DevOps** — Deployment, backup, admin tooling
+- **Organic Growth Systems** — Referral Rewards Economy Architecture, Referral Progression Framework, Referral Governance, Referral Analytics, Viral Sharing Architecture, Referral System Architecture, User Acquisition Flows Architecture
 - **Documentation** — Standards, project vision, roadmap, testing
-- **Future Concepts** — Creator ecosystem, Web3, educational partnerships
+- **Future Concepts** — Creator Economy Architecture, Creator Progression Framework, Creator Governance, Creator Analytics, Community Leadership Systems, Creator ecosystem, Web3, educational partnerships
 - **Narrative & Lore** — Lore Bible, Universe Encyclopedia, Narrative Standards, Historical Timeline
 
 **See:** `.openhands/knowledge/master-index.md#documentation-categories`
