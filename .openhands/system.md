@@ -45,9 +45,9 @@ The Master Index is the official starting point for understanding the entire Jol
 
 ### Global Documentation Structure
 
-- **Core Gameplay** — Energy, progression, quests, achievements, eras, story, Prestige System Architecture, Prestige Progression Framework, Prestige Rewards, Prestige Analytics, Prestige Governance, Global Historical Map Architecture, Exploration Framework, Civilization Framework, Historical Region Framework, Exploration Analytics
+- **Core Gameplay** — Energy, progression, quests, achievements, eras, story, Prestige System Architecture, Prestige Progression Framework, Prestige Rewards, Prestige Analytics, Prestige Governance, Global Historical Map Architecture, Exploration Framework, Civilization Framework, Historical Region Framework, Exploration Analytics, Historical Campaigns Architecture, Campaign Progression Framework, Historical Mission Framework, Educational Content Framework, Campaign Analytics, Dynamic Missions Architecture, Mission Generation Framework, Adaptive Mission Systems, Mission Analytics, Mission Governance, Endgame Content Architecture, Mastery Framework, Legacy Systems, Endgame Progression, Endgame Analytics
 - **Economy Systems** — Currencies, marketplace, inventory, wallet
-- **Museum Systems** — Artifacts, collections, evolution, museum design
+- **Museum Systems** — Artifacts, collections, evolution, museum design, Artifact Fusion Architecture, Collection Progression Framework, Fusion Progression Systems, Artifact Economy Framework, Fusion Analytics, Museum Expansion Architecture, Hall Expansion Framework, Exhibition Framework, Museum Prestige Systems, Museum Analytics
 - **Social Features** — Friends, guilds, leaderboards, referrals, Guild Wars Architecture, Territory Systems, Guild Progression Framework, Guild Competition Systems, Guild Analytics, World Bosses Architecture, Cooperative Event Framework, Contribution Systems, Boss Reward Systems, World Boss Analytics
 - **PvP Systems** — Arena, tournaments, expeditions, battle pass, Seasons 2.0 Architecture, Seasonal Progression, Seasonal Rewards, Season Lifecycle Management, Seasonal Analytics
 - **Monetization** — AdsGram, Telegram Stars, subscriptions
