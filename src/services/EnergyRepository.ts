@@ -174,8 +174,8 @@ export class EnergyRepository {
       amount: row.amount,
       balanceAfter: row.balance_after,
       context: row.context,
-      createdAt: new Date(row.created_at)
-    })));
+      createdAt: new Date(row.created_at),
+    }));
   }
 
   /**
