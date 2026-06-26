@@ -3888,15 +3888,100 @@ Jolt Time approaches AI as a future enhancement layer designed to improve player
 - **Support Developers:** AI reduces manual work for routine operational tasks
 - **Transparency:** Players know when AI is involved in decisions
 
-**See:** `.openhands/knowledge/ai-systems.md` for complete AI architecture.
+### AI Systems Architecture
+
+Jolt Time's AI ecosystem consists of multiple specialized AI systems working together:
+
+**See:** `.openhands/knowledge/ai-ecosystem-master-plan.md` for the complete AI ecosystem master plan.
+
+- **AI Ecosystem Master Plan** — Unified architecture connecting all AI systems
+- **AI Governance Framework** — Standards, auditing, safety, and review processes
+- **AI Safety Framework** — Hallucination mitigation, integrity, and quality controls
+- **AI Intelligence Layer** — Analytics, revenue intelligence, and predictive systems
+- **AI Expansion Roadmap** — Future AI system integration roadmap
+- **AI Platform Vision** — Long-term AI strategy for Jolt Time
+
+### AI Systems (Cycles 151-160)
+
+**See:** `.openhands/knowledge/ai-historian-architecture.md` for complete AI Historian architecture.
+
+- **AI Historian Architecture** — Historical knowledge companion (Cycle 151)
+- **Historical Knowledge Framework** — Educational AI Systems
+- **Educational AI Systems** — Learning systems and content
+- **AI Safety Standards** — Safety and quality standards for historical AI
+
+**See:** `.openhands/knowledge/ai-museum-guide-architecture.md` for complete AI Museum Guide architecture.
+
+- **AI Museum Guide Architecture** — Museum navigation and collection guidance (Cycle 152)
+- **Museum Recommendation Framework** — Personalized exhibit and collection suggestions
+- **Museum Personalization Systems** — Collection interest tracking and adaptation
+- **Museum AI Safety Standards** — Museum AI quality and accuracy standards
+- **AI Museum Analytics** — Museum AI engagement and effectiveness tracking
+
+**See:** `.openhands/knowledge/ai-content-generator-architecture.md` for complete AI Content Generator architecture.
+
+- **AI Content Generator Architecture** — Central content generation engine (Cycle 153)
+- **Content Validation Framework** — Quality assurance for generated content
+- **AI Content Governance** — Approval pipelines and review processes
+- **Historical Content Generation Systems** — Historical fact and narrative generation
+- **AI Content Analytics** — Content generation metrics and performance
+
+**See:** `.openhands/knowledge/ai-event-designer-architecture.md` for complete AI Event Designer architecture.
+
+- **AI Event Designer Architecture** — Intelligent LiveOps assistance (Cycle 154)
+- **Event Generation Framework** — Event objective, reward, and progression generation
+- **AI Event Governance** — Event quality and safety controls
+- **LiveOps AI Systems** — Event optimization and campaign intelligence
+- **Event Analytics** — Event performance and engagement metrics
+
+**See:** `.openhands/knowledge/ai-support-assistant-architecture.md` for complete AI Support Assistant architecture.
+
+- **AI Support Assistant Architecture** — First-line player support system (Cycle 155)
+- **Support Escalation Framework** — Human escalation and complex issue routing
+- **AI Support Governance** — Support quality and consistency standards
+- **Knowledge Management Systems** — Support documentation and knowledge bases
+- **Support Analytics** — Support volume, resolution, and satisfaction metrics
+
+**See:** `.openhands/knowledge/ai-moderation-architecture.md` for complete AI Moderation architecture.
+
+- **AI Moderation Architecture** — Community safety and health monitoring (Cycle 156)
+- **Community Safety Framework** — Toxicity and abuse detection
+- **AI Moderation Governance** — Moderation quality and fairness controls
+- **Human Moderator Integration** — AI-assisted human moderation workflows
+- **Moderation Analytics** — Moderation volume and community health metrics
+
+**See:** `.openhands/knowledge/ai-analytics-architecture.md` for complete AI Analytics architecture.
+
+- **AI Analytics Architecture** — Comprehensive analytics platform (Cycle 157)
+- **Predictive Intelligence Framework** — Forecasting and risk detection
+- **AI Insight Generation Systems** — Automated insight and anomaly detection
+- **AI Analytics Governance** — Analytics quality and validation standards
+- **Ecosystem Intelligence Layer** — Cross-system intelligence integration
+
+**See:** `.openhands/knowledge/ai-personalization-architecture.md` for complete AI Personalization architecture.
+
+- **AI Personalization Architecture** — Adaptive experience layer (Cycle 158)
+- **Adaptive Experience Framework** — Player-adaptive content and recommendations
+- **Recommendation Engine Systems** — Content, event, and progression recommendations
+- **Personalization Governance** — Fairness, transparency, and privacy controls
+- **Personalization Analytics** — Recommendation effectiveness and engagement metrics
+
+**See:** `.openhands/knowledge/ai-quest-generator-architecture.md` for complete AI Quest Generator architecture.
+
+- **AI Quest Generator Architecture** — Dynamic mission generation engine (Cycle 159)
+- **Quest Validation Framework** — Quality, educational, and gameplay validation
+- **Quest Balancing Systems** — Difficulty and reward balancing
+- **AI Quest Governance** — Quest approval and quality controls
+- **Quest Analytics** — Quest completion and engagement metrics
 
 ### AI Assistant
 
-Future in-app assistant may help players with:
+In-app AI assistant helping players with:
 
 - Tutorial guidance and FAQs
 - Museum and event explanations
 - Troubleshooting and support
+- Historical knowledge and educational content
 
 Interface: Chat-style within app, accessible from help menu.
 
@@ -3907,6 +3992,7 @@ Personalized suggestions for:
 - Missions aligned with player progress
 - Events matching player interests
 - Museum improvements and educational content
+- Collection development and artifact acquisition
 
 Principles: Player-first recommendations, transparent logic, non-invasive delivery.
 
@@ -3917,6 +4003,8 @@ Operational intelligence supporting game development:
 - Balance analysis and anomaly detection
 - Retention pattern identification
 - Trend detection across player segments
+- Revenue forecasting and optimization
+- Player behavior prediction
 
 All analytics use aggregated data; individual player privacy preserved.
 
