@@ -1,18 +1,34 @@
 /**
- * Jolt Time - Telegram Bot & Notification System
- * 
- * This module exports all services for the Telegram Mini App platform.
- * 
+ * Jolt Time - Core Infrastructure & Services
+ *
+ * Production-ready core modules and existing services.
+ *
  * @example
- * import { 
+ * import {
+ *   Logger,
+ *   ConfigProvider,
+ *   Container,
+ *   ApplicationError
+ * } from './src';
+ *
+ * @example
+ * import {
  *   TelegramBot,
- *   BotService,
  *   NotificationService,
- *   NotificationType,
- *   AdsGramService,
- *   DailyRewardService 
+ *   DailyRewardService
  * } from './src';
  */
+
+// =============================================================================
+// CORE INFRASTRUCTURE
+// =============================================================================
+
+export * from './shared';
+export * from './core';
+
+// =============================================================================
+// EXISTING SERVICES (Backward Compatible)
+// =============================================================================
 
 // Types
 export {
@@ -85,7 +101,7 @@ export { BotLogger, getBotLogger } from './services/BotLogger';
 export { MiniAppIntegration, getMiniAppIntegration } from './services/MiniAppIntegration';
 
 // Localization
-export { 
+export {
   Language,
   t, tl, getTranslation,
   getUserLanguage, setUserLanguage,

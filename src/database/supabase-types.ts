@@ -19,6 +19,11 @@ export interface Database {
           last_active_at: string;
           created_at: string;
           updated_at: string;
+          status: string;
+          is_premium: boolean;
+          language_code: string | null;
+          photo_url: string | null;
+          last_seen_at: string | null;
         };
         Insert: {
           id?: string;
@@ -30,6 +35,11 @@ export interface Database {
           last_active_at?: string;
           created_at?: string;
           updated_at?: string;
+          status?: string;
+          is_premium?: boolean;
+          language_code?: string | null;
+          photo_url?: string | null;
+          last_seen_at?: string | null;
         };
         Update: {
           id?: string;
@@ -41,6 +51,11 @@ export interface Database {
           last_active_at?: string;
           created_at?: string;
           updated_at?: string;
+          status?: string;
+          is_premium?: boolean;
+          language_code?: string | null;
+          photo_url?: string | null;
+          last_seen_at?: string | null;
         };
       };
       

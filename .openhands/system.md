@@ -45,18 +45,19 @@ The Master Index is the official starting point for understanding the entire Jol
 
 ### Global Documentation Structure
 
-- **Core Gameplay** — Energy, progression, quests, achievements, eras, story
+- **Core Gameplay** — Energy, progression, quests, achievements, eras, story, Prestige System Architecture, Prestige Progression Framework, Prestige Rewards, Prestige Analytics, Prestige Governance, Global Historical Map Architecture, Exploration Framework, Civilization Framework, Historical Region Framework, Exploration Analytics, Historical Campaigns Architecture, Campaign Progression Framework, Historical Mission Framework, Educational Content Framework, Campaign Analytics, Dynamic Missions Architecture, Mission Generation Framework, Adaptive Mission Systems, Mission Analytics, Mission Governance, Endgame Content Architecture, Mastery Framework, Legacy Systems, Endgame Progression, Endgame Analytics, Retention Systems Architecture, Retention Framework, Re-Engagement Systems, Habit Formation, Notification Integration
 - **Economy Systems** — Currencies, marketplace, inventory, wallet
-- **Museum Systems** — Artifacts, collections, evolution, museum design
-- **Social Features** — Friends, guilds, leaderboards, referrals
-- **PvP Systems** — Arena, tournaments, expeditions, battle pass
-- **Monetization** — AdsGram, Telegram Stars, subscriptions
+- **Museum Systems** — Artifacts, collections, evolution, museum design, Artifact Fusion Architecture, Collection Progression Framework, Fusion Progression Systems, Artifact Economy Framework, Fusion Analytics, Museum Expansion Architecture, Hall Expansion Framework, Exhibition Framework, Museum Prestige Systems, Museum Analytics
+- **Social Features** — Friends, guilds, leaderboards, referrals, Guild Wars Architecture, Territory Systems, Guild Progression Framework, Guild Competition Systems, Guild Analytics, World Bosses Architecture, Cooperative Event Framework, Contribution Systems, Boss Reward Systems, World Boss Analytics
+- **PvP Systems** — Arena, tournaments, expeditions, battle pass, Seasons 2.0 Architecture, Seasonal Progression, Seasonal Rewards, Season Lifecycle Management, Seasonal Analytics, LiveOps Strategy Architecture, Campaign Management Framework, Content Operations Framework, LiveOps Governance, LiveOps Analytics
+- **Monetization** — Monetization Balancing Architecture, Revenue Governance Framework, Pay-to-Win Prevention Standards, Monetization Analytics, Revenue Diversification Systems, AdsGram Optimization Architecture, Ad Placement Framework, Rewarded Ad Systems, Monetization Governance, AdsGram Analytics, Premium Subscription Architecture, Premium Benefits Framework, Subscription Governance, Premium Analytics, Recurring Revenue Systems, Telegram Stars Economy Architecture, Stars Consumption Framework, Stars Pricing Governance, Monetization Balance Framework, Stars Analytics, Telegram Stars, subscriptions
 - **Infrastructure** — API, database, Telegram integration
 - **Security** — Authentication, data protection, fraud prevention
-- **Analytics** — Metrics, tracking, retention analysis
+- **Analytics** — Metrics, tracking, retention analysis, Retention Systems Architecture, Retention Framework, Re-Engagement Systems, Retention Analytics, Lifetime Value Optimization, Revenue Intelligence Dashboard Architecture, KPI Governance Framework, Business Intelligence Systems, Revenue Analytics, Executive Reporting Systems, Telegram Analytics Layer, Acquisition Analytics, Community Analytics, Monetization Analytics, AdsGram Analytics, Telegram Intelligence Framework
 - **DevOps** — Deployment, backup, admin tooling
+- **Organic Growth Systems** — Growth Loops Architecture, Viral Growth Framework, Growth Funnel Systems, Growth Analytics, Organic Scaling Framework, Referral Rewards Economy Architecture, Referral Progression Framework, Referral Governance, Referral Analytics, Viral Sharing Architecture, Referral System Architecture, User Acquisition Flows Architecture
 - **Documentation** — Standards, project vision, roadmap, testing
-- **Future Concepts** — Creator ecosystem, Web3, educational partnerships
+- **Future Concepts** — Creator Economy Architecture, Creator Progression Framework, Creator Governance, Creator Analytics, Community Leadership Systems, Creator ecosystem, Web3, educational partnerships
 - **Narrative & Lore** — Lore Bible, Universe Encyclopedia, Narrative Standards, Historical Timeline
 
 **See:** `.openhands/knowledge/master-index.md#documentation-categories`
@@ -285,6 +286,52 @@ The main monetization for the project is **Telegram AdsGram advertisements**. Th
 - Cosmetic items only
 - Optional premium subscription
 - Battle pass (future)
+
+### Telegram Stars Architecture
+Native Telegram Stars payment integration for Jolt Time monetization:
+- **Purchase Categories:** Direct purchases (Time Shards, Dust), Premium features (Plus subscription), Seasonal (Season Pass, Event Pass), Cosmetic (profiles, museum), Progression (XP boosts, skips), Supporter (badges, emotes)
+- **Architecture Layers:** Purchase Layer (invoice creation, Telegram API), Validation Layer (signature verification, idempotency), Reward Layer (item granting, inventory), Analytics Layer (events, metrics), Security Layer (fraud prevention, duplicate detection)
+- **Purchase Security:** HMAC signature validation, receipt idempotency, fraud pattern detection, duplicate purchase prevention
+- **Premium Features:** Jolt Time Plus (5 Stars/month or 45 Stars/year), exclusive cosmetics, quality-of-life features, ad-free option
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md` for complete Stars specification.
+
+### Stars Purchase Framework
+Purchase types and pricing structure for Telegram Stars:
+- **One-Time Purchases:** Micro (1-5 Stars), Small (10-25 Stars), Medium (50-100 Stars), Large (250-500 Stars), Premium (1000+ Stars)
+- **Premium Bundles:** Starter Bundle, Value Bundle, Collection Bundle, Event Bundle
+- **Seasonal Bundles:** Limited availability, themed content, exclusive cosmetics
+- **Special Offers:** Flash sales, first purchase discounts, milestone offers, return offers
+- **Season Pass:** 10 Stars (free + premium tracks), 8-12 week seasons, 50 levels
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#purchase-architecture`
+
+### Premium Systems
+Premium subscriptions and exclusive features:
+- **Jolt Time Plus:** Monthly (5 Stars) or Annual (45 Stars, 25% savings), enhanced daily rewards, premium badge, emotes, priority support, ad-free option, extended friend list
+- **Quality-of-Life:** Larger inventory capacity, advanced filters, custom notifications, idle timeout extension
+- **Exclusive Cosmetics:** Premium frames, animated backgrounds, achievement badges, profile animations
+- **Premium Conveniences:** Quick actions, auto-management, enhanced trading, priority event access
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#premium-features-architecture`
+
+### Monetization Governance
+Economic balance and fair monetization principles:
+- **Fair Progression:** Core content accessible without purchase, no paywalls on story, competitive integrity maintained
+- **Healthy Monetization:** Value-based pricing, no dark patterns, clear refund policies, no manipulation
+- **AdsGram + Stars Balance:** AdsGram for passive engagement, Stars for active premium, no overlap, different user segments
+- **Pay-to-Win Prevention:** No gameplay power via purchase, no direct win conditions, cosmetics and convenience only
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#economic-balance-philosophy`
+
+### Purchase Security Standards
+Security measures for Stars transactions:
+- **Transaction Validation:** HMAC signature verification, receipt ID uniqueness, user/item validation, price matching
+- **Fraud Prevention:** Rapid purchase detection, pattern anomaly alerts, refund tracking, user suspension
+- **Duplicate Prevention:** Receipt ID idempotency, subscription double-charge prevention, limited item ownership check
+- **Integrity Measures:** Server-side processing only, complete audit trail, automatic retry on failure, 24h refund processing
+
+**See:** `.openhands/knowledge/telegram-stars-architecture.md#security-architecture`
 
 ### Critical Rules
 - **NEVER implement pay-to-win mechanics**
@@ -690,6 +737,60 @@ Complete Telegram integration architecture:
 
 **See:** `knowledge/telegram-architecture.md` for ecosystem details.
 
+### Telegram SDK Architecture
+Centralized bridge between Mini App and Telegram platform:
+- **SDK Categories:** User, Theme, Navigation, Device, Sharing, Storage, Monetization
+- **Architecture Layers:** SDK Layer (raw API), Service Layer (business logic), Hook Layer (React), UI Layer (components)
+- **User Integration:** Telegram user/chat/session/identity with secure verification
+- **Theme Integration:** Detection, dark mode, color sync, dynamic updates
+- **Navigation Integration:** Back button, closing confirmation, navigation state, deep links
+- **Device Integration:** Viewport, safe areas, capabilities, orientation handling
+- **Storage Integration:** Cloud storage for preferences, settings, cross-device sync
+- **Error Handling:** Availability failures, unsupported features, degraded mode, recovery
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md` for complete SDK specification.
+
+### Telegram Integration Layer
+Core integration points between Mini App and Telegram platform:
+- **SDK Initialization:** Telegram.WebApp initialization, ready signal, expand viewport
+- **User Data:** initData extraction, secure verification, session management
+- **Theme Sync:** themeParams observer, color scheme detection, CSS variable injection
+- **Navigation:** BackButton control, confirmClose dialogs, viewport events
+- **Sharing:** share_url for invitations, achievements, museum, campaigns
+- **Storage:** cloudStorage API for persistent user data
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#sdk-architecture-layers`
+
+### Theme Integration
+Synchronization between Telegram theme and Jolt Time appearance:
+- **Theme Detection:** Telegram.themeParams, colorScheme detection
+- **Color Mapping:** Telegram colors → Jolt Time CSS variables
+- **Dark Mode:** Full dark theme support with automatic switching
+- **Dynamic Updates:** Real-time theme change observation via onEvent
+- **Fallback:** Default Jolt Time colors if Telegram theme unavailable
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#theme-integration-architecture`
+
+### Navigation Integration
+Back button and navigation control through Telegram SDK:
+- **Back Button:** showBackButton/hideBackButton, onBackButtonClick handler
+- **Closing Confirmation:** showConfirmClose/hideConfirmClose for unsaved work
+- **Navigation State:** Track screen history, back stack management
+- **Deep Link Navigation:** Extract start_param, route to appropriate screen
+- **Viewport Events:** onEvent('viewport_changed') for resize handling
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#navigation-integration-architecture`
+
+### Telegram UX Standards
+User experience standards for Telegram Mini App platform:
+- **Haptic Feedback:** Impact (light/medium/heavy/rigid), notification (success/warning/error), selection
+- **Main Button:** Dynamic text, loading state, disabled state, context-aware actions
+- **Safe Areas:** Content padding for notch/home indicator, env() CSS functions
+- **Loading States:** Skeleton screens, spinner indicators, progressive loading
+- **Error Handling:** User-friendly messages, recovery suggestions, graceful degradation
+
+**See:** `.openhands/knowledge/telegram-sdk-architecture.md#haptic-feedback-architecture`
+
 ### Telegram Bot System
 Centralized bot ecosystem for player communication and engagement:
 - **Bot Responsibilities:** Send notifications, deep link navigation, deliver rewards, remind inactive players, announce events, provide support, track referrals
@@ -701,6 +802,51 @@ Centralized bot ecosystem for player communication and engagement:
 - **Referral Integration:** Link generation, milestone tracking, reward delivery notifications
 
 **See:** `.openhands/knowledge/telegram-bot.md` for complete bot system specification.
+
+### Bot Commands Architecture
+Comprehensive command system for Telegram Bot interaction:
+- **Command Categories:** Core (start, help, app, menu), Player (profile, stats, achievements), Museum (museum, artifacts, collections), Event (events, missions, leaderboard), Social (referral, invite, guild), Support (support, faq, feedback), Administrative (announce, mod, broadcast)
+- **Command Architecture:** Command Layer (parsing), Routing Layer (handler resolution), Service Layer (business logic), Analytics Layer (usage tracking)
+- **Command Routing:** Pattern matching, subcommand support, alias resolution, fallback handling
+- **Permission System:** Guest (Level 0), Player (Level 2), Moderator (Level 3), Administrator (Level 4), System (Level 5)
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md` for complete command specification.
+
+### Command Routing
+Centralized routing system for bot command processing:
+- **Routing Standards:** Command parsing (/command subcommand --flag value), exact match priority, alias resolution, fallback to /help
+- **Subcommand Support:** /profile stats, /event list, /museum artifacts
+- **Validation:** Command existence, permission level, argument types, rate limits
+- **Error Handling:** Unknown commands (suggest similar), missing args (show usage), permission denied (explain access)
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#command-routing-standards`
+
+### Command Permissions
+Role-based permission system for bot commands:
+- **Permission Levels:** Guest (basic commands only), Player (authenticated), Moderator (view/warn/mute), Administrator (full access), System (automated)
+- **Player Commands:** All standard player commands, guild access (if member), support tickets, social features
+- **Moderator Commands:** /mod subcommands, user information view, warning/suspension, escalation
+- **Administrator Commands:** /announce, /broadcast, /diagnose, user management, configuration changes
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#permission-architecture`
+
+### Mini App Command Integration
+Bot commands as gateway to Mini App experience:
+- **Mini App Launching:** /app opens Mini App, /app {screen} opens specific screen (museum, battle, events, profile)
+- **Contextual Navigation:** Bot generates deep links with context (artifact ID, event ID), Mini App receives and renders appropriate screen
+- **Deep Link Routing:** t.me/jolttimebot?start=screen_{name} for direct navigation, start_param carries routing context
+- **Onboarding Integration:** /start triggers onboarding flow for new users, returning users directed to home with context
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#mini-app-integration-standards`
+
+### Command Analytics
+Tracking and measurement for bot command performance:
+- **Usage Analytics:** Command frequency, unique users per command, command sequences, session patterns
+- **Success Metrics:** Success rate per command, average response time, failure categorization (user error, permission, service unavailable)
+- **Conversion Tracking:** Command-to-Mini-App launch rate, Mini-App-to-registration rate, retention correlation
+- **Engagement Impact:** Session frequency from bot, commands per session, return rate after command
+
+**See:** `.openhands/knowledge/bot-commands-architecture.md#analytics-architecture`
 
 ### Push Notifications
 Timely, relevant alerts that enhance player experience without becoming spam:
@@ -732,6 +878,93 @@ Notification-borne links that open specific Mini App screens with context:
 - **Mini App Context:** Links pass parameters (ref, screen, event, guild) as URL query params for seamless routing
 
 **See:** `.openhands/knowledge/telegram-bot.md` for complete deep link specification.
+
+### Deep Link Ecosystem
+Strategic platform capability for user acquisition, retention, and viral expansion:
+- **Deep Link Categories:** Referral, Campaign, Event, Museum, Social Sharing, Re-engagement, Administrative
+- **Architecture Layers:** Link Generation, Link Processing, Routing, Analytics
+- **Link Processing:** URL parsing, parameter extraction, type resolution, context building
+- **Routing Standards:** Pattern matching, route registry, fallback handling, invalid link handling
+- **Security:** HMAC signatures, parameter validation, rate limiting, fraud prevention
+- **Scalability:** Millions of links, billions of clicks, large campaign volumes
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md` for complete ecosystem specification.
+
+### Referral System Architecture
+Comprehensive referral system as primary user acquisition engine:
+- **Referral Categories:** User (friend invitations), Campaign (marketing), Guild (recruitment), Event (participation), Influencer (creator), Partner (affiliate)
+- **Architecture Layers:** Referral Generation, Tracking, Attribution, Reward, Analytics
+- **Referral Lifecycle:** Invitation creation → delivery → acquisition → validation → eligibility → distribution
+- **Reward Tiers:** Signup (50 Dust), Tutorial (25 Dust), Level 5 (Capsule), Level 10 (Rare Capsule), Level 20 (Epic Capsule)
+- **Fraud Prevention:** Duplicate detection, self-referral prevention, fake account detection, abuse monitoring
+
+**See:** `.openhands/knowledge/referral-system-architecture.md` for complete referral specification.
+
+### Referral Attribution
+Determining referral ownership and reward assignment:
+- **First-Touch Attribution:** Marketing/campaign effectiveness, stored at first click
+- **Last-Touch Attribution:** Reward assignment, last click before signup
+- **Attribution Window:** 7-day conversion window from click to signup
+- **Attribution Validation:** Window check, duplicate detection, self-referral check, device fingerprint, behavioral analysis
+- **Ownership Rules:** First valid click owns referral, locked after conversion, non-transferable
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#referral-attribution-standards`
+
+### Referral Rewards
+Reward structure for referral participants:
+- **Inviter Rewards:** Signup (50 Dust), Tutorial (25 Dust), Level 5 (Common Capsule), Level 10 (Rare Capsule), Level 20 (Epic Capsule), Day 7 retention (+50% bonus)
+- **Invited Player Rewards:** 100 Chrono Dust, 5 Time Shards, +50 Max Energy (7 days), 1 Free Common Capsule
+- **Milestone Rewards:** 3/5/10/25/50/100 referrals unlock tier rewards (Capsules, badges, cosmetics, VIP titles)
+- **Quality Bonuses:** High-quality referrals (top 25%) get +25% bonus; Exceptional (top 10%) get +50% bonus
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#reward-architecture`
+
+### Referral Fraud Prevention
+Multi-layered fraud detection and prevention:
+- **Duplicate Detection:** Same Telegram ID, phone number, device fingerprint, IP range, timing patterns
+- **Self-Referral Prevention:** Same device fingerprint, IP address, Telegram ID, geographic location, creation timing
+- **Fake Account Detection:** Bot-like patterns, no Mini App activity, suspicious referral sources, rapid account creation
+- **Abuse Monitoring:** Real-time detection, batch pattern analysis, user reports, community trust signals, automated responses
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#fraud-prevention-architecture`
+
+### Referral Analytics
+Comprehensive tracking and measurement:
+- **Conversion Analytics:** CTR, signup conversion, activation rate, overall conversion, time to conversion
+- **Quality Analytics:** Day 1/7/30 retention, session duration, sessions per week, progression speed
+- **Efficiency Analytics:** Cost per referral (CPR), cost per activated user (CPA), revenue per referral, viral coefficient (K-factor)
+- **Retention Analytics:** Cohort analysis by referral month/type/source, retention curves, quality tier analysis
+
+**See:** `.openhands/knowledge/referral-system-architecture.md#analytics-architecture
+
+### Campaign Architecture
+Marketing-driven deep link system for user acquisition and re-engagement:
+- **Campaign Types:** Marketing, Seasonal, Promotional, Influencer
+- **Seasonal Campaigns:** Christmas, Summer, Halloween, Anniversary, Lunar New Year
+- **Promotional Codes:** One-time, Limited, Unlimited, Exclusive variants
+- **Influencer Tracking:** Per-handle performance, conversion quality, payout tracking
+- **AdsGram Integration:** Monetization campaigns, reward campaigns, acquisition tracking, conversion attribution
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#campaign-deep-link-architecture`
+
+### Deep Link Analytics
+Comprehensive tracking and measurement system for deep link performance:
+- **Link Creation Analytics:** Type, creator, parameters, campaign, timestamp
+- **Link Usage Analytics:** Clicks, users, platform, device, location
+- **Conversion Funnel:** Click → Open → Signup → Tutorial → First Mission → Retention
+- **Campaign Metrics:** CPA, ROI, quality score, cohort analysis
+- **A/B Testing:** Link format, landing page, reward structure, copy variations
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#analytics-architecture`
+
+### Growth Link Standards
+Standards for deep links as primary growth channel:
+- **Viral Expansion:** Achievement sharing, collection showcases, referral rewards, leaderboard ranks
+- **User Journey:** First-time (context-aware onboarding), Returning (resume/context), Referred (enhanced bonus), Campaign (goal tracking)
+- **Future Expansions:** AI experiences, Creator economy, Web3 campaigns, NFT campaigns, Esports tournaments
+- **Long-term Philosophy:** Growth engine, viral coefficient > 1.0, CAC reduction, engagement optimization
+
+**See:** `.openhands/knowledge/deep-link-ecosystem.md#long-term-philosophy`
 
 ### Artifacts System
 The heart of Jolt Time - historical artifact collection:
@@ -3655,15 +3888,100 @@ Jolt Time approaches AI as a future enhancement layer designed to improve player
 - **Support Developers:** AI reduces manual work for routine operational tasks
 - **Transparency:** Players know when AI is involved in decisions
 
-**See:** `.openhands/knowledge/ai-systems.md` for complete AI architecture.
+### AI Systems Architecture
+
+Jolt Time's AI ecosystem consists of multiple specialized AI systems working together:
+
+**See:** `.openhands/knowledge/ai-ecosystem-master-plan.md` for the complete AI ecosystem master plan.
+
+- **AI Ecosystem Master Plan** — Unified architecture connecting all AI systems
+- **AI Governance Framework** — Standards, auditing, safety, and review processes
+- **AI Safety Framework** — Hallucination mitigation, integrity, and quality controls
+- **AI Intelligence Layer** — Analytics, revenue intelligence, and predictive systems
+- **AI Expansion Roadmap** — Future AI system integration roadmap
+- **AI Platform Vision** — Long-term AI strategy for Jolt Time
+
+### AI Systems (Cycles 151-160)
+
+**See:** `.openhands/knowledge/ai-historian-architecture.md` for complete AI Historian architecture.
+
+- **AI Historian Architecture** — Historical knowledge companion (Cycle 151)
+- **Historical Knowledge Framework** — Educational AI Systems
+- **Educational AI Systems** — Learning systems and content
+- **AI Safety Standards** — Safety and quality standards for historical AI
+
+**See:** `.openhands/knowledge/ai-museum-guide-architecture.md` for complete AI Museum Guide architecture.
+
+- **AI Museum Guide Architecture** — Museum navigation and collection guidance (Cycle 152)
+- **Museum Recommendation Framework** — Personalized exhibit and collection suggestions
+- **Museum Personalization Systems** — Collection interest tracking and adaptation
+- **Museum AI Safety Standards** — Museum AI quality and accuracy standards
+- **AI Museum Analytics** — Museum AI engagement and effectiveness tracking
+
+**See:** `.openhands/knowledge/ai-content-generator-architecture.md` for complete AI Content Generator architecture.
+
+- **AI Content Generator Architecture** — Central content generation engine (Cycle 153)
+- **Content Validation Framework** — Quality assurance for generated content
+- **AI Content Governance** — Approval pipelines and review processes
+- **Historical Content Generation Systems** — Historical fact and narrative generation
+- **AI Content Analytics** — Content generation metrics and performance
+
+**See:** `.openhands/knowledge/ai-event-designer-architecture.md` for complete AI Event Designer architecture.
+
+- **AI Event Designer Architecture** — Intelligent LiveOps assistance (Cycle 154)
+- **Event Generation Framework** — Event objective, reward, and progression generation
+- **AI Event Governance** — Event quality and safety controls
+- **LiveOps AI Systems** — Event optimization and campaign intelligence
+- **Event Analytics** — Event performance and engagement metrics
+
+**See:** `.openhands/knowledge/ai-support-assistant-architecture.md` for complete AI Support Assistant architecture.
+
+- **AI Support Assistant Architecture** — First-line player support system (Cycle 155)
+- **Support Escalation Framework** — Human escalation and complex issue routing
+- **AI Support Governance** — Support quality and consistency standards
+- **Knowledge Management Systems** — Support documentation and knowledge bases
+- **Support Analytics** — Support volume, resolution, and satisfaction metrics
+
+**See:** `.openhands/knowledge/ai-moderation-architecture.md` for complete AI Moderation architecture.
+
+- **AI Moderation Architecture** — Community safety and health monitoring (Cycle 156)
+- **Community Safety Framework** — Toxicity and abuse detection
+- **AI Moderation Governance** — Moderation quality and fairness controls
+- **Human Moderator Integration** — AI-assisted human moderation workflows
+- **Moderation Analytics** — Moderation volume and community health metrics
+
+**See:** `.openhands/knowledge/ai-analytics-architecture.md` for complete AI Analytics architecture.
+
+- **AI Analytics Architecture** — Comprehensive analytics platform (Cycle 157)
+- **Predictive Intelligence Framework** — Forecasting and risk detection
+- **AI Insight Generation Systems** — Automated insight and anomaly detection
+- **AI Analytics Governance** — Analytics quality and validation standards
+- **Ecosystem Intelligence Layer** — Cross-system intelligence integration
+
+**See:** `.openhands/knowledge/ai-personalization-architecture.md` for complete AI Personalization architecture.
+
+- **AI Personalization Architecture** — Adaptive experience layer (Cycle 158)
+- **Adaptive Experience Framework** — Player-adaptive content and recommendations
+- **Recommendation Engine Systems** — Content, event, and progression recommendations
+- **Personalization Governance** — Fairness, transparency, and privacy controls
+- **Personalization Analytics** — Recommendation effectiveness and engagement metrics
+
+**See:** `.openhands/knowledge/ai-quest-generator-architecture.md` for complete AI Quest Generator architecture.
+
+- **AI Quest Generator Architecture** — Dynamic mission generation engine (Cycle 159)
+- **Quest Validation Framework** — Quality, educational, and gameplay validation
+- **Quest Balancing Systems** — Difficulty and reward balancing
+- **AI Quest Governance** — Quest approval and quality controls
+- **Quest Analytics** — Quest completion and engagement metrics
 
 ### AI Assistant
 
-Future in-app assistant may help players with:
+In-app AI assistant helping players with:
 
 - Tutorial guidance and FAQs
 - Museum and event explanations
 - Troubleshooting and support
+- Historical knowledge and educational content
 
 Interface: Chat-style within app, accessible from help menu.
 
@@ -3674,6 +3992,7 @@ Personalized suggestions for:
 - Missions aligned with player progress
 - Events matching player interests
 - Museum improvements and educational content
+- Collection development and artifact acquisition
 
 Principles: Player-first recommendations, transparent logic, non-invasive delivery.
 
@@ -3684,6 +4003,8 @@ Operational intelligence supporting game development:
 - Balance analysis and anomaly detection
 - Retention pattern identification
 - Trend detection across player segments
+- Revenue forecasting and optimization
+- Player behavior prediction
 
 All analytics use aggregated data; individual player privacy preserved.
 
@@ -5928,6 +6249,861 @@ Performance governance ensures consistent, efficient database operations through
 | **Production** | Monitoring and optimization |
 
 **See:** `.openhands/knowledge/query-optimization.md#13-monitoring-standards`
+
+## Push Notification Architecture
+
+Jolt Time's Push Notification System serves as the primary retention and re-engagement engine. The architecture emphasizes value-first notifications that respect user time while maximizing engagement and retention.
+
+### Notification Categories
+
+The system supports seven notification categories:
+
+| Category | Purpose | Frequency Cap |
+|----------|---------|---------------|
+| **Retention Notifications** | Bring players back and maintain engagement | 1/week (lapsed) |
+| **Event Notifications** | Announce and remind about game events | Per event |
+| **Mission Notifications** | Daily and weekly mission updates | 2/day |
+| **Reward Notifications** | Reward availability and claims | Per reward |
+| **Social Notifications** | Guild, friend, and community updates | 4/day |
+| **Monetization Notifications** | Premium offers and special bundles | 2/week |
+| **Administrative Notifications** | System updates and security alerts | As needed |
+
+### Notification Philosophy
+
+```
+VALUE-FIRST PRINCIPLES:
+├── Every notification provides genuine benefit
+├── Notifications inform, celebrate, or enable action
+├── Value is immediate and clear upon reading
+├── Never send notifications that exist only for our benefit
+└── Focus on quality over quantity
+
+QUALITY MESSAGES:
+• "Your daily capsule is ready to open!"
+• "Egypt Week begins today — explore new artifacts!"
+• "Your friend Marcus sent you an energy gift!"
+
+NEVER SEND:
+• "YOUR STREAK ENDS IN 2 HOURS!!!"
+• "You haven't played in 5 days!"
+• "Come back or lose your progress!"
+```
+
+**See:** `.openhands/knowledge/push-notification-architecture.md` for complete notification architecture specification.
+
+## Notification Personalization
+
+The personalization layer adapts notification content and timing to individual players for maximum relevance and engagement.
+
+### Player Segmentation
+
+```
+SEGMENTATION MODEL:
+├── Activity Segments — Active, Regular, Casual, Lapsing, Churned
+├── Progression Segments — New, Learning, Established, Veteran, Returning
+├── Engagement Segments — Social, Collector, Competitor, Explorer
+└── Monetization Segments — Free, Light Spender, Regular, VIP
+```
+
+### Behavioral Targeting
+
+| Targeting Type | Implementation |
+|----------------|----------------|
+| **Time Optimization** | Send based on player's typical active hours |
+| **Content Matching** | Match content to player's feature engagement |
+| **Frequency Adaptation** | Adjust based on notification responsiveness |
+| **Progression Context** | Tailor based on current game progression |
+
+### Personalization Standards
+
+- **Dynamic Messages** — Variables adapt to player state
+- **Timezone Awareness** — Delivery respects user timezone
+- **Quiet Hours** — Automatic respect for user-set quiet times
+- **Preference Respect** — Category toggles fully honored
+
+**See:** `.openhands/knowledge/push-notification-architecture.md#10-personalization-standards`
+
+## Notification Analytics
+
+The notification analytics layer tracks performance metrics to enable continuous optimization of notification strategy.
+
+### Core Analytics Metrics
+
+| Metric Category | Measurements |
+|-----------------|--------------|
+| **Delivery Metrics** | Sent, delivered, failed, bounced rates |
+| **Open Metrics** | Open rates, tap rates, click-through rates |
+| **Engagement Metrics** | Deep link follow-through, session initiation |
+| **Conversion Metrics** | Reward claims, purchases, feature activations |
+
+### Analytics Targets
+
+| Metric | Target | Critical Threshold |
+|--------|--------|-------------------|
+| Delivery Rate | > 98% | < 95% |
+| Push Open Rate | 15-30% | < 10% |
+| Click-Through Rate | > 50% | < 30% |
+| Conversion Rate | > 5% | < 2% |
+
+### Health Monitoring
+
+- **Opt-out rates** — Track and minimize notification disable rates
+- **Block rates** — Monitor bot blocking incidents
+- **Report spam rates** — Track complaint rates
+- **Feedback signals** — Collect user feedback on notifications
+
+**See:** `.openhands/knowledge/push-notification-architecture.md#13-analytics-architecture`
+
+## Retention Campaign Standards
+
+Retention campaigns use the notification system to re-engage lapsed players while maintaining trust and providing value.
+
+### Comeback Campaign Structure
+
+```
+CAMPAIGN ELIGIBILITY:
+├── 7+ days since last session
+├── Previously active (3+ sessions)
+├── Has not opted out of notifications
+└── Has not blocked the bot
+
+CAMPAIGN OFFER:
+├── Welcome Back chest with preserved progress rewards
+├── Double XP weekend
+├── New content highlight since last visit
+└── No purchase required
+
+CAMPAIGN FREQUENCY:
+├── One initial message
+├── One follow-up (3 days later, optional)
+└── Pause if user returns
+```
+
+### Return Player Experience
+
+```
+WELCOME BACK MESSAGE CONTENT:
+├── "Welcome back, Time Keeper!"
+├── Progress is safe and preserved
+├── What's new since they left
+├── Catch-up chest (if applicable)
+└── No mention of days missed
+
+TONE:
+├── Excited and positive
+├── Forward-looking
+├── No guilt or pressure
+└── Celebration of return
+```
+
+### Anti-Predatory Design
+
+- **Never threaten** streak loss or progress penalties
+- **Never create artificial urgency** through countdown pressure
+- **Never use FOMO manipulation** to drive returns
+- **Always respect** if user has muted notifications
+
+**See:** `.openhands/knowledge/retention.md` for complete retention system specification.
+
+## Notification Governance
+
+Notification governance ensures all notifications meet quality standards while respecting user preferences and maintaining trust.
+
+### Frequency Limits
+
+| Channel | Daily Limit | Category Limit |
+|---------|-------------|----------------|
+| Push Notifications | 3/day | Varies by category |
+| Bot Messages | Unlimited (within reason) | Respects preferences |
+| In-App Notifications | Unlimited within session | Respects preferences |
+
+### Anti-Spam Rules
+
+```
+COOLDOWN RULES:
+├── Same notification: 24 hours
+├── Similar notification: 12 hours
+├── Minimum 1 hour between notifications
+├── Quiet hours = no delivery
+└── Maximum 5 notification triggers per day
+
+PRIORITY SYSTEM:
+├── Critical — Immediate delivery, bypass limits (security, account)
+├── High — Within 1 hour (events, rewards)
+├── Normal — User's preferred time (daily, missions)
+└── Low — Batch processing (reminders)
+```
+
+### User Control Standards
+
+| Control Type | Implementation |
+|--------------|----------------|
+| **Category Toggles** | Individual on/off for each notification category |
+| **Timing Controls** | Preferred notification time, quiet hours |
+| **Volume Controls** | Minimal, Normal, Frequent, Off |
+| **Timezone Awareness** | Automatic timezone detection and respect |
+
+### Trust Protection
+
+- **Transparency** — Users can see all settings and notification frequency
+- **Respect** — Always honor opt-out requests immediately
+- **Value Commitment** — Every notification provides genuine value
+- **Quality** — Consistent quality builds long-term trust
+
+**See:** `.openhands/knowledge/push-notification-architecture.md#16-user-experience-standards` and `.openhands/knowledge/push-notification-architecture.md#17-anti-spam-philosophy`
+
+## Viral Sharing Architecture
+
+Jolt Time's Viral Sharing System transforms players into advocates by creating share-worthy moments naturally embedded in the gameplay experience. The architecture emphasizes organic growth through genuine excitement rather than artificial manipulation.
+
+### Sharing Categories
+
+The system supports seven sharing categories:
+
+| Category | Purpose | Share Triggers |
+|----------|---------|----------------|
+| **Achievement Sharing** | Major accomplishments | Level milestones, rare achievements, seasonal accomplishments |
+| **Museum Sharing** | Museum displays | Museum snapshots, collection completions, exhibitions |
+| **Artifact Sharing** | Artifact discoveries | Rare finds, legendary discoveries, collection completions |
+| **Event Sharing** | Event participation | Event joins, victories, leaderboard achievements |
+| **Guild Sharing** | Guild activities | Guild victories, progression, milestones |
+| **Referral Sharing** | Invitation campaigns | Referral links, achievements, milestones |
+| **Social Milestone Sharing** | Social accomplishments | Friend milestones, community participation |
+
+### Viral Growth Philosophy
+
+```
+SHARING PRINCIPLES:
+├── Organic Growth — Create moments players want to share naturally
+├── Social Proof — Visible accomplishments attract new players
+├── Engagement Depth — Sharing deepens personal investment
+└── Community Building — Shared experiences strengthen bonds
+
+SHAREABLE MOMENTS:
+• "I just discovered a Legendary artifact!"
+• "My Egypt collection is finally complete!"
+• "We won the guild battle!"
+
+NEVER FORCE:
+• Don't pressure players to share
+• Don't punish those who don't share
+• Don't make sharing mandatory for progress
+• Don't incentivize low-quality shares
+```
+
+**See:** `.openhands/knowledge/viral-sharing-architecture.md` for complete viral sharing architecture specification.
+
+## Social Sharing Systems
+
+Social sharing systems enable players to share achievements, progress, and experiences with friends and the broader community.
+
+### Sharing Architecture Layers
+
+```
+LAYER ARCHITECTURE:
+├── Content Generation — Create visually appealing shareable content
+├── Sharing Layer — Handle sharing to Telegram and other platforms
+├── Attribution Layer — Track shares for analytics and rewards
+└── Analytics Layer — Measure and optimize viral performance
+```
+
+### Content Types
+
+| Content Type | Purpose | Format |
+|--------------|---------|--------|
+| Achievement Cards | Milestone celebrations | Visual card with badge |
+| Collection Displays | Museum showcases | Grid layout with progress |
+| Artifact Cards | Discovery highlights | High-quality artifact image |
+| Event Badges | Participation markers | Event-themed badge |
+| Leaderboard Cards | Ranking displays | Position and stats |
+
+### Telegram Integration
+
+```
+TELEGRAM SHARING:
+├── Telegram Chats — Direct sharing to individuals
+├── Telegram Groups — Sharing to group conversations
+├── Telegram Channels — Public channel posts
+└── Deep Links — Attribution-tracked invite links
+```
+
+**See:** `.openhands/knowledge/viral-sharing-architecture.md#11-telegram-integration-standards`
+
+## Sharing Analytics
+
+The sharing analytics layer tracks viral performance metrics for continuous optimization.
+
+### Core Analytics Metrics
+
+| Metric Category | Measurements |
+|-----------------|--------------|
+| **Share Frequency** | Volume by type, patterns, trends |
+| **Share Conversion** | CTR, signup rate, activation rate |
+| **Viral Coefficient** | K factor, viral cycle, reach |
+| **Engagement Impact** | Session quality, retention, LTV |
+
+### Viral Coefficient Targets
+
+| Metric | Target | Critical Threshold |
+|--------|--------|-------------------|
+| Viral Coefficient (K) | > 0.3 | < 0.1 |
+| Click-Through Rate | > 10% | < 5% |
+| Conversion Rate | > 5% | < 2% |
+| Share Quality Score | > 80% | < 60% |
+
+### Health Monitoring
+
+- **Share frequency** — Track and optimize sharing volume
+- **Conversion funnel** — Monitor share-to-signup pipeline
+- **Abuse detection** — Identify spam and manipulation
+- **User sentiment** — Monitor sharing experience quality
+
+**See:** `.openhands/knowledge/viral-sharing-architecture.md#14-analytics-architecture`
+
+## Viral Growth Standards
+
+Viral growth standards ensure sharing systems drive organic growth while maintaining integrity and user trust.
+
+### Content Quality Standards
+
+```
+QUALITY REQUIREMENTS:
+├── Visually Attractive — Mobile-optimized, brand-consistent graphics
+├── Immediately Understandable — Clear at a glance
+├── Genuinely Share-Worthy — Celebrates real accomplishment
+├── Value for Recipient — Provides interest to viewers
+└── Telegram-Native — Feels natural on the platform
+```
+
+### Reward Philosophy
+
+| Reward Type | Purpose | Balance |
+|-------------|---------|--------|
+| Social Recognition | Badges, leaderboards, profiles | Primary incentive |
+| Sharing Bonuses | XP, currency for milestones | Secondary, limited |
+| Referral Rewards | Both parties benefit | Quality-focused |
+
+### Anti-Abuse Rules
+
+```
+SPAM PREVENTION:
+├── Rate Limiting — Maximum shares per user per day
+├── Quality Gates — Minimum account age for rewards
+├── Detection Systems — Pattern recognition for abuse
+└── Reward Reversal — Fraudulent rewards revoked
+
+SHARING INTEGRITY:
+├── Authenticity Required — Real actions, not bots
+├── Value Required — Genuine shares only
+├── No Manipulation — No fake engagement
+└── Quality Over Quantity — Natural sharing encouraged
+```
+
+**See:** `.openhands/knowledge/viral-sharing-architecture.md#16-anti-abuse-standards`
+
+## Sharing Governance
+
+Sharing governance ensures viral mechanics remain healthy, authentic, and aligned with long-term project values.
+
+### Governance Framework
+
+```
+GOVERNANCE PILLARS:
+├── Quality Control — Maintain share content standards
+├── Fraud Prevention — Detect and prevent abuse
+├── User Trust — Preserve authentic sharing experience
+├── Sustainable Growth — Balance growth with integrity
+```
+
+### Monitoring Standards
+
+| Area | Metrics | Alerts |
+|------|---------|--------|
+| **Share Volume** | Daily shares, shares/user | Anomaly detection |
+| **Conversion Funnel** | CTR, signup, activation | Drop-off alerts |
+| **Viral Coefficient** | K factor, cycle time | Below-threshold warning |
+| **Abuse Rate** | Flagged shares, reversals | Spike detection |
+
+### Policy Enforcement
+
+- **Content Moderation** — Review flagged share content
+- **Abuse Handling** — Graduated penalties for violations
+- **Reward Integrity** — Verify and reverse fraudulent rewards
+- **User Communication** — Clear explanation of policies
+
+**See:** `.openhands/knowledge/viral-sharing-architecture.md#16-anti-abuse-standards` and `.openhands/knowledge/viral-sharing-architecture.md#17-future-expansion-notes`
+
+## Telegram Communities Architecture
+
+Jolt Time's Telegram Communities Integration transforms Telegram groups and channels into strategic layers of the game ecosystem. Communities serve as extensions of the game experience where players connect, collaborate, compete, and deepen their relationship with the game and each other.
+
+### Community Categories
+
+| Category | Purpose | Management |
+|----------|---------|------------|
+| **Official Communities** | Announcements and support | Community team |
+| **Guild Communities** | Guild communication | Guild leaders |
+| **Event Communities** | Event participation | Event team |
+| **Museum Communities** | Collection sharing | Community curators |
+| **Regional Communities** | Language/region support | Regional ambassadors |
+| **Creator Communities** | Content creator support | Creator team |
+| **Support Communities** | Player feedback and help | Community volunteers |
+
+### Community Philosophy
+
+```
+COMMUNITY PRINCIPLES:
+├── Engagement Driver — Deeper connection beyond gameplay
+├── Retention Tool — Social bonds encourage return visits
+├── Support Network — Player-to-player assistance
+├── Growth Engine — Organic recruitment through members
+└── Brand Building — Community pride and advocacy
+
+GAME INTEGRATION:
+├── Guild chats connected to in-game guilds
+├── Event groups tied to game events
+├── Community challenges linked to game rewards
+└── Collection sharing powered by museum system
+```
+
+**See:** `.openhands/knowledge/telegram-communities-architecture.md` for complete community architecture specification.
+
+## Community Integration Layer
+
+The community integration layer connects Telegram communities to game systems and features.
+
+### Integration Architecture
+
+```
+INTEGRATION LAYER:
+├── Game Integration — Bot, Mini App, notifications, deep links
+├── Feature Integration — Guild, Event, Museum, Referral systems
+└── Data Integration — Activity sync, achievements, rewards
+```
+
+### Integration Points
+
+| System | Community Integration |
+|--------|----------------------|
+| **Guild System** | Guild chats auto-created with membership |
+| **Event System** | Event communities for participation |
+| **Museum System** | Collection groups for sharing |
+| **Referral System** | Community recruitment channels |
+| **Support System** | Help groups for player assistance |
+
+### Telegram Features
+
+```
+TELEGRAM INTEGRATION:
+├── Groups — Guild chats, support groups, discussion groups
+├── Channels — Announcements, leaderboards, tips
+├── Discussion Groups — Feature feedback, bug reports
+└── Community Entry Points — In-app browser, deep links
+```
+
+**See:** `.openhands/knowledge/telegram-communities-architecture.md#3-community-architecture-layers` and `.openhands/knowledge/telegram-communities-architecture.md#11-telegram-integration-standards`
+
+## Community Engagement Standards
+
+Community engagement mechanisms drive participation and strengthen social bonds.
+
+### Engagement Mechanisms
+
+| Mechanism | Purpose | Example |
+|-----------|---------|---------|
+| **Community Challenges** | Collaborative goals | "Complete 1000 missions together" |
+| **Achievement Alerts** | Milestone celebrations | "Guild reached Level 10!" |
+| **Leaderboards** | Competitive ranking | Community contribution rankings |
+| **Recognition** | Value acknowledgment | Featured curator badges |
+
+### Participation Incentives
+
+```
+INCENTIVE STRUCTURE:
+├── In-Game Rewards — Currency, XP, items for participation
+├── Status Rewards — Badges, titles, special roles
+├── Access Rewards — Early features, exclusive content
+└── Recognition Rewards — Featured highlights, spotlight posts
+
+BALANCE:
+├── Meaningful without pay-to-win
+├── Active participation over passive membership
+├── Quality over quantity
+└── Community health over metrics manipulation
+```
+
+### Engagement Standards
+
+- **Announcements** — Structured, valuable, not spammy
+- **Challenges** — Collaborative, achievable, rewarding
+- **Recognition** — Deserved, visible, motivating
+- **Participation** — Accessible, inclusive, valued
+
+**See:** `.openhands/knowledge/telegram-communities-architecture.md#12-community-engagement-architecture`
+
+## Community Analytics
+
+Community analytics track health, growth, and impact on game metrics.
+
+### Core Analytics Metrics
+
+| Metric Category | Measurements |
+|-----------------|--------------|
+| **Community Growth** | Member count, growth rate, churn rate |
+| **Participation Rates** | Active rate, message frequency, event participation |
+| **Engagement Levels** | Message engagement, content engagement, depth |
+| **Retention Impact** | D7/D30 retention, LTV correlation |
+
+### Health Metrics
+
+| Health Indicator | Target | Warning | Critical |
+|------------------|--------|---------|----------|
+| **Active Rate** | 20-40% | < 15% | < 5% |
+| **Churn Rate** | < 5%/month | > 10% | > 20% |
+| **Sentiment Score** | > 70% | < 50% | < 30% |
+
+### Retention Correlation
+
+```
+RETENTION IMPACT:
+├── Community members retained longer than non-members
+├── Active participants have highest retention
+├── Core community members have highest LTV
+└── Social bonds increase player commitment
+```
+
+**See:** `.openhands/knowledge/telegram-communities-architecture.md#13-analytics-architecture`
+
+## Community Governance
+
+Community governance ensures healthy, safe, and thriving community environments.
+
+### Governance Framework
+
+```
+GOVERNANCE PILLARS:
+├── Community Safety — Zero tolerance for harassment
+├── Moderation Workflows — Structured, fair, consistent
+├── Abuse Prevention — Proactive detection and prevention
+├── Healthy Discussion — Constructive, respectful engagement
+```
+
+### Moderation Standards
+
+| Layer | Function | Responsibility |
+|-------|----------|----------------|
+| **Automated** | Bot filters, spam detection | Prevent spam, flag issues |
+| **Community** | Member reporting | Surface problems |
+| **Volunteers** | Trusted members | First response |
+| **Staff** | Community managers | Final decisions |
+
+### Safety Standards
+
+```
+COMMUNITY SAFETY:
+├── Clear community guidelines
+├── Reporting mechanisms
+├── Swift action on violations
+├── Appeal process for decisions
+
+PROHIBITED CONTENT:
+├── Hate speech and discrimination
+├── Harassment and bullying
+├── Spam and unauthorized advertising
+├── Scams and fraud
+└── Personal information sharing
+```
+
+### Health Monitoring
+
+- **Growth metrics** — Monitor for artificial inflation
+- **Engagement patterns** — Detect manipulation
+- **Sentiment analysis** — Track community mood
+- **Moderation activity** — Ensure timely response
+
+**See:** `.openhands/knowledge/telegram-communities-architecture.md#14-moderation-philosophy` and `.openhands/knowledge/telegram-communities-architecture.md#15-adsgram-integration-notes`
+
+## User Acquisition Architecture
+
+Jolt Time's User Acquisition System treats acquisition as a complete lifecycle, not just user registration. The architecture covers the full journey from discovery through activation, retention, and monetization, optimizing conversion at every stage.
+
+### Acquisition Categories
+
+| Category | Channels | Attribution |
+|----------|----------|-------------|
+| **Organic** | Telegram search, shares, discovery | Direct |
+| **Referral** | Invitations, campaigns, guild invites | Referral tracking |
+| **Community** | Groups, channels, campaigns | Community attribution |
+| **AdsGram** | Paid ads, retargeting | Campaign tracking |
+| **Influencer** | Creator campaigns, ambassadors | Creator attribution |
+| **Campaign** | Marketing initiatives, partnerships | UTM tracking |
+
+### Acquisition Philosophy
+
+```
+LIFECYCLE OPTIMIZATION:
+Discover → Trial → Activate → Engage → Retain → Monetize
+
+PRINCIPLES:
+├── Maximize conversion at every stage
+├── Improve activation speed and quality
+├── Build retention before habits fade
+├── Monetize engaged, retained users
+└── Quality over quantity always
+
+VALUE CHAIN:
+Discovery quality → Trial quality
+Trial experience → Activation rate
+Activation depth → Engagement level
+Engagement value → Retention strength
+```
+
+**See:** `.openhands/knowledge/user-acquisition-flows.md` for complete acquisition architecture specification.
+
+## Acquisition Funnels
+
+The acquisition funnel tracks users from discovery through conversion.
+
+### Funnel Stages
+
+```
+FUNNEL STAGES:
+┌─────────────────────────────────────────────────────────┐
+│  DISCOVER → TRIAL → REGISTER → ACTIVATE → RETAIN     │
+│                                                          │
+│  Discover: User finds Jolt Time                       │
+│  Trial: User enters Mini App                        │
+│  Register: Account created                           │
+│  Activate: First success moment completed             │
+│  Retain: User returns for second session              │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Funnel Metrics
+
+| Stage | Key Metric | Target | Critical |
+|-------|------------|--------|----------|
+| Discovery → Trial | Click-through rate | > 10% | < 5% |
+| Trial → Register | Registration rate | > 50% | < 30% |
+| Register → Activate | Activation rate | > 40% | < 20% |
+| Activate → Retain | D1 retention | > 40% | < 25% |
+
+**See:** `.openhands/knowledge/user-acquisition-flows.md#3-acquisition-architecture-layers`
+
+## Activation Framework
+
+The activation framework guides users from first visit to active engagement.
+
+### Activation Stages
+
+```
+ACTIVATION FLOW:
+First Launch → Tutorial → First Action → First Success → Second Session
+
+KEY MOMENTS:
+├── First artifact discovered
+├── First mission completed
+├── First reward claimed
+├── First social connection
+└── First return visit
+```
+
+### First Success Moments
+
+| Success Type | Timing | Celebration |
+|-------------|--------|--------------|
+| First Artifact | Tutorial end | Collection animation + share prompt |
+| First Mission | Day 1 | Mission complete animation |
+| First Reward | Day 1 | Reward highlight + excitement |
+| Level Up | Day 1-2 | Achievement celebration |
+
+**See:** `.openhands/knowledge/user-acquisition-flows.md#9-onboarding-architecture` and `.openhands/knowledge/user-acquisition-flows.md#10-activation-architecture`
+
+## Retention Flows
+
+Retention flows ensure users return and establish lasting habits.
+
+### Retention Stages
+
+| Stage | Objective | Key Actions |
+|-------|-----------|-------------|
+| **D1** | Second session | Daily rewards, mission reset |
+| **D7** | Habit formation | Weekly missions, social bonds |
+| **D30** | Investment building | Season participation, community |
+| **D90+** | Long-term loyalty | Mastery, prestige, community |
+
+### Re-Engagement
+
+```
+COMEBACK FLOW:
+Lapse Detection → Intervention → Comeback Campaign → Return
+
+INTERVENTIONS:
+├── 3+ days: Optional reminder
+├── 7+ days: "We miss you" message
+├── 14+ days: Special comeback offer
+└── Progress preserved (positive framing)
+```
+
+**See:** `.openhands/knowledge/user-acquisition-flows.md#11-retention-flow-architecture`
+
+## Acquisition Analytics
+
+Acquisition analytics track performance across the user lifecycle.
+
+### Core Metrics
+
+| Category | Metrics | Purpose |
+|----------|---------|---------|
+| **Acquisition** | New users, source distribution | Measure volume and quality |
+| **Activation** | Activation rate, time to activate | Measure onboarding success |
+| **Retention** | D1/D7/D30, cohort analysis | Measure stickiness |
+| **Monetization** | ARPU, conversion rate, LTV | Measure revenue |
+| **Quality** | LTV/CAC, retention by source | Measure efficiency |
+
+### Attribution Tracking
+
+```
+ATTRIBUTION MODEL:
+├── First-touch — Initial discovery source
+├── Last-touch — Final interaction before conversion
+├── Multi-touch — Distributed credit
+└── Time-decay — Recent touches weighted higher
+```
+
+### Cohort Analysis
+
+Track user cohorts by:
+- Acquisition source (organic, paid, referral)
+- Acquisition campaign
+- Activation path
+- Behavior patterns
+
+**See:** `.openhands/knowledge/user-acquisition-flows.md#13-attribution-standards` and `.openhands/knowledge/user-acquisition-flows.md#14-analytics-architecture`
+
+---
+
+## Production Progress
+
+Implementation tracking for production-ready module development.
+
+### Module Status
+
+| Module | Status | Task |
+|--------|--------|------|
+| Core Infrastructure | ✅ Complete | - |
+| Database Layer | ✅ Complete | - |
+| Authentication | ✅ Complete | #164 |
+| Telegram Core | ✅ Complete | #165 |
+| **User Domain** | **✅ Foundation Complete** | **P-166.1** |
+| **Player Profile Domain** | **✅ COMPLETE** | **P-167.1/P-167.2** |
+| **Inventory Domain** | **✅ Foundation Complete** | **P-169.1** |
+
+### Current Implementation
+
+**P-167.2 — Player Profile Domain Implementation (COMPLETE)**
+
+- ✅ Repository: SupabasePlayerProfileRepository with all methods
+  - create(), findById(), findByUserId(), findByNickname()
+  - exists(), nicknameExists(), update(), delete()
+  - list() with pagination and filtering, count() with filtering
+- ✅ Service: PlayerProfileService with complete business logic
+  - initializeProfile() - new user flow with defaults
+  - createProfile(), loadProfile(), updateProfile()
+  - deleteProfile(), restoreProfile()
+  - profileExists(), isNicknameAvailable()
+  - loadProfileResponse(), loadProfileSummary()
+  - listProfiles(), addExperience()
+  - completeTutorial(), prestigeReset()
+  - getProfileCount()
+- ✅ Profile Initialization Flow
+  - Checks if profile exists for user
+  - If exists: loads existing profile
+  - If not exists: creates new profile with defaults
+    - Level = 1, Experience = 0, Prestige = 0
+    - TutorialCompleted = false, ProfileVersion = 1
+    - Statistics, Preferences, Metadata initialized
+- ✅ DI Registration updated for Repository and Service
+- ✅ Unit Tests: 90 tests passing
+  - PlayerProfile entity tests (36)
+  - Validator tests (54)
+- ✅ Documentation updated
+
+**Architecture Compliance:**
+- ✅ Uses only Supabase Provider, Logger, Configuration
+- ✅ Uses Repository Error System
+- ✅ Never exposes raw Supabase rows
+- ✅ Always returns PlayerProfile Entity
+- ✅ Strongly typed, DDD compliant, reusable
+- ✅ No duplicated logic, No TODOs, No placeholders
+
+**Next Task:** P-168.1 — Game State Foundation
+
+---
+
+**P-169.1 — Inventory Foundation (COMPLETE)**
+
+- ✅ Entity: Inventory with factory methods (create, fromDatabase, copyWith)
+- ✅ Entity: InventoryItem with factory methods (create, fromDatabase, copyWith)
+- ✅ Value Objects: InventoryId, InventoryItemId, InventoryCapacity, InventoryQuantity
+- ✅ Types: InventoryItemStatus, InventoryMetadata, InventoryStatistics, InventoryFilters
+- ✅ DTOs: CreateInventoryDto, CreateInventoryItemDto, UpdateInventoryItemDto, InventoryResponseDto
+- ✅ Interfaces: IInventory, IInventoryItem, IInventoryRepository
+- ✅ Validators: InventoryCapacityValidator, InventoryQuantityValidator, InventoryItemValidator
+- ✅ Mapper: InventoryMapper, InventoryItemMapper (entity-DTO conversion)
+- ✅ Events: InventoryCreated, InventoryItemAdded, InventoryItemUpdated, InventoryItemRemoved
+- ✅ Repository: SupabaseInventoryRepository skeleton (NotImplementedError stubs)
+- ✅ DI Registration: registerInventoryDependencies, setupInventoryDomain
+- ✅ Documentation: README.md, system.md updated
+
+**Architecture Compliance:**
+- ✅ DDD compliant - Inventory stores ownership only
+- ✅ Separate from Museum (exhibition) and Artifacts (item data)
+- ✅ Fully typed with strict TypeScript
+- ✅ Zero lint errors in inventory domain
+- ✅ Production-ready foundation
+
+**Ready for P-169.2:** Repository methods, business logic, capacity management
+
+---
+
+**P-167.1 — Player Profile Domain Foundation (Complete)**
+
+- ✅ Entity: PlayerProfile with factory methods (create, fromDatabase, copyWith)
+- ✅ Value Objects: PlayerProfileId, PlayerNickname, PlayerLevel, PlayerExperience, PrestigeLevel
+- ✅ Types: PlayerStatistics, PlayerPreferences, PlayerProfileStatus, PlayerProfileMetadata
+- ✅ DTOs: CreatePlayerProfileDto, UpdatePlayerProfileDto, PlayerProfileResponseDto, PlayerProfileSummaryDto
+- ✅ Interfaces: IPlayerProfile, IPlayerProfileRepository
+- ✅ Validators: NicknameValidator, PlayerLevelValidator, ExperienceValidator
+- ✅ Mapper: PlayerProfileMapper (entity-DTO conversion)
+- ✅ Events: PlayerProfileCreated, PlayerProfileUpdated, PlayerProfileReset
+- ✅ Repository: SupabasePlayerProfileRepository skeleton (completed in P-167.2)
+- ✅ DI Registration: registerPlayerProfileDependencies, setupPlayerProfileDomain
+- ✅ Documentation: README.md, system.md updated
+
+---
+
+**P-166.1 — User Domain Foundation (Complete)**
+
+- ✅ Entity: User with factory methods (fromTelegram, fromDatabase, copyWith)
+- ✅ Value Objects: UserId, TelegramId, Username, LanguageCode, UserPhotoUrl
+- ✅ Types: UserStatus, UserRole, UserLanguage, UserMetadata, UserPermissions
+- ✅ DTOs: CreateUserDto, UpdateUserDto, UserResponseDto, UserSummaryDto
+- ✅ Interfaces: IUser, IUserRepository
+- ✅ Validators: UserValidator, UsernameValidator, LanguageValidator
+- ✅ Mapper: UserMapper (entity-DTO conversion)
+- ✅ Events: UserCreated, UserUpdated, UserDeleted (event definitions)
+- ✅ Repository: SupabaseUserRepository skeleton (NotImplementedError stubs)
+- ✅ DI Registration: registerUserDependencies, setupUserDomain
+- ✅ Documentation: README.md, system.md updated
+
+**Not Implemented (P-166.2):**
+- Database queries
+- Business workflows
+- Registration flow
+- Telegram synchronization
+
+**Next Task:** P-166.2 — User Domain Implementation
 
 ---
 

@@ -93,6 +93,8 @@ Jolt-Time/
 | **Energy System** | ✅ Complete | Regenerating energy with boosters, offline recovery |
 | **Notifications** | ✅ Complete | Push notifications with spam protection |
 | **Ads Integration** | ✅ Complete | AdsGram SDK for rewarded ads |
+| **Player Profile** | ✅ Complete | Player identity, progression, statistics, preferences |
+| **Inventory** | ✅ Foundation | Central storage system for collectibles (P-169.1) |
 
 ### In Development 🚧
 
