@@ -9,6 +9,7 @@ import { SupabaseAcademyRepository } from './repositories/SupabaseAcademyReposit
 import { AcademyMapper } from './mappers/AcademyMapper';
 import { ResearchMapper } from './mappers/ResearchMapper';
 import { ResearchValidator, ResearchPointsValidator, ResearchTreeValidator } from './validators';
+import { AcademyService } from '../../services/AcademyService';
 
 /**
  * Academy Domain DI configuration keys.
@@ -20,6 +21,7 @@ export const ACADEMY_TOKENS = {
   RESEARCH_VALIDATOR: Symbol.for('ResearchValidator'),
   RESEARCH_POINTS_VALIDATOR: Symbol.for('ResearchPointsValidator'),
   RESEARCH_TREE_VALIDATOR: Symbol.for('ResearchTreeValidator'),
+  ACADEMY_SERVICE: Symbol.for('AcademyService'),
 } as const;
 
 /**
@@ -37,6 +39,9 @@ export function registerAcademyDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseAcademyRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.register(AcademyService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -50,6 +55,7 @@ export function setupAcademyDomain(): {
   researchValidator: ResearchValidator;
   researchPointsValidator: ResearchPointsValidator;
   researchTreeValidator: ResearchTreeValidator;
+  academyService: AcademyService;
 } {
   const researchValidator = new ResearchValidator();
   const researchPointsValidator = new ResearchPointsValidator();
@@ -57,6 +63,7 @@ export function setupAcademyDomain(): {
   const academyMapper = new AcademyMapper();
   const researchMapper = new ResearchMapper();
   const academyRepository = new SupabaseAcademyRepository();
+  const academyService = new AcademyService(academyRepository);
 
   return {
     academyRepository,
@@ -65,5 +72,6 @@ export function setupAcademyDomain(): {
     researchValidator,
     researchPointsValidator,
     researchTreeValidator,
+    academyService,
   };
 }

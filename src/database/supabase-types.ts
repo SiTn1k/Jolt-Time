@@ -166,6 +166,72 @@ export interface Database {
           created_at?: string;
         };
       };
+      
+      academies: {
+        Row: {
+          id: string;
+          player_profile_id: string;
+          academy_level: number;
+          research_points: number;
+          metadata: Record<string, unknown>;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          player_profile_id: string;
+          academy_level?: number;
+          research_points?: number;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          player_profile_id?: string;
+          academy_level?: number;
+          research_points?: number;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      
+      research_progress: {
+        Row: {
+          id: string;
+          academy_id: string;
+          node_id: string;
+          status: string;
+          progress: number;
+          completed_at: string | null;
+          metadata: Record<string, unknown>;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          academy_id: string;
+          node_id: string;
+          status?: string;
+          progress?: number;
+          completed_at?: string | null;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          academy_id?: string;
+          node_id?: string;
+          status?: string;
+          progress?: number;
+          completed_at?: string | null;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
   };
 }

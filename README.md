@@ -98,6 +98,7 @@ Jolt-Time/
 | **Currency** | ✅ Foundation | Currency economy module (P-170.1) |
 | **Artifact** | ✅ Production | Master catalog of collectible artifacts (P-171.2) |
 | **Museum** | ✅ Foundation | Museum display with halls and exhibits (P-172.1) |
+| **Academy** | ✅ Production | Research progression with technology tree (P-173.2) |
 
 ### In Development 🚧
 
