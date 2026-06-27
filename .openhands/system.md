@@ -6995,19 +6995,31 @@ Implementation tracking for production-ready module development.
 | Database Layer | ✅ Complete | - |
 | Authentication | ✅ Complete | #164 |
 | Telegram Core | ✅ Complete | #165 |
-| **User Domain** | **🔄 Module Skeleton Created** | **P-166.001** |
+| **User Domain** | **✅ Foundation Complete** | **P-166.1** |
 
 ### Current Implementation
 
-**P-166.001 — User Domain Skeleton**
+**P-166.1 — User Domain Foundation**
 
-- Created module structure in `src/domains/user/`
-- Established folder hierarchy: entities, repositories, services, dto, mappers, validators, events, types, interfaces, value-objects, factories, exceptions, tests
-- Created barrel export index.ts
-- Created README.md with architecture documentation
-- Updated system.md with production progress
+- ✅ Entity: User with factory methods (fromTelegram, fromDatabase, copyWith)
+- ✅ Value Objects: UserId, TelegramId, Username, LanguageCode, UserPhotoUrl
+- ✅ Types: UserStatus, UserRole, UserLanguage, UserMetadata, UserPermissions
+- ✅ DTOs: CreateUserDto, UpdateUserDto, UserResponseDto, UserSummaryDto
+- ✅ Interfaces: IUser, IUserRepository
+- ✅ Validators: UserValidator, UsernameValidator, LanguageValidator
+- ✅ Mapper: UserMapper (entity-DTO conversion)
+- ✅ Events: UserCreated, UserUpdated, UserDeleted (event definitions)
+- ✅ Repository: SupabaseUserRepository skeleton (NotImplementedError stubs)
+- ✅ DI Registration: registerUserDependencies, setupUserDomain
+- ✅ Documentation: README.md, system.md updated
 
-**Next Task:** P-166.002 — User Entity
+**Not Implemented (P-166.2):**
+- Database queries
+- Business workflows
+- Registration flow
+- Telegram synchronization
+
+**Next Task:** P-166.2 — User Domain Implementation
 
 ---
 

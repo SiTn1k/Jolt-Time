@@ -22,6 +22,7 @@
  * ├── value-objects/  # Immutable value objects
  * ├── factories/      # Entity factories
  * ├── exceptions/     # Domain exceptions
+ * ├── di.ts           # Dependency injection setup
  * └── tests/          # Unit tests
  * ```
  *
@@ -45,6 +46,9 @@
  * export * from './value-objects';
  * export * from './factories';
  * export * from './exceptions';
+ *
+ * // DI setup
+ * export { registerUserDependencies, USER_TOKENS, setupUserDomain } from './di';
  * ```
  */
 
@@ -107,3 +111,8 @@ export * from './factories';
  * Exceptions
  */
 export * from './exceptions';
+
+/**
+ * Dependency Injection
+ */
+export { registerUserDependencies, USER_TOKENS, setupUserDomain } from './di';
