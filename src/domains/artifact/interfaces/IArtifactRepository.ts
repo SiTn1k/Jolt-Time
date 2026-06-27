@@ -8,22 +8,28 @@
 import type { ArtifactId } from '../value-objects/ArtifactId';
 import type { Artifact } from '../entities/Artifact';
 import type { PaginationParams, PaginatedResult } from '../../../shared/types/base.types';
+import type { ArtifactCategory, ArtifactRarity, ArtifactEra, ArtifactRegion } from '../types';
+
+/**
+ * Sort field options for artifact queries.
+ */
+export type ArtifactSortField = 'title' | 'era' | 'rarity' | 'category' | 'created_at' | 'slug';
 
 /**
  * Filter parameters for querying artifacts.
  */
 export interface ArtifactFilterParams {
   /** Filter by category */
-  category?: string[];
+  category?: ArtifactCategory[];
 
   /** Filter by rarity */
-  rarity?: string[];
+  rarity?: ArtifactRarity[];
 
   /** Filter by era */
-  era?: string[];
+  era?: ArtifactEra[];
 
   /** Filter by region */
-  region?: string[];
+  region?: ArtifactRegion[];
 
   /** Filter by collectible status */
   isCollectible?: boolean;
@@ -36,6 +42,12 @@ export interface ArtifactFilterParams {
 
   /** Filter by creation date before */
   createdBefore?: Date;
+
+  /** Include archived artifacts */
+  includeArchived?: boolean;
+
+  /** Search query for title/slug */
+  searchQuery?: string;
 }
 
 /**
@@ -65,6 +77,40 @@ export interface IArtifactRepository {
   findBySlug(slug: string): Promise<Artifact | null>;
 
   /**
+   * Finds all artifacts (non-paginated, use with caution).
+   * @returns Array of all artifacts
+   */
+  findAll(): Promise<Artifact[]>;
+
+  /**
+   * Finds artifacts by category.
+   * @param category The category to filter by
+   * @returns Array of matching artifacts
+   */
+  findByCategory(category: ArtifactCategory): Promise<Artifact[]>;
+
+  /**
+   * Finds artifacts by rarity.
+   * @param rarity The rarity to filter by
+   * @returns Array of matching artifacts
+   */
+  findByRarity(rarity: ArtifactRarity): Promise<Artifact[]>;
+
+  /**
+   * Finds artifacts by era.
+   * @param era The era to filter by
+   * @returns Array of matching artifacts
+   */
+  findByEra(era: ArtifactEra): Promise<Artifact[]>;
+
+  /**
+   * Finds artifacts by region.
+   * @param region The region to filter by
+   * @returns Array of matching artifacts
+   */
+  findByRegion(region: ArtifactRegion): Promise<Artifact[]>;
+
+  /**
    * Checks if an artifact exists by ID.
    * @param id The artifact ID to check
    * @returns true if artifact exists
@@ -83,6 +129,18 @@ export interface IArtifactRepository {
    * @param id The artifact ID to archive
    */
   archive(id: ArtifactId): Promise<void>;
+
+  /**
+   * Restores an archived artifact.
+   * @param id The artifact ID to restore
+   */
+  restore(id: ArtifactId): Promise<void>;
+
+  /**
+   * Permanently deletes an artifact.
+   * @param id The artifact ID to delete
+   */
+  delete(id: ArtifactId): Promise<void>;
 
   /**
    * Lists artifacts with pagination and filtering.

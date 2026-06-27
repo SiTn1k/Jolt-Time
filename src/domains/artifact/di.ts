@@ -8,6 +8,7 @@ import { Container, Lifetime } from '../../core/di';
 import { SupabaseArtifactRepository } from './repositories/SupabaseArtifactRepository';
 import { ArtifactMapper } from './mappers/ArtifactMapper';
 import { ArtifactValidator, ArtifactSlugValidator, ArtifactTitleValidator } from './validators';
+import { ArtifactService } from '../../services/ArtifactService';
 
 /**
  * Artifact Domain DI configuration keys.
@@ -18,6 +19,7 @@ export const ARTIFACT_TOKENS = {
   ARTIFACT_VALIDATOR: Symbol.for('ArtifactValidator'),
   ARTIFACT_SLUG_VALIDATOR: Symbol.for('ArtifactSlugValidator'),
   ARTIFACT_TITLE_VALIDATOR: Symbol.for('ArtifactTitleValidator'),
+  ARTIFACT_SERVICE: Symbol.for('ArtifactService'),
 } as const;
 
 /**
@@ -34,6 +36,9 @@ export function registerArtifactDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseArtifactRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.register(ArtifactService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -46,12 +51,14 @@ export function setupArtifactDomain(): {
   artifactValidator: ArtifactValidator;
   artifactSlugValidator: ArtifactSlugValidator;
   artifactTitleValidator: ArtifactTitleValidator;
+  artifactService: ArtifactService;
 } {
   const artifactValidator = new ArtifactValidator();
   const artifactSlugValidator = new ArtifactSlugValidator();
   const artifactTitleValidator = new ArtifactTitleValidator();
   const artifactMapper = new ArtifactMapper();
   const artifactRepository = new SupabaseArtifactRepository();
+  const artifactService = new ArtifactService(artifactRepository);
 
   return {
     artifactRepository,
@@ -59,5 +66,6 @@ export function setupArtifactDomain(): {
     artifactValidator,
     artifactSlugValidator,
     artifactTitleValidator,
+    artifactService,
   };
 }

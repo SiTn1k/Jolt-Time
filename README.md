@@ -96,13 +96,13 @@ Jolt-Time/
 | **Player Profile** | ✅ Complete | Player identity, progression, statistics, preferences |
 | **Inventory** | ✅ Foundation | Central storage system for collectibles (P-169.1) |
 | **Currency** | ✅ Foundation | Currency economy module (P-170.1) |
+| **Artifact** | ✅ Production | Master catalog of collectible artifacts (P-171.2) |
 
 ### In Development 🚧
 
 | System | Progress | Description |
 |--------|----------|-------------|
 | **Expeditions** | 0% | Time-based artifact collection missions |
-| **Artifacts** | 0% | Collectible items with rarities and upgrades |
 | **Museum** | 0% | Collection display with historical context |
 | **Quests** | 0% | Daily, weekly, story, and achievement quests |
 | **PVP Arena** | 0% | League-based competitive battles |
