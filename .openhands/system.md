@@ -6997,6 +6997,7 @@ Implementation tracking for production-ready module development.
 | Telegram Core | ✅ Complete | #165 |
 | **User Domain** | **✅ Foundation Complete** | **P-166.1** |
 | **Player Profile Domain** | **✅ COMPLETE** | **P-167.1/P-167.2** |
+| **Inventory Domain** | **✅ Foundation Complete** | **P-169.1** |
 
 ### Current Implementation
 
@@ -7037,6 +7038,32 @@ Implementation tracking for production-ready module development.
 - ✅ No duplicated logic, No TODOs, No placeholders
 
 **Next Task:** P-168.1 — Game State Foundation
+
+---
+
+**P-169.1 — Inventory Foundation (COMPLETE)**
+
+- ✅ Entity: Inventory with factory methods (create, fromDatabase, copyWith)
+- ✅ Entity: InventoryItem with factory methods (create, fromDatabase, copyWith)
+- ✅ Value Objects: InventoryId, InventoryItemId, InventoryCapacity, InventoryQuantity
+- ✅ Types: InventoryItemStatus, InventoryMetadata, InventoryStatistics, InventoryFilters
+- ✅ DTOs: CreateInventoryDto, CreateInventoryItemDto, UpdateInventoryItemDto, InventoryResponseDto
+- ✅ Interfaces: IInventory, IInventoryItem, IInventoryRepository
+- ✅ Validators: InventoryCapacityValidator, InventoryQuantityValidator, InventoryItemValidator
+- ✅ Mapper: InventoryMapper, InventoryItemMapper (entity-DTO conversion)
+- ✅ Events: InventoryCreated, InventoryItemAdded, InventoryItemUpdated, InventoryItemRemoved
+- ✅ Repository: SupabaseInventoryRepository skeleton (NotImplementedError stubs)
+- ✅ DI Registration: registerInventoryDependencies, setupInventoryDomain
+- ✅ Documentation: README.md, system.md updated
+
+**Architecture Compliance:**
+- ✅ DDD compliant - Inventory stores ownership only
+- ✅ Separate from Museum (exhibition) and Artifacts (item data)
+- ✅ Fully typed with strict TypeScript
+- ✅ Zero lint errors in inventory domain
+- ✅ Production-ready foundation
+
+**Ready for P-169.2:** Repository methods, business logic, capacity management
 
 ---
 
