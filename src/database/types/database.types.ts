@@ -45,6 +45,11 @@ export const DatabaseTable = {
   ENERGY_BOOSTERS: 'energy_boosters',
   USER_ENERGY_BOOSTERS: 'user_energy_boosters',
   ENERGY_HISTORY: 'energy_history',
+  // Authentication tables
+  SESSIONS: 'sessions',
+  LOGIN_HISTORY: 'login_history',
+  SECURITY_EVENTS: 'security_events',
+  USER_IDENTITIES: 'user_identities',
 } as const;
 
 /**
