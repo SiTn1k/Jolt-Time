@@ -6996,10 +6996,37 @@ Implementation tracking for production-ready module development.
 | Authentication | ✅ Complete | #164 |
 | Telegram Core | ✅ Complete | #165 |
 | **User Domain** | **✅ Foundation Complete** | **P-166.1** |
+| **Player Profile Domain** | **✅ Foundation Complete** | **P-167.1** |
 
 ### Current Implementation
 
-**P-166.1 — User Domain Foundation**
+**P-167.1 — Player Profile Domain Foundation**
+
+- ✅ Entity: PlayerProfile with factory methods (create, fromDatabase, copyWith)
+- ✅ Value Objects: PlayerProfileId, PlayerNickname, PlayerLevel, PlayerExperience, PrestigeLevel
+- ✅ Types: PlayerStatistics, PlayerPreferences, PlayerProfileStatus, PlayerProfileMetadata
+- ✅ DTOs: CreatePlayerProfileDto, UpdatePlayerProfileDto, PlayerProfileResponseDto, PlayerProfileSummaryDto
+- ✅ Interfaces: IPlayerProfile, IPlayerProfileRepository
+- ✅ Validators: NicknameValidator, PlayerLevelValidator, ExperienceValidator
+- ✅ Mapper: PlayerProfileMapper (entity-DTO conversion)
+- ✅ Events: PlayerProfileCreated, PlayerProfileUpdated, PlayerProfileReset
+- ✅ Repository: SupabasePlayerProfileRepository skeleton (NotImplementedError stubs)
+- ✅ DI Registration: registerPlayerProfileDependencies, setupPlayerProfileDomain
+- ✅ Documentation: README.md, system.md updated
+
+**Not Implemented (P-167.2):**
+- Database queries
+- Player Service
+- Profile initialization flow
+- Progression logic
+- Statistics management
+- Preferences management
+
+**Next Task:** P-167.2 — Player Profile Domain Implementation
+
+---
+
+**P-166.1 — User Domain Foundation (Complete)**
 
 - ✅ Entity: User with factory methods (fromTelegram, fromDatabase, copyWith)
 - ✅ Value Objects: UserId, TelegramId, Username, LanguageCode, UserPhotoUrl
