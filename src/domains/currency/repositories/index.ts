@@ -5,3 +5,5 @@
  */
 
 export { SupabaseCurrencyRepository, NotImplementedError } from './SupabaseCurrencyRepository';
+export { SupabaseCurrencyTransactionRepository } from './SupabaseCurrencyTransactionRepository';
+export type { ICurrencyTransactionRepository, TransactionFilterParams } from './ICurrencyTransactionRepository';

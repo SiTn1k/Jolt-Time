@@ -6998,6 +6998,7 @@ Implementation tracking for production-ready module development.
 | **User Domain** | **✅ Foundation Complete** | **P-166.1** |
 | **Player Profile Domain** | **✅ COMPLETE** | **P-167.1/P-167.2** |
 | **Inventory Domain** | **✅ Foundation Complete** | **P-169.1** |
+| **Currency Domain** | **✅ COMPLETE** | **P-170.1/P-170.2** |
 
 ### Current Implementation
 
@@ -7038,6 +7039,87 @@ Implementation tracking for production-ready module development.
 - ✅ No duplicated logic, No TODOs, No placeholders
 
 **Next Task:** P-168.1 — Game State Foundation
+
+---
+
+**P-170.2 — Currency Production Implementation (COMPLETE)**
+
+- ✅ CurrencyTransaction Entity
+  - TransactionId value object with UUID validation
+  - Factory methods: createDeposit, createWithdraw, createTransfer, createReserve, createRelease
+  - fromStorage, toJSON, toRecord methods
+  - isIncome, isExpense, netChange computed properties
+- ✅ SupabaseCurrencyRepository
+  - create(), findById(), findByPlayerProfileId()
+  - exists(), update(), delete()
+  - list() with pagination and filters, count() with filters
+- ✅ SupabaseCurrencyTransactionRepository
+  - create(), findById()
+  - listByWallet(), listByPlayer() with pagination
+  - countByWallet(), sumByWalletAndType()
+  - getRecentByWallet()
+- ✅ CurrencyService
+  - SINGLE SOURCE OF TRUTH for entire game economy
+  - createWallet() - initializes wallet with all currency types
+  - loadWallet(), loadOrCreateWallet()
+  - getBalance(), getAvailableBalance(), hasSufficientFunds()
+  - deposit() - with overflow protection
+  - withdraw() - with negative balance protection
+  - transfer() - between wallets with dual transaction records
+  - reserve() - for pending transactions
+  - release() - return reserved currency
+  - getWalletSummary(), getStatistics()
+  - listTransactions(), getRecentTransactions()
+- ✅ Wallet Initialization
+  - Automatically created when Player Profile is created
+  - Initializes all supported currencies (GOLD, GEMS, EVENT_TOKENS, GUILD_CREDITS, ENERGY_CREDITS)
+  - All balances start at 0, reserved at 0
+- ✅ Transaction System
+  - Every balance modification creates a CurrencyTransaction
+  - Transaction types: EARNED, SPENT, TRANSFER_IN, TRANSFER_OUT, REFUND
+  - Stores: transactionId, walletId, playerProfileId, currencyType, amount, balanceBefore, balanceAfter
+  - Includes reason, sourceModule, referenceId, metadata
+- ✅ Validation
+  - CurrencyAmountValidator - amount validation
+  - CurrencyTypeValidator - currency type validation  
+  - WalletValidator - wallet ID and player profile ID validation
+  - Overflow protection - MAX_AMOUNT check
+  - Negative balance protection
+- ✅ DI Registration
+  - CurrencyService, CurrencyRepository, CurrencyTransactionRepository
+  - Validators, Mappers
+- ✅ Unit Tests: 75 tests passing
+  - CurrencyAmount tests (15)
+  - CurrencyTransaction tests (20)
+  - CurrencyWallet tests (18)
+  - CurrencyService tests (22)
+- ✅ Documentation updated
+
+**Architecture Compliance:**
+- ✅ Uses only Supabase Provider, Logger, Configuration
+- ✅ Uses Repository Error System
+- ✅ Never exposes raw Supabase rows
+- ✅ Always returns domain entities
+- ✅ Strongly typed, DDD compliant, reusable
+- ✅ No duplicated logic, No TODOs, No placeholders
+- ✅ Every balance change MUST go through CurrencyService
+- ✅ Every balance change MUST generate CurrencyTransaction
+
+**CRITICAL RULE:**
+- Direct balance modification is FORBIDDEN
+- All currency operations MUST use CurrencyService methods
+- All currency operations MUST create CurrencyTransaction records
+
+**Not Implemented (Future Modules):**
+- Museum rewards
+- Academy rewards
+- Quest rewards
+- Shop
+- Marketplace
+- Donations
+- Artifacts
+
+**Next Task:** P-171.1 — Production Artifact Foundation
 
 ---
 

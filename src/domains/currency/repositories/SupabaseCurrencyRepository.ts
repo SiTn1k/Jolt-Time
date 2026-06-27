@@ -3,19 +3,18 @@
  *
  * Production Supabase implementation of the Currency repository.
  * Handles all persistence operations for CurrencyWallet entities.
- *
- * NOTE: This is a skeleton implementation. All methods throw NotImplementedError.
- * Full implementation will be completed in P-170.2.
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '../../../database/supabase-types';
 import type { ICurrencyRepository, WalletFilterParams } from '../interfaces/ICurrencyRepository';
-import { CurrencyWallet, CurrencyWalletRecord } from '../entities/CurrencyWallet';
+import { CurrencyWallet, CurrencyWalletRecord, CurrencyBalanceRecord } from '../entities/CurrencyWallet';
 import { WalletId } from '../value-objects/WalletId';
 import type { PaginationParams, PaginatedResult } from '../../../shared/types/base.types';
 import { getSupabaseClient } from '../../../database/providers/supabase.provider';
 import { createLogger } from '../../../core/logging/logger.service';
+import { RepositoryError } from '../../../database/errors/repository.error';
+import type { CurrencyTypeEnum } from '../value-objects/CurrencyType';
 
 const logger = createLogger('SupabaseCurrencyRepository');
 
@@ -46,10 +45,23 @@ export class SupabaseCurrencyRepository implements ICurrencyRepository {
    * Maps a database row to CurrencyWalletRecord format.
    */
   private mapRowToRecord(row: Record<string, unknown>): CurrencyWalletRecord {
+    const balancesRaw = row.balances;
+    let balances: CurrencyBalanceRecord[] = [];
+
+    if (Array.isArray(balancesRaw)) {
+      balances = balancesRaw.map((b) => ({
+        currencyType: (b as Record<string, unknown>).currencyType as CurrencyTypeEnum,
+        balance: (b as Record<string, unknown>).balance as number,
+        reservedBalance: (b as Record<string, unknown>).reservedBalance as number,
+        lastTransactionAt: (b as Record<string, unknown>).lastTransactionAt as string | null,
+        metadata: (b as Record<string, unknown>).metadata as CurrencyBalanceRecord['metadata'],
+      }));
+    }
+
     return {
       walletId: row.wallet_id as string,
       playerProfileId: row.player_profile_id as string,
-      balances: (row.balances as CurrencyWalletRecord['balances']) ?? [],
+      balances,
       createdAt: row.created_at as string,
       updatedAt: row.updated_at as string,
     };
@@ -113,65 +125,190 @@ export class SupabaseCurrencyRepository implements ICurrencyRepository {
    * Creates a new currency wallet.
    * @param wallet The wallet to create
    * @returns The created wallet
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async create(wallet: CurrencyWallet): Promise<CurrencyWallet> {
     logger.debug('Creating currency wallet', { walletId: wallet.walletId.value });
-    throw new NotImplementedError('CurrencyRepository.create() - Full implementation in P-170.2');
+
+    try {
+      const record = this.toInsertRecord(wallet);
+      const { data, error } = await this.client.from(this.tableName).insert(record).select().single();
+
+      if (error) {
+        if (error.code === '23505') {
+          throw RepositoryError.alreadyExists('CurrencyWallet', 'wallet_id', wallet.walletId.value, this.tableName);
+        }
+        logger.error('Failed to create currency wallet', error);
+        throw RepositoryError.createFailed('CurrencyWallet', new Error(error.message));
+      }
+
+      logger.info('Currency wallet created', {
+        walletId: wallet.walletId.value,
+        playerProfileId: wallet.playerProfileId.value,
+      });
+
+      return this.mapRowToEntity(data as Record<string, unknown>);
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to create currency wallet', err as Error);
+      throw RepositoryError.createFailed('CurrencyWallet', err as Error);
+    }
   }
 
   /**
    * Finds a wallet by its internal ID.
    * @param id The wallet ID to find
    * @returns The wallet if found, null otherwise
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async findById(id: WalletId): Promise<CurrencyWallet | null> {
     logger.debug('Finding currency wallet by ID', { walletId: id.value });
-    throw new NotImplementedError('CurrencyRepository.findById() - Full implementation in P-170.2');
+
+    try {
+      const { data, error } = await this.client
+        .from(this.tableName)
+        .select('*')
+        .eq('wallet_id', id.value)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          return null;
+        }
+        throw RepositoryError.entityNotFound('CurrencyWallet', id.value, this.tableName);
+      }
+
+      return this.mapRowToEntity(data as Record<string, unknown>);
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to find currency wallet', err as Error, { walletId: id.value });
+      throw RepositoryError.entityNotFound('CurrencyWallet', id.value, this.tableName);
+    }
   }
 
   /**
    * Finds a wallet by player profile ID.
    * @param playerProfileId The player profile ID to find wallet for
    * @returns The wallet if found, null otherwise
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async findByPlayerProfileId(playerProfileId: string): Promise<CurrencyWallet | null> {
     logger.debug('Finding currency wallet by player profile ID', { playerProfileId });
-    throw new NotImplementedError('CurrencyRepository.findByPlayerProfileId() - Full implementation in P-170.2');
+
+    try {
+      const { data, error } = await this.client
+        .from(this.tableName)
+        .select('*')
+        .eq('player_profile_id', playerProfileId)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          return null;
+        }
+        throw RepositoryError.entityNotFound('CurrencyWallet', playerProfileId, this.tableName);
+      }
+
+      return this.mapRowToEntity(data as Record<string, unknown>);
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to find currency wallet by player profile ID', err as Error, { playerProfileId });
+      throw RepositoryError.entityNotFound('CurrencyWallet', playerProfileId, this.tableName);
+    }
   }
 
   /**
    * Checks if a wallet exists by ID.
    * @param id The wallet ID to check
    * @returns true if wallet exists
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async exists(id: WalletId): Promise<boolean> {
     logger.debug('Checking if currency wallet exists', { walletId: id.value });
-    throw new NotImplementedError('CurrencyRepository.exists() - Full implementation in P-170.2');
+
+    try {
+      const { error } = await this.client
+        .from(this.tableName)
+        .select('wallet_id')
+        .eq('wallet_id', id.value)
+        .limit(1);
+
+      if (error) {
+        throw RepositoryError.queryFailed(error.message, new Error(error.message));
+      }
+
+      return true;
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to check currency wallet existence', err as Error, { walletId: id.value });
+      return false;
+    }
   }
 
   /**
    * Updates an existing wallet.
    * @param wallet The wallet to update
    * @returns The updated wallet
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async update(wallet: CurrencyWallet): Promise<CurrencyWallet> {
     logger.debug('Updating currency wallet', { walletId: wallet.walletId.value });
-    throw new NotImplementedError('CurrencyRepository.update() - Full implementation in P-170.2');
+
+    try {
+      const record = this.toUpdateRecord(wallet);
+      const { data, error } = await this.client
+        .from(this.tableName)
+        .update(record)
+        .eq('wallet_id', wallet.walletId.value)
+        .select()
+        .single();
+
+      if (error) {
+        logger.error('Failed to update currency wallet', error);
+        throw RepositoryError.updateFailed('CurrencyWallet', wallet.walletId.value, new Error(error.message));
+      }
+
+      logger.info('Currency wallet updated', { walletId: wallet.walletId.value });
+
+      return this.mapRowToEntity(data as Record<string, unknown>);
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to update currency wallet', err as Error, { walletId: wallet.walletId.value });
+      throw RepositoryError.updateFailed('CurrencyWallet', wallet.walletId.value, err as Error);
+    }
   }
 
   /**
    * Deletes a wallet.
    * @param id The wallet ID to delete
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async delete(id: WalletId): Promise<void> {
     logger.debug('Deleting currency wallet', { walletId: id.value });
-    throw new NotImplementedError('CurrencyRepository.delete() - Full implementation in P-170.2');
+
+    try {
+      const { error } = await this.client
+        .from(this.tableName)
+        .delete()
+        .eq('wallet_id', id.value);
+
+      if (error) {
+        logger.error('Failed to delete currency wallet', error);
+        throw RepositoryError.deleteFailed('CurrencyWallet', id.value, new Error(error.message));
+      }
+
+      logger.info('Currency wallet deleted', { walletId: id.value });
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to delete currency wallet', err as Error, { walletId: id.value });
+      throw RepositoryError.deleteFailed('CurrencyWallet', id.value, err as Error);
+    }
   }
 
   /**
@@ -179,34 +316,107 @@ export class SupabaseCurrencyRepository implements ICurrencyRepository {
    * @param params Pagination parameters
    * @param filters Optional filter parameters
    * @returns Paginated result of wallets
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async list(
     params: PaginationParams,
     filters?: WalletFilterParams
   ): Promise<PaginatedResult<CurrencyWallet>> {
     logger.debug('Listing currency wallets', { params, filters });
-    throw new NotImplementedError('CurrencyRepository.list() - Full implementation in P-170.2');
+
+    try {
+      let query = this.client
+        .from(this.tableName)
+        .select('*', { count: 'exact' });
+
+      // Apply filters
+      if (filters?.playerProfileId) {
+        query = query.eq('player_profile_id', filters.playerProfileId);
+      }
+
+      if (filters?.createdAfter) {
+        query = query.gte('created_at', filters.createdAfter.toISOString());
+      }
+
+      if (filters?.createdBefore) {
+        query = query.lte('created_at', filters.createdBefore.toISOString());
+      }
+
+      // Apply sorting
+      const sortBy = params.sortBy || 'created_at';
+      const sortOrder = params.sortOrder === 'asc' ? true : false;
+      query = query.order(sortBy, { ascending: sortOrder });
+
+      // Apply pagination
+      const offset = this.calculateOffset(params);
+      query = query.range(offset, offset + params.pageSize - 1);
+
+      const { data, error, count } = await query;
+
+      if (error) {
+        throw RepositoryError.queryFailed(error.message, new Error(error.message));
+      }
+
+      const items = (data as Record<string, unknown>[]).map((row) => this.mapRowToEntity(row));
+      const total = count ?? 0;
+      const totalPages = Math.ceil(total / params.pageSize);
+
+      return {
+        items,
+        total,
+        page: params.page,
+        pageSize: params.pageSize,
+        totalPages,
+        hasNextPage: params.page < totalPages,
+        hasPreviousPage: params.page > 1,
+      };
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to list currency wallets', err as Error);
+      throw RepositoryError.queryFailed('list', err as Error);
+    }
   }
 
   /**
    * Counts total wallets with optional filtering.
    * @param filters Optional filter parameters
    * @returns Total count of matching wallets
-   * @throws NotImplementedError - Full implementation in P-170.2
    */
   async count(filters?: WalletFilterParams): Promise<number> {
     logger.debug('Counting currency wallets', { filters });
-    throw new NotImplementedError('CurrencyRepository.count() - Full implementation in P-170.2');
-  }
-}
 
-/**
- * NotImplementedError for repository skeleton.
- */
-export class NotImplementedError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'NotImplementedError';
+    try {
+      let query = this.client
+        .from(this.tableName)
+        .select('*', { count: 'exact', head: true });
+
+      // Apply filters
+      if (filters?.playerProfileId) {
+        query = query.eq('player_profile_id', filters.playerProfileId);
+      }
+
+      if (filters?.createdAfter) {
+        query = query.gte('created_at', filters.createdAfter.toISOString());
+      }
+
+      if (filters?.createdBefore) {
+        query = query.lte('created_at', filters.createdBefore.toISOString());
+      }
+
+      const { error, count } = await query;
+
+      if (error) {
+        throw RepositoryError.queryFailed(error.message, new Error(error.message));
+      }
+
+      return count ?? 0;
+    } catch (err) {
+      if (err instanceof RepositoryError) {
+        throw err;
+      }
+      logger.error('Failed to count currency wallets', err as Error);
+      throw RepositoryError.queryFailed('count', err as Error);
+    }
   }
 }

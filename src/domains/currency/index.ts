@@ -37,13 +37,19 @@ export {
 export {
   CurrencyBalance,
   CurrencyWallet,
+  CurrencyTransaction,
+  TransactionId,
 } from './entities';
 export type {
   CurrencyBalanceProps,
   CurrencyBalanceRecord,
   CurrencyBalanceJSON,
   CurrencyWalletProps,
+  CurrencyWalletRecord,
   CurrencyWalletJSON,
+  CurrencyTransactionProps,
+  CurrencyTransactionRecord,
+  CurrencyTransactionJSON,
 } from './entities';
 
 // Interfaces
@@ -104,7 +110,9 @@ export { CurrencyMapper } from './mappers';
 export type { CurrencyWalletRecord } from './mappers';
 
 // Repositories
-export { SupabaseCurrencyRepository, NotImplementedError } from './repositories';
+export { SupabaseCurrencyRepository } from './repositories';
+export { SupabaseCurrencyTransactionRepository } from './repositories';
+export type { ICurrencyTransactionRepository, TransactionFilterParams } from './repositories';
 
 // DI
 export {

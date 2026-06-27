@@ -17,3 +17,10 @@ export type {
   CurrencyWalletRecord,
   CurrencyWalletJSON,
 } from './CurrencyWallet';
+
+export { CurrencyTransaction, TransactionId } from './CurrencyTransaction';
+export type {
+  CurrencyTransactionProps,
+  CurrencyTransactionRecord,
+  CurrencyTransactionJSON,
+} from './CurrencyTransaction';
