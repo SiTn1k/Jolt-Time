@@ -74,10 +74,61 @@ export interface IGameStateRepository {
   update(gameState: GameState): Promise<GameState>;
 
   /**
-   * Deletes a game state.
+   * Updates only the energy values of a game state.
+   * Optimized method for energy updates.
+   * @param id The game state ID
+   * @param currentEnergy New current energy value
+   * @param maximumEnergy New maximum energy value
+   * @returns The updated game state
+   */
+  updateEnergy(id: GameStateId, currentEnergy: number, maximumEnergy: number): Promise<GameState>;
+
+  /**
+   * Updates only the health values of a game state.
+   * Optimized method for health updates.
+   * @param id The game state ID
+   * @param currentHealth New current health value
+   * @param maximumHealth New maximum health value
+   * @returns The updated game state
+   */
+  updateHealth(id: GameStateId, currentHealth: number, maximumHealth: number): Promise<GameState>;
+
+  /**
+   * Updates only the session-related fields of a game state.
+   * Optimized method for session updates.
+   * @param id The game state ID
+   * @param currentSession New session ID
+   * @param onlineStatus New online status
+   * @param lastActivity New last activity timestamp
+   * @returns The updated game state
+   */
+  updateSession(
+    id: GameStateId,
+    currentSession: string,
+    onlineStatus: string,
+    lastActivity: Date
+  ): Promise<GameState>;
+
+  /**
+   * Resets a game state to initial values.
+   * Sets energy/health to max, clears session, resets tutorial.
+   * @param id The game state ID to reset
+   * @returns The reset game state
+   */
+  reset(id: GameStateId): Promise<GameState>;
+
+  /**
+   * Deletes a game state (soft delete by setting status).
    * @param id The game state ID to delete
    */
   delete(id: GameStateId): Promise<void>;
+
+  /**
+   * Restores a deleted game state.
+   * @param id The game state ID to restore
+   * @returns The restored game state
+   */
+  restore(id: GameStateId): Promise<GameState>;
 
   /**
    * Lists game states with pagination and filtering.

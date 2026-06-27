@@ -8,6 +8,7 @@ import { Container, Lifetime } from '../../core/di';
 import { SupabaseGameStateRepository } from './repositories/SupabaseGameStateRepository';
 import { GameStateMapper } from './mappers/GameStateMapper';
 import { EnergyValidator, HealthValidator, SessionValidator } from './validators';
+import { GameStateService } from '../../services/GameStateService';
 
 /**
  * Game State Domain DI configuration keys.
@@ -18,6 +19,7 @@ export const GAME_STATE_TOKENS = {
   ENERGY_VALIDATOR: Symbol.for('EnergyValidator'),
   HEALTH_VALIDATOR: Symbol.for('HealthValidator'),
   SESSION_VALIDATOR: Symbol.for('SessionValidator'),
+  GAME_STATE_SERVICE: Symbol.for('GameStateService'),
 } as const;
 
 /**
@@ -34,6 +36,9 @@ export function registerGameStateDependencies(container: Container): void {
 
   // Repository (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseGameStateRepository, { lifetime: Lifetime.Singleton });
+
+  // Service (Singleton - depends on repository, mapper, and validators)
+  container.register(GameStateService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -46,12 +51,20 @@ export function setupGameStateDomain(): {
   energyValidator: EnergyValidator;
   healthValidator: HealthValidator;
   sessionValidator: SessionValidator;
+  gameStateService: GameStateService;
 } {
   const gameStateRepository = new SupabaseGameStateRepository();
   const gameStateMapper = new GameStateMapper();
   const energyValidator = new EnergyValidator();
   const healthValidator = new HealthValidator();
   const sessionValidator = new SessionValidator();
+  const gameStateService = new GameStateService(
+    gameStateRepository,
+    gameStateMapper,
+    energyValidator,
+    healthValidator,
+    sessionValidator
+  );
 
   return {
     gameStateRepository,
@@ -59,5 +72,6 @@ export function setupGameStateDomain(): {
     energyValidator,
     healthValidator,
     sessionValidator,
+    gameStateService,
   };
 }
