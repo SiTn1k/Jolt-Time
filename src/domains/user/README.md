@@ -1,8 +1,8 @@
 # User Domain Module
 
-**Task P-166.1 — User Domain Foundation**  
+**Task P-166.2 — Production User Domain Implementation**  
 **Project:** Jolt Time  
-**Status:** Foundation Complete
+**Status:** ✅ COMPLETE
 
 ---
 
@@ -19,7 +19,7 @@ This domain follows Clean Architecture principles with clear separation between:
 
 ## Implementation Status
 
-### Completed Components
+### ✅ All Components Complete
 
 | Component | Status | Implementation |
 |-----------|--------|----------------|
@@ -29,19 +29,26 @@ This domain follows Clean Architecture principles with clear separation between:
 | **DTOs** | ✅ Complete | CreateUserDto, UpdateUserDto, UserResponseDto |
 | **Interfaces** | ✅ Complete | IUser, IUserRepository |
 | **Validators** | ✅ Complete | UserValidator, UsernameValidator, LanguageValidator |
-| **Mapper** | ✅ Complete | UserMapper (entity-DTO conversion) |
+| **Mapper** | ✅ Complete | UserMapper (bidirectional entity-DTO conversion) |
 | **Events** | ✅ Complete | UserCreated, UserUpdated, UserDeleted |
-| **Repository Skeleton** | ✅ Complete | SupabaseUserRepository (NotImplementedError stubs) |
+| **Repository** | ✅ Complete | SupabaseUserRepository with all methods implemented |
+| **Service** | ✅ Complete | UserService with all business logic |
 | **DI Registration** | ✅ Complete | registerUserDependencies, setupUserDomain |
+| **Tests** | ✅ Complete | Repository, Service, and Registration flow tests |
 
-### Pending Components (P-166.2+)
+### User Service Responsibilities (All Implemented)
 
-| Component | Task | Description |
-|-----------|------|-------------|
-| Database queries | P-166.2 | Supabase repository implementation |
-| Business workflows | P-166.2 | User service with business logic |
-| Registration flow | P-166.2 | User creation from Telegram data |
-| Telegram sync | P-166.2 | Telegram user data synchronization |
+| Responsibility | Status | Description |
+|---------------|--------|-------------|
+| Register User | ✅ | Create new user or return existing |
+| Load User | ✅ | Find by ID or Telegram ID |
+| Update User | ✅ | Update user profile data |
+| Update Last Seen | ✅ | Track user activity |
+| Delete User | ✅ | Soft delete user |
+| Restore User | ✅ | Restore soft-deleted user |
+| Exists Check | ✅ | Verify user existence |
+| User Summary | ✅ | Return minimal user data |
+| Telegram Sync | ✅ | Sync changed fields only | |
 
 ---
 
@@ -60,10 +67,11 @@ src/domains/user/
 ├── repositories/         # Repository interfaces & implementations
 │   ├── index.ts
 │   ├── IUserRepository.ts
-│   └── SupabaseUserRepository.ts  # Skeleton - DB queries not implemented
+│   └── SupabaseUserRepository.ts  # Full implementation with all methods
 │
-├── services/             # Business logic (pending P-166.2)
-│   └── index.ts
+├── services/             # Business logic
+│   ├── index.ts
+│   └── UserService.ts    # Full implementation
 │
 ├── dto/                  # Data Transfer Objects
 │   ├── index.ts
@@ -110,11 +118,14 @@ src/domains/user/
 ├── factories/            # Entity factories (pending)
 │   └── index.ts
 │
-├── exceptions/           # Domain exceptions (pending)
+├── exceptions/           # Domain exceptions
 │   └── index.ts
 │
-└── tests/                # Unit tests (pending)
-    └── index.ts
+└── tests/                # Unit and integration tests
+    ├── index.ts
+    ├── UserRepository.test.ts
+    ├── UserService.test.ts
+    └── UserRegistration.test.ts
 ```
 
 ---
@@ -171,7 +182,34 @@ const container = getContainer();
 registerUserDependencies(container);
 
 // Or use quick setup
-const { userRepository, userMapper, userValidator } = setupUserDomain();
+const { userRepository, userService, userMapper, userValidator } = setupUserDomain();
+```
+
+### Using the User Service
+
+```typescript
+import { UserService, createUserService } from './domains/user/services';
+import { SupabaseUserRepository } from './domains/user/repositories';
+
+// Direct creation
+const repository = new SupabaseUserRepository();
+const service = createUserService(repository);
+
+// Register user (creates or returns existing)
+const user = await service.registerUser({
+  telegramId: 123456789,
+  firstName: 'John',
+  lastName: 'Doe',
+  username: 'johndoe',
+  languageCode: 'en',
+  isPremium: false,
+});
+
+// Sync from Telegram (only updates changed fields)
+const updatedUser = await service.syncFromTelegram(123456789, {
+  firstName: 'Updated Name',
+  isPremium: true,
+});
 ```
 
 ---
@@ -183,8 +221,8 @@ const { userRepository, userMapper, userValidator } = setupUserDomain();
 | Layer | User Domain Implementation |
 |-------|---------------------------|
 | **Domain** | Entities, Value Objects, Domain Events, Business Invariants |
-| **Application** | DTOs, Mappers, Validators, Services (P-166.2) |
-| **Infrastructure** | Repository implementations (P-166.2) |
+| **Application** | DTOs, Mappers, Validators, Services (fully implemented) |
+| **Infrastructure** | Repository implementations (fully implemented) |
 
 ### Domain-Driven Design
 
@@ -193,15 +231,19 @@ const { userRepository, userMapper, userValidator } = setupUserDomain();
 | **Aggregates** | User is the aggregate root |
 | **Value Objects** | UserId, TelegramId, Username, LanguageCode, UserPhotoUrl |
 | **Domain Events** | UserCreated, UserUpdated, UserDeleted |
-| **Repositories** | IUserRepository interface + SupabaseUserRepository skeleton |
+| **Repositories** | IUserRepository interface + SupabaseUserRepository implementation |
 | **Factories** | User.fromTelegram(), User.fromDatabase() |
+| **Services** | UserService with all business logic |
 
 ### Repository Pattern
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     Service Layer                       │
-│                  (Business Logic - P-166.2)             │
+│                   (UserService)                         │
+│              - registerUser()                           │
+│              - syncFromTelegram()                       │
+│              - updateUser(), etc.                       │
 └─────────────────────────────────────────────────────────┘
                             │
                             ▼
@@ -213,7 +255,10 @@ const { userRepository, userMapper, userValidator } = setupUserDomain();
                             ▼
 ┌─────────────────────────────────────────────────────────┐
 │                 Repository Implementation                │
-│         (SupabaseUserRepository - P-166.2)             │
+│            (SupabaseUserRepository)                     │
+│         - create(), findById(), findByTelegramId()      │
+│         - update(), softDelete(), restore()             │
+│         - list(), count()                               │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -251,7 +296,8 @@ const { userRepository, userMapper, userValidator } = setupUserDomain();
 | Module | Dependency Type | Purpose |
 |--------|-----------------|---------|
 | `src/core/di/` | Hard | Dependency injection container |
-| `src/database/` | Hard | Supabase types and providers |
+| `src/database/` | Hard | Supabase types, providers, and error handling |
+| `src/core/logging/` | Hard | Logger service |
 | `src/shared/` | Soft | Shared types and utilities |
 | `src/authentication/` | Soft | User identity resolution |
 
@@ -259,19 +305,63 @@ const { userRepository, userMapper, userValidator } = setupUserDomain();
 
 | External | Purpose |
 |----------|---------|
-| Supabase | User data persistence (P-166.2) |
+| Supabase | User data persistence |
 | Telegram API | User profile data |
+
+---
+
+## User Registration Flow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                User Enters Telegram Mini App                    │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              Extract Telegram User Data                         │
+│    (telegramId, firstName, lastName, username, language, etc.)  │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   UserService.registerUser()                    │
+│                              │                                  │
+│              ┌───────────────┴───────────────┐                  │
+│              ▼                               ▼                  │
+│    ┌─────────────────┐             ┌─────────────────┐          │
+│    │ findByTelegramId │             │ findByTelegramId │          │
+│    │   - Found?       │             │   - Not Found?   │          │
+│    └────────┬────────┘             └────────┬────────┘          │
+│             │                               │                   │
+│             ▼                               ▼                   │
+│    ┌─────────────────┐             ┌─────────────────┐          │
+│    │ Return existing │             │ Create new User │          │
+│    │     User        │             │  with metadata  │          │
+│    └─────────────────┘             └─────────────────┘          │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Telegram Synchronization
+
+Synchronizes the following fields when they change:
+- `username` - Telegram username
+- `firstName` - User's first name
+- `lastName` - User's last name
+- `photoUrl` - Profile photo URL
+- `languageCode` - Telegram language
+- `isPremium` - Telegram Premium status
+- `lastSeenAt` - Always updated on sync
+
+Only changed fields are synchronized to minimize database writes.
 
 ---
 
 ## Next Task
 
-**P-166.2 — User Domain Implementation**  
-Complete implementation of:
-- SupabaseUserRepository database queries
-- UserService with business logic
-- User registration flow
-- Telegram user synchronization
+**P-167.1 — Production Player Profile Foundation**
 
 ---
 

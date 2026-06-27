@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseUserRepository } from './repositories/SupabaseUserRepository';
+import { UserService, createUserService } from './services/UserService';
 import { UserMapper } from './mappers/UserMapper';
 import { UserValidator, UsernameValidator, LanguageValidator } from './validators';
 
@@ -14,6 +15,7 @@ import { UserValidator, UsernameValidator, LanguageValidator } from './validator
  */
 export const USER_TOKENS = {
   USER_REPOSITORY: Symbol.for('SupabaseUserRepository'),
+  USER_SERVICE: Symbol.for('UserService'),
   USER_MAPPER: Symbol.for('UserMapper'),
   USER_VALIDATOR: Symbol.for('UserValidator'),
   USERNAME_VALIDATOR: Symbol.for('UsernameValidator'),
@@ -28,6 +30,13 @@ export function registerUserDependencies(container: Container): void {
   container.registerFactory(
     SupabaseUserRepository,
     () => new SupabaseUserRepository(),
+    { lifetime: Lifetime.Scoped }
+  );
+
+  // Service (Scoped - depends on repository)
+  container.registerFactory(
+    UserService,
+    () => createUserService(new SupabaseUserRepository()),
     { lifetime: Lifetime.Scoped }
   );
 
@@ -46,15 +55,18 @@ export function registerUserDependencies(container: Container): void {
  */
 export function setupUserDomain(): {
   userRepository: SupabaseUserRepository;
+  userService: UserService;
   userMapper: UserMapper;
   userValidator: UserValidator;
 } {
   const userRepository = new SupabaseUserRepository();
+  const userService = createUserService(userRepository);
   const userMapper = new UserMapper();
   const userValidator = new UserValidator();
 
   return {
     userRepository,
+    userService,
     userMapper,
     userValidator,
   };
