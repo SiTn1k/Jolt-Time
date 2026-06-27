@@ -9,6 +9,7 @@ import { SupabaseInventoryRepository, SupabaseInventoryItemRepository } from './
 import { InventoryMapper } from './mappers/InventoryMapper';
 import { InventoryItemMapper } from './mappers/InventoryItemMapper';
 import { InventoryCapacityValidator, InventoryQuantityValidator, InventoryItemValidator } from './validators';
+import { InventoryService } from '../../services/InventoryService';
 
 /**
  * Inventory Domain DI configuration keys.
@@ -21,6 +22,7 @@ export const INVENTORY_TOKENS = {
   INVENTORY_CAPACITY_VALIDATOR: Symbol.for('InventoryCapacityValidator'),
   INVENTORY_QUANTITY_VALIDATOR: Symbol.for('InventoryQuantityValidator'),
   INVENTORY_ITEM_VALIDATOR: Symbol.for('InventoryItemValidator'),
+  INVENTORY_SERVICE: Symbol.for('InventoryService'),
 } as const;
 
 /**
@@ -39,6 +41,9 @@ export function registerInventoryDependencies(container: Container): void {
   // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseInventoryRepository, { lifetime: Lifetime.Singleton });
   container.register(SupabaseInventoryItemRepository, { lifetime: Lifetime.Singleton });
+
+  // Service
+  container.register(InventoryService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -53,6 +58,7 @@ export function setupInventoryDomain(): {
   inventoryCapacityValidator: InventoryCapacityValidator;
   inventoryQuantityValidator: InventoryQuantityValidator;
   inventoryItemValidator: InventoryItemValidator;
+  inventoryService: InventoryService;
 } {
   const inventoryCapacityValidator = new InventoryCapacityValidator();
   const inventoryQuantityValidator = new InventoryQuantityValidator();
@@ -61,6 +67,10 @@ export function setupInventoryDomain(): {
   const inventoryItemMapper = new InventoryItemMapper();
   const inventoryRepository = new SupabaseInventoryRepository();
   const inventoryItemRepository = new SupabaseInventoryItemRepository();
+  const inventoryService = new InventoryService(
+    inventoryRepository,
+    inventoryItemRepository
+  );
 
   return {
     inventoryRepository,
@@ -70,5 +80,6 @@ export function setupInventoryDomain(): {
     inventoryCapacityValidator,
     inventoryQuantityValidator,
     inventoryItemValidator,
+    inventoryService,
   };
 }
