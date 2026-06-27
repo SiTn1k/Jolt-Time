@@ -5,3 +5,4 @@
  */
 
 export { SupabaseQuestRepository } from './SupabaseQuestRepository';
+export { SupabaseQuestProgressRepository } from './SupabaseQuestProgressRepository';

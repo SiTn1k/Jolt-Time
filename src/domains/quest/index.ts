@@ -73,6 +73,8 @@ export type {
   IQuestProgress,
   IQuestRepository,
   QuestFilterParams,
+  IQuestProgressRepository,
+  QuestProgressFilterParams,
 } from './interfaces';
 
 // DTOs
@@ -126,7 +128,27 @@ export {
 export { QuestMapper, ObjectiveMapper, ProgressMapper } from './mappers';
 
 // Repositories
-export { SupabaseQuestRepository } from './repositories';
+export { SupabaseQuestRepository, SupabaseQuestProgressRepository } from './repositories';
+
+// Services
+export {
+  QuestService,
+  createQuestService,
+  QuestInitializationService,
+  createQuestInitializationService,
+  ObjectiveTrackingService,
+  createObjectiveTrackingService,
+  DEFAULT_STARTER_QUESTS,
+  OBJECTIVE_HANDLERS,
+} from './services';
+export type {
+  IQuestService,
+  IQuestInitializationService,
+  StarterQuestConfig,
+  IObjectiveTrackingService,
+  ObjectiveProgressEvent,
+  ObjectiveCompletionResult,
+} from './services';
 
 // DI
 export {
