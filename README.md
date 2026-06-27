@@ -95,6 +95,7 @@ Jolt-Time/
 | **Ads Integration** | ✅ Complete | AdsGram SDK for rewarded ads |
 | **Player Profile** | ✅ Complete | Player identity, progression, statistics, preferences |
 | **Inventory** | ✅ Foundation | Central storage system for collectibles (P-169.1) |
+| **Currency** | ✅ Foundation | Currency economy module (P-170.1) |
 
 ### In Development 🚧
 
