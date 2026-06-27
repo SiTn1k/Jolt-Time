@@ -100,6 +100,7 @@ Jolt-Time/
 | **Museum** | ✅ Foundation | Museum display with halls and exhibits (P-172.1) |
 | **Academy** | ✅ Production | Research progression with technology tree (P-173.2) |
 | **Quests** | ✅ Foundation | Quest system foundation with entities, types, and repository skeleton (P-174.1) |
+| **Achievements** | ✅ Foundation | Achievement system foundation with entities, types, and repository skeleton (P-175.1) |
 
 ### In Development 🚧
 
@@ -108,6 +109,7 @@ Jolt-Time/
 | **Expeditions** | 0% | Time-based artifact collection missions |
 | **Museum** | 0% | Collection display with historical context (P-172.2) |
 | **Quests** | 0% | Quest execution, progress tracking, reward distribution (P-174.2) |
+| **Achievements** | 0% | Achievement progress tracking, completion detection, reward distribution (P-175.2) |
 | **PVP Arena** | 0% | League-based competitive battles |
 | **Guilds** | 0% | Cooperative clan system |
 | **Tournaments** | 0% | Competitive bracket tournaments |
