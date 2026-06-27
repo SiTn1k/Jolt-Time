@@ -88,7 +88,7 @@ Jolt-Time/
 ### Implemented ✅
 
 | System | Status | Description |
-|--------|--------|-------------|
+|--------|---------|-------------|
 | **Daily Rewards** | ✅ Complete | 30-day reward calendar with streak bonuses |
 | **Energy System** | ✅ Complete | Regenerating energy with boosters, offline recovery |
 | **Notifications** | ✅ Complete | Push notifications with spam protection |
@@ -97,13 +97,14 @@ Jolt-Time/
 | **Inventory** | ✅ Foundation | Central storage system for collectibles (P-169.1) |
 | **Currency** | ✅ Foundation | Currency economy module (P-170.1) |
 | **Artifact** | ✅ Production | Master catalog of collectible artifacts (P-171.2) |
+| **Museum** | ✅ Foundation | Museum display with halls and exhibits (P-172.1) |
 
 ### In Development 🚧
 
 | System | Progress | Description |
 |--------|----------|-------------|
 | **Expeditions** | 0% | Time-based artifact collection missions |
-| **Museum** | 0% | Collection display with historical context |
+| **Museum** | 0% | Collection display with historical context (P-172.2) |
 | **Quests** | 0% | Daily, weekly, story, and achievement quests |
 | **PVP Arena** | 0% | League-based competitive battles |
 | **Guilds** | 0% | Cooperative clan system |
