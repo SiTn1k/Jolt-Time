@@ -232,6 +232,132 @@ export interface Database {
           updated_at?: string;
         };
       };
+      
+      achievements: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          description: string;
+          category: string;
+          rarity: string;
+          points: number;
+          icon: string;
+          reward_definition: Record<string, unknown>;
+          is_hidden: boolean;
+          is_active: boolean;
+          metadata: Record<string, unknown>;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          description: string;
+          category: string;
+          rarity: string;
+          points: number;
+          icon?: string;
+          reward_definition?: Record<string, unknown>;
+          is_hidden?: boolean;
+          is_active?: boolean;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          description?: string;
+          category?: string;
+          rarity?: string;
+          points?: number;
+          icon?: string;
+          reward_definition?: Record<string, unknown>;
+          is_hidden?: boolean;
+          is_active?: boolean;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      
+      achievement_conditions: {
+        Row: {
+          id: string;
+          achievement_id: string;
+          condition_type: string;
+          target: string | null;
+          required_value: number;
+          metadata: Record<string, unknown>;
+          order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          achievement_id: string;
+          condition_type: string;
+          target?: string | null;
+          required_value: number;
+          metadata?: Record<string, unknown>;
+          order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          achievement_id?: string;
+          condition_type?: string;
+          target?: string | null;
+          required_value?: number;
+          metadata?: Record<string, unknown>;
+          order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      
+      achievement_progress: {
+        Row: {
+          id: string;
+          player_profile_id: string;
+          achievement_id: string;
+          status: string;
+          current_value: number;
+          completed_at: string | null;
+          claimed_at: string | null;
+          metadata: Record<string, unknown>;
+          started_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          player_profile_id: string;
+          achievement_id: string;
+          status?: string;
+          current_value?: number;
+          completed_at?: string | null;
+          claimed_at?: string | null;
+          metadata?: Record<string, unknown>;
+          started_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          player_profile_id?: string;
+          achievement_id?: string;
+          status?: string;
+          current_value?: number;
+          completed_at?: string | null;
+          claimed_at?: string | null;
+          metadata?: Record<string, unknown>;
+          started_at?: string;
+          updated_at?: string;
+        };
+      };
     };
   };
 }

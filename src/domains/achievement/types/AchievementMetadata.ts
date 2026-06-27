@@ -41,6 +41,14 @@ export interface AchievementMetadata {
   iconId?: string;
   /** Reward definition */
   rewardDefinition: AchievementRewardDefinition;
+  /** Target value for progress tracking (default: 1) */
+  targetValue?: number;
+  /** Target category for filtering related events */
+  targetCategory?: string;
+  /** Target ID for specific item achievements */
+  targetId?: string;
+  /** Minimum amount required for currency-type achievements */
+  minAmount?: number;
 }
 
 /**

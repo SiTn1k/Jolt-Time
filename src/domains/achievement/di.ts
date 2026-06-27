@@ -11,6 +11,10 @@ import { AchievementMapper } from './mappers/AchievementMapper';
 import { ConditionMapper } from './mappers/ConditionMapper';
 import { ProgressMapper } from './mappers/ProgressMapper';
 import { AchievementValidator, ConditionValidator, ProgressValidator } from './validators';
+import { AchievementService } from './services/AchievementService';
+import type { IAchievementService } from './services/AchievementService';
+import { AchievementEventProcessor } from './services/AchievementEventProcessor';
+import type { IAchievementEventProcessor } from './services/AchievementEventProcessor';
 
 /**
  * Achievement Domain DI configuration keys.
@@ -24,6 +28,8 @@ export const ACHIEVEMENT_TOKENS = {
   ACHIEVEMENT_VALIDATOR: Symbol.for('AchievementValidator'),
   CONDITION_VALIDATOR: Symbol.for('ConditionValidator'),
   PROGRESS_VALIDATOR: Symbol.for('ProgressValidator'),
+  ACHIEVEMENT_SERVICE: Symbol.for('AchievementService'),
+  ACHIEVEMENT_EVENT_PROCESSOR: Symbol.for('AchievementEventProcessor'),
 } as const;
 
 /**
@@ -43,6 +49,12 @@ export function registerAchievementDependencies(container: Container): void {
   // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseAchievementRepository, { lifetime: Lifetime.Singleton });
   container.register(SupabaseAchievementProgressRepository, { lifetime: Lifetime.Singleton });
+
+  // Services - direct instantiation since the DI container doesn't support factory functions well
+  const achievementRepository = container.resolve(SupabaseAchievementRepository);
+  const achievementProgressRepository = container.resolve(SupabaseAchievementProgressRepository);
+  const achievementService = new AchievementService(achievementRepository, achievementProgressRepository);
+  container.registerInstance(AchievementService, achievementService);
 }
 
 /**
@@ -58,6 +70,8 @@ export function setupAchievementDomain(): {
   achievementValidator: AchievementValidator;
   conditionValidator: ConditionValidator;
   progressValidator: ProgressValidator;
+  achievementService: AchievementService;
+  achievementEventProcessor: AchievementEventProcessor;
 } {
   const achievementValidator = new AchievementValidator();
   const conditionValidator = new ConditionValidator();
@@ -67,6 +81,8 @@ export function setupAchievementDomain(): {
   const progressMapper = new ProgressMapper();
   const achievementRepository = new SupabaseAchievementRepository();
   const achievementProgressRepository = new SupabaseAchievementProgressRepository();
+  const achievementService = new AchievementService(achievementRepository, achievementProgressRepository);
+  const achievementEventProcessor = new AchievementEventProcessor(achievementService);
 
   return {
     achievementRepository,
@@ -77,5 +93,7 @@ export function setupAchievementDomain(): {
     achievementValidator,
     conditionValidator,
     progressValidator,
+    achievementService,
+    achievementEventProcessor,
   };
 }

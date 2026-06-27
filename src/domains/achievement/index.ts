@@ -128,6 +128,20 @@ export { AchievementMapper, ConditionMapper, ProgressMapper } from './mappers';
 // Repositories
 export { SupabaseAchievementRepository, SupabaseAchievementProgressRepository } from './repositories';
 
+// Services
+export {
+  AchievementService,
+  createAchievementService,
+  type IAchievementService,
+} from './services';
+export {
+  AchievementEventProcessor,
+  createAchievementEventProcessor,
+  type IAchievementEventProcessor,
+  type AchievementEventType,
+  type AchievementDomainEvent,
+} from './services';
+
 // DI
 export {
   ACHIEVEMENT_TOKENS,
