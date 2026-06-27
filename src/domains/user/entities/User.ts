@@ -17,6 +17,11 @@
 
 import type { IUser } from '../interfaces/IUser';
 import { UserStatus } from '../types/UserStatus';
+import { UserId } from '../value-objects/UserId';
+import { TelegramId } from '../value-objects/TelegramId';
+import { Username } from '../value-objects/Username';
+import { LanguageCode } from '../value-objects/LanguageCode';
+import { UserPhotoUrl } from '../value-objects/UserPhotoUrl';
 
 /**
  * User entity class.
@@ -24,13 +29,13 @@ import { UserStatus } from '../types/UserStatus';
  */
 export class User implements IUser {
   /** Unique internal identifier */
-  public readonly id: string;
+  public readonly id: UserId;
 
   /** Telegram user ID */
-  public readonly telegramId: number;
+  public readonly telegramId: TelegramId;
 
   /** Telegram username (optional) */
-  public readonly username: string | null;
+  public readonly username: Username | null;
 
   /** User's first name */
   public readonly firstName: string;
@@ -39,10 +44,10 @@ export class User implements IUser {
   public readonly lastName: string | null;
 
   /** Telegram language code */
-  public readonly languageCode: string | null;
+  public readonly languageCode: LanguageCode | null;
 
   /** URL to user's Telegram photo */
-  public readonly photoUrl: string | null;
+  public readonly photoUrl: UserPhotoUrl | null;
 
   /** Whether user has Telegram Premium */
   public readonly isPremium: boolean;
@@ -65,30 +70,18 @@ export class User implements IUser {
    * @throws Error if required invariants are violated
    */
   constructor(props: UserProps) {
-    this.validateInvariant(props.id, 'id');
-    this.validateInvariant(props.telegramId.toString(), 'telegramId');
-
     this.id = props.id;
     this.telegramId = props.telegramId;
-    this.username = props.username ?? null;
+    this.username = props.username;
     this.firstName = props.firstName;
     this.lastName = props.lastName ?? null;
-    this.languageCode = props.languageCode ?? null;
-    this.photoUrl = props.photoUrl ?? null;
+    this.languageCode = props.languageCode;
+    this.photoUrl = props.photoUrl;
     this.isPremium = props.isPremium ?? false;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
     this.lastSeenAt = props.lastSeenAt ?? null;
     this.status = props.status ?? UserStatus.ACTIVE;
-  }
-
-  /**
-   * Validates that a required field is not empty.
-   */
-  private validateInvariant(value: string, fieldName: string): void {
-    if (!value || value.trim().length === 0) {
-      throw new Error(`${fieldName} cannot be empty`);
-    }
   }
 
   /**
@@ -108,13 +101,13 @@ export class User implements IUser {
     const now = new Date();
 
     return new User({
-      id: params.id,
-      telegramId: params.telegramId,
+      id: UserId.create(params.id),
+      telegramId: TelegramId.create(params.telegramId),
       firstName: params.firstName,
       lastName: params.lastName ?? null,
-      username: params.username ?? null,
-      languageCode: params.languageCode ?? null,
-      photoUrl: params.photoUrl ?? null,
+      username: Username.create(params.username),
+      languageCode: LanguageCode.create(params.languageCode),
+      photoUrl: UserPhotoUrl.create(params.photoUrl),
       isPremium: params.isPremium ?? false,
       createdAt: now,
       updatedAt: now,
@@ -129,13 +122,13 @@ export class User implements IUser {
    */
   public static fromDatabase(record: UserRecord): User {
     return new User({
-      id: record.id,
-      telegramId: record.telegram_id,
-      username: record.username,
+      id: UserId.reconstruct(record.id),
+      telegramId: TelegramId.reconstruct(record.telegram_id),
+      username: Username.create(record.username),
       firstName: record.first_name,
       lastName: record.last_name,
-      languageCode: record.language_code,
-      photoUrl: record.photo_url,
+      languageCode: LanguageCode.create(record.language_code),
+      photoUrl: UserPhotoUrl.create(record.photo_url),
       isPremium: record.is_premium,
       createdAt: new Date(record.created_at),
       updatedAt: new Date(record.updated_at),
@@ -149,13 +142,13 @@ export class User implements IUser {
    */
   public toJSON(): UserJSON {
     return {
-      id: this.id,
-      telegramId: this.telegramId,
-      username: this.username,
+      id: this.id.value,
+      telegramId: this.telegramId.value,
+      username: this.username?.value ?? null,
       firstName: this.firstName,
       lastName: this.lastName,
-      languageCode: this.languageCode,
-      photoUrl: this.photoUrl,
+      languageCode: this.languageCode?.value ?? null,
+      photoUrl: this.photoUrl?.value ?? null,
       isPremium: this.isPremium,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
@@ -190,13 +183,13 @@ export class User implements IUser {
  * User properties interface for constructor.
  */
 export interface UserProps {
-  id: string;
-  telegramId: number;
-  username: string | null;
+  id: UserId;
+  telegramId: TelegramId;
+  username: Username | null;
   firstName: string;
   lastName: string | null;
-  languageCode: string | null;
-  photoUrl: string | null;
+  languageCode: LanguageCode | null;
+  photoUrl: UserPhotoUrl | null;
   isPremium: boolean;
   createdAt: Date;
   updatedAt: Date;
