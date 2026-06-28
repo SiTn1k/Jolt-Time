@@ -91,7 +91,7 @@ Jolt-Time/
 |--------|---------|-------------|
 | **Daily Rewards** | ✅ Complete | 30-day reward calendar with streak bonuses |
 | **Energy System** | ✅ Complete | Regenerating energy with boosters, offline recovery |
-| **Notifications** | ✅ Complete | Push notifications with spam protection |
+| **Notifications** | ✅ Foundation | Notification domain foundation - entities, templates, channels (P-179.1) |
 | **Ads Integration** | ✅ Complete | AdsGram SDK for rewarded ads |
 | **Player Profile** | ✅ Complete | Player identity, progression, statistics, preferences |
 | **Inventory** | ✅ Foundation | Central storage system for collectibles (P-169.1) |
