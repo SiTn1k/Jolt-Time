@@ -140,7 +140,7 @@ export {
 export { RewardMapper, PackageMapper, RequestMapper } from './mappers';
 
 // Repositories
-export { SupabaseRewardRepository, NotImplementedError } from './repositories';
+export { SupabaseRewardRepository } from './repositories';
 
 // DI
 export {

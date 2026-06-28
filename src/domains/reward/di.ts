@@ -5,13 +5,14 @@
  */
 
 import { Container, Lifetime } from '../../core/di';
-import { SupabaseRewardRepository, NotImplementedError } from './repositories/SupabaseRewardRepository';
+import { SupabaseRewardRepository } from './repositories/SupabaseRewardRepository';
 import { RewardMapper } from './mappers/RewardMapper';
 import { PackageMapper } from './mappers/PackageMapper';
 import { RequestMapper } from './mappers/RequestMapper';
 import { RewardValidator } from './validators/RewardValidator';
 import { RewardPackageValidator } from './validators/RewardPackageValidator';
 import { RewardRequestValidator } from './validators/RewardRequestValidator';
+import { RewardEngineService, createRewardEngineService } from '../../services/RewardEngineService';
 
 /**
  * Reward Domain DI configuration keys.
@@ -24,6 +25,7 @@ export const REWARD_TOKENS = {
   REWARD_VALIDATOR: Symbol.for('RewardValidator'),
   PACKAGE_VALIDATOR: Symbol.for('RewardPackageValidator'),
   REQUEST_VALIDATOR: Symbol.for('RewardRequestValidator'),
+  REWARD_ENGINE_SERVICE: Symbol.for('RewardEngineService'),
 } as const;
 
 /**
@@ -42,6 +44,9 @@ export function registerRewardDependencies(container: Container): void {
 
   // Repositories (Singleton)
   container.register(SupabaseRewardRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.register(RewardEngineService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -56,6 +61,7 @@ export function setupRewardDomain(): {
   rewardValidator: RewardValidator;
   packageValidator: RewardPackageValidator;
   requestValidator: RewardRequestValidator;
+  rewardEngineService: RewardEngineService;
 } {
   const rewardValidator = new RewardValidator();
   const packageValidator = new RewardPackageValidator();
@@ -64,6 +70,7 @@ export function setupRewardDomain(): {
   const packageMapper = new PackageMapper();
   const requestMapper = new RequestMapper();
   const rewardRepository = new SupabaseRewardRepository();
+  const rewardEngineService = createRewardEngineService(rewardRepository);
 
   return {
     rewardRepository,
@@ -73,5 +80,6 @@ export function setupRewardDomain(): {
     rewardValidator,
     packageValidator,
     requestValidator,
+    rewardEngineService,
   };
 }

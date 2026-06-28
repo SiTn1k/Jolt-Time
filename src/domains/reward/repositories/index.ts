@@ -4,4 +4,4 @@
  * Exports all reward domain repositories.
  */
 
-export { SupabaseRewardRepository, NotImplementedError } from './SupabaseRewardRepository';
+export { SupabaseRewardRepository } from './SupabaseRewardRepository';
