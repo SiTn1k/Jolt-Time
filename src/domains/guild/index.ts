@@ -95,6 +95,9 @@ export {
   createGuildDeletedEvent,
 } from './events';
 
+// Services
+export { GuildService, GuildError, createGuildService } from './services';
+
 // Repositories
 export { SupabaseGuildRepository } from './repositories';
 

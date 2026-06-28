@@ -38,6 +38,7 @@ export interface GuildRoleRecord {
 export interface GuildRoleJSON {
   roleId: string;
   name: string;
+  roleType: GuildRoleType;
   permissions: GuildPermission[];
   priority: number;
   metadata: Record<string, unknown>;
@@ -177,6 +178,7 @@ export class GuildRole implements IGuildRole {
     return {
       roleId: String(this.roleId),
       name: this.name,
+      roleType: this.roleType,
       permissions: this.permissions,
       priority: this.priority,
       metadata: this.metadata,

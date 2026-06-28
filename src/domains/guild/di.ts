@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseGuildRepository } from './repositories/SupabaseGuildRepository';
+import { GuildService, createGuildService } from './services/GuildService';
 import { GuildMapper } from './mappers/GuildMapper';
 import { MemberMapper } from './mappers/MemberMapper';
 import { RoleMapper } from './mappers/RoleMapper';
@@ -16,6 +17,7 @@ import { GuildValidator, GuildMemberValidator, GuildRoleValidator } from './vali
  */
 export const GUILD_TOKENS = {
   GUILD_REPOSITORY: Symbol.for('SupabaseGuildRepository'),
+  GUILD_SERVICE: Symbol.for('GuildService'),
   GUILD_MAPPER: Symbol.for('GuildMapper'),
   MEMBER_MAPPER: Symbol.for('MemberMapper'),
   ROLE_MAPPER: Symbol.for('RoleMapper'),
@@ -38,8 +40,15 @@ export function registerGuildDependencies(container: Container): void {
   container.registerInstance(MemberMapper, new MemberMapper());
   container.registerInstance(RoleMapper, new RoleMapper());
 
-  // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
+  // Repository (Singleton)
   container.register(SupabaseGuildRepository, { lifetime: Lifetime.Singleton });
+
+  // Service (Singleton - depends on repository)
+  container.registerFactory(
+    GuildService,
+    () => createGuildService(new SupabaseGuildRepository()),
+    { lifetime: Lifetime.Singleton }
+  );
 }
 
 /**
@@ -48,6 +57,7 @@ export function registerGuildDependencies(container: Container): void {
  */
 export function setupGuildDomain(): {
   guildRepository: SupabaseGuildRepository;
+  guildService: GuildService;
   guildMapper: GuildMapper;
   memberMapper: MemberMapper;
   roleMapper: RoleMapper;
@@ -62,9 +72,11 @@ export function setupGuildDomain(): {
   const memberMapper = new MemberMapper();
   const roleMapper = new RoleMapper();
   const guildRepository = new SupabaseGuildRepository();
+  const guildService = createGuildService(guildRepository);
 
   return {
     guildRepository,
+    guildService,
     guildMapper,
     memberMapper,
     roleMapper,

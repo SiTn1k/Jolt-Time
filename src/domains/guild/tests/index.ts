@@ -1,0 +1,5 @@
+/**
+ * Guild Tests Index
+ */
+
+export {};
