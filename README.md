@@ -102,11 +102,13 @@ Jolt-Time/
 | **Quests** | ✅ Foundation | Quest system foundation with entities, types, and repository skeleton (P-174.1) |
 | **Achievements** | ✅ Foundation | Achievement system foundation with entities, types, and repository skeleton (P-175.1) |
 | **Guild** | ✅ Foundation | Guild system foundation with entities, types, and repository skeleton (P-176.1) |
+| **Reward Engine** | ✅ Foundation | Central reward distribution system - ONLY system allowed to distribute rewards (P-177.1) |
 
 ### In Development 🚧
 
 | System | Progress | Description |
 |--------|----------|-------------|
+| **Reward Engine** | 0% | Reward processing, distribution, integration with all systems (P-177.2) |
 | **Expeditions** | 0% | Time-based artifact collection missions |
 | **Museum** | 0% | Collection display with historical context (P-172.2) |
 | **Quests** | 0% | Quest execution, progress tracking, reward distribution (P-174.2) |
