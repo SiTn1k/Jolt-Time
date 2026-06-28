@@ -101,6 +101,19 @@ export { createEventFailedEvent } from './events/EventFailed.event';
 export type { EventRetriedEvent, EventRetriedEventData } from './events/EventRetried.event';
 export { createEventRetriedEvent } from './events/EventRetried.event';
 
+// Built-in Subscribers
+export type {
+  IRewardEngineSubscriber,
+  IAchievementEngineSubscriber,
+  IQuestEngineSubscriber,
+  IAnalyticsSubscriber,
+  INotificationSubscriber,
+  IGuildSubscriber,
+  IMuseumSubscriber,
+  IAcademySubscriber,
+  BuiltInSubscriber,
+} from './subscribers';
+
 // Repositories
 export { InMemoryEventBus } from './repositories/InMemoryEventBus';
 
