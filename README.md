@@ -103,6 +103,7 @@ Jolt-Time/
 | **Achievements** | ✅ Foundation | Achievement system foundation with entities, types, and repository skeleton (P-175.1) |
 | **Guild** | ✅ Foundation | Guild system foundation with entities, types, and repository skeleton (P-176.1) |
 | **Reward Engine** | ✅ Production | Central reward distribution system - ONLY system allowed to distribute rewards (P-177.2) |
+| **Event Bus** | ✅ Foundation | Central communication mechanism between domains - ONLY allowed inter-domain communication (P-178.1) |
 
 ### In Development 🚧
 
