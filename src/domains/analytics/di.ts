@@ -6,6 +6,8 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseAnalyticsRepository } from './repositories/SupabaseAnalyticsRepository';
+import { AnalyticsService, type AnalyticsServiceConfig } from './services/AnalyticsService';
+import { AnalyticsEventSubscriber } from './subscribers/AnalyticsEventSubscriber';
 import { AnalyticsMapper } from './mappers/AnalyticsMapper';
 import { SessionMapper } from './mappers/SessionMapper';
 import { MetricMapper } from './mappers/MetricMapper';
@@ -18,6 +20,8 @@ import { SessionValidator } from './validators/SessionValidator';
  */
 export const ANALYTICS_TOKENS = {
   ANALYTICS_REPOSITORY: Symbol.for('SupabaseAnalyticsRepository'),
+  ANALYTICS_SERVICE: Symbol.for('AnalyticsService'),
+  ANALYTICS_SUBSCRIBER: Symbol.for('AnalyticsEventSubscriber'),
   ANALYTICS_MAPPER: Symbol.for('AnalyticsMapper'),
   SESSION_MAPPER: Symbol.for('SessionMapper'),
   METRIC_MAPPER: Symbol.for('MetricMapper'),
@@ -29,7 +33,10 @@ export const ANALYTICS_TOKENS = {
 /**
  * Register all analytics domain dependencies with the container.
  */
-export function registerAnalyticsDependencies(container: Container): void {
+export function registerAnalyticsDependencies(
+  container: Container,
+  config?: AnalyticsServiceConfig
+): void {
   // Validators (Singleton - stateless, register first as they're used by others)
   container.registerInstance(AnalyticsValidator, new AnalyticsValidator());
   container.registerInstance(MetricValidator, new MetricValidator());
@@ -40,16 +47,24 @@ export function registerAnalyticsDependencies(container: Container): void {
   container.registerInstance(SessionMapper, new SessionMapper());
   container.registerInstance(MetricMapper, new MetricMapper());
 
-  // Repository (Singleton for simplicity)
+  // Repository (Singleton)
   container.register(SupabaseAnalyticsRepository, { lifetime: Lifetime.Singleton });
+
+  // Service (Singleton) - using factory since DI container doesn't auto-inject
+  container.registerFactory(AnalyticsService, () => {
+    const repository = container.resolve(SupabaseAnalyticsRepository);
+    return new AnalyticsService(repository, config);
+  }, { lifetime: Lifetime.Singleton });
 }
 
 /**
  * Quick setup function for analytics domain.
  * Creates and configures all analytics domain components.
  */
-export function setupAnalyticsDomain(): {
+export function setupAnalyticsDomain(config?: AnalyticsServiceConfig): {
   analyticsRepository: SupabaseAnalyticsRepository;
+  analyticsService: AnalyticsService;
+  analyticsSubscriber: AnalyticsEventSubscriber | null;
   analyticsMapper: AnalyticsMapper;
   sessionMapper: SessionMapper;
   metricMapper: MetricMapper;
@@ -64,9 +79,15 @@ export function setupAnalyticsDomain(): {
   const analyticsValidator = new AnalyticsValidator();
   const metricValidator = new MetricValidator();
   const sessionValidator = new SessionValidator();
+  const analyticsService = new AnalyticsService(analyticsRepository, config);
+
+  // Subscriber requires event bus which may not be available in simple setup
+  let analyticsSubscriber: AnalyticsEventSubscriber | null = null;
 
   return {
     analyticsRepository,
+    analyticsService,
+    analyticsSubscriber,
     analyticsMapper,
     sessionMapper,
     metricMapper,
@@ -74,4 +95,26 @@ export function setupAnalyticsDomain(): {
     metricValidator,
     sessionValidator,
   };
+}
+
+/**
+ * Creates AnalyticsService with repository.
+ */
+export function createAnalyticsService(
+  repository: SupabaseAnalyticsRepository,
+  config?: AnalyticsServiceConfig
+): AnalyticsService {
+  return new AnalyticsService(repository, config);
+}
+
+/**
+ * Creates AnalyticsEventSubscriber.
+ * Requires event bus and analytics service.
+ */
+export function createAnalyticsSubscriber(
+  eventBus: unknown,
+  analyticsService: AnalyticsService
+): AnalyticsEventSubscriber {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return new AnalyticsEventSubscriber(eventBus as any, analyticsService);
 }

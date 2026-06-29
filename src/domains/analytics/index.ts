@@ -4,22 +4,24 @@
  * Production-ready Analytics Domain for Jolt Time.
  * This module encapsulates all analytics-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types, interfaces,
- * value objects, and dependency injection.
+ * value objects, services, subscribers, and dependency injection.
  *
  * ## Module Structure
  *
  * ```
  * src/domains/analytics/
  * ├── entities/        # Domain entities (AnalyticsEvent, AnalyticsSession, AnalyticsMetric)
- * ├── repositories/   # Data access layer interfaces and implementations
- * ├── dto/            # Data Transfer Objects
- * ├── mappers/        # Entity-DTO mappers
- * ├── validators/     # Input validation
- * ├── events/         # Domain events
- * ├── types/          # Type definitions
- * ├── interfaces/     # Abstract interfaces
- * ├── value-objects/  # Immutable value objects
- * ├── di.ts           # Dependency injection setup
+ * ├── repositories/    # Data access layer interfaces and implementations
+ * ├── services/         # Business logic (AnalyticsService)
+ * ├── subscribers/     # Event subscribers for automatic collection
+ * ├── dto/             # Data Transfer Objects
+ * ├── mappers/         # Entity-DTO mappers
+ * ├── validators/      # Input validation
+ * ├── events/          # Domain events
+ * ├── types/           # Type definitions
+ * ├── interfaces/      # Abstract interfaces
+ * ├── value-objects/   # Immutable value objects
+ * ├── di.ts            # Dependency injection setup
  * └── index.ts         # Module exports
  * ```
  *
@@ -47,7 +49,12 @@
  * ## Usage
  *
  * ```typescript
- * import { AnalyticsEvent, IAnalyticsRepository, AnalyticsEventType } from './domains/analytics';
+ * import { 
+ *   AnalyticsEvent, 
+ *   AnalyticsService,
+ *   IAnalyticsRepository, 
+ *   AnalyticsEventType 
+ * } from './domains/analytics';
  *
  * // Domain types and interfaces are exported
  * export * from './types';
@@ -56,6 +63,8 @@
  * // Concrete implementations are exported by each folder
  * export * from './entities';
  * export * from './repositories';
+ * export * from './services';
+ * export * from './subscribers';
  * export * from './dto';
  * export * from './mappers';
  * export * from './validators';
@@ -86,6 +95,16 @@ export * from './entities';
  * Repositories
  */
 export * from './repositories';
+
+/**
+ * Services
+ */
+export * from './services';
+
+/**
+ * Subscribers
+ */
+export * from './subscribers';
 
 /**
  * DTOs

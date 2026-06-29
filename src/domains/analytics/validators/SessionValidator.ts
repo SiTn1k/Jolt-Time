@@ -117,7 +117,7 @@ export class SessionValidator {
 
   /**
    * Validates session start and end timestamps.
-   * @param startedAt Session start timestamp
+   * @param startedAt Session start timestamp (optional for session creation)
    * @param endedAt Session end timestamp (optional)
    * @returns Validation result with any error message
    */
@@ -125,11 +125,10 @@ export class SessionValidator {
     startedAt: Date | null | undefined,
     endedAt?: Date | null
   ): SessionValidationResult {
+    // Timestamps are optional for session creation validation
+    // They will be validated when the session entity is fully formed
     if (startedAt === null || startedAt === undefined) {
-      return {
-        isValid: false,
-        error: 'Session start timestamp is required',
-      };
+      return { isValid: true };
     }
 
     if (!(startedAt instanceof Date) || isNaN(startedAt.getTime())) {
