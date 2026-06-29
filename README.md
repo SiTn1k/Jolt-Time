@@ -104,6 +104,7 @@ Jolt-Time/
 | **Guild** | ✅ Foundation | Guild system foundation with entities, types, and repository skeleton (P-176.1) |
 | **Reward Engine** | ✅ Production | Central reward distribution system - ONLY system allowed to distribute rewards (P-177.2) |
 | **Event Bus** | ✅ Foundation | Central communication mechanism between domains - ONLY allowed inter-domain communication (P-178.1) |
+| **Analytics** | ✅ Foundation | Universal telemetry layer - ONLY records events/metrics, never modifies gameplay (P-180.1) |
 
 ### In Development 🚧
 
