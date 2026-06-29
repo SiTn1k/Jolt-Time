@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseNotificationRepository } from './repositories/SupabaseNotificationRepository';
+import { NotificationService } from './services/NotificationService';
 import { NotificationMapper } from './mappers/NotificationMapper';
 import { TemplateMapper } from './mappers/TemplateMapper';
 import { ChannelMapper } from './mappers/ChannelMapper';
@@ -18,6 +19,7 @@ import { ChannelValidator } from './validators/ChannelValidator';
  */
 export const NOTIFICATION_TOKENS = {
   NOTIFICATION_REPOSITORY: Symbol.for('SupabaseNotificationRepository'),
+  NOTIFICATION_SERVICE: Symbol.for('NotificationService'),
   NOTIFICATION_MAPPER: Symbol.for('NotificationMapper'),
   TEMPLATE_MAPPER: Symbol.for('TemplateMapper'),
   CHANNEL_MAPPER: Symbol.for('ChannelMapper'),
@@ -42,6 +44,16 @@ export function registerNotificationDependencies(container: Container): void {
 
   // Repository (Singleton for simplicity - can be changed to Scoped if needed)
   container.register(SupabaseNotificationRepository, { lifetime: Lifetime.Singleton });
+
+  // Service (Singleton - depends on repository)
+  container.registerFactory(
+    NotificationService,
+    () => {
+      const repository = container.resolve(SupabaseNotificationRepository);
+      return new NotificationService(repository);
+    },
+    { lifetime: Lifetime.Singleton }
+  );
 }
 
 /**
@@ -50,6 +62,7 @@ export function registerNotificationDependencies(container: Container): void {
  */
 export function setupNotificationDomain(): {
   notificationRepository: SupabaseNotificationRepository;
+  notificationService: NotificationService;
   notificationMapper: NotificationMapper;
   templateMapper: TemplateMapper;
   channelMapper: ChannelMapper;
@@ -64,9 +77,11 @@ export function setupNotificationDomain(): {
   const notificationValidator = new NotificationValidator();
   const templateValidator = new TemplateValidator();
   const channelValidator = new ChannelValidator();
+  const notificationService = new NotificationService(notificationRepository);
 
   return {
     notificationRepository,
+    notificationService,
     notificationMapper,
     templateMapper,
     channelMapper,

@@ -38,6 +38,33 @@ export interface NotificationMetadata {
 
   /** Schema version for migrations */
   schemaVersion?: number;
+
+  /** Delivery state for internal tracking */
+  deliveryState?: string;
+
+  /** Source event ID that triggered this notification */
+  sourceEventId?: string;
+
+  /** Source event type that triggered this notification */
+  sourceEvent?: string;
+
+  /** Timestamp when notification was read */
+  readAt?: string;
+
+  /** Retry count for failed notifications */
+  retryCount?: number;
+
+  /** Timestamp of last retry attempt */
+  lastRetryAt?: string;
+
+  /** Reason for failure if notification failed */
+  failureReason?: string;
+
+  /** Previous status before current status */
+  previousStatus?: string;
+
+  /** Index signature for additional properties */
+  [key: string]: unknown;
 }
 
 /**
