@@ -11,3 +11,12 @@ export type { ConfigurationMetadata } from './ConfigurationMetadata';
 export { DEFAULT_CONFIGURATION_METADATA } from './ConfigurationMetadata';
 export type { ConfigurationStatistics } from './ConfigurationStatistics';
 export { INITIAL_CONFIGURATION_STATISTICS } from './ConfigurationStatistics';
+export {
+  BuiltInGroupName,
+  BUILT_IN_GROUPS,
+  getBuiltInGroupNames,
+  getBuiltInGroupDefinition,
+  isBuiltInGroup,
+  getBuiltInGroupTags,
+} from './BuiltInConfigurationGroups';
+export type { ConfigurationGroupDefinition } from './BuiltInConfigurationGroups';

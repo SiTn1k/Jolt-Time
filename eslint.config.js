@@ -26,6 +26,15 @@ export default [
         clearInterval: 'readonly',
         fetch: 'readonly',
         URL: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        test: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        vi: 'readonly',
       },
     },
     plugins: {
@@ -42,6 +51,7 @@ export default [
       '@typescript-eslint/no-empty-object-type': 'off',
       'no-unused-vars': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-undef': 'off',
     },
   },
   {

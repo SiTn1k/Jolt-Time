@@ -13,6 +13,11 @@ import { FeatureFlagMapper } from './mappers/FeatureFlagMapper';
 import { ConfigurationValidator } from './validators/ConfigurationValidator';
 import { GroupValidator } from './validators/GroupValidator';
 import { FeatureFlagValidator } from './validators/FeatureFlagValidator';
+import { ConfigurationService } from './services/ConfigurationService';
+import { ConfigurationCache } from './services/ConfigurationCache';
+import { FeatureFlagEngine } from './services/FeatureFlagEngine';
+import { ConfigurationResolution } from './services/ConfigurationResolution';
+import { ConfigurationValidationService } from './services/ConfigurationValidationService';
 
 /**
  * Configuration Domain DI configuration keys.
@@ -25,6 +30,11 @@ export const CONFIGURATION_TOKENS = {
   CONFIGURATION_VALIDATOR: Symbol.for('ConfigurationValidator'),
   GROUP_VALIDATOR: Symbol.for('GroupValidator'),
   FEATURE_FLAG_VALIDATOR: Symbol.for('FeatureFlagValidator'),
+  CONFIGURATION_SERVICE: Symbol.for('ConfigurationService'),
+  CONFIGURATION_CACHE: Symbol.for('ConfigurationCache'),
+  FEATURE_FLAG_ENGINE: Symbol.for('FeatureFlagEngine'),
+  CONFIGURATION_RESOLUTION: Symbol.for('ConfigurationResolution'),
+  CONFIGURATION_VALIDATION_SERVICE: Symbol.for('ConfigurationValidationService'),
 } as const;
 
 /**
@@ -41,8 +51,23 @@ export function registerConfigurationDependencies(container: Container): void {
   container.registerInstance(GroupMapper, new GroupMapper());
   container.registerInstance(FeatureFlagMapper, new FeatureFlagMapper());
 
-  // Repository (Singleton - skeleton, full implementation in P-182.2)
+  // Validation Service (Singleton)
+  container.registerInstance(ConfigurationValidationService, new ConfigurationValidationService());
+
+  // Cache (Singleton)
+  container.registerInstance(ConfigurationCache, new ConfigurationCache());
+
+  // Feature Flag Engine (Singleton)
+  container.registerInstance(FeatureFlagEngine, new FeatureFlagEngine());
+
+  // Configuration Resolution (Singleton)
+  container.registerInstance(ConfigurationResolution, new ConfigurationResolution());
+
+  // Repository (Singleton)
   container.register(SupabaseConfigurationRepository, { lifetime: Lifetime.Singleton });
+
+  // Configuration Service (Singleton - depends on repository)
+  container.register(ConfigurationService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -57,6 +82,11 @@ export function setupConfigurationDomain(): {
   configurationValidator: ConfigurationValidator;
   groupValidator: GroupValidator;
   featureFlagValidator: FeatureFlagValidator;
+  configurationService: ConfigurationService;
+  configurationCache: ConfigurationCache;
+  featureFlagEngine: FeatureFlagEngine;
+  configurationResolution: ConfigurationResolution;
+  configurationValidationService: ConfigurationValidationService;
 } {
   const configurationRepository = new SupabaseConfigurationRepository();
   const configurationMapper = new ConfigurationMapper();
@@ -65,6 +95,11 @@ export function setupConfigurationDomain(): {
   const configurationValidator = new ConfigurationValidator();
   const groupValidator = new GroupValidator();
   const featureFlagValidator = new FeatureFlagValidator();
+  const configurationValidationService = new ConfigurationValidationService();
+  const configurationCache = new ConfigurationCache();
+  const featureFlagEngine = new FeatureFlagEngine();
+  const configurationResolution = new ConfigurationResolution();
+  const configurationService = new ConfigurationService(configurationRepository);
 
   return {
     configurationRepository,
@@ -74,5 +109,10 @@ export function setupConfigurationDomain(): {
     configurationValidator,
     groupValidator,
     featureFlagValidator,
+    configurationService,
+    configurationCache,
+    featureFlagEngine,
+    configurationResolution,
+    configurationValidationService,
   };
 }

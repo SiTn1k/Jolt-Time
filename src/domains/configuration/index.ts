@@ -4,7 +4,7 @@
  * Production-ready Configuration Domain for Jolt Time.
  * This module encapsulates all configuration-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types, interfaces,
- * value objects, and dependency injection.
+ * value objects, services, and dependency injection.
  *
  * ## Module Structure
  *
@@ -15,6 +15,7 @@
  * ├── dto/            # Data Transfer Objects
  * ├── mappers/        # Entity-DTO mappers
  * ├── validators/     # Input validation
+ * ├── services/       # Configuration services (Cache, FeatureFlagEngine, Resolution, Service, Validation)
  * ├── events/         # Domain events
  * ├── types/          # Type definitions
  * ├── interfaces/     # Abstract interfaces
@@ -53,6 +54,7 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
  * export { registerConfigurationDependencies, CONFIGURATION_TOKENS, setupConfigurationDomain } from './di';
@@ -103,6 +105,11 @@ export * from './events';
  * Value Objects
  */
 export * from './value-objects';
+
+/**
+ * Services
+ */
+export * from './services';
 
 /**
  * Dependency Injection
