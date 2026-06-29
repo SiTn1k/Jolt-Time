@@ -17,7 +17,7 @@
 
 import type { IAdminRole } from '../interfaces/IAdminRole';
 import { AdminRoleType } from '../types/AdminRoleType';
-import type { AdminPermissionType } from '../types/AdminPermissionType';
+import { AdminPermissionType, DEFAULT_ROLE_PERMISSIONS } from '../types/AdminPermissionType';
 import type { AdminRoleMetadata } from '../types/AdminMetadata';
 import { AdminRoleId } from '../value-objects/AdminRoleId';
 
@@ -78,7 +78,8 @@ export class AdminRole implements IAdminRole {
       [AdminRoleType.OWNER]: 6,
     }[params.type];
 
-    const defaultPermissions = params.permissions ?? [];
+    // Use DEFAULT_ROLE_PERMISSIONS when permissions not provided
+    const defaultPermissions = params.permissions ?? DEFAULT_ROLE_PERMISSIONS[params.type] ?? [];
 
     const metadata: AdminRoleMetadata = {
       description: undefined,

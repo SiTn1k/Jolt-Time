@@ -10,12 +10,18 @@ import { AdminMapper } from './mappers/AdminMapper';
 import { RoleMapper } from './mappers/RoleMapper';
 import { PermissionMapper } from './mappers/PermissionMapper';
 import { AdminValidator, RoleValidator, PermissionValidator } from './validators';
+import { AdminService } from './services/AdminService';
+import { PermissionEngine, getPermissionEngine } from './services/PermissionEngine';
+import { AuditService, getAuditService } from './services/AuditService';
 
 /**
  * Admin Domain DI configuration keys.
  */
 export const ADMIN_TOKENS = {
   ADMIN_REPOSITORY: Symbol.for('SupabaseAdminRepository'),
+  ADMIN_SERVICE: Symbol.for('AdminService'),
+  PERMISSION_ENGINE: Symbol.for('PermissionEngine'),
+  AUDIT_SERVICE: Symbol.for('AuditService'),
   ADMIN_MAPPER: Symbol.for('AdminMapper'),
   ROLE_MAPPER: Symbol.for('RoleMapper'),
   PERMISSION_MAPPER: Symbol.for('PermissionMapper'),
@@ -35,6 +41,16 @@ export function registerAdminDependencies(container: Container): void {
     { lifetime: Lifetime.Scoped }
   );
 
+  // Services (Singleton)
+  container.registerFactory(
+    AdminService,
+    (c) => new AdminService(c.resolve<IAdminRepository>(ADMIN_TOKENS.ADMIN_REPOSITORY)),
+    { lifetime: Lifetime.Singleton }
+  );
+
+  container.registerInstance(PermissionEngine, getPermissionEngine());
+  container.registerInstance(AuditService, getAuditService());
+
   // Mappers (Singleton - stateless)
   container.registerInstance(AdminMapper, new AdminMapper());
   container.registerInstance(RoleMapper, new RoleMapper());
@@ -46,12 +62,18 @@ export function registerAdminDependencies(container: Container): void {
   container.registerInstance(PermissionValidator, new PermissionValidator());
 }
 
+// Import the repository interface for type resolution
+import type { IAdminRepository } from './interfaces/IAdminRepository';
+
 /**
  * Quick setup function for admin domain.
  * Creates and configures all admin domain components.
  */
 export function setupAdminDomain(): {
   adminRepository: SupabaseAdminRepository;
+  adminService: AdminService;
+  permissionEngine: PermissionEngine;
+  auditService: AuditService;
   adminMapper: AdminMapper;
   roleMapper: RoleMapper;
   permissionMapper: PermissionMapper;
@@ -60,6 +82,9 @@ export function setupAdminDomain(): {
   permissionValidator: PermissionValidator;
 } {
   const adminRepository = new SupabaseAdminRepository();
+  const adminService = new AdminService(adminRepository);
+  const permissionEngine = getPermissionEngine();
+  const auditService = getAuditService();
   const adminMapper = new AdminMapper();
   const roleMapper = new RoleMapper();
   const permissionMapper = new PermissionMapper();
@@ -69,6 +94,9 @@ export function setupAdminDomain(): {
 
   return {
     adminRepository,
+    adminService,
+    permissionEngine,
+    auditService,
     adminMapper,
     roleMapper,
     permissionMapper,

@@ -4,7 +4,7 @@
  * Production-ready Admin Domain for Jolt Time.
  * This module encapsulates all admin-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types,
- * interfaces, value objects, and dependency injection.
+ * interfaces, value objects, services, and dependency injection.
  *
  * ## Module Structure
  *
@@ -19,6 +19,12 @@
  * ├── types/          # Type definitions
  * ├── interfaces/     # Abstract interfaces
  * ├── value-objects/  # Immutable value objects
+ * ├── services/       # Business logic services
+ * │   ├── AdminService.ts
+ * │   ├── PermissionEngine.ts
+ * │   ├── AuditService.ts
+ * │   ├── commands/
+ * │   └── subscribers/
  * ├── di.ts           # Dependency injection setup
  * └── index.ts        # Module exports
  * ```
@@ -29,12 +35,20 @@
  * - Admin manages administration only
  * - Admin NEVER contains gameplay logic
  * - Admin NEVER modifies gameplay (rewards, balances, inventory, quests, museums)
- * - Foundation only stores accounts, roles, and permissions
+ * - Admin ONLY issues validated commands; target domains execute their own logic
+ *
+ * ## Services
+ *
+ * - AdminService: Core business logic for admin operations
+ * - PermissionEngine: RBAC permission validation and checking
+ * - AuditService: Comprehensive audit logging
+ * - AdminEventSubscribers: Event handlers for admin domain events
+ * - AdminCommands: Command interfaces for cross-domain operations
  *
  * ## Usage
  *
  * ```typescript
- * import { AdminAccount, AdminStatus, AdminRoleType } from './domains/admin';
+ * import { AdminAccount, AdminService, PermissionEngine } from './domains/admin';
  *
  * // Domain types and interfaces are exported
  * export * from './types';
@@ -48,6 +62,7 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
  * export { registerAdminDependencies, ADMIN_TOKENS, setupAdminDomain } from './di';
@@ -98,6 +113,11 @@ export * from './events';
  * Value Objects
  */
 export * from './value-objects';
+
+/**
+ * Services
+ */
+export * from './services';
 
 /**
  * Dependency Injection

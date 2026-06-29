@@ -1,3 +1,4 @@
+import { AdminRoleType } from "./AdminRoleType";
 /**
  * Admin Permission Type Enum
  *
@@ -72,7 +73,7 @@ export enum AdminPermissionType {
 /**
  * Default permissions for each admin role type.
  */
-export const DEFAULT_ROLE_PERMISSIONS: Record<string, AdminPermissionType[]> = {
+export const DEFAULT_ROLE_PERMISSIONS: Record<AdminRoleType, AdminPermissionType[]> = {
   [AdminRoleType.SUPPORT]: [
     AdminPermissionType.PLAYER_READ,
     AdminPermissionType.PLAYER_SEARCH,
@@ -129,5 +130,4 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, AdminPermissionType[]> = {
   [AdminRoleType.OWNER]: Object.values(AdminPermissionType),
 };
 
-// Import AdminRoleType for type reference
 import { AdminRoleType } from './AdminRoleType';
