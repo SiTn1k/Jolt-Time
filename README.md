@@ -105,6 +105,7 @@ Jolt-Time/
 | **Reward Engine** | ✅ Production | Central reward distribution system - ONLY system allowed to distribute rewards (P-177.2) |
 | **Event Bus** | ✅ Foundation | Central communication mechanism between domains - ONLY allowed inter-domain communication (P-178.1) |
 | **Analytics** | ✅ Production | Universal telemetry layer - ONLY records events/metrics, never modifies gameplay (P-180.2) |
+| **Admin** | ✅ Foundation | Admin domain foundation - accounts, roles, permissions, repository skeleton (P-181.1) |
 
 ### In Development 🚧
 
