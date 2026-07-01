@@ -1,0 +1,1221 @@
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { GameState, EpochId, OwnedGenerator, TapEvent, LeaderboardEntry, Epoch, ARTIFACT_PARTS_PER_LEVEL } from '../types/game';
+import {
+  EPOCHS,
+  ARTIFACTS,
+  getEpochById,
+  getCurrentEpochByLevel,
+  getGeneratorCost,
+  getGeneratorProduction,
+} from '../data/epochs';
+import {
+  getTodayDateStr,
+  getYesterdayDateStr,
+  makeFreshDailyTasks,
+  getStreakReward,
+  getTaskById,
+  type StreakReward,
+} from '../data/tasks';
+import {
+  saveLocalState,
+  saveRemoteState,
+  loadGameState,
+  getTelegramUserId,
+  getLeaderboard,
+  getUserRank,
+  fetchActiveBoosters,
+} from '../lib/storage';
+import { hapticNotification, hapticImpact } from '../lib/telegram';
+import type { ActiveBoosters } from '../types/game';
+
+const LOCAL_SAVE_INTERVAL = 2000;
+const REMOTE_SAVE_INTERVAL = 15000;
+const MAX_LEVEL = 2200; // Extended for World History epochs (12 Ukrainian + 12 World)
+const TAB_ID = `tab_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+/**
+ * XP curve: tuned for MARCH 2027 (Prestige 1 only)
+ * Extended for World History Epochs (Prestige 1-6)
+ *
+ * TARGET PROGRESSION:
+ * - Day 3-5: First prestige ready (level 950)
+ * - Month 1: Prestige 1 player at level 100+
+ * - Month 3: Prestige 1 player at level 200+
+ * - Month 6: Prestige 1 player at level 400+
+ * - Month 9: Prestige 1 player at level 600+
+ * - Month 12: Prestige 1 player at level 800+
+ *
+ * World epochs (13-24) have significantly longer curves for prestige players
+ */
+function calculateXpToLevel(level: number): number {
+  const epoch = getCurrentEpochByLevel(level);
+  const { min, max } = epoch.levelRange;
+  const rangeSize = Math.max(1, max - min + 1);
+  const progress = Math.min(1, Math.max(0, (level - min) / rangeSize));
+
+  const epochIndex = EPOCHS.findIndex(e => e.id === epoch.id);
+  let minSeconds: number;
+  let maxSeconds: number;
+
+  // Ukrainian History Epochs (0-11)
+  if (epochIndex === 0) {
+    minSeconds = 480;
+    maxSeconds = 2400;
+  } else if (epochIndex === 1) {
+    minSeconds = 480;
+    maxSeconds = 3840;
+  } else if (epochIndex === 2) {
+    minSeconds = 960;
+    maxSeconds = 7200;
+  } else if (epochIndex === 3) {
+    minSeconds = 1440;
+    maxSeconds = 10800;
+  } else if (epochIndex === 4) {
+    minSeconds = 1920;
+    maxSeconds = 14400;
+  } else if (epochIndex === 5) {
+    minSeconds = 2400;
+    maxSeconds = 18000;
+  } else if (epochIndex === 6) {
+    minSeconds = 2880;
+    maxSeconds = 21600;
+  } else if (epochIndex === 7) {
+    minSeconds = 3360;
+    maxSeconds = 25200;
+  } else if (epochIndex === 8) {
+    minSeconds = 3840;
+    maxSeconds = 28800;
+  } else if (epochIndex === 9) {
+    minSeconds = 4320;
+    maxSeconds = 32400;
+  } else if (epochIndex === 10) {
+    minSeconds = 4800;
+    maxSeconds = 36000;
+  } else if (epochIndex === 11) {
+    // Independence
+    minSeconds = 5760;
+    maxSeconds = 43200;
+  }
+  // World History Epochs (12-23) - longer curves for prestige players
+  else if (epochIndex === 12) {
+    // Egypt
+    minSeconds = 6000;
+    maxSeconds = 48000;
+  } else if (epochIndex === 13) {
+    // Rome
+    minSeconds = 6500;
+    maxSeconds = 52000;
+  } else if (epochIndex === 14) {
+    // China
+    minSeconds = 7000;
+    maxSeconds = 56000;
+  } else if (epochIndex === 15) {
+    // Byzantine
+    minSeconds = 7500;
+    maxSeconds = 60000;
+  } else if (epochIndex === 16) {
+    // Medieval
+    minSeconds = 8000;
+    maxSeconds = 64000;
+  } else if (epochIndex === 17) {
+    // Ottoman
+    minSeconds = 8500;
+    maxSeconds = 68000;
+  } else if (epochIndex === 18) {
+    // Renaissance
+    minSeconds = 9000;
+    maxSeconds = 72000;
+  } else if (epochIndex === 19) {
+    // Discovery
+    minSeconds = 9500;
+    maxSeconds = 76000;
+  } else if (epochIndex === 20) {
+    // Revolution Era
+    minSeconds = 10000;
+    maxSeconds = 80000;
+  } else if (epochIndex === 21) {
+    // Industrial
+    minSeconds = 10500;
+    maxSeconds = 84000;
+  } else if (epochIndex === 22) {
+    // Civil War
+    minSeconds = 11000;
+    maxSeconds = 88000;
+  } else {
+    // Meiji and beyond
+    minSeconds = 12000;
+    maxSeconds = 96000;
+  }
+
+  const targetSeconds = minSeconds + progress * (maxSeconds - minSeconds);
+
+  // Estimate passive XP/s for this level within the epoch
+  const levelInEpoch = Math.max(1, level - min + 1);
+  const estimatedPassive = estimatePassiveForEpoch(epoch, levelInEpoch);
+
+  return Math.max(100, Math.floor(estimatedPassive * targetSeconds));
+}
+
+function estimatePassiveForEpoch(epoch: Epoch, levelInEpoch: number): number {
+  // Rough estimate: sum of production if player owns ~2 generators per tier
+  // scaled by their level within the epoch
+  const tierWeights = [1, 0.5, 0.25, 0.1, 0.03];
+  let total = 0;
+  for (let i = 0; i < epoch.generators.length && i < tierWeights.length; i++) {
+    const g = epoch.generators[i];
+    const owned = Math.max(1, Math.floor(levelInEpoch * tierWeights[i]));
+    total += g.baseProduction * owned;
+  }
+  return Math.max(1, total);
+}
+
+export interface ArtifactMultipliers {
+  xp: number;
+  currency: number;
+  passive: number;
+}
+
+export interface BoosterMultipliers {
+  xp: number;
+  currency: number;
+}
+
+export function getBoosterMultipliers(boosters: ActiveBoosters): BoosterMultipliers {
+  const now = Date.now();
+  let xp = 1;
+  let currency = 1;
+
+  if (boosters.xp_boost_end && boosters.xp_boost_end > now) {
+    xp = Math.max(xp, boosters.xp_boost_mult ?? 2);
+  }
+  if (boosters.currency_boost_end && boosters.currency_boost_end > now) {
+    currency = Math.max(currency, boosters.currency_boost_mult ?? 2);
+  }
+  if (boosters.super_boost_end && boosters.super_boost_end > now) {
+    const m = boosters.super_boost_mult ?? 3;
+    xp = Math.max(xp, m);
+    currency = Math.max(currency, m);
+  }
+  if (boosters.offline_boost_end && boosters.offline_boost_end > now) {
+    xp = Math.max(xp, 2);
+    currency = Math.max(currency, 2);
+  }
+
+  return { xp, currency };
+}
+
+export function getArtifactMultipliers(completedArtifacts: string[], artifactDupes?: Record<string, number>): ArtifactMultipliers {
+  let xp = 1;
+  let currency = 1;
+  let passive = 1;
+  for (const id of completedArtifacts) {
+    const art = ARTIFACTS.find(a => a.id === id);
+    if (!art) continue;
+    // Each duplicate adds +10% of the base bonus (stacks additively, then multiplied)
+    const dupeCount = artifactDupes?.[id] || 0;
+    const effectiveValue = art.bonus.value + (art.bonus.value - 1) * 0.1 * dupeCount;
+    if (art.bonus.type === 'xp_multiplier') xp *= effectiveValue;
+    if (art.bonus.type === 'currency_multiplier') currency *= effectiveValue;
+    if (art.bonus.type === 'passive_boost') passive *= effectiveValue;
+  }
+  return { xp, currency, passive };
+}
+
+const INITIAL_STATE: GameState = {
+  epochId: 'trypillia',
+  level: 1,
+  xp: 0,
+  xpToNextLevel: calculateXpToLevel(1),
+  totalXp: 0,
+  currency: 20,
+  totalCurrencyEarned: 20,
+  ownedGenerators: [],
+  tapPower: 1,
+  passiveXpPerSecond: 0,
+  unlockedEpochs: ['trypillia'],
+  artifactParts: {},
+  artifactLevels: {},
+  completedArtifacts: [],
+  artifactDupes: {},
+  lastSavedAt: Date.now(),
+  referrerId: null,
+  referralsCount: 0,
+  referralEarnings: 0,
+  activeBoosters: {},
+  dailyStreak: 0,
+  bestStreak: 0,
+  lastLoginDate: null,
+  dailyTasksState: null,
+  lastCheckIn: null,
+  checkInStreak: 0,
+  // Phase 2: Prestige System
+  prestigeLevel: 0,
+  prestigePoints: 0,
+  prestigeResearch: {},
+  // Phase 2: Energy System (only after Prestige 1+)
+  energy: 1000,
+  maxEnergy: 1000,
+  lastOnlineAt: Date.now(),
+  sessionStartAt: Date.now(),
+  dailyAdViews: {},
+};
+
+export type SyncStatus = 'synced' | 'syncing' | 'offline' | 'error';
+
+export function useGame() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [state, setState] = useState<GameState>(INITIAL_STATE);
+  const [tapEvents, setTapEvents] = useState<TapEvent[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [userRank, setUserRank] = useState<number | null>(null);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+  const [offlineGains, setOfflineGains] = useState<{ xp: number; currency: number } | null>(null);
+  const [duplicateTab, setDuplicateTab] = useState(false);
+  const [streakModal, setStreakModal] = useState<{ streak: number; reward: StreakReward } | null>(null);
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
+  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [showDailyRewards, setShowDailyRewards] = useState(false);
+  const tickRef = useRef<number | null>(null);
+  const localSaveRef = useRef<number | null>(null);
+  const remoteSaveRef = useRef<number | null>(null);
+  const isInitialized = useRef(false);
+  const dirtyRef = useRef(false);
+  const isOnlineRef = useRef(true);
+
+  // ── Online/offline detection ────────────────────────────────────────
+  useEffect(() => {
+    const goOffline = () => {
+      isOnlineRef.current = false;
+      setSyncStatus('offline');
+      setConnectionError('Проблеми зі з\'єднанням. Прогрес збережеться локально');
+    };
+    const goOnline = () => {
+      isOnlineRef.current = true;
+      setSyncStatus('synced');
+      setConnectionError(null);
+    };
+
+    // Initial state
+    isOnlineRef.current = navigator.onLine;
+    if (!navigator.onLine) goOffline();
+
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+
+    return () => {
+      window.removeEventListener('offline', goOffline);
+      window.removeEventListener('online', goOnline);
+    };
+  }, []);
+
+  // Multiple tab detection with BroadcastChannel for real-time sync
+  useEffect(() => {
+    const STORAGE_KEY = 'game_active_tab';
+    const CHANNEL_NAME = 'jolt_time_tab_channel';
+    let channel: BroadcastChannel | null = null;
+    let heartbeatTimer: ReturnType<typeof setInterval> | null = null;
+
+    // Claim active tab on mount
+    localStorage.setItem(STORAGE_KEY, TAB_ID);
+
+    // Try BroadcastChannel for better cross-tab communication
+    if (typeof BroadcastChannel !== 'undefined') {
+      try {
+        channel = new BroadcastChannel(CHANNEL_NAME);
+        
+        // Announce this tab
+        channel.postMessage({
+          type: 'tab_active',
+          tabId: TAB_ID,
+          timestamp: Date.now(),
+        });
+
+        // Listen for other tabs
+        channel.onmessage = (event) => {
+          const { type, tabId } = event.data;
+          if (tabId === TAB_ID) return; // Ignore own messages
+
+          if (type === 'tab_active') {
+            setDuplicateTab(true);
+          } else if (type === 'tab_closed') {
+            // Another tab closed, we can claim active status
+            setDuplicateTab(false);
+            localStorage.setItem(STORAGE_KEY, TAB_ID);
+          }
+        };
+      } catch {
+        console.warn('BroadcastChannel not supported');
+      }
+    }
+
+    const checkTab = () => {
+      const activeTab = localStorage.getItem(STORAGE_KEY);
+      if (activeTab && activeTab !== TAB_ID) {
+        setDuplicateTab(true);
+      } else {
+        // Other tab closed/released — reclaim and clear warning
+        localStorage.setItem(STORAGE_KEY, TAB_ID);
+        setDuplicateTab(false);
+        // Notify other tabs
+        channel?.postMessage({
+          type: 'tab_active',
+          tabId: TAB_ID,
+          timestamp: Date.now(),
+        });
+      }
+    };
+
+    heartbeatTimer = setInterval(checkTab, 1000);
+
+    // Listen for storage events from other tabs
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key !== STORAGE_KEY) return;
+      if (e.newValue && e.newValue !== TAB_ID) {
+        setDuplicateTab(true);
+      } else {
+        setDuplicateTab(false);
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+
+    return () => {
+      clearInterval(heartbeatTimer);
+      window.removeEventListener('storage', handleStorage);
+      // Notify other tabs we're closing
+      channel?.postMessage({
+        type: 'tab_closed',
+        tabId: TAB_ID,
+        timestamp: Date.now(),
+      });
+      channel?.close();
+      if (localStorage.getItem(STORAGE_KEY) === TAB_ID) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    };
+  }, []);
+
+  // Use the player's selected epoch (state.epochId) if available
+  // Fall back to level-based epoch only for new players
+  const epoch = getEpochById(state.epochId);
+
+  const calculatePassiveXp = useCallback((owned: OwnedGenerator[], unlockedEpochs: EpochId[]): number => {
+    // Sum production from all owned generators across all unlocked epochs
+    return owned.reduce((total, og) => {
+      // Search for generator in all unlocked epochs
+      for (const epochId of unlockedEpochs) {
+        const epochData = getEpochById(epochId);
+        const generator = epochData.generators.find(g => g.id === og.generatorId);
+        if (generator) {
+          return total + getGeneratorProduction(generator, og.level);
+        }
+      }
+      return total;
+    }, 0);
+  }, []);
+
+  useEffect(() => {
+    if (isInitialized.current) return;
+    isInitialized.current = true;
+
+    (async () => {
+      let saved: GameState | null = null;
+      try {
+        saved = await loadGameState();
+      } catch (e) {
+        console.error('Failed to load game state:', e);
+        setSyncStatus('error');
+        setConnectionError('Не вдалося завантажити прогрес. Гратимете з локальної копії.');
+        // Try localStorage fallback
+        try {
+          const raw = localStorage.getItem('ukraine_tap_game_state');
+          if (raw) saved = JSON.parse(raw) as GameState;
+        } catch {
+          // No fallback available — start fresh
+        }
+      }
+      if (saved) {
+        const passiveXp = calculatePassiveXp(saved.ownedGenerators, saved.unlockedEpochs);
+
+        // Compute offline gains using server-based timestamp
+        // lastSavedAt comes from server's last_saved_at column during hydration
+        // We use lastOnlineAt (server timestamp) instead of Date.now() (device time)
+        // to prevent device clock manipulation exploits
+        const serverNow = saved.lastOnlineAt || Date.now();
+        const offlineMs = Math.max(0, serverNow - saved.lastSavedAt);
+        // 6 hours offline cap - after 6 hours, no more rewards
+        // This is the SAME for all prestige levels to keep economy balanced
+        const OFFLINE_CAP_SECONDS = 6 * 3600; // 6 hours
+        const offlineSec = Math.min(offlineMs / 1000, OFFLINE_CAP_SECONDS);
+        
+        // CRITICAL FIX: Offline rewards formula balanced for game economy
+        // Currency based on level, prestige reduces it further to prevent snowballing
+        let offlineXp = passiveXp * offlineSec;
+        // Prestige multiplier reduces currency gains slightly each prestige
+        const prestigeLevel = saved.prestigeLevel || 0;
+        const prestigeCurrencyMultiplier = Math.max(0.5, 1 - (prestigeLevel * 0.1));
+        // Max 200 currency/hour while offline, scaled by level
+        const maxOfflineCurrencyPerHour = Math.min(saved.level * 5, 200) * prestigeCurrencyMultiplier;
+        let offlineCurrency = (maxOfflineCurrencyPerHour * offlineSec) / 3600;
+
+        // ── Daily streak check ────────────────────────────────────────
+        const today = getTodayDateStr();
+        const yesterday = getYesterdayDateStr();
+        let newStreak = saved.dailyStreak || 0;
+        let newBestStreak = saved.bestStreak || 0;
+        let newLastLoginDate = saved.lastLoginDate;
+        let isNewDay = false;
+
+        if (saved.lastLoginDate !== today) {
+          isNewDay = true;
+          if (!saved.lastLoginDate) {
+            // Brand new player
+            newStreak = 1;
+          } else if (saved.lastLoginDate === yesterday) {
+            newStreak = (saved.dailyStreak || 0) + 1;
+          } else {
+            // Missed at least one day → reset streak
+            newStreak = 1;
+          }
+          newBestStreak = Math.max(newStreak, saved.bestStreak || 0);
+          newLastLoginDate = today;
+
+          // Add streak reward to offline gains so it's shown in the same batch
+          const reward = getStreakReward(newStreak);
+          offlineXp += reward.xp;
+          offlineCurrency += reward.currency;
+          setStreakModal({ streak: newStreak, reward });
+        }
+
+        // ── Daily tasks: refresh if new day ──────────────────────────
+        let dailyTasksState = saved.dailyTasksState;
+        if (!dailyTasksState || dailyTasksState.date !== today) {
+          dailyTasksState = makeFreshDailyTasks(today);
+        }
+
+        if (offlineMs > 60_000 && (offlineXp > 100 || offlineCurrency > 10) && !isNewDay) {
+          setOfflineGains({ xp: offlineXp, currency: offlineCurrency });
+        }
+
+        // ── Daily check-in: show reward modal if player hasn't claimed today ──
+        const checkInToday = getTodayDateStr();
+        if (saved.lastCheckIn !== checkInToday) {
+          setShowDailyRewards(true);
+        }
+
+        setState({
+          ...saved,
+          xp: saved.xp + offlineXp,
+          totalXp: saved.totalXp + offlineXp,
+          currency: saved.currency + offlineCurrency,
+          totalCurrencyEarned: saved.totalCurrencyEarned + offlineCurrency,
+          passiveXpPerSecond: passiveXp,
+          lastSavedAt: Date.now(),
+          dailyStreak: newStreak,
+          bestStreak: newBestStreak,
+          lastLoginDate: newLastLoginDate,
+          dailyTasksState,
+        });
+      }
+      setIsLoading(false);
+    })();
+  }, [calculatePassiveXp]);
+
+  // Use a stable ref for save so we don't recreate the interval on every state update
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
+  // ── Dual-layer save: local (fast) + remote (throttled) ──────────────
+  // Mark state as dirty whenever it changes — the intervals check this flag
+  // to avoid redundant writes when nothing changed.
+  useEffect(() => {
+    if (isLoading) return;
+    dirtyRef.current = true;
+  }, [state, isLoading]);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    // Local save: every 2s (cheap, synchronous)
+    localSaveRef.current = window.setInterval(() => {
+      if (dirtyRef.current) {
+        saveLocalState(stateRef.current);
+        dirtyRef.current = false;
+      }
+    }, LOCAL_SAVE_INTERVAL);
+
+    // Remote save: every 15s (expensive, throttled to avoid race conditions)
+    remoteSaveRef.current = window.setInterval(async () => {
+      if (!isOnlineRef.current) return;
+      try {
+        setSyncStatus('syncing');
+        await saveRemoteState(stateRef.current);
+        setSyncStatus('synced');
+        // Clear connection error on first successful save after a failure
+        setConnectionError(prev => prev ? null : prev);
+      } catch (e) {
+        console.error('Remote save failed:', e);
+        setSyncStatus('error');
+        setConnectionError('Проблеми зі з\'єднанням. Прогрес збережеться локально');
+      }
+    }, REMOTE_SAVE_INTERVAL);
+
+    // Flush both on unmount / tab close
+    const flush = () => {
+      saveLocalState(stateRef.current);
+      saveRemoteState(stateRef.current);
+    };
+
+    window.addEventListener('beforeunload', flush);
+
+    return () => {
+      if (localSaveRef.current) clearInterval(localSaveRef.current);
+      if (remoteSaveRef.current) clearInterval(remoteSaveRef.current);
+      window.removeEventListener('beforeunload', flush);
+      flush();
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    tickRef.current = window.setInterval(() => {
+      setState(prev => {
+        const basePassiveXp = calculatePassiveXp(prev.ownedGenerators, prev.unlockedEpochs);
+        const { passive: passMult, currency: artCurrMult } = getArtifactMultipliers(prev.completedArtifacts || [], prev.artifactDupes || {});
+        const { xp: boostXpMult, currency: boostCurrMult } = getBoosterMultipliers(prev.activeBoosters || {});
+        const effectivePassiveXp = basePassiveXp * passMult * boostXpMult * (1 + ((prev.prestigeResearch?.passive_income || 0) * 0.10));
+
+        const xpGainThisTick = effectivePassiveXp / 10;
+        let xp = prev.xp + xpGainThisTick;
+        const newTotalXp = prev.totalXp + xpGainThisTick;
+
+        const currMult = artCurrMult * boostCurrMult;
+        let newLevel = prev.level;
+        let xpToNext = prev.xpToNextLevel;
+        let newCurrency = prev.currency;
+        let newTotalCurrency = prev.totalCurrencyEarned;
+        // Reuse same array reference if no epoch unlocks happen — avoids cascading re-renders
+        let newUnlocked: string[] | null = null;
+
+        const prestigeLevel = prev.prestigeLevel || 0;
+
+        while (xp >= xpToNext && newLevel < MAX_LEVEL) {
+          xp -= xpToNext;
+          newLevel++;
+          xpToNext = calculateXpToLevel(newLevel);
+          const levelReward = Math.round(newLevel * 50 * currMult);
+          newCurrency += levelReward;
+          newTotalCurrency += levelReward;
+
+          EPOCHS.forEach(e => {
+            // Check unlock level AND prestige requirement
+            if (e.unlockLevel === newLevel && !prev.unlockedEpochs.includes(e.id)) {
+              if (!e.requiredPrestige || e.requiredPrestige <= prestigeLevel) {
+                if (!newUnlocked) newUnlocked = [...prev.unlockedEpochs];
+                if (!newUnlocked.includes(e.id)) newUnlocked.push(e.id);
+              }
+            }
+          });
+        }
+
+        const unlockedEpochs = newUnlocked ?? prev.unlockedEpochs;
+        const newEpochUnlocked = newUnlocked !== null;
+        const epochId = newEpochUnlocked
+          ? getCurrentEpochByLevel(newLevel, prestigeLevel).id
+          : prev.epochId;
+
+        return {
+          ...prev,
+          xp,
+          totalXp: newTotalXp,
+          level: newLevel,
+          xpToNextLevel: xpToNext,
+          epochId,
+          passiveXpPerSecond: effectivePassiveXp,
+          currency: newCurrency,
+          totalCurrencyEarned: newTotalCurrency,
+          unlockedEpochs,
+        };
+      });
+    }, 100);
+
+    return () => {
+      if (tickRef.current) clearInterval(tickRef.current);
+    };
+  }, [isLoading, calculatePassiveXp]);
+
+  const tap = useCallback((x: number, y: number) => {
+    const eventId = Math.random().toString(36).substr(2, 9);
+
+    setState(prev => {
+      const { xp: artXpMult } = getArtifactMultipliers(prev.completedArtifacts || [], prev.artifactDupes || {});
+      const { xp: boostXpMult } = getBoosterMultipliers(prev.activeBoosters || {});
+
+      // Energy multiplier: x5 if energy > 0 and prestige >= 1, x1 otherwise
+      const hasEnergyBoost = (prev.prestigeLevel || 0) >= 1 && (prev.energy || 0) > 0;
+      const energyMult = hasEnergyBoost ? 5 : 1;
+
+      // Apply prestige research XP bonus
+      const prestigeXpBonus = 1 + ((prev.prestigeResearch?.xp_gain || 0) * 0.05);
+
+      const baseTap = Math.max(1, Math.round(prev.tapPower * artXpMult * boostXpMult * energyMult * prestigeXpBonus));
+      const passiveFloor = Math.round(prev.passiveXpPerSecond * 0.015);
+      const value = Math.max(baseTap, passiveFloor);
+
+      setTapEvents(te => [
+        ...te.slice(-9),
+        { id: eventId, x, y, value, createdAt: Date.now() },
+      ]);
+      setTimeout(() => {
+        setTapEvents(te => te.filter(e => e.id !== eventId));
+      }, 1000);
+
+      // Track daily task counters for tap and earn_xp types
+      const tasks = prev.dailyTasksState;
+      const updatedTasks = tasks
+        ? {
+            ...tasks,
+            counters: {
+              ...tasks.counters,
+              tap: tasks.counters.tap + 1,
+              earn_xp: tasks.counters.earn_xp + value,
+            },
+          }
+        : tasks;
+
+      // Use energy if prestige >= 1 and energy > 0 (consume 1 per tap)
+      const currentEnergy = prev.energy || 0;
+      const maxEnergy = prev.maxEnergy || 1000;
+      const newEnergy = hasEnergyBoost
+        ? Math.max(0, currentEnergy - 1)
+        : Math.min(maxEnergy, currentEnergy); // Regenerate when not using x5
+
+      return {
+        ...prev,
+        xp: prev.xp + value,
+        totalXp: prev.totalXp + value,
+        dailyTasksState: updatedTasks,
+        energy: newEnergy,
+      };
+    });
+  }, []);
+
+  const buyGenerator = useCallback((generatorId: string) => {
+    const generator = epoch.generators.find(g => g.id === generatorId);
+    if (!generator) {
+      console.warn('[buyGenerator] Generator not found:', generatorId);
+      return false;
+    }
+
+    // Use setState with function to get fresh state
+    let success = false;
+
+    setState(prev => {
+      const currentOwned = prev.ownedGenerators.find(og => og.generatorId === generatorId);
+      const currentLevel = currentOwned?.level || 0;
+      const cost = getGeneratorCost(generator, currentLevel);
+
+      if (prev.currency < cost) {
+        console.log('[buyGenerator] Not enough currency. Need:', cost, 'Have:', prev.currency);
+        return prev; // Return unchanged state
+      }
+
+      const existing = prev.ownedGenerators.find(og => og.generatorId === generatorId);
+      const newOwned = existing
+        ? prev.ownedGenerators.map(og =>
+            og.generatorId === generatorId ? { ...og, level: og.level + 1 } : og
+          )
+        : [...prev.ownedGenerators, { generatorId, level: 1 }];
+
+      const { passive: passMult } = getArtifactMultipliers(prev.completedArtifacts || [], prev.artifactDupes || {});
+      const newPassiveXp = calculatePassiveXp(newOwned, prev.unlockedEpochs) * passMult;
+
+      const tasks = prev.dailyTasksState;
+      const updatedTasks = tasks
+        ? { ...tasks, counters: { ...tasks.counters, buy_generator: tasks.counters.buy_generator + 1 } }
+        : tasks;
+
+      success = true;
+      console.log('[buyGenerator] Success. New level:', currentLevel + 1, 'Cost:', cost);
+
+      return {
+        ...prev,
+        currency: prev.currency - cost,
+        ownedGenerators: newOwned,
+        passiveXpPerSecond: newPassiveXp,
+        dailyTasksState: updatedTasks,
+      };
+    });
+
+    return success;
+  }, [epoch.generators, calculatePassiveXp]);
+
+  const upgradeTapPower = useCallback(() => {
+    let success = false;
+
+    setState(prev => {
+      const rawCost = 25 * Math.pow(1.8, prev.tapPower - 1);
+      // Guard against floating-point overflow at very high tap power levels
+      const cost = Number.isFinite(rawCost) ? Math.floor(rawCost) : Number.MAX_SAFE_INTEGER;
+
+      if (prev.currency < cost) {
+        console.log('[upgradeTapPower] Not enough currency. Need:', cost, 'Have:', prev.currency);
+        return prev;
+      }
+
+      const tasks = prev.dailyTasksState;
+      const updatedTasks = tasks
+        ? { ...tasks, counters: { ...tasks.counters, upgrade_tap: tasks.counters.upgrade_tap + 1 } }
+        : tasks;
+
+      success = true;
+      console.log('[upgradeTapPower] Success. New tapPower:', prev.tapPower + 1, 'Cost:', cost);
+
+      return {
+        ...prev,
+        currency: prev.currency - cost,
+        tapPower: prev.tapPower + 1,
+        dailyTasksState: updatedTasks,
+      };
+    });
+
+    return success;
+  }, []);
+
+  const addArtifactPart = useCallback((artifactId: string, isFull: boolean) => {
+    const artifact = ARTIFACTS.find(a => a.id === artifactId);
+
+    setState(prev => {
+      const newParts = { ...prev.artifactParts };
+      const newCompleted = [...(prev.completedArtifacts || [])];
+      const newDupes = { ...prev.artifactDupes };
+      const newLevels = { ...prev.artifactLevels };
+
+      if (isFull) {
+        if (newCompleted.includes(artifactId)) {
+          // Duplicate of a completed artifact → add fragments for upgrades
+          newParts[artifactId] = (newParts[artifactId] || 0) + (artifact?.parts || 10);
+        } else {
+          newCompleted.push(artifactId);
+          // Set initial level to 1
+          newLevels[artifactId] = 1;
+        }
+      } else if (newCompleted.includes(artifactId)) {
+        // Part for an already-completed artifact → add to parts (for upgrades)
+        newParts[artifactId] = (newParts[artifactId] || 0) + 1;
+      } else {
+        // Only add parts if artifact not already completed
+        newParts[artifactId] = (newParts[artifactId] || 0) + 1;
+
+        // Auto-complete when all parts collected
+        if (artifact && newParts[artifactId] >= artifact.parts) {
+          newCompleted.push(artifactId);
+          newLevels[artifactId] = 1;
+        }
+      }
+
+      return { ...prev, artifactParts: newParts, completedArtifacts: newCompleted, artifactDupes: newDupes, artifactLevels: newLevels };
+    });
+  }, []);
+
+  // Process server-determined chest rewards (server already updated DB)
+  const processServerRewards = useCallback((rewards: Array<{ id: string; parts_granted: number }>) => {
+    setState(prev => {
+      const newParts = { ...prev.artifactParts };
+      const newCompleted = [...(prev.completedArtifacts || [])];
+      const newLevels = { ...prev.artifactLevels };
+
+      for (const reward of rewards) {
+        const artifact = ARTIFACTS.find(a => a.id === reward.id);
+        newParts[reward.id] = (newParts[reward.id] || 0) + reward.parts_granted;
+
+        // Auto-complete if enough parts collected (matches server logic)
+        if (artifact && newParts[reward.id] >= artifact.parts && !newCompleted.includes(reward.id)) {
+          newCompleted.push(reward.id);
+          newLevels[reward.id] = 1;
+        }
+      }
+
+      return { ...prev, artifactParts: newParts, completedArtifacts: newCompleted, artifactLevels: newLevels };
+    });
+  }, []);
+
+  // Upgrade artifact level (consume parts for bonus increase)
+  const upgradeArtifactLevel = useCallback((artifactId: string) => {
+    setState(prev => {
+      const currentLevel = prev.artifactLevels?.[artifactId] || 1;
+      if (currentLevel >= 4) return prev; // Max level
+
+      const partsRequired = ARTIFACT_PARTS_PER_LEVEL[currentLevel + 1] || 10;
+      const currentParts = prev.artifactParts?.[artifactId] || 0;
+
+      if (currentParts < partsRequired) return prev;
+
+      const newParts = { ...prev.artifactParts };
+      const newLevels = { ...prev.artifactLevels };
+
+      newParts[artifactId] = currentParts - partsRequired;
+      newLevels[artifactId] = currentLevel + 1;
+
+      return { ...prev, artifactParts: newParts, artifactLevels: newLevels };
+    });
+  }, []);
+
+  const deductGachaCost = useCallback((cost: number): boolean => {
+    if (state.currency < cost) return false;
+    setState(prev => ({ ...prev, currency: Math.max(0, prev.currency - cost) }));
+    return true;
+  }, [state.currency]);
+
+  const recordGachaOpen = useCallback(() => {
+    setState(prev => {
+      const tasks = prev.dailyTasksState;
+      if (!tasks) return prev;
+      return {
+        ...prev,
+        dailyTasksState: {
+          ...tasks,
+          counters: { ...tasks.counters, open_gacha: tasks.counters.open_gacha + 1 },
+        },
+      };
+    });
+  }, []);
+
+  const claimDailyTask = useCallback((taskId: string) => {
+    const task = getTaskById(taskId);
+    if (!task) return;
+
+    setState(prev => {
+      const tasks = prev.dailyTasksState;
+      if (!tasks || tasks.claimed.includes(taskId)) return prev;
+      if (tasks.counters[task.type] < task.target) return prev;
+
+      const reward = task.reward;
+      return {
+        ...prev,
+        currency: prev.currency + (reward.currency || 0),
+        totalCurrencyEarned: prev.totalCurrencyEarned + (reward.currency || 0),
+        xp: prev.xp + (reward.xp || 0),
+        totalXp: prev.totalXp + (reward.xp || 0),
+        dailyTasksState: {
+          ...tasks,
+          claimed: [...tasks.claimed, taskId],
+        },
+      };
+    });
+  }, []);
+
+  const dismissStreakModal = useCallback(() => setStreakModal(null), []);
+  const dismissConnectionError = useCallback(() => setConnectionError(null), []);
+
+  const claimDailyReward = useCallback(() => {
+    const today = getTodayDateStr();
+    const yesterday = getYesterdayDateStr();
+
+    setState(prev => {
+      if (prev.lastCheckIn === today) return prev; // already claimed today
+
+      let newStreak: number;
+      if (!prev.lastCheckIn) {
+        newStreak = 1;
+      } else if (prev.lastCheckIn === yesterday) {
+        newStreak = prev.checkInStreak + 1;
+      } else {
+        newStreak = 1; // missed a day — reset
+      }
+
+      // Import dynamically to avoid circular — but since it's a pure data module, import at top
+      const dayInWeek = ((newStreak - 1) % 7) + 1;
+      // Inline reward lookup to avoid importing component code here
+      const REWARDS = [
+        { day: 1, currency: 500,  xp: 0 },
+        { day: 2, currency: 1000, xp: 200 },
+        { day: 3, currency: 1500, xp: 400 },
+        { day: 4, currency: 2000, xp: 600 },
+        { day: 5, currency: 3000, xp: 800 },
+        { day: 6, currency: 4000, xp: 1000 },
+        { day: 7, currency: 5000, xp: 1500 },
+      ];
+      const reward = REWARDS.find(r => r.day === dayInWeek) || REWARDS[0];
+
+      // For day 7 special: grant a gacha ticket by adding 100 currency equivalent
+      const bonusCurrency = reward.currency + (dayInWeek === 7 ? 100 : 0);
+
+      return {
+        ...prev,
+        lastCheckIn: today,
+        checkInStreak: newStreak,
+        currency: prev.currency + bonusCurrency,
+        totalCurrencyEarned: prev.totalCurrencyEarned + bonusCurrency,
+        xp: prev.xp + reward.xp,
+        totalXp: prev.totalXp + reward.xp,
+      };
+    });
+
+    setShowDailyRewards(false);
+  }, []);
+
+  const switchEpoch = useCallback((epochId: EpochId) => {
+    if (!state.unlockedEpochs.includes(epochId)) return;
+    setState(prev => ({ ...prev, epochId }));
+    // Force immediate remote save for important state change
+    saveRemoteState({ ...state, epochId }).catch(e => {
+      console.error('switchEpoch remote save failed:', e);
+      setSyncStatus('error');
+      setConnectionError('Проблеми зі з\'єднанням. Прогрес збережеться локально');
+    });
+  }, [state]);
+
+  const loadLeaderboard = useCallback(async () => {
+    setLeaderboardLoading(true);
+    try {
+      const data = await getLeaderboard(50);
+      setLeaderboard(data);
+
+      const telegramId = getTelegramUserId();
+      if (telegramId) {
+        const rank = await getUserRank(telegramId);
+        setUserRank(rank);
+      }
+    } catch (e) {
+      console.error('Failed to load leaderboard:', e);
+      setConnectionError('Не вдалося завантажити таблицю лідерів');
+    }
+    setLeaderboardLoading(false);
+  }, []);
+
+  const dismissOfflineGains = useCallback(() => setOfflineGains(null), []);
+
+  // Called after a successful Telegram Stars purchase to pull fresh boosters from DB
+  const refreshBoosters = useCallback(async () => {
+    const telegramIdLocal = getTelegramUserId();
+    if (!telegramIdLocal) return;
+    try {
+      const fresh = await fetchActiveBoosters(telegramIdLocal);
+      setState(prev => ({ ...prev, activeBoosters: fresh }));
+    } catch (e) {
+      console.error('Failed to refresh boosters:', e);
+      setConnectionError('Не вдалося оновити бустери');
+    }
+  }, []);
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // PRESTIGE SYSTEM
+  // ═══════════════════════════════════════════════════════════════════════
+
+  // Check if player can prestige (level >= 950, epoch = independence)
+  const canPrestige = state.level >= 950 && state.epochId === 'independence';
+
+  // Perform prestige (rebirth) - SERVER AUTHORITATIVE
+  // This resets: level, currency, generators, epochs, tap power, passive XP, artifacts
+  // But PRESERVES: completedArtifacts, artifactLevels, prestigeResearch, prestigePoints
+  const performPrestige = useCallback(async () => {
+    if (!canPrestige) return false;
+
+    const telegramIdLocal = getTelegramUserId();
+    if (!telegramIdLocal) return false;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/perform-prestige`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegram_id: telegramIdLocal }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        console.error('Prestige failed:', data.error);
+        return false;
+      }
+
+      // Update local state with server response
+      setState(prev => ({
+        ...prev,
+        // RESET game progress:
+        level: 1,
+        xp: 0,
+        xpToNextLevel: calculateXpToLevel(1),
+        totalXp: 0,
+        currency: 20,
+        totalCurrencyEarned: 20,
+        ownedGenerators: [],
+        epochId: 'trypillia',
+        unlockedEpochs: ['trypillia'],
+        tapPower: 1,
+        passiveXpPerSecond: 0,
+        activeBoosters: {},
+        artifactParts: {},
+        artifactDupes: {},
+        // PRESERVE prestige-related progress:
+        completedArtifacts: prev.completedArtifacts,
+        artifactLevels: prev.artifactLevels,
+        dailyStreak: prev.dailyStreak,
+        bestStreak: prev.bestStreak,
+        lastLoginDate: prev.lastLoginDate,
+        referralsCount: prev.referralsCount,
+        referralEarnings: prev.referralEarnings,
+        prestigeResearch: prev.prestigeResearch,
+        // UPDATE prestige stats:
+        prestigeLevel: data.prestige_level,
+        prestigePoints: data.total_prestige_points,
+        energy: 1000,
+        maxEnergy: 1000,
+        lastSavedAt: Date.now(),
+        lastOnlineAt: Date.now(),
+        sessionStartAt: Date.now(),
+        // Reset daily ad views on prestige
+        dailyAdViews: {},
+      }));
+
+      hapticNotification('success');
+      return true;
+    } catch (err) {
+      console.error('Prestige error:', err);
+      return false;
+    }
+  }, [canPrestige]);
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // MUSEUM LABORATORY (Prestige Shop)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  const buyPrestigeUpgrade = useCallback((upgradeId: string, cost: number, maxLevel: number) => {
+    setState(prev => {
+      const currentPoints = prev.prestigePoints || 0;
+      const currentResearch = prev.prestigeResearch || {};
+      const currentLevel = currentResearch[upgradeId as keyof typeof currentResearch] || 0;
+
+      if (currentPoints < cost) return prev;
+      if (currentLevel >= maxLevel) return prev;
+
+      return {
+        ...prev,
+        prestigePoints: currentPoints - cost,
+        prestigeResearch: {
+          ...currentResearch,
+          [upgradeId]: currentLevel + 1,
+        },
+      };
+    });
+
+    hapticNotification('success');
+    return true;
+  }, []);
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // ENERGY SYSTEM (Only after Prestige 1+)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  // Use energy on tap (only for prestige 1+)
+  const useEnergy = useCallback(() => {
+    if ((state.prestigeLevel || 0) < 1) return false;
+
+    setState(prev => {
+      if (prev.energy <= 0) return prev;
+      return { ...prev, energy: prev.energy - 1 };
+    });
+
+    hapticImpact('light');
+    return true;
+  }, [state.prestigeLevel]);
+
+  // Get energy multiplier (x5 if energy > 0, x1 if energy = 0, only for prestige 1+)
+  const getEnergyMultiplier = useCallback(() => {
+    if ((state.prestigeLevel || 0) < 1) return 1;
+    return (state.energy || 0) > 0 ? 5 : 1;
+  }, [state.prestigeLevel, state.energy]);
+
+  // Regenerate energy: +2 per 2 minutes (using timestamps for offline regeneration)
+  const regenerateEnergy = useCallback(() => {
+    if ((state.prestigeLevel || 0) < 1) return;
+
+    const now = Date.now();
+    const lastOnline = state.lastOnlineAt || now;
+    const elapsedMs = now - lastOnline;
+    const REGEN_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes
+    const REGEN_AMOUNT = 2;
+    const MAX_ENERGY = 1000;
+
+    // Calculate how many regen cycles have passed
+    const cycles = Math.floor(elapsedMs / REGEN_INTERVAL_MS);
+    const energyToAdd = cycles * REGEN_AMOUNT;
+
+    if (energyToAdd > 0 || (state.energy || 0) < MAX_ENERGY) {
+      setState(prev => {
+        const currentEnergy = prev.energy || 0;
+        if (currentEnergy >= MAX_ENERGY && energyToAdd <= 0) return prev;
+
+        const newEnergy = Math.min(MAX_ENERGY, currentEnergy + Math.max(0, energyToAdd));
+        return {
+          ...prev,
+          energy: newEnergy,
+          lastOnlineAt: now,
+        };
+      });
+    }
+  }, [state.prestigeLevel, state.lastOnlineAt, state.energy]);
+
+  // Energy regeneration interval - check every 2 minutes
+  useEffect(() => {
+    if ((state.prestigeLevel || 0) < 1) return;
+    if (isLoading) return;
+
+    // Initial regeneration check
+    regenerateEnergy();
+
+    const interval = setInterval(regenerateEnergy, 2 * 60 * 1000); // Every 2 minutes
+    return () => clearInterval(interval);
+  }, [state.prestigeLevel, isLoading, regenerateEnergy]);
+
+  const rawTapCost = 25 * Math.pow(1.8, state.tapPower - 1);
+  const tapPowerCost = Number.isFinite(rawTapCost) ? Math.floor(rawTapCost) : Number.MAX_SAFE_INTEGER;
+  const telegramId = getTelegramUserId();
+  const artifactMultipliers = getArtifactMultipliers(state.completedArtifacts || [], state.artifactDupes || {});
+  const boosterMultipliers = getBoosterMultipliers(state.activeBoosters || {});
+
+  return {
+    state,
+    epoch,
+    tapEvents,
+    tap,
+    buyGenerator,
+    upgradeTapPower,
+    switchEpoch,
+    tapPowerCost,
+    addArtifactPart,
+    processServerRewards,
+    upgradeArtifactLevel,
+    deductGachaCost,
+    recordGachaOpen,
+    claimDailyTask,
+    isLoading,
+    telegramId,
+    leaderboard,
+    userRank,
+    leaderboardLoading,
+    loadLeaderboard,
+    artifactMultipliers,
+    boosterMultipliers,
+    refreshBoosters,
+    offlineGains,
+    dismissOfflineGains,
+    duplicateTab,
+    streakModal,
+    dismissStreakModal,
+    syncStatus,
+    connectionError,
+    dismissConnectionError,
+    showDailyRewards,
+    claimDailyReward,
+    skipDailyRewards: useCallback(() => setShowDailyRewards(false), []),
+    // Prestige System
+    canPrestige,
+    performPrestige,
+    buyPrestigeUpgrade,
+    // Energy System
+    useEnergy,
+    getEnergyMultiplier,
+    regenerateEnergy,
+  };
+}
