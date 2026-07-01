@@ -7,16 +7,12 @@
  * - Exclusive rewards not found elsewhere (x3 XP boost, rare artifacts)
  * - Clear value proposition for watching ads
  * - Anti-abuse: server-side validation, daily limits
- * - 30-second non-skippable chest ads every 10 chests
  * 
  * Block ID: 35644
- * Token: e73dc047768d42dba4d64432274c05c1
  */
 
 // AdsGram Block ID for reward ads (Telegram-approved exclusive block)
 export const ADSGRAM_BLOCK_ID = '35644';
-// AdsGram Token
-export const ADSGRAM_TOKEN = 'e73dc047768d42dba4d64432274c05c1';
 
 // XP Boost configuration - EXCLUSIVE reward (cannot be bought)
 export const XP_BOOST_MULTIPLIER = 3;
@@ -40,73 +36,77 @@ export interface AdShowResult {
 }
 
 /**
- * AdsGram SDK types (Sad API)
+ * AdsGram SDK types (Adsgram API)
  */
-interface SadConfig {
-  blockId: string;
-  token: string;
-  onReward?: () => void;
-  onError?: (error: { message: string }) => void;
-  onClose?: () => void;
+interface AdController {
+  show: () => Promise<{ done: boolean; error: boolean; state: string; description?: string }>;
 }
 
-interface Sad {
-  showRewardedAd: (config: SadConfig) => Promise<{ success: boolean; error?: string }>;
+interface Adsgram {
+  init: (config: { blockId: string; debug?: boolean }) => AdController;
 }
 
 declare global {
   interface Window {
-    SAD?: Sad;
+    Adsgram?: Adsgram;
   }
 }
 
-// Store SDK instance
-let sdkInstance: Sad | null = null;
+// Store AdController instance
+let adController: AdController | null = null;
 
 /**
  * Check if AdsGram SDK is loaded
  */
 export function isAdsgramLoaded(): boolean {
-  return typeof window !== 'undefined' && !!window.SAD;
+  return typeof window !== 'undefined' && !!window.Adsgram;
 }
 
 /**
  * Wait for AdsGram SDK to load (polling with timeout)
- * Solves the race condition between defer script loading and React init
  */
-export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad | null> {
+export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<AdController | null> {
   console.log('[adsgram] Waiting for SDK to load...');
   const startTime = Date.now();
 
   // First check if already loaded
-  if (window.SAD) {
-    console.log('[adsgram] SDK already loaded (SAD)');
-    sdkInstance = window.SAD;
-    return window.SAD;
+  if (window.Adsgram) {
+    console.log('[adsgram] SDK already loaded (Adsgram)');
+    return adController;
   }
 
   // Wait for SDK
   while (Date.now() - startTime < timeoutMs) {
-    if (window.SAD) {
+    if (window.Adsgram) {
       console.log('[adsgram] SDK loaded after', Date.now() - startTime, 'ms');
-      sdkInstance = window.SAD;
-      return window.SAD;
+      return adController;
     }
     await new Promise(resolve => setTimeout(resolve, 200));
   }
 
   console.error('[adsgram] SDK timeout after', timeoutMs, 'ms');
-  
-  // Try to load SDK dynamically as fallback
-  console.log('[adsgram] Trying to load SDK dynamically...');
-  await loadAdsgramSDK();
-  
-  if (window.SAD) {
-    sdkInstance = window.SAD;
-    return window.SAD;
-  }
-  
   return null;
+}
+
+/**
+ * Initialize AdsGram SDK and get AdController
+ */
+export function initAdsgram(): AdController | null {
+  console.log('[adsgram] initAdsgram called');
+  console.log('[adsgram] window.Adsgram exists:', !!window.Adsgram);
+
+  if (!window.Adsgram) {
+    console.warn('[adsgram] SDK not loaded');
+    return null;
+  }
+
+  // Create AdController with blockId
+  adController = window.Adsgram.init({
+    blockId: ADSGRAM_BLOCK_ID,
+  });
+
+  console.log('[adsgram] AdController created!');
+  return adController;
 }
 
 /**
@@ -114,31 +114,11 @@ export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad 
  */
 export async function loadAdsgramSDK(): Promise<boolean> {
   return new Promise((resolve) => {
-    // Check if already loaded
-    if (window.SAD) {
+    if (window.Adsgram) {
       resolve(true);
       return;
     }
 
-    // Check if script is already being loaded
-    if (document.querySelector('script[src*="adsgram"]')) {
-      // Wait for existing script
-      const checkInterval = setInterval(() => {
-        if (window.SAD) {
-          clearInterval(checkInterval);
-          resolve(true);
-        }
-      }, 100);
-      
-      // Timeout after 10 seconds
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        resolve(false);
-      }, 10000);
-      return;
-    }
-
-    // Create and load script
     const script = document.createElement('script');
     script.src = 'https://sad.adsgram.ai/js/sad.min.js';
     script.async = true;
@@ -146,7 +126,7 @@ export async function loadAdsgramSDK(): Promise<boolean> {
     script.onload = () => {
       console.log('[adsgram] Script loaded');
       setTimeout(() => {
-        if (window.SAD) {
+        if (window.Adsgram) {
           console.log('[adsgram] SDK available after dynamic load');
           resolve(true);
         } else {
@@ -163,29 +143,6 @@ export async function loadAdsgramSDK(): Promise<boolean> {
 
     document.head.appendChild(script);
   });
-}
-
-/**
- * Initialize AdsGram SDK (Sad API)
- */
-export function initAdsgram(): Sad | null {
-  console.log('[adsgram] initAdsgram called');
-  console.log('[adsgram] window.SAD exists:', !!window.SAD);
-  console.log('[adsgram] cached sdkInstance:', !!sdkInstance);
-
-  // Return cached instance if available
-  if (sdkInstance) {
-    return sdkInstance;
-  }
-
-  if (!window.SAD) {
-    console.warn('[adsgram] SDK not loaded - need to wait');
-    return null;
-  }
-
-  console.log('[adsgram] SDK found and initialized!');
-  sdkInstance = window.SAD;
-  return window.SAD;
 }
 
 /**
@@ -240,52 +197,50 @@ export async function grantXpBoostFromServer(telegramId: number): Promise<{ succ
 }
 
 /**
- * Show reward ad and handle completion (Sad API)
+ * Show reward ad and handle completion (Adsgram API)
  */
 export async function showRewardAd(
-  sad: Sad,
+  adController: AdController,
   telegramId: number
 ): Promise<AdShowResult> {
-  return new Promise((resolve) => {
-    console.log('[adsgram] Showing reward ad...');
-    
-    sad.showRewardedAd({
-      blockId: ADSGRAM_BLOCK_ID,
-      token: ADSGRAM_TOKEN,
-      onReward: async () => {
-        console.log('[adsgram] Ad watched, granting reward via server...');
-        const grantResult = await grantXpBoostFromServer(telegramId);
-        console.log('[adsgram] Grant result:', JSON.stringify(grantResult));
+  console.log('[adsgram] Showing reward ad...');
+  
+  try {
+    const result = await adController.show();
+    console.log('[adsgram] Ad result:', JSON.stringify(result));
 
-        if (grantResult.success) {
-          resolve({
-            success: true,
-            boostActivated: true,
-          });
-        } else {
-          resolve({
-            success: false,
-            error: grantResult.error || 'Failed to grant reward',
-            alreadyActive: grantResult.alreadyActive,
-          });
-        }
-      },
-      onError: (error) => {
-        console.error('[adsgram] Ad error:', error);
-        resolve({
+    if (result.done && !result.error) {
+      // User watched the ad or closed interstitial - grant reward
+      console.log('[adsgram] Ad completed, granting reward via server...');
+      const grantResult = await grantXpBoostFromServer(telegramId);
+      console.log('[adsgram] Grant result:', JSON.stringify(grantResult));
+
+      if (grantResult.success) {
+        return {
+          success: true,
+          boostActivated: true,
+        };
+      } else {
+        return {
           success: false,
-          error: error?.message || 'Сталася помилка при відтворенні реклами',
-        });
-      },
-      onClose: () => {
-        console.log('[adsgram] Ad closed before completion');
-        resolve({
-          success: false,
-          error: 'Рекламу закрито до завершення',
-        });
-      },
-    });
-  });
+          error: grantResult.error || 'Failed to grant reward',
+          alreadyActive: grantResult.alreadyActive,
+        };
+      }
+    } else {
+      // Ad was not completed or error occurred
+      return {
+        success: false,
+        error: result.description || 'Рекламу закрито до завершення',
+      };
+    }
+  } catch (err: unknown) {
+    console.error('[adsgram] Ad error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Сталася помилка при відтворенні реклами',
+    };
+  }
 }
 
 /**

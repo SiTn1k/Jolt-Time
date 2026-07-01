@@ -24,6 +24,7 @@ export function AdsGramButton({ activeBoosters, onBoostActivated }: AdsGramButto
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [remainingTime, setRemainingTime] = useState(0);
+  const [adController, setAdController] = useState<ReturnType<typeof initAdsgram>>(null);
 
   // Check if x3 boost is active
   const boostActive = isXpBoostActive(activeBoosters);
@@ -34,13 +35,19 @@ export function AdsGramButton({ activeBoosters, onBoostActivated }: AdsGramButto
 
     const initSDK = async () => {
       console.log('[AdsGramButton] Waiting for AdsGram SDK...');
-      const sad = await waitForAdsgramSDK(5000);
+      const controller = await waitForAdsgramSDK(10000);
 
       if (mounted) {
-        if (sad) {
-          console.log('[AdsGramButton] AdsGram SDK initialized successfully');
+        if (controller) {
+          console.log('[AdsGramButton] AdsGram SDK ready');
+          setAdController(controller);
         } else {
           console.error('[AdsGramButton] Failed to initialize AdsGram SDK after waiting');
+          // Try to initialize anyway
+          const ctrl = initAdsgram();
+          if (ctrl) {
+            setAdController(ctrl);
+          }
         }
       }
     };
@@ -67,8 +74,13 @@ export function AdsGramButton({ activeBoosters, onBoostActivated }: AdsGramButto
   const handleShowAd = useCallback(async () => {
     if (isLoading || boostActive) return;
 
-    const sad = initAdsgram();
-    if (!sad) {
+    // Get or create AdController
+    let controller = adController;
+    if (!controller) {
+      controller = initAdsgram();
+    }
+
+    if (!controller) {
       console.error('[AdsGramButton] SDK not ready');
       setError('Реклама наразі недоступна. Спробуйте пізніше.');
       return;
@@ -88,7 +100,7 @@ export function AdsGramButton({ activeBoosters, onBoostActivated }: AdsGramButto
     console.log('[AdsGramButton] Showing reward ad...');
 
     try {
-      const result = await showRewardAd(sad, telegramId);
+      const result = await showRewardAd(controller, telegramId);
       console.log('[AdsGramButton] Ad result:', result);
 
       if (result.success && result.boostActivated) {
@@ -108,7 +120,7 @@ export function AdsGramButton({ activeBoosters, onBoostActivated }: AdsGramButto
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, boostActive, onBoostActivated]);
+  }, [isLoading, boostActive, onBoostActivated, adController]);
 
   // Boost is active - show status with correct duration
   if (boostActive) {
