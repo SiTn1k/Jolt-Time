@@ -56,7 +56,7 @@ interface Sad {
 
 declare global {
   interface Window {
-    Sad?: Sad;
+    SAD?: Sad;
   }
 }
 
@@ -67,7 +67,7 @@ let sdkInstance: Sad | null = null;
  * Check if AdsGram SDK is loaded
  */
 export function isAdsgramLoaded(): boolean {
-  return typeof window !== 'undefined' && !!window.Sad;
+  return typeof window !== 'undefined' && !!window.SAD;
 }
 
 /**
@@ -79,18 +79,18 @@ export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad 
   const startTime = Date.now();
 
   // First check if already loaded
-  if (window.Sad) {
-    console.log('[adsgram] SDK already loaded');
-    sdkInstance = window.Sad;
-    return window.Sad;
+  if (window.SAD) {
+    console.log('[adsgram] SDK already loaded (SAD)');
+    sdkInstance = window.SAD;
+    return window.SAD;
   }
 
   // Wait for SDK
   while (Date.now() - startTime < timeoutMs) {
-    if (window.Sad) {
+    if (window.SAD) {
       console.log('[adsgram] SDK loaded after', Date.now() - startTime, 'ms');
-      sdkInstance = window.Sad;
-      return window.Sad;
+      sdkInstance = window.SAD;
+      return window.SAD;
     }
     await new Promise(resolve => setTimeout(resolve, 200));
   }
@@ -101,9 +101,9 @@ export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad 
   console.log('[adsgram] Trying to load SDK dynamically...');
   await loadAdsgramSDK();
   
-  if (window.Sad) {
-    sdkInstance = window.Sad;
-    return window.Sad;
+  if (window.SAD) {
+    sdkInstance = window.SAD;
+    return window.SAD;
   }
   
   return null;
@@ -115,7 +115,7 @@ export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad 
 export async function loadAdsgramSDK(): Promise<boolean> {
   return new Promise((resolve) => {
     // Check if already loaded
-    if (window.Sad) {
+    if (window.SAD) {
       resolve(true);
       return;
     }
@@ -124,7 +124,7 @@ export async function loadAdsgramSDK(): Promise<boolean> {
     if (document.querySelector('script[src*="adsgram"]')) {
       // Wait for existing script
       const checkInterval = setInterval(() => {
-        if (window.Sad) {
+        if (window.SAD) {
           clearInterval(checkInterval);
           resolve(true);
         }
@@ -146,7 +146,7 @@ export async function loadAdsgramSDK(): Promise<boolean> {
     script.onload = () => {
       console.log('[adsgram] Script loaded');
       setTimeout(() => {
-        if (window.Sad) {
+        if (window.SAD) {
           console.log('[adsgram] SDK available after dynamic load');
           resolve(true);
         } else {
@@ -170,7 +170,7 @@ export async function loadAdsgramSDK(): Promise<boolean> {
  */
 export function initAdsgram(): Sad | null {
   console.log('[adsgram] initAdsgram called');
-  console.log('[adsgram] window.Sad exists:', !!window.Sad);
+  console.log('[adsgram] window.SAD exists:', !!window.SAD);
   console.log('[adsgram] cached sdkInstance:', !!sdkInstance);
 
   // Return cached instance if available
@@ -178,14 +178,14 @@ export function initAdsgram(): Sad | null {
     return sdkInstance;
   }
 
-  if (!window.Sad) {
+  if (!window.SAD) {
     console.warn('[adsgram] SDK not loaded - need to wait');
     return null;
   }
 
   console.log('[adsgram] SDK found and initialized!');
-  sdkInstance = window.Sad;
-  return window.Sad;
+  sdkInstance = window.SAD;
+  return window.SAD;
 }
 
 /**
