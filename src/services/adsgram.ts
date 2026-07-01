@@ -60,6 +60,9 @@ declare global {
   }
 }
 
+// Store SDK instance
+let sdkInstance: Sad | null = null;
+
 /**
  * Check if AdsGram SDK is loaded
  */
@@ -71,33 +74,117 @@ export function isAdsgramLoaded(): boolean {
  * Wait for AdsGram SDK to load (polling with timeout)
  * Solves the race condition between defer script loading and React init
  */
-export async function waitForAdsgramSDK(timeoutMs: number = 5000): Promise<Sad | null> {
+export async function waitForAdsgramSDK(timeoutMs: number = 10000): Promise<Sad | null> {
+  console.log('[adsgram] Waiting for SDK to load...');
   const startTime = Date.now();
 
+  // First check if already loaded
+  if (window.Sad) {
+    console.log('[adsgram] SDK already loaded');
+    sdkInstance = window.Sad;
+    return window.Sad;
+  }
+
+  // Wait for SDK
   while (Date.now() - startTime < timeoutMs) {
     if (window.Sad) {
       console.log('[adsgram] SDK loaded after', Date.now() - startTime, 'ms');
+      sdkInstance = window.Sad;
       return window.Sad;
     }
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 200));
   }
 
   console.error('[adsgram] SDK timeout after', timeoutMs, 'ms');
+  
+  // Try to load SDK dynamically as fallback
+  console.log('[adsgram] Trying to load SDK dynamically...');
+  await loadAdsgramSDK();
+  
+  if (window.Sad) {
+    sdkInstance = window.Sad;
+    return window.Sad;
+  }
+  
   return null;
+}
+
+/**
+ * Dynamically load AdsGram SDK
+ */
+export async function loadAdsgramSDK(): Promise<boolean> {
+  return new Promise((resolve) => {
+    // Check if already loaded
+    if (window.Sad) {
+      resolve(true);
+      return;
+    }
+
+    // Check if script is already being loaded
+    if (document.querySelector('script[src*="adsgram"]')) {
+      // Wait for existing script
+      const checkInterval = setInterval(() => {
+        if (window.Sad) {
+          clearInterval(checkInterval);
+          resolve(true);
+        }
+      }, 100);
+      
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkInterval);
+        resolve(false);
+      }, 10000);
+      return;
+    }
+
+    // Create and load script
+    const script = document.createElement('script');
+    script.src = 'https://sad.adsgram.ai/js/sad.min.js';
+    script.async = true;
+    
+    script.onload = () => {
+      console.log('[adsgram] Script loaded');
+      setTimeout(() => {
+        if (window.Sad) {
+          console.log('[adsgram] SDK available after dynamic load');
+          resolve(true);
+        } else {
+          console.warn('[adsgram] Script loaded but SDK not available');
+          resolve(false);
+        }
+      }, 500);
+    };
+    
+    script.onerror = (err) => {
+      console.error('[adsgram] Failed to load SDK script:', err);
+      resolve(false);
+    };
+
+    document.head.appendChild(script);
+  });
 }
 
 /**
  * Initialize AdsGram SDK (Sad API)
  */
 export function initAdsgram(): Sad | null {
-  console.log('[adsgram] Checking SDK...');
+  console.log('[adsgram] initAdsgram called');
+  console.log('[adsgram] window.Sad exists:', !!window.Sad);
+  console.log('[adsgram] cached sdkInstance:', !!sdkInstance);
+
+  // Return cached instance if available
+  if (sdkInstance) {
+    return sdkInstance;
+  }
 
   if (!window.Sad) {
-    console.warn('[adsgram] SDK not loaded yet - use waitForAdsgramSDK() for async init');
+    console.warn('[adsgram] SDK not loaded - need to wait');
     return null;
   }
 
-  console.log('[adsgram] SDK found!');
+  console.log('[adsgram] SDK found and initialized!');
+  sdkInstance = window.Sad;
   return window.Sad;
 }
 
