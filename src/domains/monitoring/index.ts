@@ -4,7 +4,7 @@
  * Production-ready Monitoring Domain for Jolt Time.
  * This module encapsulates all monitoring-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types, interfaces,
- * value objects, and dependency injection.
+ * value objects, services, and dependency injection.
  *
  * ## Module Structure
  *
@@ -19,6 +19,7 @@
  * ├── types/          # Type definitions
  * ├── interfaces/     # Abstract interfaces
  * ├── value-objects/  # Immutable value objects
+ * ├── services/       # MonitoringService, HealthCheckEngine, MetricCollector, HeartbeatSystem
  * ├── di.ts          # Dependency injection setup
  * └── index.ts        # Module exports
  * ```
@@ -33,9 +34,10 @@
  *
  * ## Event Types Supported
  *
- * - Health Check Events
- * - Metric Recording Events
- * - Service Status Events
+ * - Health Check Events (HealthChecked)
+ * - Metric Recording Events (MetricRecorded)
+ * - Service Status Events (ServiceOnline, ServiceOffline, ServiceHealthy, ServiceWarning, ServiceCritical)
+ * - Heartbeat Events (HeartbeatReceived)
  *
  * ## Usage
  *
@@ -45,7 +47,11 @@
  *   SystemMetric,
  *   ServiceStatus,
  *   IMonitoringRepository,
- *   HealthStatus
+ *   HealthStatus,
+ *   MonitoringService,
+ *   HealthCheckEngine,
+ *   MetricCollector,
+ *   HeartbeatSystem
  * } from './domains/monitoring';
  *
  * // Domain types and interfaces are exported
@@ -60,6 +66,7 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
  * export { registerMonitoringDependencies, MONITORING_TOKENS, setupMonitoringDomain } from './di';
@@ -110,6 +117,11 @@ export * from './events';
  * Value Objects
  */
 export * from './value-objects';
+
+/**
+ * Services
+ */
+export * from './services';
 
 /**
  * Dependency Injection

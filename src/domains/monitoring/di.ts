@@ -13,6 +13,26 @@ import { ServiceMapper } from './mappers/ServiceMapper';
 import { HealthValidator } from './validators/HealthValidator';
 import { MetricValidator } from './validators/MetricValidator';
 import { ServiceValidator } from './validators/ServiceValidator';
+import { 
+  MonitoringService, 
+  createMonitoringService,
+  type IMonitoringService 
+} from './services/MonitoringService';
+import { 
+  HealthCheckEngine, 
+  createHealthCheckEngine,
+  type HealthCheckEngineConfig 
+} from './services/HealthCheckEngine';
+import { 
+  MetricCollector, 
+  createMetricCollector,
+  type MetricCollectorConfig 
+} from './services/MetricCollector';
+import { 
+  HeartbeatSystem, 
+  createHeartbeatSystem,
+  type HeartbeatConfig 
+} from './services/HeartbeatSystem';
 
 /**
  * Monitoring Domain DI configuration keys.
@@ -26,6 +46,10 @@ export const MONITORING_TOKENS = {
   HEALTH_VALIDATOR: Symbol.for('HealthValidator'),
   METRIC_VALIDATOR: Symbol.for('MetricValidator'),
   SERVICE_VALIDATOR: Symbol.for('ServiceValidator'),
+  MONITORING_SERVICE: Symbol.for('MonitoringService'),
+  HEALTH_CHECK_ENGINE: Symbol.for('HealthCheckEngine'),
+  METRIC_COLLECTOR: Symbol.for('MetricCollector'),
+  HEARTBEAT_SYSTEM: Symbol.for('HeartbeatSystem'),
 } as const;
 
 /**
@@ -45,6 +69,27 @@ export function registerMonitoringDependencies(container: Container): void {
 
   // Repository (Singleton)
   container.register(SupabaseMonitoringRepository, { lifetime: Lifetime.Singleton });
+
+  // Services (Singleton)
+  container.registerSingleton<IMonitoringService>(MONITORING_TOKENS.MONITORING_SERVICE, (c) => {
+    const repository = c.resolve(SupabaseMonitoringRepository);
+    return createMonitoringService(repository);
+  });
+
+  container.registerSingleton<HealthCheckEngine>(MONITORING_TOKENS.HEALTH_CHECK_ENGINE, (c) => {
+    const monitoringService = c.resolve<IMonitoringService>(MONITORING_TOKENS.MONITORING_SERVICE);
+    return createHealthCheckEngine(monitoringService);
+  });
+
+  container.registerSingleton<MetricCollector>(MONITORING_TOKENS.METRIC_COLLECTOR, (c) => {
+    const monitoringService = c.resolve<IMonitoringService>(MONITORING_TOKENS.MONITORING_SERVICE);
+    return createMetricCollector(monitoringService);
+  });
+
+  container.registerSingleton<HeartbeatSystem>(MONITORING_TOKENS.HEARTBEAT_SYSTEM, (c) => {
+    const monitoringService = c.resolve<IMonitoringService>(MONITORING_TOKENS.MONITORING_SERVICE);
+    return createHeartbeatSystem(monitoringService);
+  });
 }
 
 /**
@@ -60,6 +105,10 @@ export function setupMonitoringDomain(): {
   healthValidator: HealthValidator;
   metricValidator: MetricValidator;
   serviceValidator: ServiceValidator;
+  monitoringService: MonitoringService;
+  healthCheckEngine: HealthCheckEngine;
+  metricCollector: MetricCollector;
+  heartbeatSystem: HeartbeatSystem;
 } {
   const healthValidator = new HealthValidator();
   const metricValidator = new MetricValidator();
@@ -69,6 +118,10 @@ export function setupMonitoringDomain(): {
   const serviceMapper = new ServiceMapper();
   const monitoringMapper = new MonitoringMapper();
   const monitoringRepository = new SupabaseMonitoringRepository();
+  const monitoringService = createMonitoringService(monitoringRepository);
+  const healthCheckEngine = createHealthCheckEngine(monitoringService);
+  const metricCollector = createMetricCollector(monitoringService);
+  const heartbeatSystem = createHeartbeatSystem(monitoringService);
 
   return {
     monitoringRepository,
@@ -79,5 +132,9 @@ export function setupMonitoringDomain(): {
     healthValidator,
     metricValidator,
     serviceValidator,
+    monitoringService,
+    healthCheckEngine,
+    metricCollector,
+    heartbeatSystem,
   };
 }
