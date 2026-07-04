@@ -5,6 +5,35 @@
  */
 
 /**
+ * Overall integration statistics summary.
+ */
+export interface IntegrationStatistics {
+  /** Total number of providers */
+  totalProviders: number;
+  
+  /** Number of active providers */
+  activeProviders: number;
+  
+  /** Total number of requests */
+  totalRequests: number;
+  
+  /** Total number of responses */
+  totalResponses: number;
+  
+  /** Number of failed requests */
+  failedRequests: number;
+  
+  /** Success rate (0-1) */
+  successRate: number;
+  
+  /** Average response time in milliseconds */
+  averageResponseTimeMs: number;
+  
+  /** Last updated timestamp */
+  lastUpdatedAt: Date;
+}
+
+/**
  * Statistics for an integration provider.
  */
 export interface IntegrationProviderStatistics {

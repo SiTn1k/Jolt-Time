@@ -4,7 +4,7 @@
  * Production-ready Integration Domain for Jolt Time.
  * This module encapsulates all integration-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types,
- * interfaces, value objects, and dependency injection.
+ * interfaces, value objects, services, and dependency injection.
  *
  * ## Module Structure
  *
@@ -19,6 +19,7 @@
  * ├── types/             # Type definitions
  * ├── interfaces/        # Abstract interfaces
  * ├── value-objects/     # Immutable value objects
+ * ├── services/          # Service implementations (P-187.2)
  * ├── di.ts              # Dependency injection setup
  * └── index.ts           # Module exports
  * ```
@@ -33,21 +34,20 @@
  * - All external communication (HTTP clients, webhooks, retries, circuit breakers)
  *   belongs to P-187.2 — Production Integration Implementation
  *
- * ## What Integration DOES NOT Include (Belongs to P-187.2)
+ * ## Services (P-187.2)
  *
- * - HTTP Client
- * - Webhook Dispatcher
- * - Retry Logic
- * - Circuit Breaker
- * - Rate Limiter
- * - OAuth Implementation
- * - Token Refresh
- * - Provider SDK
+ * - IntegrationService: Main orchestration service
+ * - HttpGateway: Abstract HTTP client
+ * - RetryEngine: Retry with exponential backoff
+ * - CircuitBreaker: Fault tolerance pattern
+ * - RateLimiter: Rate limiting
+ * - ProviderRegistry: Provider management
+ * - FailureHandler: Failure handling with events
  *
  * ## Usage
  *
  * ```typescript
- * import { IntegrationProvider, IntegrationMapper } from './domains/integration';
+ * import { IntegrationProvider, IntegrationMapper, IntegrationService } from './domains/integration';
  *
  * // Domain types and interfaces are exported
  * export * from './types';
@@ -61,9 +61,10 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
- * export { registerIntegrationDependencies, INTEGRATION_TOKENS, setupIntegrationDomain } from './di';
+ * export { INTEGRATION_TOKENS, setupIntegrationDomain } from './di';
  * ```
  */
 
@@ -113,6 +114,11 @@ export * from './events';
 export * from './value-objects';
 
 /**
+ * Services
+ */
+export * from './services';
+
+/**
  * Dependency Injection
  */
-export { registerIntegrationDependencies, INTEGRATION_TOKENS, setupIntegrationDomain } from './di';
+export { INTEGRATION_TOKENS, setupIntegrationDomain } from './di';
