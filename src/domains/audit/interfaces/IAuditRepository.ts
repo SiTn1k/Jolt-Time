@@ -112,6 +112,37 @@ export interface IAuditRepository {
    */
   countRecords(filters?: AuditRecordFilterParams): Promise<number>;
 
+  /**
+   * Finds audit records by actor ID.
+   * @param actorId The actor ID to search for
+   * @param params Optional pagination parameters
+   * @returns Paginated result of audit records
+   */
+  findByActor(actorId: string, params?: PaginationParams): Promise<PaginatedResult<AuditRecord>>;
+
+  /**
+   * Finds audit records by target ID.
+   * @param targetId The target ID to search for
+   * @param params Optional pagination parameters
+   * @returns Paginated result of audit records
+   */
+  findByTarget(targetId: string, params?: PaginationParams): Promise<PaginatedResult<AuditRecord>>;
+
+  /**
+   * Finds audit records by category.
+   * @param categoryId The category ID to search for
+   * @param params Optional pagination parameters
+   * @returns Paginated result of audit records
+   */
+  findByCategory(categoryId: string, params?: PaginationParams): Promise<PaginatedResult<AuditRecord>>;
+
+  /**
+   * Archives audit records older than a given date.
+   * @param olderThan Date threshold for archiving
+   * @returns Number of records archived
+   */
+  archive(olderThan: Date): Promise<number>;
+
   // ============ Audit Category Operations ============
 
   /**

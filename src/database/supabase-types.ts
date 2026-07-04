@@ -8,6 +8,87 @@
 export interface Database {
   public: {
     Tables: {
+      audit_records: {
+        Row: {
+          audit_id: string;
+          actor_id: string;
+          actor_type: string;
+          action: string;
+          target_type: string;
+          target_id: string;
+          category_id: string | null;
+          result: string;
+          created_at: string;
+          metadata: Record<string, unknown> | null;
+        };
+        Insert: {
+          audit_id?: string;
+          actor_id: string;
+          actor_type: string;
+          action: string;
+          target_type: string;
+          target_id: string;
+          category_id?: string | null;
+          result: string;
+          created_at?: string;
+          metadata?: Record<string, unknown> | null;
+        };
+        Update: {
+          audit_id?: string;
+          actor_id?: string;
+          actor_type?: string;
+          action?: string;
+          target_type?: string;
+          target_id?: string;
+          category_id?: string | null;
+          result?: string;
+          created_at?: string;
+          metadata?: Record<string, unknown> | null;
+        };
+      };
+
+      audit_categories: {
+        Row: {
+          category_id: string;
+          name: string;
+          description: string;
+          metadata: Record<string, unknown> | null;
+        };
+        Insert: {
+          category_id?: string;
+          name: string;
+          description: string;
+          metadata?: Record<string, unknown> | null;
+        };
+        Update: {
+          category_id?: string;
+          name?: string;
+          description?: string;
+          metadata?: Record<string, unknown> | null;
+        };
+      };
+
+      audit_actors: {
+        Row: {
+          actor_id: string;
+          actor_type: string;
+          display_name: string;
+          metadata: Record<string, unknown> | null;
+        };
+        Insert: {
+          actor_id?: string;
+          actor_type: string;
+          display_name: string;
+          metadata?: Record<string, unknown> | null;
+        };
+        Update: {
+          actor_id?: string;
+          actor_type?: string;
+          display_name?: string;
+          metadata?: Record<string, unknown> | null;
+        };
+      };
+
       users: {
         Row: {
           id: string;

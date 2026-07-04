@@ -106,7 +106,7 @@ Jolt-Time/
 | **Event Bus** | ✅ Foundation | Central communication mechanism between domains - ONLY allowed inter-domain communication (P-178.1) |
 | **Analytics** | ✅ Production | Universal telemetry layer - ONLY records events/metrics, never modifies gameplay (P-180.2) |
 | **Admin** | ✅ Foundation | Admin domain foundation - accounts, roles, permissions, repository skeleton (P-181.1) |
-| **Audit** | ✅ Foundation | Immutable audit history layer - ONLY stores records, never modifies gameplay (P-184.1) |
+| **Audit** | ✅ Complete | Immutable audit history layer with Event Bus integration, automatic collection, and search (P-184.2) |
 
 ### In Development 🚧
 
@@ -122,7 +122,6 @@ Jolt-Time/
 | **Battle Pass** | 0% | Seasonal premium progression track |
 | **Boss Battles** | 0% | Elite enemy encounters |
 | **Story Mode** | 0% | Narrative campaign with chapters |
-| **Audit** | 0% | Audit queries, search, filtering, export, retention (P-184.2) |
 
 ---
 
