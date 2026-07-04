@@ -41,6 +41,7 @@ export {
   isActiveExecutionStatus,
   isTerminalExecutionStatus,
   isCancellableExecutionStatus,
+  isRetryableExecutionStatus,
   SCHEDULER_PRIORITY_DISPLAY,
   SCHEDULER_PRIORITY_VALUES,
   SCHEDULER_PRIORITY_COLORS,
@@ -149,6 +150,46 @@ export {
 export {
   SupabaseSchedulerRepository,
 } from './repositories';
+
+// Services
+export {
+  SchedulerService,
+  JobExecutorService,
+  RetryEngineService,
+  ExecutionQueueService,
+  BuiltInJobsService,
+  getBuiltInJobsService,
+} from './services';
+
+export type {
+  SchedulerServiceResult,
+  JobEventHandler,
+  SchedulerJobEvent,
+} from './services/SchedulerService';
+
+export type {
+  JobHandler,
+  JobExecutionContext,
+  JobExecutionResult,
+} from './services/JobExecutorService';
+
+export type {
+  RetryConfig,
+  RetryState,
+} from './services/RetryEngineService';
+
+export type {
+  QueueItem,
+  QueueStatistics,
+  QueueConfig,
+} from './services/ExecutionQueueService';
+
+export type {
+  BuiltInJobEventType,
+  BuiltInJobEvent,
+  BuiltInJobEventHandler,
+  BuiltInJobDefinition,
+} from './services/BuiltInJobsService';
 
 // DI
 export {

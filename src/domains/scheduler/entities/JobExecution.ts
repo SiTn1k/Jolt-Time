@@ -102,6 +102,68 @@ export class JobExecution implements IJobExecution {
   }
 
   /**
+   * Marks execution as waiting in queue.
+   */
+  public markWaiting(): JobExecution {
+    if (this.status !== 'pending') {
+      throw new Error(`Cannot mark waiting execution in ${this.status} status`);
+    }
+    return new JobExecution({
+      executionId: this.executionId,
+      jobId: this.jobId,
+      startedAt: this.startedAt,
+      finishedAt: undefined,
+      duration: undefined,
+      status: 'waiting',
+      errorMessage: undefined,
+      metadata: this.metadata,
+    });
+  }
+
+  /**
+   * Marks execution as retrying.
+   */
+  public markRetrying(errorMessage?: string): JobExecution {
+    if (this.status !== 'running' && this.status !== 'failed' && this.status !== 'timeout') {
+      throw new Error(`Cannot mark retrying execution in ${this.status} status`);
+    }
+    return new JobExecution({
+      executionId: this.executionId,
+      jobId: this.jobId,
+      startedAt: this.startedAt,
+      finishedAt: undefined,
+      duration: undefined,
+      status: 'retrying',
+      errorMessage: errorMessage ?? this.errorMessage,
+      metadata: {
+        ...this.metadata,
+        lastRetryAt: new Date().toISOString(),
+      },
+    });
+  }
+
+  /**
+   * Marks execution as timed out.
+   */
+  public markTimeout(): JobExecution {
+    if (this.status !== 'running') {
+      throw new Error(`Cannot timeout execution in ${this.status} status`);
+    }
+    const finishedAt = new Date();
+    const duration = finishedAt.getTime() - this.startedAt.getTime();
+    return new JobExecution({
+      executionId: this.executionId,
+      jobId: this.jobId,
+      startedAt: this.startedAt,
+      finishedAt,
+      duration,
+      status: 'timeout',
+      errorMessage: 'Execution timed out',
+      metadata: this.metadata,
+    });
+  }
+
+  /**
    * Reconstructs a JobExecution from stored data.
    */
   public static fromStorage(record: JobExecutionRecord): JobExecution {
@@ -140,7 +202,7 @@ export class JobExecution implements IJobExecution {
    * Completes the execution successfully.
    */
   public complete(): JobExecution {
-    if (this.status !== 'running') {
+    if (this.status !== 'running' && this.status !== 'waiting' && this.status !== 'retrying') {
       throw new Error(`Cannot complete execution in ${this.status} status`);
     }
     const finishedAt = new Date();
@@ -151,7 +213,7 @@ export class JobExecution implements IJobExecution {
       startedAt: this.startedAt,
       finishedAt,
       duration,
-      status: 'completed',
+      status: 'success',
       errorMessage: undefined,
       metadata: this.metadata,
     });
@@ -161,7 +223,7 @@ export class JobExecution implements IJobExecution {
    * Fails the execution with an error message.
    */
   public fail(errorMessage: string): JobExecution {
-    if (this.status !== 'running' && this.status !== 'pending') {
+    if (this.status !== 'running' && this.status !== 'pending' && this.status !== 'waiting' && this.status !== 'retrying') {
       throw new Error(`Cannot fail execution in ${this.status} status`);
     }
     const finishedAt = new Date();
@@ -182,7 +244,7 @@ export class JobExecution implements IJobExecution {
    * Cancels the execution.
    */
   public cancel(): JobExecution {
-    if (this.status !== 'pending' && this.status !== 'running') {
+    if (this.status !== 'pending' && this.status !== 'waiting' && this.status !== 'running' && this.status !== 'retrying') {
       throw new Error(`Cannot cancel execution in ${this.status} status`);
     }
     const finishedAt = new Date();
@@ -210,21 +272,21 @@ export class JobExecution implements IJobExecution {
    * Checks if the execution is in a terminal state.
    */
   public get isTerminal(): boolean {
-    return this.status === 'completed' || this.status === 'failed' || this.status === 'cancelled';
+    return this.status === 'success' || this.status === 'failed' || this.status === 'timeout' || this.status === 'cancelled';
   }
 
   /**
    * Checks if the execution was successful.
    */
   public get isSuccessful(): boolean {
-    return this.status === 'completed';
+    return this.status === 'success';
   }
 
   /**
    * Checks if the execution failed.
    */
   public get hasFailed(): boolean {
-    return this.status === 'failed';
+    return this.status === 'failed' || this.status === 'timeout';
   }
 
   /**

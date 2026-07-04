@@ -30,6 +30,7 @@ export {
   isActiveExecutionStatus,
   isTerminalExecutionStatus,
   isCancellableExecutionStatus,
+  isRetryableExecutionStatus,
 } from './ExecutionStatus';
 
 export type { SchedulerPriority } from './SchedulerPriority';

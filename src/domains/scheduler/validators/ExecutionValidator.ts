@@ -69,7 +69,16 @@ export class ExecutionValidator {
     if (status === null || status === undefined) {
       return false;
     }
-    const validStatuses: ExecutionStatus[] = ['pending', 'running', 'completed', 'failed', 'cancelled'];
+    const validStatuses: ExecutionStatus[] = [
+      'pending',
+      'waiting',
+      'running',
+      'success',
+      'failed',
+      'retrying',
+      'timeout',
+      'cancelled',
+    ];
     return validStatuses.includes(status);
   }
 
@@ -105,7 +114,7 @@ export class ExecutionValidator {
 
     if (data.status !== undefined) {
       if (!this.isValidStatus(data.status)) {
-        errors.push('Status must be one of: pending, running, completed, failed, cancelled');
+        errors.push('Status must be one of: pending, waiting, running, success, failed, retrying, timeout, cancelled');
       }
     }
 
@@ -156,10 +165,13 @@ export class ExecutionValidator {
    */
   public static canTransitionTo(currentStatus: ExecutionStatus, newStatus: ExecutionStatus): boolean {
     const validTransitions: Record<ExecutionStatus, ExecutionStatus[]> = {
-      pending: ['running', 'cancelled'],
-      running: ['completed', 'failed', 'cancelled'],
-      completed: [],
-      failed: [],
+      pending: ['waiting', 'running', 'cancelled'],
+      waiting: ['running', 'cancelled'],
+      running: ['success', 'failed', 'timeout', 'cancelled', 'retrying'],
+      success: [],
+      failed: ['retrying'],
+      retrying: ['running', 'failed', 'timeout', 'cancelled'],
+      timeout: ['retrying'],
       cancelled: [],
     };
 

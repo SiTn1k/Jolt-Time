@@ -79,7 +79,7 @@ export class ExecutionMapper {
    */
   public static toStatisticsDto(executions: JobExecution[]): JobExecutionStatisticsDto {
     const total = executions.length;
-    const successful = executions.filter((e) => e.status === 'completed').length;
+    const successful = executions.filter((e) => e.status === 'success').length;
     const failed = executions.filter((e) => e.status === 'failed').length;
     const durations = executions.filter((e) => e.duration !== undefined).map((e) => e.duration!);
     const averageDuration = durations.length > 0
@@ -88,7 +88,7 @@ export class ExecutionMapper {
 
     const sorted = [...executions].sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime());
     const lastExecutedAt = sorted[0]?.startedAt.toISOString();
-    const lastSuccessful = sorted.find((e) => e.status === 'completed');
+    const lastSuccessful = sorted.find((e) => e.status === 'success');
     const lastSuccessfulAt = lastSuccessful?.startedAt.toISOString();
     const lastFailed = sorted.find((e) => e.status === 'failed');
     const lastFailedAt = lastFailed?.startedAt.toISOString();
