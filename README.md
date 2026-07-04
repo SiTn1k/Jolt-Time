@@ -108,11 +108,13 @@ Jolt-Time/
 | **Admin** | ✅ Foundation | Admin domain foundation - accounts, roles, permissions, repository skeleton (P-181.1) |
 | **Audit** | ✅ Complete | Immutable audit history layer with Event Bus integration, automatic collection, and search (P-184.2) |
 | **Backup** | ✅ Foundation | Backup domain foundation - entities, types, repository skeleton (P-186.1) |
+| **Integration** | ✅ Foundation | Integration domain foundation - providers, requests, responses, repository skeleton (P-187.1) |
 
 ### In Development 🚧
 
 | System | Progress | Description |
 |--------|----------|-------------|
+| **Integration** | 0% | Production integration implementation - HTTP clients, webhooks, retries, circuit breakers (P-187.2) |
 | **Expeditions** | 0% | Time-based artifact collection missions |
 | **Museum** | 0% | Collection display with historical context (P-172.2) |
 | **Quests** | 0% | Quest execution, progress tracking, reward distribution (P-174.2) |
