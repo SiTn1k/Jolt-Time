@@ -111,6 +111,7 @@ Jolt-Time/
 | **Integration** | ✅ Foundation | Integration domain foundation - providers, requests, responses, repository skeleton (P-187.1) |
 | **Security** | ✅ Foundation | Security domain foundation - incidents, policies, sessions, repository skeleton (P-188.1) |
 | **Cache** | ✅ Complete | Production cache implementation - memory cache engine, TTL engine, eviction policies (P-189.2) |
+| **API Gateway** | ✅ Foundation | API Gateway foundation - entities, types, interfaces, validators, mappers, events, repository skeleton (P-190.1) |
 
 ### In Development 🚧
 
