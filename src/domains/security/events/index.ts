@@ -15,3 +15,18 @@ export { createSecuritySessionCreatedEvent } from './SecuritySessionCreated.even
 
 export type { SecuritySessionClosedEvent, SecuritySessionClosedEventData } from './SecuritySessionClosed.event';
 export { createSecuritySessionClosedEvent } from './SecuritySessionClosed.event';
+
+export type { SecurityViolationDetectedEvent, SecurityViolationDetectedEventData } from './SecurityViolation.event';
+export { createSecurityViolationDetectedEvent } from './SecurityViolation.event';
+
+export type { SuspiciousActivityDetectedEvent, SuspiciousActivityDetectedEventData } from './SuspiciousActivity.event';
+export { createSuspiciousActivityDetectedEvent } from './SuspiciousActivity.event';
+
+export type { SessionExpiredEvent, SessionExpiredEventData } from './SessionExpired.event';
+export { createSessionExpiredEvent } from './SessionExpired.event';
+
+export type { SessionCompromisedEvent, SessionCompromisedEventData } from './SessionCompromised.event';
+export { createSessionCompromisedEvent } from './SessionCompromised.event';
+
+export type { PolicyViolationDetectedEvent, PolicyViolationDetectedEventData } from './PolicyViolation.event';
+export { createPolicyViolationDetectedEvent } from './PolicyViolation.event';
