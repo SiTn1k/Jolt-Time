@@ -4,23 +4,24 @@
  * Production-ready Optimization Domain for Jolt Time.
  * This module encapsulates all optimization-related functionality including
  * entities, repositories, DTOs, mappers, validators, events, types, interfaces,
- * value objects, and dependency injection.
+ * value objects, services, and dependency injection.
  *
  * ## Module Structure
  *
  * ```
  * src/domains/optimization/
- * ├── entities/        # Domain entities (PerformanceProfile, OptimizationRule, PerformanceSnapshot)
- * ├── repositories/    # Data access layer interfaces and implementations
- * ├── dto/             # Data Transfer Objects
- * ├── mappers/         # Entity-DTO mappers
- * ├── validators/      # Input validation
- * ├── events/          # Domain events
- * ├── types/           # Type definitions
- * ├── interfaces/      # Abstract interfaces
- * ├── value-objects/   # Immutable value objects
- * ├── di.ts            # Dependency injection setup
- * └── index.ts         # Module exports
+ * ├── entities/           # Domain entities (PerformanceProfile, OptimizationRule, PerformanceSnapshot)
+ * ├── repositories/       # Data access layer interfaces and implementations
+ * ├── dto/                # Data Transfer Objects
+ * ├── mappers/            # Entity-DTO mappers
+ * ├── validators/         # Input validation
+ * ├── events/             # Domain events
+ * ├── types/              # Type definitions
+ * ├── interfaces/         # Abstract interfaces
+ * ├── value-objects/      # Immutable value objects
+ * ├── services/           # Business logic services
+ * ├── di.ts               # Dependency injection setup
+ * └── index.ts            # Module exports
  * ```
  *
  * ## Key Principle
@@ -30,9 +31,16 @@
  * - Optimization does NOT modify Currency, Inventory, Museum, Academy,
  *   Quest, Achievement, Guild, Rewards, or Notifications
  * - Optimization is a pure performance analysis layer
- * - Optimization does NOT implement any optimization logic (Profiler, Memory Optimizer,
- *   Database Optimizer, Query Optimizer, Bundle Optimizer, Image Optimizer,
- *   Lazy Loading, Benchmark Engine) - these belong to P-193.2
+ * - Optimization does NOT automatically rewrite queries, patch code, or optimize bundles
+ *
+ * ## Services Implemented (P-193.2)
+ *
+ * - OptimizationService: Snapshot creation, rule registration, performance summaries
+ * - PerformanceAnalyzer: Execution time, memory, CPU, repository/cache timing analysis
+ * - DatabaseOptimizationAnalyzer: Query stats, slow/duplicate query detection
+ * - CacheOptimizationAnalyzer: Hit/miss ratio, lifetime, region statistics
+ * - MemoryAnalyzer: Object count, growth detection, peak/average usage
+ * - OptimizationFailureHandler: Graceful failure handling (never interrupts gameplay)
  *
  * ## Types Supported
  *
@@ -51,7 +59,9 @@
  *   OptimizationLevel,
  *   ProfileId,
  *   RuleId,
- *   SnapshotId
+ *   SnapshotId,
+ *   OptimizationService,
+ *   PerformanceAnalyzer
  * } from './domains/optimization';
  *
  * // Domain types and interfaces are exported
@@ -66,6 +76,7 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
  * export { registerOptimizationDependencies, OPTIMIZATION_TOKENS, setupOptimizationDomain } from './di';
@@ -118,6 +129,22 @@ export * from './events';
 export * from './value-objects';
 
 /**
+ * Services
+ */
+export * from './services';
+
+/**
  * Dependency Injection
  */
-export { registerOptimizationDependencies, OPTIMIZATION_TOKENS, setupOptimizationDomain, createOptimizationRepository } from './di';
+export {
+  registerOptimizationDependencies,
+  OPTIMIZATION_TOKENS,
+  setupOptimizationDomain,
+  createOptimizationRepository,
+  createOptimizationService,
+  createPerformanceAnalyzer,
+  createDatabaseAnalyzer,
+  createCacheAnalyzer,
+  createMemoryAnalyzer,
+  createFailureHandler,
+} from './di';
