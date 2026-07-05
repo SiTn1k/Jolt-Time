@@ -6,10 +6,15 @@
  *
  * DevOps represents the deployment and operational management layer.
  * DevOps never contains gameplay logic.
- * DevOps Foundation ONLY stores:
+ * DevOps ONLY stores:
  * - Deployments
  * - Environments
  * - Infrastructure metadata
+ *
+ * DevOps NEVER:
+ * - Deploys containers or runs Docker
+ * - Executes GitHub Actions
+ * - Modifies gameplay or game state
  */
 
 // Value Objects
@@ -145,6 +150,59 @@ export { InfrastructureMapper } from './mappers';
 
 // Repositories
 export { SupabaseDevOpsRepository } from './repositories';
+
+// Services
+export {
+  DevOpsService,
+  type IDevOpsService,
+  type DeploymentSummary,
+  type EnvironmentSummary,
+  type InfrastructureSummary,
+  type DevOpsSummary,
+} from './services';
+
+export {
+  DeploymentEngine,
+  type IDeploymentEngine,
+  type DeploymentValidationResult,
+  type DeploymentTransitionResult,
+  type DeploymentHistoryEntry,
+} from './services';
+
+export {
+  EnvironmentManager,
+  type IEnvironmentManager,
+  type EnvironmentStatus,
+  type EnvironmentValidationResult as EnvironmentValidationResult2,
+  type EnvironmentTransitionResult as EnvironmentTransitionResult2,
+} from './services';
+
+export {
+  InfrastructureManager,
+  type IInfrastructureManager,
+  type NodeStatus as InfrastructureNodeStatus,
+  type InfrastructureValidationResult as InfrastructureValidationResult2,
+  type InfrastructureTransitionResult as InfrastructureTransitionResult2,
+  type RegionMetadata,
+} from './services';
+
+export {
+  DeploymentValidationService,
+  type IDeploymentValidationService,
+  type VersionValidationResult,
+  type EnvironmentValidationResult as EnvValidationResult,
+  type DependencyValidationResult,
+  type ConfigurationValidationResult,
+  type FullDeploymentValidationResult,
+} from './services';
+
+export {
+  DevOpsFailureHandler,
+  type IDevOpsFailureHandler,
+  type DeploymentFailedEvent,
+  type DeploymentFailedEventData,
+  createDeploymentFailedEvent,
+} from './services';
 
 // DI
 export {

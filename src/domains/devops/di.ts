@@ -12,18 +12,39 @@ import { InfrastructureMapper } from './mappers/InfrastructureMapper';
 import { DeploymentValidator } from './validators/DeploymentValidator';
 import { EnvironmentValidator } from './validators/EnvironmentValidator';
 import { InfrastructureValidator } from './validators/InfrastructureValidator';
+import {
+  DevOpsService,
+  DeploymentEngine,
+  EnvironmentManager,
+  InfrastructureManager,
+  DeploymentValidationService,
+  DevOpsFailureHandler,
+} from './services';
 
 /**
  * DevOps Domain DI configuration keys.
  */
 export const DEVOPS_TOKENS = {
+  // Repository
   DEVOPS_REPOSITORY: Symbol.for('SupabaseDevOpsRepository'),
+
+  // Mappers
   DEPLOYMENT_MAPPER: Symbol.for('DeploymentMapper'),
   ENVIRONMENT_MAPPER: Symbol.for('EnvironmentMapper'),
   INFRASTRUCTURE_MAPPER: Symbol.for('InfrastructureMapper'),
+
+  // Validators
   DEPLOYMENT_VALIDATOR: Symbol.for('DeploymentValidator'),
   ENVIRONMENT_VALIDATOR: Symbol.for('EnvironmentValidator'),
   INFRASTRUCTURE_VALIDATOR: Symbol.for('InfrastructureValidator'),
+
+  // Services
+  DEVOPS_SERVICE: Symbol.for('DevOpsService'),
+  DEPLOYMENT_ENGINE: Symbol.for('DeploymentEngine'),
+  ENVIRONMENT_MANAGER: Symbol.for('EnvironmentManager'),
+  INFRASTRUCTURE_MANAGER: Symbol.for('InfrastructureManager'),
+  DEPLOYMENT_VALIDATION_SERVICE: Symbol.for('DeploymentValidationService'),
+  DEVOPS_FAILURE_HANDLER: Symbol.for('DevOpsFailureHandler'),
 } as const;
 
 /**
@@ -40,8 +61,16 @@ export function registerDevOpsDependencies(container: Container): void {
   container.registerInstance(EnvironmentMapper, new EnvironmentMapper());
   container.registerInstance(InfrastructureMapper, new InfrastructureMapper());
 
-  // Repositories (Singleton for simplicity - can be changed to Scoped if needed)
+  // Repository (Singleton)
   container.register(SupabaseDevOpsRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.registerSingleton(DevOpsService);
+  container.registerSingleton(DeploymentEngine);
+  container.registerSingleton(EnvironmentManager);
+  container.registerSingleton(InfrastructureManager);
+  container.registerSingleton(DeploymentValidationService);
+  container.registerSingleton(DevOpsFailureHandler);
 }
 
 /**
@@ -56,14 +85,33 @@ export function setupDevOpsDomain(): {
   deploymentValidator: DeploymentValidator;
   environmentValidator: EnvironmentValidator;
   infrastructureValidator: InfrastructureValidator;
+  devOpsService: DevOpsService;
+  deploymentEngine: DeploymentEngine;
+  environmentManager: EnvironmentManager;
+  infrastructureManager: InfrastructureManager;
+  deploymentValidationService: DeploymentValidationService;
+  failureHandler: DevOpsFailureHandler;
 } {
+  // Validators
   const deploymentValidator = new DeploymentValidator();
   const environmentValidator = new EnvironmentValidator();
   const infrastructureValidator = new InfrastructureValidator();
+
+  // Mappers
   const deploymentMapper = new DeploymentMapper();
   const environmentMapper = new EnvironmentMapper();
   const infrastructureMapper = new InfrastructureMapper();
+
+  // Repository
   const devOpsRepository = new SupabaseDevOpsRepository();
+
+  // Services
+  const devOpsService = new DevOpsService(devOpsRepository);
+  const deploymentEngine = new DeploymentEngine(devOpsRepository);
+  const environmentManager = new EnvironmentManager(devOpsRepository);
+  const infrastructureManager = new InfrastructureManager(devOpsRepository);
+  const deploymentValidationService = new DeploymentValidationService(devOpsRepository);
+  const failureHandler = new DevOpsFailureHandler();
 
   return {
     devOpsRepository,
@@ -73,5 +121,11 @@ export function setupDevOpsDomain(): {
     deploymentValidator,
     environmentValidator,
     infrastructureValidator,
+    devOpsService,
+    deploymentEngine,
+    environmentManager,
+    infrastructureManager,
+    deploymentValidationService,
+    failureHandler,
   };
 }
