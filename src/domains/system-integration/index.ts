@@ -62,5 +62,8 @@ export * from './validators';
 // Repositories
 export { SupabaseSystemIntegrationRepository } from './repositories';
 
+// Services
+export * from './services';
+
 // Dependency Injection
-export { SYSTEM_INTEGRATION_TOKENS, setupSystemIntegrationDomain } from './di';
+export { SYSTEM_INTEGRATION_TOKENS, setupSystemIntegrationDomain, registerSystemIntegrationDependencies } from './di';
