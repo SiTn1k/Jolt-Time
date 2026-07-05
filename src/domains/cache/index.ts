@@ -125,5 +125,30 @@ export { RegionCreated, type RegionCreatedJSON } from './events/RegionCreated.ev
 // Repositories
 export { SupabaseCacheRepository } from './repositories/SupabaseCacheRepository';
 
+// Services
+export {
+  MemoryCacheEngine,
+  TTLEngine,
+  CacheInvalidation,
+  CacheService,
+  type MemoryCacheStats,
+  type MemoryCacheConfig,
+  type EvictionPolicyType,
+  type TTLStatistics,
+  type TTLConfig,
+  type TTLType,
+  type InvalidationResult,
+  type InvalidationReason,
+  type DependencyMap,
+  type CacheServiceConfig,
+  type CacheResult,
+} from './services';
+
 // DI
-export { CACHE_TOKENS, registerCacheDependencies, setupCacheDomain } from './di';
+export {
+  CACHE_TOKENS,
+  registerCacheDependencies,
+  setupCacheDomain,
+  DEFAULT_MEMORY_CACHE_CONFIG,
+  DEFAULT_CACHE_SERVICE_CONFIG,
+} from './di';

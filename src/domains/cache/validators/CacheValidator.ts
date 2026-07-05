@@ -103,7 +103,7 @@ export class CacheValidator {
       }
     }
 
-    // Validate cache value if provided
+    // Validate cache value is not undefined if provided
     if (params.cacheValue !== undefined && params.cacheValue === undefined) {
       errors.push('Cache value cannot be undefined');
     }
