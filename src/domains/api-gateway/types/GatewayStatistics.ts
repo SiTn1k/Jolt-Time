@@ -19,14 +19,9 @@ export interface GatewayStatistics {
   successfulRequests: number;
 
   /**
-   * Number of client errors (4xx).
+   * Number of failed requests.
    */
-  clientErrors: number;
-
-  /**
-   * Number of server errors (5xx).
-   */
-  serverErrors: number;
+  failedRequests: number;
 
   /**
    * Average response time in milliseconds.
@@ -34,29 +29,19 @@ export interface GatewayStatistics {
   averageResponseTime: number;
 
   /**
-   * Minimum response time in milliseconds.
+   * Requests by HTTP method.
    */
-  minResponseTime: number;
+  requestsByMethod: Record<string, number>;
 
   /**
-   * Maximum response time in milliseconds.
+   * Requests by API version.
    */
-  maxResponseTime: number;
+  requestsByVersion: Record<string, number>;
 
   /**
-   * Requests per minute.
+   * Gateway uptime in milliseconds.
    */
-  requestsPerMinute: number;
-
-  /**
-   * Bytes transferred.
-   */
-  bytesTransferred: number;
-
-  /**
-   * Timestamp of last update.
-   */
-  updatedAt: Date;
+  uptime: number;
 }
 
 /**
@@ -116,14 +101,11 @@ export function createEmptyGatewayStatistics(): GatewayStatistics {
   return {
     totalRequests: 0,
     successfulRequests: 0,
-    clientErrors: 0,
-    serverErrors: 0,
+    failedRequests: 0,
     averageResponseTime: 0,
-    minResponseTime: 0,
-    maxResponseTime: 0,
-    requestsPerMinute: 0,
-    bytesTransferred: 0,
-    updatedAt: new Date(),
+    requestsByMethod: {},
+    requestsByVersion: {},
+    uptime: 0,
   };
 }
 

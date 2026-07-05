@@ -155,7 +155,7 @@ export type {
 
 // ============ Validators ============
 
-export { RouteValidator, type ValidationResult } from './validators/RouteValidator';
+export { RouteValidator } from './validators/RouteValidator';
 export { RequestValidator } from './validators/RequestValidator';
 export { ResponseValidator } from './validators/ResponseValidator';
 
@@ -175,6 +175,32 @@ export { RouteDisabled, type RouteDisabledJSON } from './events/RouteDisabled.ev
 // ============ Repositories ============
 
 export { SupabaseApiGatewayRepository } from './repositories/SupabaseApiGatewayRepository';
+
+// ============ Services ============
+
+export {
+  ApiGatewayService,
+  RoutingEngine,
+  MiddlewarePipeline,
+  RequestValidatorService,
+  ResponseBuilder,
+  FailureHandler,
+  HttpStatusCodes,
+  ErrorCodes,
+} from './services';
+
+export type {
+  RouteMatch,
+  RouteRequest,
+  MiddlewareContext,
+  MiddlewareResult,
+  MiddlewareFunction,
+  ValidationResult,
+  ValidationError,
+  ValidationRule,
+  GatewaySummaryDto,
+  RequestSummary,
+} from './services';
 
 // ============ DI ============
 
