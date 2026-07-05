@@ -12,6 +12,14 @@ import { ContextMapper } from './mappers/ContextMapper';
 import { ErrorValidator } from './validators/ErrorValidator';
 import { CategoryValidator } from './validators/CategoryValidator';
 import { ContextValidator } from './validators/ContextValidator';
+import {
+  ErrorHandlingService,
+  createErrorHandlingService,
+  GlobalExceptionHandler,
+  createGlobalExceptionHandler,
+  HTTPErrorResponseService,
+  createHTTPErrorResponseService,
+} from './services';
 
 /**
  * Error Handling Domain DI configuration keys.
@@ -24,6 +32,9 @@ export const ERROR_HANDLING_TOKENS = {
   ERROR_VALIDATOR: Symbol.for('ErrorValidator'),
   CATEGORY_VALIDATOR: Symbol.for('CategoryValidator'),
   CONTEXT_VALIDATOR: Symbol.for('ContextValidator'),
+  ERROR_HANDLING_SERVICE: Symbol.for('ErrorHandlingService'),
+  GLOBAL_EXCEPTION_HANDLER: Symbol.for('GlobalExceptionHandler'),
+  HTTP_ERROR_RESPONSE_SERVICE: Symbol.for('HTTPErrorResponseService'),
 } as const;
 
 /**
@@ -42,6 +53,21 @@ export function registerErrorHandlingDependencies(container: Container): void {
 
   // Repository (Singleton)
   container.register(SupabaseErrorRepository, { lifetime: Lifetime.Singleton });
+
+  // Services (Singleton) - use registerFactory since Container doesn't have registerSingleton
+  container.registerFactory(
+    ErrorHandlingService,
+    () => createErrorHandlingService(new SupabaseErrorRepository()),
+    { lifetime: Lifetime.Singleton }
+  );
+
+  container.registerFactory(
+    GlobalExceptionHandler,
+    () => createGlobalExceptionHandler(createErrorHandlingService(new SupabaseErrorRepository())),
+    { lifetime: Lifetime.Singleton }
+  );
+
+  container.registerInstance(HTTPErrorResponseService, createHTTPErrorResponseService());
 }
 
 /**
@@ -56,6 +82,9 @@ export function setupErrorHandlingDomain(): {
   errorValidator: ErrorValidator;
   categoryValidator: CategoryValidator;
   contextValidator: ContextValidator;
+  errorHandlingService: ErrorHandlingService;
+  globalExceptionHandler: GlobalExceptionHandler;
+  httpErrorResponseService: HTTPErrorResponseService;
 } {
   const errorRepository = new SupabaseErrorRepository();
   const errorMapper = new ErrorMapper();
@@ -64,6 +93,9 @@ export function setupErrorHandlingDomain(): {
   const errorValidator = new ErrorValidator();
   const categoryValidator = new CategoryValidator();
   const contextValidator = new ContextValidator();
+  const errorHandlingService = createErrorHandlingService(errorRepository);
+  const globalExceptionHandler = createGlobalExceptionHandler(errorHandlingService);
+  const httpErrorResponseService = createHTTPErrorResponseService();
 
   return {
     errorRepository,
@@ -73,6 +105,9 @@ export function setupErrorHandlingDomain(): {
     errorValidator,
     categoryValidator,
     contextValidator,
+    errorHandlingService,
+    globalExceptionHandler,
+    httpErrorResponseService,
   };
 }
 

@@ -9,16 +9,18 @@ The Error Handling Domain provides a centralized error management layer for Jolt
 ```
 src/domains/error-handling/
 ├── entities/           # Domain entities (SystemError, ErrorCategory, ErrorContext)
-├── repositories/       # Data access layer (SupabaseErrorRepository skeleton)
-├── dto/                # Data Transfer Objects
-├── mappers/            # Entity-DTO mappers (only mapping, no logic)
-├── validators/         # Input validation
-├── events/             # Domain events
-├── types/              # Type definitions
-├── interfaces/         # Abstract interfaces
-├── value-objects/      # Immutable value objects
-├── di.ts              # Dependency injection
-└── index.ts           # Module exports
+├── repositories/        # Data access layer (SupabaseErrorRepository)
+├── services/            # ErrorHandlingService, GlobalExceptionHandler, HTTPErrorResponseService
+├── dto/                 # Data Transfer Objects
+├── mappers/             # Entity-DTO mappers (only mapping, no logic)
+├── validators/           # Input validation
+├── events/              # Domain events
+├── types/               # Type definitions
+├── interfaces/          # Abstract interfaces
+├── value-objects/       # Immutable value objects
+├── tests/               # Unit tests
+├── di.ts                # Dependency injection
+└── index.ts            # Module exports
 ```
 
 ## Core Entities
@@ -52,6 +54,35 @@ Stores error context:
 - Actor ID (optional)
 - Metadata
 
+## Services
+
+### ErrorHandlingService
+Central service for capturing, classifying, and responding to errors.
+- `captureError()` - Captures and stores an error
+- `createContext()` - Creates error context for tracking
+- `classifyError()` - Classifies error into categories
+- `buildErrorResponse()` - Builds standardized error response
+- `getSystemSummary()` - Gets error statistics
+
+### GlobalExceptionHandler
+Routes all exceptions through ErrorHandlingService.
+- `handleException()` - Handles async exceptions
+- `handleSync()` - Handles sync exceptions
+- `wrapAsync()` - Wraps async functions with error handling
+- `wrapSync()` - Wraps sync functions with error handling
+
+### HTTPErrorResponseService
+Centralized HTTP error response handling.
+- `badRequest()` - 400
+- `unauthorized()` - 401
+- `forbidden()` - 403
+- `notFound()` - 404
+- `conflict()` - 409
+- `unprocessableEntity()` - 422
+- `tooManyRequests()` - 429
+- `internalError()` - 500
+- `serviceUnavailable()` - 503
+
 ## Key Principle
 
 **Error Handling NEVER modifies gameplay**
@@ -61,6 +92,9 @@ This domain ONLY:
 - Stores categories
 - Stores contexts
 - Emits events
+- Builds error responses
+- Integrates with monitoring
+- Integrates with audit
 
 This domain does NOT:
 - Retry operations
@@ -68,6 +102,20 @@ This domain does NOT:
 - Grant rewards
 - Modify balances
 - Modify inventory
+- Restart services
+- Send notifications (PagerDuty, Slack, Email)
+
+## Error Classification
+
+| Classification | Description |
+|----------------|-------------|
+| BusinessError | Business logic rule violations |
+| ValidationError | Input validation failures |
+| RepositoryError | Data access failures |
+| ExternalProviderError | Third-party service failures |
+| ConfigurationError | Configuration-related failures |
+| InternalError | Unknown internal failures |
+| CriticalError | Critical system failures |
 
 ## Error Severity Levels
 
@@ -120,7 +168,14 @@ registerErrorHandlingDependencies(container);
 
 // Or use quick setup
 import { setupErrorHandlingDomain } from './domains/error-handling/di';
-const { errorRepository, errorMapper, errorValidator } = setupErrorHandlingDomain();
+const {
+  errorRepository,
+  errorMapper,
+  errorValidator,
+  errorHandlingService,
+  globalExceptionHandler,
+  httpErrorResponseService
+} = setupErrorHandlingDomain();
 ```
 
 ## Validation
@@ -130,14 +185,68 @@ Validators ensure data integrity:
 - `CategoryValidator` - Validates error category data
 - `ContextValidator` - Validates error context data
 
-## Not Implemented (P-191.2)
+## HTTP Status Codes
 
-The following will be implemented in P-191.2:
-- Full SupabaseErrorRepository implementation
-- Global Exception Handler
-- Sentry integration
-- Retry Engine
-- Recovery Engine
-- Error Notifications
-- Crash Recovery
-- Automatic Restart
+All HTTP error responses follow a unified format:
+
+```typescript
+interface ErrorResponseDto {
+  errorId?: string;           // Error tracking ID
+  errorCode: string;          // Error code (e.g., 'VALIDATION_ERROR')
+  category: ErrorCategoryType; // Error category
+  severity: ErrorSeverity;     // Error severity
+  message: string;            // User-friendly message
+  details?: string;           // Debug info (dev only)
+  timestamp: string;           // ISO timestamp
+  requestId?: string;         // Request tracing
+  metadata?: Record<string, unknown>;
+  userAction?: string;        // Suggested action
+  supportContact?: string;    // Support info
+}
+```
+
+## Monitoring Integration
+
+Critical errors automatically:
+1. Emit `CriticalErrorDetected` event
+2. Send metric to Monitoring service (fire-and-forget)
+3. Never block on monitoring
+
+## Audit Integration
+
+Critical system errors create audit records:
+- Actor: 'system'
+- Action: 'CRITICAL_ERROR_DETECTED'
+- Target: SystemError entity
+- Result: FAILURE
+
+## Failure Handling
+
+When Error Repository fails:
+1. Log the failure
+2. Never create recursive exceptions
+3. Re-throw the original error
+4. Continue execution gracefully
+
+## Testing
+
+```bash
+# Run tests
+npm test -- --testPathPattern="error-handling"
+
+# Run with coverage
+npm test -- --coverage --testPathPattern="error-handling"
+```
+
+## Implemented (P-191.2)
+
+- ✅ Full SupabaseErrorRepository implementation
+- ✅ ErrorHandlingService
+- ✅ GlobalExceptionHandler
+- ✅ HTTPErrorResponseService
+- ✅ Error Classification system
+- ✅ HTTP error responses (400, 401, 403, 404, 409, 422, 429, 500, 503)
+- ✅ Monitoring integration
+- ✅ Audit integration
+- ✅ Failure handling with graceful degradation
+- ✅ Unit tests

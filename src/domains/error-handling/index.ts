@@ -19,6 +19,7 @@
  * ├── types/           # Type definitions
  * ├── interfaces/      # Abstract interfaces
  * ├── value-objects/   # Immutable value objects
+ * ├── services/       # ErrorHandlingService, GlobalExceptionHandler, HTTPErrorResponseService
  * ├── di.ts            # Dependency injection setup
  * └── index.ts         # Module exports
  * ```
@@ -66,6 +67,9 @@
  *   ErrorCategory,
  *   ErrorContext,
  *   IErrorRepository,
+ *   ErrorHandlingService,
+ *   GlobalExceptionHandler,
+ *   HTTPErrorResponseService,
  *   ErrorSeverity,
  *   ErrorCategoryType
  * } from './domains/error-handling';
@@ -82,6 +86,7 @@
  * export * from './validators';
  * export * from './events';
  * export * from './value-objects';
+ * export * from './services';
  *
  * // DI setup
  * export { registerErrorHandlingDependencies, ERROR_HANDLING_TOKENS, setupErrorHandlingDomain } from './di';
@@ -132,6 +137,11 @@ export * from './events';
  * Value Objects
  */
 export * from './value-objects';
+
+/**
+ * Services
+ */
+export * from './services';
 
 /**
  * Dependency Injection
