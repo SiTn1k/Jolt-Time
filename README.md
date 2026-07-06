@@ -196,6 +196,7 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **Vision Bible** | `docs/game/Vision-Bible.md` | 1.0 | ✅ Complete |
 | **Game Design Bible** | `docs/game/Game-Design-Bible.md` | 1.0 | ✅ Complete |
 | **Artifact System Bible** | `docs/game/Artifact-System-Bible.md` | 1.0 | ✅ Complete |
+| **Global Artifact Catalogue** | `docs/game/Global-Artifact-Catalogue.md` | 1.0 | ✅ Complete |
 | Technical Bible | `docs/game/Technical-Bible.md` | — | P-201.3 |
 | Art Bible | `docs/game/Art-Bible.md` | — | P-201.4 |
 | Audio Bible | `docs/game/Audio-Bible.md` | — | P-201.5 |
@@ -207,6 +208,7 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **P-201.1** Vision Bible | ✅ Complete | Game vision, fantasy, identity, philosophy |
 | **P-201.2** Game Design Bible | ✅ Complete | Game pillars, loops, progression, philosophy |
 | **P-202.1** Artifact System Bible | ✅ Complete | Artifact philosophy, categories, hierarchy, rarity, narratives, progression |
+| **P-202.2** Global Artifact Catalogue | ✅ Complete | Catalogue architecture, hierarchy, civilizations, museums, collections, taxonomy |
 | **P-201.3** Technical Bible | 📋 Pending | Architecture, data, API, tech stack |
 | **P-201.4** Art Bible | 📋 Pending | Visual style, UI, animations, assets |
 | **P-201.5** Audio Bible | 📋 Pending | Music, SFX, voice, implementation |
