@@ -200,6 +200,11 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **Civilization Bible** | `docs/game/Civilization-Bible.md` | 1.0 | ✅ Complete |
 | **Historical Timeline Bible** | `docs/game/Historical-Timeline-Bible.md` | 1.0 | ✅ Complete |
 | **Museum Bible** | `docs/game/Museum-Bible.md` | 1.0 | ✅ Complete |
+| **Museum Architecture & Exhibition System** | `docs/game/Museum-Architecture-And-Exhibition-System.md` | 1.0 | ✅ Complete |
+| **Collection Bible** | `docs/game/Collection-Bible.md` | 1.0 | ✅ Complete |
+| **Collection Architecture & Completion System** | `docs/game/Collection-Architecture-And-Completion-System.md` | 1.0 | ✅ Complete |
+| **Historical Artifact Creation Framework** | `docs/game/Historical-Artifact-Creation-Framework.md` | 1.0 | ✅ Complete |
+| **Historical Artifact Metadata Standard** | `docs/game/Historical-Artifact-Metadata-Standard.md` | 1.0 | ✅ Complete |
 | Technical Bible | `docs/game/Technical-Bible.md` | — | P-201.3 |
 | Art Bible | `docs/game/Art-Bible.md` | — | P-201.4 |
 | Audio Bible | `docs/game/Audio-Bible.md` | — | P-201.5 |
@@ -215,7 +220,12 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **P-203.1** Civilization Bible | ✅ Complete | Civilization philosophy, hierarchy, master list, metadata, identity, relationships, timeline rules, museum/artifact ownership, educational philosophy, expansion rules, regional structure, DLC framework, NEVER DO list, manifesto |
 | **P-203.2** Historical Timeline Bible | 📋 Pending | Era definitions, period transitions, temporal relationships |
 | **P-204.1** Museum Bible | ✅ Complete | Museum philosophy, purpose, hierarchy, types, regional distribution, identity, wings, exhibition philosophy, progression, relationships, educational philosophy, visual direction, future expansion, NEVER DO list, manifesto |
-| **P-204.2** Museum Architecture & Exhibition System | 📋 Pending | Museum UI/UX architecture, wing/hall layouts, exhibit design, navigation |
+| **P-204.2** Museum Architecture & Exhibition System | ✅ Complete | Museum structure, wing/hall/gallery types, exhibition philosophy, display philosophy, museum flow, visitor journey, placement rules, expansion rules, LiveOps, educational philosophy, NEVER DO list, manifesto |
+| **P-205.1** Collection Bible | ✅ Complete | Collection philosophy, categories, themes, identity, completion philosophy, relationships, educational philosophy, expansion rules, LiveOps, quality rules, NEVER DO list, manifesto |
+| **P-205.2** Collection Architecture & Completion System | ✅ Complete | Collection structure, types, artifact sets, completion tiers, knowledge progression, cross-collection links, master collections, LiveOps, discovery pathways, expansion rules |
+| **P-206.1** Historical Artifact Creation Framework | ✅ Complete | Artifact creation philosophy, 8-stage pipeline, required fields, authenticity rules, writing standards, educational structure, source requirements, quality checklist, forbidden content, scalability, localization, AI guidelines |
+| **P-206.2** Historical Artifact Metadata Standard | ✅ Complete | Core metadata, historical metadata, museum metadata, physical metadata, context, educational, classification, research, localization, media, validation rules, scalability |
+| **P-207.1** Ancient Egypt Artifact Pack | 📋 Pending | First civilization artifact pack with 50+ artifacts |
 | **P-201.3** Technical Bible | 📋 Pending | Architecture, data, API, tech stack |
 | **P-201.4** Art Bible | 📋 Pending | Visual style, UI, animations, assets |
 | **P-201.5** Audio Bible | 📋 Pending | Music, SFX, voice, implementation |
