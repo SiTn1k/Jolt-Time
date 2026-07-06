@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseAlphaRepository } from './repositories/SupabaseAlphaRepository';
+import { AlphaService } from './services/AlphaService';
 import { ChecklistMapper } from './mappers/ChecklistMapper';
 import { MilestoneMapper } from './mappers/MilestoneMapper';
 import { SnapshotMapper } from './mappers/SnapshotMapper';
@@ -17,6 +18,7 @@ import { ChecklistValidator, MilestoneValidator, SnapshotValidator } from './val
  */
 export const ALPHA_TOKENS = {
   ALPHA_REPOSITORY: Symbol.for('SupabaseAlphaRepository'),
+  ALPHA_SERVICE: Symbol.for('AlphaService'),
   CHECKLIST_MAPPER: Symbol.for('ChecklistMapper'),
   MILESTONE_MAPPER: Symbol.for('MilestoneMapper'),
   SNAPSHOT_MAPPER: Symbol.for('SnapshotMapper'),
@@ -43,6 +45,11 @@ export function registerAlphaDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity)
   container.register(SupabaseAlphaRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.registerFactory(AlphaService, () => new AlphaService(
+    container.resolve(SupabaseAlphaRepository)
+  ), { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -51,6 +58,7 @@ export function registerAlphaDependencies(container: Container): void {
  */
 export function setupAlphaDomain(): {
   alphaRepository: SupabaseAlphaRepository;
+  alphaService: AlphaService;
   checklistMapper: ChecklistMapper;
   milestoneMapper: MilestoneMapper;
   snapshotMapper: SnapshotMapper;
@@ -67,9 +75,11 @@ export function setupAlphaDomain(): {
   const snapshotMapper = new SnapshotMapper();
   const alphaMapper = new AlphaMapper();
   const alphaRepository = new SupabaseAlphaRepository();
+  const alphaService = new AlphaService(alphaRepository);
 
   return {
     alphaRepository,
+    alphaService,
     checklistMapper,
     milestoneMapper,
     snapshotMapper,

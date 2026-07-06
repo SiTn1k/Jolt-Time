@@ -132,6 +132,16 @@ export { MilestoneMapper } from './mappers/MilestoneMapper';
 export { SnapshotMapper } from './mappers/SnapshotMapper';
 export { AlphaMapper } from './mappers/AlphaMapper';
 
+// Services
+export { AlphaService } from './services/AlphaService';
+export type {
+  AlphaServiceConfig,
+  ModuleValidationResult,
+  AlphaReadinessResult,
+  AlphaSummary,
+  AlphaValidationReport,
+} from './services/AlphaService';
+
 // Repositories
 export { SupabaseAlphaRepository } from './repositories/SupabaseAlphaRepository';
 
