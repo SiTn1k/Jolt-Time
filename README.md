@@ -199,6 +199,7 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **Global Artifact Catalogue** | `docs/game/Global-Artifact-Catalogue.md` | 1.0 | ✅ Complete |
 | **Civilization Bible** | `docs/game/Civilization-Bible.md` | 1.0 | ✅ Complete |
 | **Historical Timeline Bible** | `docs/game/Historical-Timeline-Bible.md` | 1.0 | ✅ Complete |
+| **Museum Bible** | `docs/game/Museum-Bible.md` | 1.0 | ✅ Complete |
 | Technical Bible | `docs/game/Technical-Bible.md` | — | P-201.3 |
 | Art Bible | `docs/game/Art-Bible.md` | — | P-201.4 |
 | Audio Bible | `docs/game/Audio-Bible.md` | — | P-201.5 |
@@ -213,6 +214,8 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **P-202.2** Global Artifact Catalogue | ✅ Complete | Catalogue architecture, hierarchy, civilizations, museums, collections, taxonomy |
 | **P-203.1** Civilization Bible | ✅ Complete | Civilization philosophy, hierarchy, master list, metadata, identity, relationships, timeline rules, museum/artifact ownership, educational philosophy, expansion rules, regional structure, DLC framework, NEVER DO list, manifesto |
 | **P-203.2** Historical Timeline Bible | 📋 Pending | Era definitions, period transitions, temporal relationships |
+| **P-204.1** Museum Bible | ✅ Complete | Museum philosophy, purpose, hierarchy, types, regional distribution, identity, wings, exhibition philosophy, progression, relationships, educational philosophy, visual direction, future expansion, NEVER DO list, manifesto |
+| **P-204.2** Museum Architecture & Exhibition System | 📋 Pending | Museum UI/UX architecture, wing/hall layouts, exhibit design, navigation |
 | **P-201.3** Technical Bible | 📋 Pending | Architecture, data, API, tech stack |
 | **P-201.4** Art Bible | 📋 Pending | Visual style, UI, animations, assets |
 | **P-201.5** Audio Bible | 📋 Pending | Music, SFX, voice, implementation |
