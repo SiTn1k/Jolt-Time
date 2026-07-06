@@ -189,6 +189,26 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **Database** | `.openhands/knowledge/database-schema.md` | Supabase schema |
 | **Project Vision** | `.openhands/knowledge/project-vision.md` | Mission & principles |
 
+### Game Documentation Index
+
+| Document | Location | Version | Status |
+|----------|----------|---------|--------|
+| **Vision Bible** | `docs/game/Vision-Bible.md` | 1.0 | ✅ Complete |
+| Game Design Bible | `docs/game/Design-Bible.md` | — | P-201.2 |
+| Technical Bible | `docs/game/Technical-Bible.md` | — | P-201.3 |
+| Art Bible | `docs/game/Art-Bible.md` | — | P-201.4 |
+| Audio Bible | `docs/game/Audio-Bible.md` | — | P-201.5 |
+
+### Implementation Progress
+
+| Task | Status | Notes |
+|------|--------|-------|
+| **P-201.1** Vision Bible | ✅ Complete | Game vision, fantasy, identity, philosophy |
+| **P-201.2** Game Design Bible | ⏳ Next | Mechanics, systems, loops, rules |
+| **P-201.3** Technical Bible | 📋 Pending | Architecture, data, API, tech stack |
+| **P-201.4** Art Bible | 📋 Pending | Visual style, UI, animations, assets |
+| **P-201.5** Audio Bible | 📋 Pending | Music, SFX, voice, implementation |
+
 ---
 
 ## 🚀 Quick Start
