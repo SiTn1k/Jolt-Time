@@ -1017,7 +1017,11 @@ Civilization Pack: [Theme Name]
 | **Ancient Egypt Pack II: Religion & Temples** | Ancient Egypt | 50+ | 3100–1069 BCE | ✅ P-207.2 Complete |
 | **Ancient Egypt Pack III: Daily Life & Society** | Ancient Egypt | 50+ | 4000–332 BCE | ✅ P-207.3 Complete |
 | **Ancient Egypt Pack IV: Military & Warfare** | Ancient Egypt | 50+ | 4000–332 BCE | ✅ P-207.4 Complete |
-| **Rise of Empires** | Persia, Macedonia, Carthage | 150+ | 550–146 BCE | Planned |
+| **Ancient Egypt Pack V: Science, Medicine & Writing** | Ancient Egypt | 52 | 3100–30 BCE | ✅ P-207.5 Complete |
+| **Ancient Egypt Pack VI: Architecture & Engineering** | Ancient Egypt | 52 | 3100–30 BCE | ✅ P-207.6 Complete |
+| **Ancient Egypt Pack VII: Trade, Agriculture & Economy** | Ancient Egypt | 52 | 3100–30 BCE | ✅ P-207.7 Complete |
+| **Ancient Egypt Master Collection & Completion Review** | Ancient Egypt | 356 | 3100–30 BCE | ✅ P-207.8 Complete — 100% |
+| **Rise of Empires** | Persia, Macedonia, Carthage | 150+ | 550–146 BCE | 🔄 In Progress |
 | **Dynastic China** | Han, Tang, Song, Ming | 200+ | 206 BCE–1644 CE | Planned |
 | **Medieval Kingdoms** | Holy Roman Empire, Kingdom of France, England | 175+ | 800–1500 CE | Planned |
 | **Oceanic Explorers** | Polynesian cultures, Māori, Pacific Islanders | 120+ | 1000–1800 CE | Planned |
