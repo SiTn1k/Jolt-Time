@@ -198,6 +198,7 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **Artifact System Bible** | `docs/game/Artifact-System-Bible.md` | 1.0 | ✅ Complete |
 | **Global Artifact Catalogue** | `docs/game/Global-Artifact-Catalogue.md` | 1.0 | ✅ Complete |
 | **Civilization Bible** | `docs/game/Civilization-Bible.md` | 1.0 | ✅ Complete |
+| **Historical Timeline Bible** | `docs/game/Historical-Timeline-Bible.md` | 1.0 | ✅ Complete |
 | Technical Bible | `docs/game/Technical-Bible.md` | — | P-201.3 |
 | Art Bible | `docs/game/Art-Bible.md` | — | P-201.4 |
 | Audio Bible | `docs/game/Audio-Bible.md` | — | P-201.5 |
