@@ -104,6 +104,20 @@ export class QAReport implements IQAReport {
       metadata: this.metadata,
     };
   }
+
+  /**
+   * Converts to database record format.
+   */
+  public toRecord(): QAReportRecord {
+    return {
+      report_id: this.reportId.value,
+      created_at: this.createdAt.toISOString(),
+      passed_checks: this.passedChecks,
+      failed_checks: this.failedChecks,
+      warnings: this.warnings,
+      metadata: this.metadata,
+    };
+  }
 }
 
 /**

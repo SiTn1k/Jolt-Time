@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseQARepository } from './repositories/SupabaseQARepository';
+import { QAService } from './services/QAService';
 import { QAMapper } from './mappers/QAMapper';
 import { CheckMapper } from './mappers/CheckMapper';
 import { SnapshotMapper } from './mappers/SnapshotMapper';
@@ -17,6 +18,7 @@ import { CheckValidator, SnapshotValidator, ReportValidator } from './validators
  */
 export const FINAL_QA_TOKENS = {
   QA_REPOSITORY: Symbol.for('IQARepository'),
+  QA_SERVICE: Symbol.for('QAService'),
   QA_MAPPER: Symbol.for('QAMapper'),
   CHECK_MAPPER: Symbol.for('CheckMapper'),
   SNAPSHOT_MAPPER: Symbol.for('SnapshotMapper'),
@@ -34,6 +36,13 @@ export function registerFinalQADependencies(container: Container): void {
   container.registerFactory(
     SupabaseQARepository,
     () => new SupabaseQARepository(),
+    { lifetime: Lifetime.Scoped }
+  );
+
+  // Service (Scoped - one instance per request)
+  container.registerFactory(
+    QAService,
+    () => new QAService(container.resolve<SupabaseQARepository>(SupabaseQARepository)),
     { lifetime: Lifetime.Scoped }
   );
 
@@ -55,6 +64,7 @@ export function registerFinalQADependencies(container: Container): void {
  */
 export function setupFinalQADomain(): {
   qaRepository: SupabaseQARepository;
+  qaService: QAService;
   qaMapper: QAMapper;
   checkMapper: CheckMapper;
   snapshotMapper: SnapshotMapper;
@@ -64,6 +74,7 @@ export function setupFinalQADomain(): {
   reportValidator: ReportValidator;
 } {
   const qaRepository = new SupabaseQARepository();
+  const qaService = new QAService(qaRepository);
   const qaMapper = new QAMapper();
   const checkMapper = new CheckMapper();
   const snapshotMapper = new SnapshotMapper();
@@ -74,6 +85,7 @@ export function setupFinalQADomain(): {
 
   return {
     qaRepository,
+    qaService,
     qaMapper,
     checkMapper,
     snapshotMapper,

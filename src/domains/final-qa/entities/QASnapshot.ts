@@ -105,6 +105,20 @@ export class QASnapshot implements IQASnapshot {
       metadata: this.metadata,
     };
   }
+
+  /**
+   * Converts to database record format.
+   */
+  public toRecord(): QASnapshotRecord {
+    return {
+      snapshot_id: this.snapshotId.value,
+      created_at: this.createdAt.toISOString(),
+      backend_version: this.backendVersion,
+      module_count: this.moduleCount,
+      health_status: this.healthStatus,
+      metadata: this.metadata,
+    };
+  }
 }
 
 /**

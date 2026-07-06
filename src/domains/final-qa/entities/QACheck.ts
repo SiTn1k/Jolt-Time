@@ -107,6 +107,20 @@ export class QACheck implements IQACheck {
       metadata: this.metadata,
     };
   }
+
+  /**
+   * Converts to database record format.
+   */
+  public toRecord(): QACheckRecord {
+    return {
+      check_id: this.checkId.value,
+      title: this.title,
+      status: this.status,
+      severity: this.severity,
+      completed_at: this.completedAt?.toISOString() ?? null,
+      metadata: this.metadata,
+    };
+  }
 }
 
 /**

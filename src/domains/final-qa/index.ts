@@ -48,6 +48,9 @@ export * from './mappers';
 // Events
 export * from './events';
 
+// Services
+export * from './services';
+
 // Repositories
 export * from './repositories';
 

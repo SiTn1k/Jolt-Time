@@ -5,7 +5,7 @@
  */
 
 import type { SnapshotId } from '../value-objects/SnapshotId';
-import type { HealthStatus } from '../entities/QASnapshot';
+import type { HealthStatus } from '../types/HealthStatus';
 
 /**
  * Event data for QA snapshot creation.
