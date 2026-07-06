@@ -11,18 +11,21 @@
  * - Recording system health snapshots
  * - Generating stabilization reports
  * - Providing data for monitoring and alerting
+ * - Validating system dependencies and configuration
+ * - Performing health checks on system components
  *
  * The Stabilization domain is NOT responsible for:
  * - Modifying gameplay, balances, or player state
  * - Distributing rewards
  * - Managing inventory or currency
- * - Health scanning, stress testing, or auto-repair (belong to P-195.2)
- * - Any state-changing operations
+ * - Auto-repair or automatic fixes
+ * - Any state-changing operations beyond data storage
  *
  * Stabilization is a FOUNDATION layer that enables:
  * - Production monitoring and alerting
  * - Issue tracking and resolution
  * - System health visibility
+ * - Dependency and configuration validation
  * - Debugging and troubleshooting
  */
 
@@ -52,6 +55,9 @@ export * from './events';
 
 // Repositories
 export * from './repositories';
+
+// Services
+export * from './services';
 
 // DI Registration
 export { registerStabilizationDependencies, setupStabilizationDomain, STABILIZATION_TOKENS } from './di';
