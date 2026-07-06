@@ -161,6 +161,17 @@ export { ChecklistMapper } from './mappers/ChecklistMapper';
 export { SnapshotMapper } from './mappers/SnapshotMapper';
 export { ProductionMapper } from './mappers/ProductionMapper';
 
+// Services
+export { ProductionService } from './services/ProductionService';
+export type {
+  ProductionServiceConfig,
+  ModuleValidationResult,
+  ProductionReadinessResult,
+  ProductionSummary,
+  ProductionValidationReport,
+  BackendSystemSummary,
+} from './services/ProductionService';
+
 // Repositories
 export { SupabaseProductionRepository } from './repositories/SupabaseProductionRepository';
 

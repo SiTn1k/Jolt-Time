@@ -6,6 +6,7 @@
 
 import { Container, Lifetime } from '../../core/di';
 import { SupabaseProductionRepository } from './repositories/SupabaseProductionRepository';
+import { ProductionService } from './services/ProductionService';
 import { CertificateMapper } from './mappers/CertificateMapper';
 import { ChecklistMapper } from './mappers/ChecklistMapper';
 import { SnapshotMapper } from './mappers/SnapshotMapper';
@@ -17,6 +18,7 @@ import { CertificateValidator, ChecklistValidator, SnapshotValidator } from './v
  */
 export const PRODUCTION_TOKENS = {
   PRODUCTION_REPOSITORY: Symbol.for('SupabaseProductionRepository'),
+  PRODUCTION_SERVICE: Symbol.for('ProductionService'),
   CERTIFICATE_MAPPER: Symbol.for('CertificateMapper'),
   CHECKLIST_MAPPER: Symbol.for('ChecklistMapper'),
   SNAPSHOT_MAPPER: Symbol.for('SnapshotMapper'),
@@ -43,6 +45,9 @@ export function registerProductionDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity)
   container.register(SupabaseProductionRepository, { lifetime: Lifetime.Singleton });
+
+  // Services (Singleton)
+  container.register(ProductionService, { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -51,6 +56,7 @@ export function registerProductionDependencies(container: Container): void {
  */
 export function setupProductionDomain(): {
   productionRepository: SupabaseProductionRepository;
+  productionService: ProductionService;
   certificateMapper: CertificateMapper;
   checklistMapper: ChecklistMapper;
   snapshotMapper: SnapshotMapper;
@@ -67,9 +73,11 @@ export function setupProductionDomain(): {
   const snapshotMapper = new SnapshotMapper();
   const productionMapper = new ProductionMapper();
   const productionRepository = new SupabaseProductionRepository();
+  const productionService = new ProductionService(productionRepository);
 
   return {
     productionRepository,
+    productionService,
     certificateMapper,
     checklistMapper,
     snapshotMapper,
