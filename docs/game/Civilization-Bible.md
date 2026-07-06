@@ -1011,15 +1011,17 @@ Civilization Pack: [Theme Name]
 
 ### Pack Themes
 
-| Pack | Civilizations | Artifacts | Era |
-|------|--------------|----------|-----|
-| **Rise of Empires** | Persia, Macedonia, Carthage | 150+ | 550–146 BCE |
-| **Dynastic China** | Han, Tang, Song, Ming | 200+ | 206 BCE–1644 CE |
-| **Medieval Kingdoms** | Holy Roman Empire, Kingdom of France, England | 175+ | 800–1500 CE |
-| **Oceanic Explorers** | Polynesian cultures, Māori, Pacific Islanders | 120+ | 1000–1800 CE |
-| **African Kingdoms** | Mali, Songhai, Great Zimbabwe, Benin | 150+ | 700–1600 CE |
-| **Silk Road** | Persia, Central Asian kingdoms, Tang | 180+ | 200 BCE–1400 CE |
-| **Pre-Columbian Americas** | Mississippian, Ancestral Puebloans, Moche | 130+ | 500 BCE–1500 CE |
+| Pack | Civilizations | Artifacts | Era | Status |
+|------|--------------|----------|-----|--------|
+| **Ancient Egypt Pack I: Royal Treasures** | Ancient Egypt | 50+ | 3100–1069 BCE | ✅ P-207.1 Complete |
+| **Ancient Egypt Pack II: Religion & Temples** | Ancient Egypt | 50+ | 1550–1069 BCE | 📋 P-207.2 Pending |
+| **Rise of Empires** | Persia, Macedonia, Carthage | 150+ | 550–146 BCE | Planned |
+| **Dynastic China** | Han, Tang, Song, Ming | 200+ | 206 BCE–1644 CE | Planned |
+| **Medieval Kingdoms** | Holy Roman Empire, Kingdom of France, England | 175+ | 800–1500 CE | Planned |
+| **Oceanic Explorers** | Polynesian cultures, Māori, Pacific Islanders | 120+ | 1000–1800 CE | Planned |
+| **African Kingdoms** | Mali, Songhai, Great Zimbabwe, Benin | 150+ | 700–1600 CE | Planned |
+| **Silk Road** | Persia, Central Asian kingdoms, Tang | 180+ | 200 BCE–1400 CE | Planned |
+| **Pre-Columbian Americas** | Mississippian, Ancestral Puebloans, Moche | 130+ | 500 BCE–1500 CE | Planned |
 
 ## 13.2 Expansion Principles
 
