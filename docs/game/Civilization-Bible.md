@@ -1014,7 +1014,9 @@ Civilization Pack: [Theme Name]
 | Pack | Civilizations | Artifacts | Era | Status |
 |------|--------------|----------|-----|--------|
 | **Ancient Egypt Pack I: Royal Treasures** | Ancient Egypt | 50+ | 3100–1069 BCE | ✅ P-207.1 Complete |
-| **Ancient Egypt Pack II: Religion & Temples** | Ancient Egypt | 50+ | 1550–1069 BCE | 📋 P-207.2 Pending |
+| **Ancient Egypt Pack II: Religion & Temples** | Ancient Egypt | 50+ | 3100–1069 BCE | ✅ P-207.2 Complete |
+| **Ancient Egypt Pack III: Daily Life & Society** | Ancient Egypt | 50+ | 4000–332 BCE | ✅ P-207.3 Complete |
+| **Ancient Egypt Pack IV: Military & Warfare** | Ancient Egypt | 50+ | 4000–332 BCE | ✅ P-207.4 Complete |
 | **Rise of Empires** | Persia, Macedonia, Carthage | 150+ | 550–146 BCE | Planned |
 | **Dynastic China** | Han, Tang, Song, Ming | 200+ | 206 BCE–1644 CE | Planned |
 | **Medieval Kingdoms** | Holy Roman Empire, Kingdom of France, England | 175+ | 800–1500 CE | Planned |
