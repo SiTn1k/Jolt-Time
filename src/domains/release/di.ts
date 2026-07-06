@@ -13,6 +13,7 @@ import { SnapshotMapper } from './mappers/SnapshotMapper';
 import { ReleaseValidator } from './validators/ReleaseValidator';
 import { ChecklistValidator } from './validators/ChecklistValidator';
 import { SnapshotValidator } from './validators/SnapshotValidator';
+import { ReleaseService } from './services/ReleaseService';
 
 /**
  * Release Domain DI configuration keys.
@@ -26,6 +27,7 @@ export const RELEASE_TOKENS = {
   RELEASE_VALIDATOR: Symbol.for('ReleaseValidator'),
   CHECKLIST_VALIDATOR: Symbol.for('ChecklistValidator'),
   SNAPSHOT_VALIDATOR: Symbol.for('SnapshotValidator'),
+  RELEASE_SERVICE: Symbol.for('ReleaseService'),
 } as const;
 
 /**
@@ -45,6 +47,11 @@ export function registerReleaseDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity)
   container.register(SupabaseReleaseRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.registerFactory(ReleaseService, () => new ReleaseService(
+    container.resolve(SupabaseReleaseRepository)
+  ), { lifetime: Lifetime.Singleton });
 }
 
 /**
@@ -60,6 +67,7 @@ export function setupReleaseDomain(): {
   releaseValidator: ReleaseValidator;
   checklistValidator: ChecklistValidator;
   snapshotValidator: SnapshotValidator;
+  releaseService: ReleaseService;
 } {
   const releaseValidator = new ReleaseValidator();
   const checklistValidator = new ChecklistValidator();
@@ -69,6 +77,7 @@ export function setupReleaseDomain(): {
   const checklistMapper = new ChecklistMapper();
   const snapshotMapper = new SnapshotMapper();
   const releaseRepository = new SupabaseReleaseRepository();
+  const releaseService = new ReleaseService(releaseRepository);
 
   return {
     releaseRepository,
@@ -79,5 +88,6 @@ export function setupReleaseDomain(): {
     releaseValidator,
     checklistValidator,
     snapshotValidator,
+    releaseService,
   };
 }

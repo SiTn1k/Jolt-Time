@@ -133,5 +133,17 @@ export { SnapshotMapper } from './mappers/SnapshotMapper';
 // Repositories
 export { SupabaseReleaseRepository } from './repositories/SupabaseReleaseRepository';
 
+// Services
+export {
+  ReleaseService,
+  type ReleaseServiceConfig,
+  type ModuleValidationResult,
+  type ReleaseReadinessResult,
+  type ReleaseSummary,
+  type ReleaseValidationReport,
+  type ReleaseCandidateValidation,
+  type ChecklistValidation,
+} from './services/ReleaseService';
+
 // DI
 export { RELEASE_TOKENS, registerReleaseDependencies, setupReleaseDomain } from './di';
