@@ -53,6 +53,22 @@ export interface SnapshotMetadata {
 }
 
 /**
+ * System health summary for overview/dashboard.
+ */
+export interface SystemHealthSummary {
+  /** Overall health status */
+  status: 'healthy' | 'degraded' | 'unhealthy' | 'unknown';
+  /** Last health check timestamp */
+  lastChecked: Date;
+  /** Total number of modules */
+  moduleCount: number;
+  /** Number of healthy modules */
+  healthyModules: number;
+  /** Number of unhealthy modules */
+  unhealthyModules: number;
+}
+
+/**
  * Hardening statistics for overview/dashboard.
  */
 export interface HardeningStatistics {
@@ -62,12 +78,16 @@ export interface HardeningStatistics {
   activeRules: number;
   /** Number of pending rules */
   pendingRules: number;
+  /** Total number of checklist items */
+  totalChecklists: number;
   /** Number of completed checklist items */
   completedChecklists: number;
-  /** Number of pending checklist items */
-  pendingChecklists: number;
   /** Number of snapshots taken */
   totalSnapshots: number;
+  /** Timestamp of the last snapshot */
+  lastSnapshotAt: Date | null;
+  /** Compliance score as a percentage (0-100) */
+  complianceScore: number;
 }
 
 /**

@@ -4,7 +4,7 @@
  * Main entry point for the Hardening domain module.
  * Exports all public-facing entities, interfaces, types, and utilities.
  *
- * P-198.1 — Production Hardening Foundation
+ * P-198.2 — Production Hardening
  *
  * IMPORTANT: This domain is for production hardening infrastructure ONLY.
  * - Stores hardening rules, checklists, and snapshots
@@ -25,6 +25,7 @@ export type {
   ChecklistMetadata,
   SnapshotMetadata,
   HardeningStatistics,
+  SystemHealthSummary,
 } from './types/HardeningMetadata';
 
 export {
@@ -141,6 +142,18 @@ export { SnapshotMapper } from './mappers/SnapshotMapper';
 
 // Repositories
 export { SupabaseHardeningRepository } from './repositories/SupabaseHardeningRepository';
+
+// Services
+export { HardeningService } from './services/HardeningService';
+export type {
+  SystemValidationResult,
+  ValidationCheck,
+  HardeningReport,
+  ModuleInfo,
+  DependencyCheckResult,
+  ConfigurationCheckResult,
+  HardeningServiceConfig,
+} from './services/HardeningService';
 
 // DI
 export { HARDENING_TOKENS, registerHardeningDependencies, setupHardeningDomain } from './di';

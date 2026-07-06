@@ -12,6 +12,7 @@ import { SnapshotMapper } from './mappers/SnapshotMapper';
 import { RuleValidator } from './validators/RuleValidator';
 import { ChecklistValidator } from './validators/ChecklistValidator';
 import { SnapshotValidator } from './validators/SnapshotValidator';
+import { HardeningService } from './services/HardeningService';
 
 /**
  * Hardening Domain DI configuration keys.
@@ -24,6 +25,7 @@ export const HARDENING_TOKENS = {
   RULE_VALIDATOR: Symbol.for('RuleValidator'),
   CHECKLIST_VALIDATOR: Symbol.for('ChecklistValidator'),
   SNAPSHOT_VALIDATOR: Symbol.for('SnapshotValidator'),
+  HARDENING_SERVICE: Symbol.for('HardeningService'),
 } as const;
 
 /**
@@ -42,13 +44,19 @@ export function registerHardeningDependencies(container: Container): void {
 
   // Repositories (Singleton for simplicity)
   container.register(SupabaseHardeningRepository, { lifetime: Lifetime.Singleton });
+
+  // Services
+  container.register(HardeningService, { lifetime: Lifetime.Singleton });
 }
 
 /**
  * Quick setup function for hardening domain.
  * Creates and configures all hardening domain components.
  */
-export function setupHardeningDomain(): {
+export function setupHardeningDomain(config?: {
+  systemVersion?: string;
+  gitCommit?: string;
+}): {
   hardeningRepository: SupabaseHardeningRepository;
   hardeningMapper: HardeningMapper;
   checklistMapper: ChecklistMapper;
@@ -56,6 +64,7 @@ export function setupHardeningDomain(): {
   ruleValidator: RuleValidator;
   checklistValidator: ChecklistValidator;
   snapshotValidator: SnapshotValidator;
+  hardeningService: HardeningService;
 } {
   const ruleValidator = new RuleValidator();
   const checklistValidator = new ChecklistValidator();
@@ -64,6 +73,10 @@ export function setupHardeningDomain(): {
   const checklistMapper = new ChecklistMapper();
   const snapshotMapper = new SnapshotMapper();
   const hardeningRepository = new SupabaseHardeningRepository();
+  const hardeningService = new HardeningService(hardeningRepository, {
+    systemVersion: config?.systemVersion ?? '1.0.0',
+    gitCommit: config?.gitCommit,
+  });
 
   return {
     hardeningRepository,
@@ -73,5 +86,6 @@ export function setupHardeningDomain(): {
     ruleValidator,
     checklistValidator,
     snapshotValidator,
+    hardeningService,
   };
 }
