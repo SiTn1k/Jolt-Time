@@ -238,7 +238,10 @@ All ads are **optional rewarded ads** — never forced, always skippable, never 
 | **P-208.3** Mesopotamia Artifact Pack III — Writing & Cuneiform | ✅ Complete | 54 authentic artifacts following metadata standard |
 | **P-209.1** Ancient Greece Artifact Pack I — Kings, Heroes & Power | ✅ Complete | 55 authentic artifacts following metadata standard |
 | **P-209.2** Ancient Greece Artifact Pack II — Religion & Temples | ✅ Complete | 55 authentic artifacts following metadata standard |
-| **P-209.3** Ancient Greece Artifact Pack III — Democracy, Philosophy & Writing | 📋 Pending | Democracy, philosophy, writing, education, rhetoric |
+| **P-209.3** Ancient Greece Artifact Pack III — Democracy, Philosophy & Writing | ✅ Complete | 55 authentic artifacts following metadata standard |
+| **P-209.4** Ancient Greece Artifact Pack IV — Daily Life & Society | ✅ Complete | 55 authentic artifacts following metadata standard |
+| **P-209.5** Ancient Greece Artifact Pack V — Science, Mathematics & Medicine | ✅ Complete | 55 authentic artifacts following metadata standard |
+| **P-209.6** Ancient Greece Artifact Pack VI — Military & Warfare | 📋 Pending | Military equipment, weapons, armor, warfare tactics, naval technology |
 | **P-201.3** Technical Bible | 📋 Pending | Architecture, data, API, tech stack |
 | **P-201.4** Art Bible | 📋 Pending | Visual style, UI, animations, assets |
 | **P-201.5** Audio Bible | 📋 Pending | Music, SFX, voice, implementation |
