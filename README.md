@@ -19,6 +19,7 @@
 Collect Energy → Complete Expeditions → Earn Artifacts → Build Museum → Unlock New Eras → Repeat
 ```
 
+
 ### Core Principles
 
 | Principle | Description |
@@ -37,6 +38,7 @@ Collect Energy → Complete Expeditions → Earn Artifacts → Build Museum → 
 | **Frontend** | React + TypeScript | Telegram Mini App UI |
 | **Backend** | Supabase | PostgreSQL, Edge Functions, Auth, Realtime |
 | **Bot** | Telegram Bot API | Notifications, commands, engagement |
+
 | **Monetization** | AdsGram | Primary revenue (rewarded ads only) |
 | **Payments** | Telegram Stars | Premium purchases (cosmetics, convenience) |
 
@@ -46,6 +48,7 @@ Collect Energy → Complete Expeditions → Earn Artifacts → Build Museum → 
 
 ```
 Jolt-Time/
+
 ├── src/                          # Frontend source code
 │   ├── api/                      # REST API endpoints
 │   ├── database/                 # Database types & migrations
@@ -55,6 +58,7 @@ Jolt-Time/
 │
 ├── knowledge/                    # Game design documentation
 │   ├── artifacts.md              # Artifact system
+
 │   ├── energy-system.md          # Energy & daily rewards
 │   ├── museum-system.md          # Museum collection system
 │   ├── quests.md                 # Quest system
@@ -64,6 +68,7 @@ Jolt-Time/
 │   └── ...
 │
 ├── agents/                       # Designer agent specifications
+
 │   ├── collector-designer.md     # Artifact balancing
 │   ├── economy-designer.md       # Economy balance
 │   ├── museum-designer.md       # Museum design
@@ -73,6 +78,7 @@ Jolt-Time/
 ├── docs/                         # External documentation
 ├── .openhands/                   # OpenHands agent knowledge
 │   ├── system.md                 # Master system documentation
+
 │   ├── agents/                   # Agent specifications
 │   └── knowledge/                # Technical knowledge base
 │
@@ -83,6 +89,7 @@ Jolt-Time/
 
 ---
 
+
 ## 🎯 Game Systems
 
 ### Implemented ✅
@@ -91,6 +98,7 @@ Jolt-Time/
 |--------|---------|-------------|
 | **Daily Rewards** | ✅ Complete | 30-day reward calendar with streak bonuses |
 | **Energy System** | ✅ Complete | Regenerating energy with boosters, offline recovery |
+
 | **Notifications** | ✅ Foundation | Notification domain foundation - entities, templates, channels (P-179.1) |
 | **Ads Integration** | ✅ Complete | AdsGram SDK for rewarded ads |
 | **Player Profile** | ✅ Complete | Player identity, progression, statistics, preferences |
