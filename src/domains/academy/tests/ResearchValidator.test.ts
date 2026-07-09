@@ -6,6 +6,8 @@
 
 import { describe, it, expect } from 'vitest';
 import { ResearchValidator } from '../validators/ResearchValidator';
+import { ResearchCategory } from '../types/ResearchCategory';
+import { UnlockType } from '../types/UnlockType';
 
 describe('ResearchValidator', () => {
   describe('isValidSlug', () => {
@@ -110,11 +112,11 @@ describe('ResearchValidator', () => {
         slug: 'ancient-egypt',
         title: 'Ancient Egypt',
         description: 'This is a detailed description of ancient Egypt research.',
-        category: 'history',
+        category: ResearchCategory.HISTORY,
         tier: 1,
         requiredNodes: [],
         researchCost: 100,
-        unlockType: 'default',
+        unlockType: UnlockType.DEFAULT,
       });
 
       expect(result.isValid).toBe(true);
@@ -151,7 +153,7 @@ describe('ResearchValidator', () => {
 
     it('should return errors for invalid category', () => {
       const result = ResearchValidator.validateResearchNode({
-        category: 'invalid_category',
+        category: 'invalid_category' as unknown as ResearchCategory,
       });
 
       expect(result.isValid).toBe(false);
@@ -178,7 +180,7 @@ describe('ResearchValidator', () => {
 
     it('should return errors for invalid unlock type', () => {
       const result = ResearchValidator.validateResearchNode({
-        unlockType: 'invalid_type',
+        unlockType: 'invalid_type' as unknown as UnlockType,
       });
 
       expect(result.isValid).toBe(false);

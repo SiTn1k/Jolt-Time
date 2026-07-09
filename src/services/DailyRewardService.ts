@@ -74,6 +74,21 @@ export class DailyRewardService {
   // =========================================================================
 
   /**
+   * Get the reward calendar for display.
+   *
+   * @param userId - User ID
+   * @returns Array of rewards for the week
+   */
+  async getRewardCalendar(userId: string): Promise<DailyReward[]> {
+    return DEFAULT_WEEKLY_REWARDS.map(r => ({
+      id: '',
+      ...r,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+  }
+
+  /**
    * Get the current day number in the reward cycle for a user.
    * 
    * This considers:
@@ -524,9 +539,10 @@ export class DailyRewardService {
     return {
       id: '',
       dayNumber: defaultReward.dayNumber,
-      coinsReward: defaultReward.coinsReward,
-      energyReward: defaultReward.energyReward,
-      timeShardsReward: defaultReward.timeShardsReward,
+      rewardType: defaultReward.rewardType || 'coins',
+      coinsReward: defaultReward.coinsReward || 0,
+      energyReward: defaultReward.energyReward || 0,
+      timeShardsReward: defaultReward.timeShardsReward || 0,
       boosterType: defaultReward.boosterType,
       boosterAmount: defaultReward.boosterAmount || 0,
       isPremiumOnly: defaultReward.isPremiumOnly,

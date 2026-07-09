@@ -190,7 +190,7 @@ export class AchievementEventProcessor implements IAchievementEventProcessor {
         playerProfileId: event.playerProfileId,
       });
     } catch (error) {
-      this.logger.error('Failed to process achievement event', {
+      this.logger.error('Failed to process achievement event', undefined, {
         type: event.type,
         playerProfileId: event.playerProfileId,
         error: error instanceof Error ? error.message : 'Unknown error',
@@ -223,9 +223,8 @@ export class AchievementEventProcessor implements IAchievementEventProcessor {
 
       this.logger.info('Player achievements initialized', { playerProfileId });
     } catch (error) {
-      this.logger.error('Failed to initialize player achievements', {
+      this.logger.error('Failed to initialize player achievements', error instanceof Error ? error : undefined, {
         playerProfileId,
-        error: error instanceof Error ? error.message : 'Unknown error',
       });
       throw error;
     }

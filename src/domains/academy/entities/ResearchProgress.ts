@@ -19,7 +19,7 @@ import type { IResearchProgress } from '../interfaces/IResearchProgress';
 import { AcademyId } from '../value-objects/AcademyId';
 import { ResearchNodeId } from '../value-objects/ResearchNodeId';
 import { ResearchProgressValue } from '../value-objects/ResearchProgressValue';
-import type { ResearchStatus } from '../types/ResearchStatus';
+import { ResearchStatus } from '../types/ResearchStatus';
 
 /**
  * ResearchProgress entity class.
@@ -102,28 +102,28 @@ export class ResearchProgress implements IResearchProgress {
    * Checks if research is complete.
    */
   public get isComplete(): boolean {
-    return this.status === 'completed';
+    return this.status === ResearchStatus.COMPLETED;
   }
 
   /**
    * Checks if research is in progress.
    */
   public get isInProgress(): boolean {
-    return this.status === 'in_progress';
+    return this.status === ResearchStatus.IN_PROGRESS;
   }
 
   /**
    * Checks if research is locked.
    */
   public get isLocked(): boolean {
-    return this.status === 'locked';
+    return this.status === ResearchStatus.LOCKED;
   }
 
   /**
    * Checks if research is available.
    */
   public get isAvailable(): boolean {
-    return this.status === 'available';
+    return this.status === ResearchStatus.AVAILABLE;
   }
 
   /**

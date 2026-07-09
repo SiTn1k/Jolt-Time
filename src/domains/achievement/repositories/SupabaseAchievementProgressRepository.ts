@@ -112,7 +112,7 @@ export class SupabaseAchievementProgressRepository implements IAchievementProgre
       const record = this.toInsertRecord(progress);
       const { data, error } = await this.client
         .from(this.tableName)
-        .insert(record)
+        .insert(record as any)
         .select()
         .single();
 
@@ -236,7 +236,7 @@ export class SupabaseAchievementProgressRepository implements IAchievementProgre
       const record = this.toUpdateRecord(progress);
       const { data, error } = await this.client
         .from(this.tableName)
-        .update(record)
+        .update(record as any)
         .eq('id', progress.progressId)
         .select()
         .single();

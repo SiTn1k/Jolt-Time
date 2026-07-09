@@ -129,7 +129,7 @@ export class SupabaseAchievementRepository implements IAchievementRepository {
       const record = this.toInsertRecord(achievement);
       const { data, error } = await this.client
         .from(this.tableName)
-        .insert(record)
+        .insert(record as any)
         .select()
         .single();
 
@@ -249,7 +249,7 @@ export class SupabaseAchievementRepository implements IAchievementRepository {
       const record = this.toUpdateRecord(achievement);
       const { data, error } = await this.client
         .from(this.tableName)
-        .update(record)
+        .update(record as any)
         .eq('id', achievement.achievementId.value)
         .select()
         .single();

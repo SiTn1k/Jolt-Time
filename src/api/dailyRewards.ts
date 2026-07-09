@@ -13,7 +13,7 @@
  * - GET  /analytics     - Get reward analytics (admin)
  */
 
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { getDailyRewardService } from '../services/DailyRewardService';
 import { DEFAULT_WEEKLY_REWARDS, getRewardDisplayInfo } from '../types/daily-rewards';
 
